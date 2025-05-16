@@ -1,5 +1,79 @@
 <!DOCTYPE html>
-<HTML lang="pl">
-  <HEAD></HEAD>
-  <BODY>Dzień 122</BODY>
-</HTML>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>About Me</title>
+    <meta name="description" content="This is a page about me!" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <ul>
+          <li><a href="#blog">Blog</a></li>
+          <li><a href="#contact">Contact me</a></li>
+          <li><a href="#home">Home</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <section id="about">
+        <h1>About Me</h1>
+        <p>My name is Pat. I would like to learn some new stuff.</p>
+        <img src="photo.png" width="25%" alt="Portrait of Pat Dolata" />
+      </section>
+
+      <section id="skills">
+        <h2>Skills</h2>
+        <ul>
+          <li>Frontend</li>
+          <li>Backend</li>
+          <li>Database</li>
+        </ul>
+      </section>
+
+      <section id="projects">
+        <h2>Projects</h2>
+        <ul>
+          <li>first</li>
+          <li>second</li>
+          <li>third</li>
+        </ul>
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Technologies</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>C++</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>Java/Kotlin</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>Java, JavaScript</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="contact">
+        <h2>Contact</h2>
+        <form action="/" method="post">
+          <label for="message">Message</label>
+          <input type="text" id="message" name="message" />
+          <button type="submit">OK</button>
+        </form>
+      </section>
+    </main>
+
+    <footer>&copy; 2025 Pat Dol</footer>
+  </body>
+</html>
