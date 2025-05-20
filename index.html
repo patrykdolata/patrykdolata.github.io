@@ -1,79 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
+
   <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8">
     <title>About Me</title>
-    <meta name="description" content="This is a page about me!" />
-    <link rel="stylesheet" href="style.css" />
+    <meta name="description" content="This is a page about me!">
+    <link rel="stylesheet" href="style.css">
   </head>
+
   <body>
-    <header>
-      <nav>
+    <h1>Dzień 140</h1>
+    <p>Powolutku przechodzę na neovim.
+      <br>Oświeżyłem sobie trochę projekt i pogadałem z AI na temat dalszego rozwoju.
+      <br>Plan jest prosty
+      <ul>
+        <li>codzień coś commitować</li>
+        <li>dokończyć MVP meet-app</li>
+        <li>krok po kroku pisać kodzik od zera i mieć fun z tego</li>
+        <li>dokumentowć moją drogę</li>
+      </ul>
+      Czego dziś się nauczyłem
+      <ul>
+        <li>dużo dowiedziałem się na temat konfigurowania neovim, pliki konfiguracyjne w lua, pluginy, lsp, dap</li>
         <ul>
-          <li><a href="#blog">Blog</a></li>
-          <li><a href="#contact">Contact me</a></li>
-          <li><a href="#home">Home</a></li>
+          <li><a href="https://www.youtube.com/watch?v=46z_h4bNzjk">https://www.youtube.com/watch?v=46z_h4bNzjk</a></li>
+          <li><a href="https://www.youtube.com/watch?v=zbpF3te0M3g">https://www.youtube.com/watch?v=zbpF3te0M3g</a></li>
+          <li><a href="https://www.youtube.com/watch?v=RdyfT2dbt78">https://www.youtube.com/watch?v=RdyfT2dbt78</a></li>
         </ul>
-      </nav>
-    </header>
+        <li>poznałem kilka ciekawych skrótów w neovim, które staram się używać
+        </li>
+        <li>można ćwiczyć pisanie na klawiaturze na stronie <a href="https://monkeytype.com">monkeytype</a></li>
+        <li>robię mały rollback do czasów początków internetu - używanie vim, brak frameworków - po prostu czysty html</li>
+        <li>trzeba pamiętać, że html i protokół http powstał by móc dzielić się informacjami <a
+          href="https://www.youtube.com/watch?v=21eFwbb48sE">who invented the Internet?</a></li>
+        <li>zabawy css: block, inline, flexbox, grid</li>
+      </ul>
+      Co było dobre
+      <ul>
+        <li>spacer 3km</li>
+        <li>wporządku dieta</li>
+        <li>zluzowałem spinę i zacząłem bawić się kodowaniem</li>
+      </ul>
+    </p>
 
-    <main>
-      <section id="about">
-        <h1>About Me</h1>
-        <p>My name is Pat. I would like to learn some new stuff.</p>
-        <img src="photo.png" width="25%" alt="Portrait of Pat Dolata" />
-      </section>
+    <div class="inline">
+      <div class="cell">1</div>
+      <div class="cell">2</div>
+      <div class="cell">3</div>
+    </div>
 
-      <section id="skills">
-        <h2>Skills</h2>
-        <ul>
-          <li>Frontend</li>
-          <li>Backend</li>
-          <li>Database</li>
-        </ul>
-      </section>
+    <div class="inline2">
+      <div class="cell2">1</div>
+      <div class="cell2">2</div>
+      <div class="cell2">3</div>
+    </div>
+    <div class="title">1. inline</div>
+    <div class="wrapper">
+      <span class="example-inline">A</span>
+      <span class="example-inline">B</span>
+    </div>
 
-      <section id="projects">
-        <h2>Projects</h2>
-        <ul>
-          <li>first</li>
-          <li>second</li>
-          <li>third</li>
-        </ul>
-        <table>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Technologies</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>1</td>
-              <td>C++</td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>Java/Kotlin</td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>Java, JavaScript</td>
-            </tr>
-          </tbody>
-        </table>
-      </section>
+    <div class="title">2. block</div>
+    <div class="wrapper">
+      <div class="example-block">A</div>
+      <div class="example-block">B</div>
+    </div>
 
-      <section id="contact">
-        <h2>Contact</h2>
-        <form action="/" method="post">
-          <label for="message">Message</label>
-          <input type="text" id="message" name="message" />
-          <button type="submit">OK</button>
-        </form>
-      </section>
-    </main>
+    <div class="title">3. inline-block</div>
+    <div class="wrapper">
+      <div class="example-inline-block">A</div>
+      <div class="example-inline-block">B</div>
+    </div>
 
-    <footer>&copy; 2025 Pat Dol</footer>
+    <div class="title">4. flex</div>
+    <div class="wrapper flex-wrapper">
+      <div class="example-box">A</div>
+      <div class="example-box">B</div>
+    </div>
+
+    <div class="title">4b. flex</div>
+    <div class="wrapper flex-wrapper-b">
+      <div class="example-box">A</div>
+      <div class="example-box">B</div>
+    </div>
+    <div class="title">5. grid</div>
+    <div class="wrapper grid-wrapper">
+      <div class="example-box-b">A</div>
+      <div class="example-box-c">B</div>
+    </div>
   </body>
+
 </html>
