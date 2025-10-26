@@ -474,6 +474,7 @@ input:not([type]),
 select,
 textarea {
   width: 100%;
+  max-width: 100%;
   padding: 12px;
   border-radius: 12px;
   border: 1px solid var(--border);
@@ -482,6 +483,20 @@ textarea {
   font-family: inherit;
   background: #fff;
   transition: border-color 0.2s ease;
+  box-sizing: border-box;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="time"]::-webkit-calendar-picker-indicator,
+input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator:hover,
+input[type="time"]::-webkit-calendar-picker-indicator:hover,
+input[type="datetime-local"]::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
 }
 
 select {

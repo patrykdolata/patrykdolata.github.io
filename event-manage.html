@@ -33,8 +33,9 @@
               <div class="player-info">
                 <span style="cursor:grab">☰</span>
                 <span class="player-number">1.</span>
-                <span>Ola P. <span class="badge organizer">👨‍💼</span></span>
-                <span style="margin-left:4px;font-size:16px">💰</span>
+                <span>Iza S. <span class="badge organizer">👨‍💼</span></span>
+                <span class="status-confirm" data-confirmed="true" onclick="toggleConfirm(this)" style="margin-left:8px;font-size:16px;color:#16a34a;cursor:pointer" title="Potwierdził obecność (kliknij aby zmienić)">✓</span>
+                <span class="status-payment" data-paid="true" onclick="togglePayment(this)" style="margin-left:4px;font-size:16px;color:#16a34a;cursor:pointer" title="Zapłacił (kliknij aby zmienić)">💰</span>
               </div>
               <div class="player-actions">
                 <button class="btn btn-ghost btn-small" onclick="moveToWaitlist(this)">↓</button>
@@ -47,6 +48,8 @@
                 <span style="cursor:grab">☰</span>
                 <span class="player-number">2.</span>
                 <span>Kuba M.</span>
+                <span class="status-confirm" data-confirmed="true" onclick="toggleConfirm(this)" style="margin-left:8px;font-size:16px;color:#16a34a;cursor:pointer" title="Potwierdził obecność (kliknij aby zmienić)">✓</span>
+                <span class="status-payment" data-paid="false" onclick="togglePayment(this)" style="margin-left:4px;font-size:16px;color:#cbd5e1;cursor:pointer" title="Nie zapłacił (kliknij aby zmienić)">—</span>
               </div>
               <div class="player-actions">
                 <button class="btn btn-ghost btn-small" onclick="moveToWaitlist(this)">↓</button>
@@ -59,7 +62,8 @@
                 <span style="cursor:grab">☰</span>
                 <span class="player-number">3.</span>
                 <span>Anna K.</span>
-                <span style="margin-left:4px;font-size:16px">💰</span>
+                <span class="status-confirm" data-confirmed="true" onclick="toggleConfirm(this)" style="margin-left:8px;font-size:16px;color:#16a34a;cursor:pointer" title="Potwierdził obecność (kliknij aby zmienić)">✓</span>
+                <span class="status-payment" data-paid="true" onclick="togglePayment(this)" style="margin-left:4px;font-size:16px;color:#16a34a;cursor:pointer" title="Zapłacił (kliknij aby zmienić)">💰</span>
               </div>
               <div class="player-actions">
                 <button class="btn btn-ghost btn-small" onclick="moveToWaitlist(this)">↓</button>
@@ -72,7 +76,8 @@
                 <span style="cursor:grab">☰</span>
                 <span class="player-number">4.</span>
                 <span>Tomasz W.</span>
-                <span style="margin-left:4px;font-size:16px">💰</span>
+                <span class="status-confirm" data-confirmed="true" onclick="toggleConfirm(this)" style="margin-left:8px;font-size:16px;color:#16a34a;cursor:pointer" title="Potwierdził obecność (kliknij aby zmienić)">✓</span>
+                <span class="status-payment" data-paid="true" onclick="togglePayment(this)" style="margin-left:4px;font-size:16px;color:#16a34a;cursor:pointer" title="Zapłacił (kliknij aby zmienić)">💰</span>
               </div>
               <div class="player-actions">
                 <button class="btn btn-ghost btn-small" onclick="moveToWaitlist(this)">↓</button>
@@ -85,6 +90,8 @@
                 <span style="cursor:grab">☰</span>
                 <span class="player-number">5.</span>
                 <span>Michał S.</span>
+                <span class="status-confirm" data-confirmed="false" onclick="toggleConfirm(this)" style="margin-left:8px;font-size:16px;color:#cbd5e1;cursor:pointer" title="Nie potwierdził (kliknij aby zmienić)">—</span>
+                <span class="status-payment" data-paid="false" onclick="togglePayment(this)" style="margin-left:4px;font-size:16px;color:#cbd5e1;cursor:pointer" title="Nie zapłacił (kliknij aby zmienić)">—</span>
               </div>
               <div class="player-actions">
                 <button class="btn btn-ghost btn-small" onclick="moveToWaitlist(this)">↓</button>
@@ -97,7 +104,8 @@
                 <span style="cursor:grab">☰</span>
                 <span class="player-number">6.</span>
                 <span>Ewa L.</span>
-                <span style="margin-left:4px;font-size:16px">💰</span>
+                <span class="status-confirm" data-confirmed="true" onclick="toggleConfirm(this)" style="margin-left:8px;font-size:16px;color:#16a34a;cursor:pointer" title="Potwierdził obecność (kliknij aby zmienić)">✓</span>
+                <span class="status-payment" data-paid="true" onclick="togglePayment(this)" style="margin-left:4px;font-size:16px;color:#16a34a;cursor:pointer" title="Zapłacił (kliknij aby zmienić)">💰</span>
               </div>
               <div class="player-actions">
                 <button class="btn btn-ghost btn-small" onclick="moveToWaitlist(this)">↓</button>
@@ -110,7 +118,8 @@
                 <span style="cursor:grab">☰</span>
                 <span class="player-number">7.</span>
                 <span>Patryk (TY)</span>
-                <span style="margin-left:4px;font-size:16px">💰</span>
+                <span class="status-confirm" data-confirmed="true" onclick="toggleConfirm(this)" style="margin-left:8px;font-size:16px;color:#16a34a;cursor:pointer" title="Potwierdził obecność (kliknij aby zmienić)">✓</span>
+                <span class="status-payment" data-paid="true" onclick="togglePayment(this)" style="margin-left:4px;font-size:16px;color:#16a34a;cursor:pointer" title="Zapłacił (kliknij aby zmienić)">💰</span>
               </div>
               <div class="player-actions">
                 <button class="btn btn-ghost btn-small" onclick="moveToWaitlist(this)">↓</button>
@@ -123,7 +132,8 @@
                 <span style="cursor:grab">☰</span>
                 <span class="player-number">8.</span>
                 <span>Bartek N.</span>
-                <span style="margin-left:4px;font-size:16px">💰</span>
+                <span class="status-confirm" data-confirmed="true" onclick="toggleConfirm(this)" style="margin-left:8px;font-size:16px;color:#16a34a;cursor:pointer" title="Potwierdził obecność (kliknij aby zmienić)">✓</span>
+                <span class="status-payment" data-paid="true" onclick="togglePayment(this)" style="margin-left:4px;font-size:16px;color:#16a34a;cursor:pointer" title="Zapłacił (kliknij aby zmienić)">💰</span>
               </div>
               <div class="player-actions">
                 <button class="btn btn-ghost btn-small" onclick="moveToWaitlist(this)">↓</button>
@@ -267,6 +277,36 @@
           function promotePlayer(btn) {
             alert('Awansowano na listę główną!');
             // In real app, this would move player to main list
+          }
+
+          function toggleConfirm(element) {
+            const isConfirmed = element.getAttribute('data-confirmed') === 'true';
+            if (isConfirmed) {
+              element.setAttribute('data-confirmed', 'false');
+              element.style.color = '#cbd5e1';
+              element.textContent = '—';
+              element.title = 'Nie potwierdził (kliknij aby zmienić)';
+            } else {
+              element.setAttribute('data-confirmed', 'true');
+              element.style.color = '#16a34a';
+              element.textContent = '✓';
+              element.title = 'Potwierdził obecność (kliknij aby zmienić)';
+            }
+          }
+
+          function togglePayment(element) {
+            const isPaid = element.getAttribute('data-paid') === 'true';
+            if (isPaid) {
+              element.setAttribute('data-paid', 'false');
+              element.style.color = '#cbd5e1';
+              element.textContent = '—';
+              element.title = 'Nie zapłacił (kliknij aby zmienić)';
+            } else {
+              element.setAttribute('data-paid', 'true');
+              element.style.color = '#16a34a';
+              element.textContent = '💰';
+              element.title = 'Zapłacił (kliknij aby zmienić)';
+            }
           }
 
           document.getElementById('addPlayerBtn').addEventListener('click', () => {

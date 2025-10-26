@@ -34,7 +34,7 @@
             <label>Data początkowa</label>
             <input type="date" id="startDate" value="2024-11-07">
             <div class="muted" style="font-size:12px;margin-top:4px">
-              Pierwsze wydarzenie zostanie utworzone na ten dzień (lub najbliższy czwartek)
+              Pierwsze wydarzenie zostanie utworzone na ten dzień (lub najbliższą środę)
             </div>
           </div>
 
@@ -62,7 +62,7 @@
         <div class="card" style="margin-top:12px">
           <div class="h2">Podsumowanie</div>
           <div id="preview" style="margin-top:8px;font-size:14px;color:var(--text)">
-            Zostanie utworzonych <strong>8 wydarzeń</strong> w czwartki od <strong>07.11.2024</strong> do <strong>26.12.2024</strong>.
+            Zostanie utworzonych <strong>8 wydarzeń</strong> w środy od <strong>07.11.2024</strong> do <strong>26.12.2024</strong>.
           </div>
           <div class="muted" style="font-size:12px;margin-top:8px">
             ⚠️ Nowe wydarzenia pojawią się na liście. Uczestnicy zostaną powiadomieni o ich dostępności.
@@ -94,7 +94,7 @@
         </div>
 
         <div style="margin-top:16px;display:flex;flex-direction:column;gap:8px">
-          <button class="btn btn-primary" id="generateBtn">⟳ Generuj wydarzenia</button>
+          <button class="btn btn-primary" id="generateBtn">∞ Generuj wydarzenia</button>
           <a href="series.html" class="btn btn-ghost">Anuluj</a>
         </div>
 
@@ -106,9 +106,9 @@
 
             const preview = document.getElementById('preview');
             if (eventCount > 0) {
-              preview.innerHTML = `Zostanie utworzonych <strong>${eventCount} wydarzeń</strong> w czwartki od <strong>07.11.2024</strong>.`;
+              preview.innerHTML = `Zostanie utworzonych <strong>${eventCount} wydarzeń</strong> w środy od <strong>07.11.2024</strong>.`;
             } else {
-              preview.innerHTML = `Zostanie utworzonych <strong>8 wydarzeń</strong> w czwartki od <strong>07.11.2024</strong> do <strong>26.12.2024</strong>.`;
+              preview.innerHTML = `Zostanie utworzonych <strong>8 wydarzeń</strong> w środy od <strong>07.11.2024</strong> do <strong>26.12.2024</strong>.`;
             }
           }
 

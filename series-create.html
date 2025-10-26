@@ -93,6 +93,21 @@
           </div>
 
           <div class="form-group">
+            <label>Kiedy wydarzenie pojawia się w aplikacji</label>
+            <select id="visibilityTime">
+              <option>1 dzień przed</option>
+              <option>3 dni przed</option>
+              <option>1 tydzień przed</option>
+              <option selected>2 tygodnie przed</option>
+              <option>3 tygodnie przed</option>
+              <option>1 miesiąc przed</option>
+            </select>
+            <div class="muted" style="font-size:12px;margin-top:4px">
+              Określa, jak wcześnie przed wydarzeniem będzie ono widoczne dla użytkowników
+            </div>
+          </div>
+
+          <div class="form-group">
             <label>Deadline na zapisy</label>
             <select id="deadline">
               <option>Brak</option>
@@ -113,7 +128,7 @@
           <div class="form-group">
             <label style="display:flex;align-items:center;gap:8px">
               <input type="checkbox" id="requirePayment" checked style="width:24px;height:24px">
-              <span>Wymóg płatności</span>
+              <span>Wymóg płatności przed grą</span>
             </label>
           </div>
 
