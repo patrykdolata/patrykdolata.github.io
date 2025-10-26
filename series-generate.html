@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="pl">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Generuj wydarzenia • Meet‑App</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="phone">
+    <div class="app">
+      <div class="status-bar-right"></div>
+      <div class="topbar">
+        <a href="series.html" class="link">← Wróć</a>
+        <div class="title">Generuj wydarzenia</div>
+        <span></span>
+      </div>
+      <div class="content">
+
+        <div class="card">
+          <div class="h2" style="margin:0 0 4px 0">Środy 18:30</div>
+          <div class="muted" style="font-size:12px">🏐 Siatkówka • Kościelna 53, Przeźmierowo • 25 PLN</div>
+          <div style="margin-top:8px">
+            <span class="badge ok">Śr 18:30 - 20:30 co tydzień</span>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:12px">
+          <div class="h2">Zakres dat</div>
+
+          <div class="form-group">
+            <label>Data początkowa</label>
+            <input type="date" id="startDate" value="2024-11-07">
+            <div class="muted" style="font-size:12px;margin-top:4px">
+              Pierwsze wydarzenie zostanie utworzone na ten dzień (lub najbliższy czwartek)
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Data końcowa</label>
+            <input type="date" id="endDate" value="2024-12-31">
+            <div class="muted" style="font-size:12px;margin-top:4px">
+              Ostatnie wydarzenie nie później niż ta data
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Lub liczba wydarzeń</label>
+            <select id="eventCount">
+              <option value="0">Użyj daty końcowej</option>
+              <option value="4">4 wydarzenia</option>
+              <option value="6">6 wydarzeń</option>
+              <option value="8" selected>8 wydarzeń</option>
+              <option value="10">10 wydarzeń</option>
+              <option value="12">12 wydarzeń</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:12px">
+          <div class="h2">Podsumowanie</div>
+          <div id="preview" style="margin-top:8px;font-size:14px;color:var(--text)">
+            Zostanie utworzonych <strong>8 wydarzeń</strong> w czwartki od <strong>07.11.2024</strong> do <strong>26.12.2024</strong>.
+          </div>
+          <div class="muted" style="font-size:12px;margin-top:8px">
+            ⚠️ Nowe wydarzenia pojawią się na liście. Uczestnicy zostaną powiadomieni o ich dostępności.
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:12px">
+          <div class="h2">Opcje zaawansowane</div>
+
+          <div class="form-group">
+            <label style="display:flex;align-items:center;gap:8px">
+              <input type="checkbox" id="skipHolidays" style="width:24px;height:24px">
+              <span>Pomiń święta</span>
+            </label>
+            <div class="muted" style="font-size:12px;margin-top:4px">
+              Nie twórz wydarzeń w dni świąteczne
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label style="display:flex;align-items:center;gap:8px">
+              <input type="checkbox" id="notifyUsers" checked style="width:24px;height:24px">
+              <span>Powiadom uczestników</span>
+            </label>
+            <div class="muted" style="font-size:12px;margin-top:4px">
+              Wyślij powiadomienie o nowych wydarzeniach
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:16px;display:flex;flex-direction:column;gap:8px">
+          <button class="btn btn-primary" id="generateBtn">⟳ Generuj wydarzenia</button>
+          <a href="series.html" class="btn btn-ghost">Anuluj</a>
+        </div>
+
+        <script>
+          function updatePreview() {
+            const eventCount = document.getElementById('eventCount').value;
+            const startDate = document.getElementById('startDate').value;
+            const endDate = document.getElementById('endDate').value;
+
+            const preview = document.getElementById('preview');
+            if (eventCount > 0) {
+              preview.innerHTML = `Zostanie utworzonych <strong>${eventCount} wydarzeń</strong> w czwartki od <strong>07.11.2024</strong>.`;
+            } else {
+              preview.innerHTML = `Zostanie utworzonych <strong>8 wydarzeń</strong> w czwartki od <strong>07.11.2024</strong> do <strong>26.12.2024</strong>.`;
+            }
+          }
+
+          document.getElementById('eventCount').addEventListener('change', updatePreview);
+          document.getElementById('startDate').addEventListener('change', updatePreview);
+          document.getElementById('endDate').addEventListener('change', updatePreview);
+
+          document.getElementById('generateBtn').addEventListener('click', () => {
+            const eventCount = document.getElementById('eventCount').value || 8;
+            alert(`Wygenerowano ${eventCount} wydarzeń!\n\nWydarzenia zostały dodane do kalendarza.\nUczestnicy zostali powiadomieni.`);
+            window.location.href = 'series.html';
+          });
+        </script>
+
+      </div>
+      <div class="bottom">
+        <a href="index.html" class="">📅<div>Wydarzenia</div></a>
+        <a href="dashboard.html" class="">👥<div>Grupy</div></a>
+        <a href="profile.html" class="">👤<div>Profil</div></a>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

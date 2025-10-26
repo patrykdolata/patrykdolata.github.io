@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="pl">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Szczegóły wydarzenia • Meet‑App</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="phone">
+    <div class="app">
+      <div class="status-bar-right"></div>
+      <div class="topbar">
+        <a href="index.html" class="link">← Wróć</a>
+        <div class="title">Szczegóły</div>
+        <a href="event-edit.html" class="link">✏️</a>
+      </div>
+      <div class="content">
+
+        <!-- Event header -->
+        <div class="card">
+          <div class="h1" style="margin:0 0 8px 0">Ndz 10.11 • 12:00 - 14:00</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">
+            <span class="badge primary">Siatkówka</span>
+          </div>
+          <div class="muted">
+            📍 Kościelna 53, Przeźmierowo<br>
+            💰 25 PLN / osoba<br>
+            ⏰ Deadline: 10:00 (2h przed)<br>
+          </div>
+        </div>
+
+        <!-- Participant status - NOT ON LIST -->
+        <div class="card" style="margin-top:12px;background:#fee2e2;border-color:#dc2626">
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <div>
+              <div style="font-weight:600;color:var(--danger)">✗ Nie jesteś na liście</div>
+              <div class="muted" style="font-size:12px;margin-top:4px">Wydarzenie jest pełne</div>
+            </div>
+            <button class="btn btn-primary btn-small" disabled>Pełne</button>
+          </div>
+        </div>
+
+        <!-- List summary -->
+        <div class="card" style="margin-top:12px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+            <div class="h2" style="margin:0">Lista uczestników</div>
+            <span class="badge primary">12/12</span>
+          </div>
+
+          <!-- Main list -->
+          <div style="margin-bottom:12px">
+            <div class="muted" style="font-size:12px;margin-bottom:6px">Lista główna (12 miejsc)</div>
+            <div class="player-item">
+              <div class="player-info">
+                <span class="player-number">1.</span>
+                <span>Ola P. <span class="badge organizer">👨‍💼</span></span>
+              </div>
+              <span style="font-size:16px">💰</span>
+            </div>
+            <div class="player-item">
+              <div class="player-info">
+                <span class="player-number">2.</span>
+                <span>Kuba M.</span>
+              </div>
+              <span style="font-size:16px">💰</span>
+            </div>
+            <div class="player-item">
+              <div class="player-info">
+                <span class="player-number">3.</span>
+                <span>Anna K.</span>
+              </div>
+              <span style="font-size:16px">💰</span>
+            </div>
+            <div class="player-item">
+              <div class="player-info">
+                <span class="player-number">4.</span>
+                <span>Tomasz W.</span>
+              </div>
+              <span style="font-size:16px">💰</span>
+            </div>
+            <div class="player-item">
+              <div class="player-info">
+                <span class="player-number">5.</span>
+                <span>Michał S.</span>
+              </div>
+              <span style="font-size:16px">💰</span>
+            </div>
+            <div class="player-item">
+              <div class="player-info">
+                <span class="player-number">6.</span>
+                <span>Ewa L.</span>
+              </div>
+              <span style="font-size:16px">💰</span>
+            </div>
+            <div class="player-item">
+              <div class="player-info">
+                <span class="player-number">7.</span>
+                <span>Bartek N.</span>
+              </div>
+              <span style="font-size:16px">💰</span>
+            </div>
+            <div class="player-item">
+              <div class="player-info">
+                <span class="player-number">8.</span>
+                <span>Magda T.</span>
+              </div>
+              <span style="font-size:16px">💰</span>
+            </div>
+            <div class="player-item">
+              <div class="player-info">
+                <span class="player-number">9.</span>
+                <span>Piotr K.</span>
+              </div>
+              <span style="font-size:16px">💰</span>
+            </div>
+            <div class="player-item">
+              <div class="player-info">
+                <span class="player-number">10.</span>
+                <span>Karolina W.</span>
+              </div>
+              <span style="font-size:16px">💰</span>
+            </div>
+            <div class="player-item">
+              <div class="player-info">
+                <span class="player-number">11.</span>
+                <span>Marek L.</span>
+              </div>
+              <span style="font-size:16px">💰</span>
+            </div>
+            <div class="player-item">
+              <div class="player-info">
+                <span class="player-number">12.</span>
+                <span>Dorota S.</span>
+              </div>
+              <span style="font-size:16px">💰</span>
+            </div>
+          </div>
+
+          <!-- Waitlist -->
+          <div>
+            <div class="muted" style="font-size:12px;margin-bottom:6px">Lista rezerwowa (0/5)</div>
+            <div class="muted" style="font-size:12px;text-align:center;padding:16px">
+              Brak osób na rezerwie
+            </div>
+          </div>
+        </div>
+
+        <!-- Organizer actions (only visible to organizer) -->
+        <div class="card" style="margin-top:12px">
+          <div class="h2">Akcje organizatora</div>
+          <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px">
+            <a href="event-manage.html" class="btn btn-primary btn-small">👥 Zarządzaj listą</a>
+            <a href="event-edit.html" class="btn btn-ghost btn-small">✏️ Edytuj wydarzenie</a>
+          </div>
+        </div>
+
+        <!-- Notes -->
+        <div class="card" style="margin-top:12px">
+          <div class="h2">Notatki</div>
+          <div style="font-size:14px;color:var(--text)">
+            Pamiętajcie o butach halowych!
+          </div>
+        </div>
+
+        <!-- Quick actions for regular users -->
+        <div style="margin-top:16px;display:flex;gap:8px">
+          <button class="btn btn-primary" style="flex:1" onclick="alert('Udostępnij wydarzenie')">📤 Udostępnij</button>
+        </div>
+
+      </div>
+      <div class="bottom">
+        <a href="index.html" class="">📅<div>Wydarzenia</div></a>
+        <a href="dashboard.html" class="">👥<div>Grupy</div></a>
+        <a href="profile.html" class="">👤<div>Profil</div></a>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

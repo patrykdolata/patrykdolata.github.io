@@ -1,27 +1,94 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pl">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>365dw</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Meet‑App • Wydarzenia</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-  <a href="/180/180.html">180</a>
-  <a href="/178/178.html">178</a>
-  <a href="/175/175.html">175</a>
-  <a href="/174/174.html">174</a>
-  <a href="/149/149.html">149</a>
-  <a href="/148/148.html">148</a>
-  <a href="/147/147.html">147</a>
-  <a href="/146/146.html">146</a>
-  <a href="/145/145.html">145</a>
-  <a href="/144/144.html">144</a>
-  <a href="/143/143.html">143</a>
-  <a href="/142/142.html">142</a>
-  <a href="/141/141.html">141</a>
-  <a href="/140/140.html">140</a>
+  <div class="phone">
+    <div class="app">
+      <div class="status-bar-right"></div>
+      <div class="topbar">
+        <a href="event-create.html" class="link">+ Nowe</a>
+        <div class="title">Meet‑App</div>
+        <a href="series.html" class="link" style="font-size:20px">⟳</a>
+      </div>
+      <div class="content">
+
+        <!-- Group selector -->
+        <div class="muted">Grupa</div>
+        <div class="card"
+          style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px">
+          <div>
+            <div class="h2" style="margin:0;">Siatkówka Przeźmierowo</div>
+            <div class="muted">Śr 18:30 • Ndz 12:00</div>
+          </div>
+          <a class="link" href="dashboard.html">Zmień</a>
+        </div>
+
+        <div class="h2">Najbliższe wydarzenia</div>
+
+        <!-- Event 1 -->
+        <div class="card" style="margin-top:12px">
+          <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:6px">
+            <div>
+              <div class="h2" style="margin:0 0 4px 0;">Śr 06.11 • 18:30 - 20:30</div>
+              <div class="muted">📍 Kościelna 53, Przeźmierowo</div>
+            </div>
+            <a class="link" href="event-1.html" style="font-size:12px">Szczegóły →</a>
+          </div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;align-items:center">
+            <span class="badge primary">8/12</span>
+            <span class="badge warn">2 na rezerwie</span>
+            <span class="badge ok">✓ Jesteś na liście</span>
+          </div>
+        </div>
+
+        <!-- Event 2 -->
+        <div class="card" style="margin-top:12px">
+          <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:6px">
+            <div>
+              <div class="h2" style="margin:0 0 4px 0;">Ndz 10.11 • 12:00 - 14:00</div>
+              <div class="muted">📍 Kościelna 53, Przeźmierowo</div>
+            </div>
+            <a class="link" href="event-2.html" style="font-size:12px">Szczegóły →</a>
+          </div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap">
+            <span class="badge primary">12/12</span>
+            <span class="badge danger">Pełne</span>
+          </div>
+        </div>
+
+        <!-- Event 3 -->
+        <div class="card" style="margin-top:12px">
+          <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:6px">
+            <div>
+              <div class="h2" style="margin:0 0 4px 0;">Śr 13.11 • 18:30 - 20:30</div>
+              <div class="muted">📍 Kościelna 53, Przeźmierowo</div>
+            </div>
+            <a class="link" href="event-3.html" style="font-size:12px">Szczegóły →</a>
+          </div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap">
+            <span class="badge primary">5/12</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- FAB for organizers/admins -->
+      <button class="fab" onclick="window.location.href='event-create.html'">+</button>
+
+      <div class="bottom">
+        <a href="index.html" class="active">📅<div>Wydarzenia</div></a>
+        <a href="dashboard.html" class="">👥<div>Grupy</div></a>
+        <a href="profile.html" class="">👤<div>Profil</div></a>
+      </div>
+    </div>
+  </div>
 </body>
 
 </html>

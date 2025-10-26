@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="pl">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Zarządzanie listą • Meet‑App</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="phone">
+    <div class="app">
+      <div class="status-bar-right"></div>
+      <div class="topbar">
+        <a href="event.html" class="link">← Wróć</a>
+        <div class="title">Zarządzaj listą</div>
+        <button class="link" id="addPlayerBtn">+ Dodaj</button>
+      </div>
+      <div class="content">
+
+        <div class="muted">Śr 06.11 • 18:30 - 20:30 • Kościelna 53, Przeźmierowo</div>
+
+        <!-- Main list -->
+        <div class="card" style="margin-top:12px">
+          <div class="h2">Lista główna (12 miejsc)</div>
+          <div class="muted" style="font-size:12px;margin-bottom:8px">
+            Przeciągnij aby zmienić kolejność
+          </div>
+
+          <div id="mainList">
+            <div class="player-item" draggable="true">
+              <div class="player-info">
+                <span style="cursor:grab">☰</span>
+                <span class="player-number">1.</span>
+                <span>Ola P. <span class="badge organizer">👨‍💼</span></span>
+                <span style="margin-left:4px;font-size:16px">💰</span>
+              </div>
+              <div class="player-actions">
+                <button class="btn btn-ghost btn-small" onclick="moveToWaitlist(this)">↓</button>
+                <button class="btn btn-danger btn-small" onclick="removePlayer(this)">×</button>
+              </div>
+            </div>
+
+            <div class="player-item" draggable="true">
+              <div class="player-info">
+                <span style="cursor:grab">☰</span>
+                <span class="player-number">2.</span>
+                <span>Kuba M.</span>
+              </div>
+              <div class="player-actions">
+                <button class="btn btn-ghost btn-small" onclick="moveToWaitlist(this)">↓</button>
+                <button class="btn btn-danger btn-small" onclick="removePlayer(this)">×</button>
+              </div>
+            </div>
+
+            <div class="player-item" draggable="true">
+              <div class="player-info">
+                <span style="cursor:grab">☰</span>
+                <span class="player-number">3.</span>
+                <span>Anna K.</span>
+                <span style="margin-left:4px;font-size:16px">💰</span>
+              </div>
+              <div class="player-actions">
+                <button class="btn btn-ghost btn-small" onclick="moveToWaitlist(this)">↓</button>
+                <button class="btn btn-danger btn-small" onclick="removePlayer(this)">×</button>
+              </div>
+            </div>
+
+            <div class="player-item" draggable="true">
+              <div class="player-info">
+                <span style="cursor:grab">☰</span>
+                <span class="player-number">4.</span>
+                <span>Tomasz W.</span>
+                <span style="margin-left:4px;font-size:16px">💰</span>
+              </div>
+              <div class="player-actions">
+                <button class="btn btn-ghost btn-small" onclick="moveToWaitlist(this)">↓</button>
+                <button class="btn btn-danger btn-small" onclick="removePlayer(this)">×</button>
+              </div>
+            </div>
+
+            <div class="player-item" draggable="true">
+              <div class="player-info">
+                <span style="cursor:grab">☰</span>
+                <span class="player-number">5.</span>
+                <span>Michał S.</span>
+              </div>
+              <div class="player-actions">
+                <button class="btn btn-ghost btn-small" onclick="moveToWaitlist(this)">↓</button>
+                <button class="btn btn-danger btn-small" onclick="removePlayer(this)">×</button>
+              </div>
+            </div>
+
+            <div class="player-item" draggable="true">
+              <div class="player-info">
+                <span style="cursor:grab">☰</span>
+                <span class="player-number">6.</span>
+                <span>Ewa L.</span>
+                <span style="margin-left:4px;font-size:16px">💰</span>
+              </div>
+              <div class="player-actions">
+                <button class="btn btn-ghost btn-small" onclick="moveToWaitlist(this)">↓</button>
+                <button class="btn btn-danger btn-small" onclick="removePlayer(this)">×</button>
+              </div>
+            </div>
+
+            <div class="player-item current-user" draggable="true">
+              <div class="player-info">
+                <span style="cursor:grab">☰</span>
+                <span class="player-number">7.</span>
+                <span>Patryk (TY)</span>
+                <span style="margin-left:4px;font-size:16px">💰</span>
+              </div>
+              <div class="player-actions">
+                <button class="btn btn-ghost btn-small" onclick="moveToWaitlist(this)">↓</button>
+                <button class="btn btn-danger btn-small" onclick="removePlayer(this)">×</button>
+              </div>
+            </div>
+
+            <div class="player-item" draggable="true">
+              <div class="player-info">
+                <span style="cursor:grab">☰</span>
+                <span class="player-number">8.</span>
+                <span>Bartek N.</span>
+                <span style="margin-left:4px;font-size:16px">💰</span>
+              </div>
+              <div class="player-actions">
+                <button class="btn btn-ghost btn-small" onclick="moveToWaitlist(this)">↓</button>
+                <button class="btn btn-danger btn-small" onclick="removePlayer(this)">×</button>
+              </div>
+            </div>
+
+            <div class="player-item" style="background:#fff;opacity:0.5">
+              <div class="player-info">
+                <span class="player-number">9.</span>
+                <span class="muted">wolne</span>
+              </div>
+            </div>
+
+            <div class="player-item" style="background:#fff;opacity:0.5">
+              <div class="player-info">
+                <span class="player-number">10.</span>
+                <span class="muted">wolne</span>
+              </div>
+            </div>
+
+            <div class="player-item" style="background:#fff;opacity:0.5">
+              <div class="player-info">
+                <span class="player-number">11.</span>
+                <span class="muted">wolne</span>
+              </div>
+            </div>
+
+            <div class="player-item" style="background:#fff;opacity:0.5">
+              <div class="player-info">
+                <span class="player-number">12.</span>
+                <span class="muted">wolne</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Waitlist -->
+        <div class="card" style="margin-top:12px">
+          <div class="h2">Lista rezerwowa (2)</div>
+
+          <div id="waitList">
+            <div class="player-item">
+              <div class="player-info">
+                <span class="player-number">1.</span>
+                <span>Ania K.</span>
+                <span class="muted" style="font-size:11px;margin-left:8px">10:05</span>
+              </div>
+              <div class="player-actions">
+                <button class="btn btn-success btn-small" onclick="promotePlayer(this)">↑</button>
+                <button class="btn btn-danger btn-small" onclick="removePlayer(this)">×</button>
+              </div>
+            </div>
+
+            <div class="player-item">
+              <div class="player-info">
+                <span class="player-number">2.</span>
+                <span>Mateusz S.</span>
+                <span class="muted" style="font-size:11px;margin-left:8px">10:12</span>
+              </div>
+              <div class="player-actions">
+                <button class="btn btn-success btn-small" onclick="promotePlayer(this)">↑</button>
+                <button class="btn btn-danger btn-small" onclick="removePlayer(this)">×</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mass actions -->
+        <div class="card" style="margin-top:12px">
+          <div class="h2">Akcje masowe</div>
+          <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px">
+            <button class="btn btn-ghost btn-small">📧 Wyślij przypomnienie</button>
+            <button class="btn btn-ghost btn-small">💰 Oznacz wszystkich jako opłaconych</button>
+          </div>
+        </div>
+
+        <div style="margin-top:16px">
+          <a href="event.html" class="btn btn-primary" style="width:100%">Gotowe</a>
+        </div>
+
+        <script>
+          // Drag and drop functionality
+          let draggedElement = null;
+
+          document.querySelectorAll('[draggable="true"]').forEach(item => {
+            item.addEventListener('dragstart', (e) => {
+              draggedElement = e.target;
+              e.target.style.opacity = '0.5';
+            });
+
+            item.addEventListener('dragend', (e) => {
+              e.target.style.opacity = '1';
+            });
+
+            item.addEventListener('dragover', (e) => {
+              e.preventDefault();
+            });
+
+            item.addEventListener('drop', (e) => {
+              e.preventDefault();
+              if (draggedElement !== e.currentTarget) {
+                const parent = e.currentTarget.parentNode;
+                const draggedIndex = Array.from(parent.children).indexOf(draggedElement);
+                const targetIndex = Array.from(parent.children).indexOf(e.currentTarget);
+
+                if (draggedIndex < targetIndex) {
+                  parent.insertBefore(draggedElement, e.currentTarget.nextSibling);
+                } else {
+                  parent.insertBefore(draggedElement, e.currentTarget);
+                }
+                updateNumbers();
+              }
+            });
+          });
+
+          function updateNumbers() {
+            document.querySelectorAll('#mainList .player-item').forEach((item, index) => {
+              const numSpan = item.querySelector('.player-number');
+              if (numSpan) numSpan.textContent = (index + 1) + '.';
+            });
+          }
+
+          function removePlayer(btn) {
+            if (confirm('Usunąć gracza z listy?')) {
+              btn.closest('.player-item').remove();
+              updateNumbers();
+            }
+          }
+
+          function moveToWaitlist(btn) {
+            const item = btn.closest('.player-item');
+            document.getElementById('waitList').appendChild(item);
+            item.querySelector('.player-actions').innerHTML = `
+        <button class="btn btn-success btn-small" onclick="promotePlayer(this)">↑</button>
+        <button class="btn btn-danger btn-small" onclick="removePlayer(this)">×</button>
+      `;
+            updateNumbers();
+          }
+
+          function promotePlayer(btn) {
+            alert('Awansowano na listę główną!');
+            // In real app, this would move player to main list
+          }
+
+          document.getElementById('addPlayerBtn').addEventListener('click', () => {
+            const name = prompt('Imię i nazwisko gracza:');
+            if (name) {
+              alert('Dodano: ' + name);
+            }
+          });
+        </script>
+
+      </div>
+      <div class="bottom">
+        <a href="index.html" class="">📅<div>Wydarzenia</div></a>
+        <a href="dashboard.html" class="">👥<div>Grupy</div></a>
+        <a href="profile.html" class="">👤<div>Profil</div></a>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

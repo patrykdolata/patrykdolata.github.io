@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="pl">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Profil • Meet‑App</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="phone">
+    <div class="app">
+      <div class="status-bar-right"></div>
+      <div class="topbar">
+        <a href="index.html" class="link">← Wróć</a>
+        <div class="title">Profil</div>
+        <a href="#" class="link">⚙️</a>
+      </div>
+      <div class="content">
+
+        <!-- User info -->
+        <div class="card">
+          <div style="display:flex;align-items:center;gap:16px">
+            <div
+              style="width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#667eea,#764ba2);display:flex;align-items:center;justify-content:center;color:#fff;font-size:28px;font-weight:700">
+              P
+            </div>
+            <div style="flex:1">
+              <div class="h2" style="margin:0">
+                Patryk
+                <span class="badge organizer" style="margin-left:4px">👨‍💼 Organizator</span>
+              </div>
+              <div class="muted" style="font-size:12px;margin-top:4px">
+                📧 patryk@example.com<br>
+                📱 +48 123 456 789
+              </div>
+            </div>
+          </div>
+          <button class="btn btn-ghost btn-small" style="width:100%;margin-top:12px">✏️ Edytuj profil</button>
+        </div>
+
+        <!-- Stats -->
+        <div class="card" style="margin-top:12px">
+          <div class="h2">Statystyki</div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:12px;text-align:center">
+            <div>
+              <div style="font-size:24px;font-weight:700;color:var(--primary)">42</div>
+              <div class="muted" style="font-size:11px">Wydarzenia</div>
+            </div>
+            <div>
+              <div style="font-size:24px;font-weight:700;color:var(--success)">38</div>
+              <div class="muted" style="font-size:11px">Obecności</div>
+            </div>
+            <div>
+              <div style="font-size:24px;font-weight:700;color:var(--warning)">90%</div>
+              <div class="muted" style="font-size:11px">Frekwencja</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Upcoming events -->
+        <div class="card" style="margin-top:12px">
+          <div class="h2">Moje wydarzenia (2)</div>
+
+          <div class="player-item" style="cursor:pointer" onclick="window.location.href='event-1.html'">
+            <div class="player-info" style="flex-direction:column;align-items:start;gap:2px">
+              <span style="font-weight:600">Śr 06.11 • 18:30 - 20:30</span>
+              <span class="muted" style="font-size:11px">Kościelna 53, Przeźmierowo • Pozycja #7</span>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:end;gap:2px">
+              <span class="badge ok">✓</span>
+            </div>
+          </div>
+
+          <div class="player-item" style="cursor:pointer" onclick="window.location.href='event-3.html'">
+            <div class="player-info" style="flex-direction:column;align-items:start;gap:2px">
+              <span style="font-weight:600">Śr 13.11 • 18:30 - 20:30</span>
+              <span class="muted" style="font-size:11px">Kościelna 53, Przeźmierowo • Pozycja #3</span>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:end;gap:2px">
+              <span class="badge ok">✓</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- History -->
+        <div class="card" style="margin-top:12px">
+          <div class="h2">Historia (5 ostatnich)</div>
+
+          <div style="margin-top:8px">
+            <div
+              style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px dashed var(--border)">
+              <div>
+                <div style="font-size:13px;font-weight:500">31.10 Siatkówka</div>
+                <div class="muted" style="font-size:11px">Kościelna 53, Przeźmierowo</div>
+              </div>
+              <span class="badge ok">✓</span>
+            </div>
+
+            <div
+              style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px dashed var(--border)">
+              <div>
+                <div style="font-size:13px;font-weight:500">27.10 Siatkówka</div>
+                <div class="muted" style="font-size:11px">Kościelna 53, Przeźmierowo</div>
+              </div>
+              <span class="badge ok">✓</span>
+            </div>
+
+            <div
+              style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px dashed var(--border)">
+              <div>
+                <div style="font-size:13px;font-weight:500">23.10 Siatkówka</div>
+                <div class="muted" style="font-size:11px">Kościelna 53, Przeźmierowo</div>
+              </div>
+              <span class="badge danger">✗ Nie byłem</span>
+            </div>
+
+            <div
+              style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px dashed var(--border)">
+              <div>
+                <div style="font-size:13px;font-weight:500">20.10 Siatkówka</div>
+                <div class="muted" style="font-size:11px">Kościelna 53, Przeźmierowo</div>
+              </div>
+              <span class="badge ok">✓</span>
+            </div>
+
+            <div style="display:flex;justify-content:space-between;padding:8px 0">
+              <div>
+                <div style="font-size:13px;font-weight:500">16.10 Siatkówka</div>
+                <div class="muted" style="font-size:11px">Kościelna 53, Przeźmierowo</div>
+              </div>
+              <span class="badge ok">✓</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Settings -->
+        <div class="card" style="margin-top:12px">
+          <div class="h2">Ustawienia</div>
+
+          <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px">
+            <button class="btn btn-ghost btn-small" style="justify-content:start">🔔 Powiadomienia</button>
+            <button class="btn btn-ghost btn-small" style="justify-content:start">🔒 Prywatność</button>
+            <button class="btn btn-ghost btn-small" style="justify-content:start">❓ Pomoc</button>
+            <button class="btn btn-danger btn-small" style="justify-content:start">🚪 Wyloguj</button>
+          </div>
+        </div>
+
+      </div>
+      <div class="bottom">
+        <a href="index.html" class="">📅<div>Wydarzenia</div></a>
+        <a href="dashboard.html" class="">👥<div>Grupy</div></a>
+        <a href="profile.html" class="active">👤<div>Profil</div></a>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

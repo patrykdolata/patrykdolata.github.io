@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="pl">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Edytuj wydarzenie • Meet‑App</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="phone">
+    <div class="app">
+      <div class="status-bar-right"></div>
+      <div class="topbar">
+        <a href="event.html" class="link">← Anuluj</a>
+        <div class="title">Edytuj wydarzenie</div>
+        <button class="link" id="saveBtn">Zapisz</button>
+      </div>
+      <div class="content">
+
+        <div class="card" style="background:#fef3c7;border-color:#fde68a">
+          <div style="font-size:12px;color:#92400e">
+            ⚠️ <strong>8 osób</strong> jest już zapisanych. Niektóre zmiany mogą ich dotknąć.
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:12px">
+          <div class="form-group">
+            <label>Sport</label>
+            <select id="sport">
+              <option selected>Siatkówka</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Data i godzina</label>
+            <input type="datetime-local" id="datetime" value="2024-11-06T18:30">
+          </div>
+
+          <div class="form-group">
+            <label>Miejsce</label>
+            <input type="text" id="venue" value="Kościelna 53, Przeźmierowo">
+          </div>
+
+          <div class="form-group">
+            <label>Cena (PLN)</label>
+            <input type="number" id="price" value="25" min="0">
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:12px">
+          <div class="h2">Konfiguracja listy</div>
+
+          <div class="form-group">
+            <label>Liczba miejsc</label>
+            <input type="number" id="capacity" value="12" disabled style="background:#f1f5f9;color:var(--muted)">
+            <div class="muted" style="font-size:12px;margin-top:4px">
+              🔒 Liczba miejsc nie może być zmieniona (stała: 12)
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Max liczba osób na rezerwie</label>
+            <input type="number" id="waitlistMax" value="5" min="0" max="20">
+          </div>
+
+          <div class="form-group">
+            <label style="display:flex;align-items:center;gap:8px">
+              <input type="checkbox" id="autoPromote" checked style="width:24px;height:24px">
+              <span>Auto-awansowanie z rezerwy</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:12px">
+          <div class="h2">Opcje zaawansowane</div>
+
+          <div class="form-group">
+            <label>Deadline na zapisy</label>
+            <select id="deadline">
+              <option>Brak</option>
+              <option>30 minut przed</option>
+              <option selected>2 godziny przed</option>
+              <option>6 godzin przed</option>
+              <option>1 dzień przed</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label style="display:flex;align-items:center;gap:8px">
+              <input type="checkbox" id="requirePayment" checked style="width:24px;height:24px">
+              <span>Wymóg płatności</span>
+            </label>
+          </div>
+
+          <div class="form-group">
+            <label style="display:flex;align-items:center;gap:8px">
+              <input type="checkbox" id="sendNotifications" checked style="width:24px;height:24px">
+              <span>Wysyłaj powiadomienia</span>
+            </label>
+          </div>
+
+          <div class="form-group">
+            <label>Notatka</label>
+            <textarea id="notes" placeholder="Dodatkowe informacje...">Pamiętajcie o butach halowych!</textarea>
+          </div>
+        </div>
+
+        <div style="margin-top:16px;display:flex;flex-direction:column;gap:8px">
+          <button class="btn btn-primary" id="updateBtn">💾 Zapisz zmiany</button>
+          <button class="btn btn-danger" id="deleteBtn">🗑️ Usuń wydarzenie</button>
+          <a href="event.html" class="btn btn-ghost">Anuluj</a>
+        </div>
+
+        <!-- Delete confirmation modal -->
+        <div id="deleteModal" class="modal-overlay" style="display:none">
+          <div class="modal">
+            <div class="h2">⚠️ Usuń wydarzenie?</div>
+            <div class="muted" style="margin:12px 0">
+              Czy na pewno chcesz usunąć wydarzenie <strong>Czw 07.11 • 19:00</strong>?
+              <br><br>
+              <strong>4 osoby</strong> są zapisane i zostaną powiadomione o odwołaniu.
+              <br><br>
+              <span style="color:var(--danger);font-weight:600">Ta akcja jest nieodwracalna!</span>
+            </div>
+
+            <div style="display:flex;gap:8px;margin-top:16px">
+              <button class="btn btn-danger" style="flex:1" id="confirmDelete">Tak, usuń</button>
+              <button class="btn btn-ghost" id="cancelDelete">Anuluj</button>
+            </div>
+          </div>
+        </div>
+
+        <script>
+          document.getElementById('updateBtn').addEventListener('click', () => {
+            alert('Zmiany zapisane!\n\nZapisani uczestnicy zostali powiadomieni o zmianach.');
+            window.location.href = 'event.html';
+          });
+
+          document.getElementById('saveBtn').addEventListener('click', () => {
+            document.getElementById('updateBtn').click();
+          });
+
+          document.getElementById('deleteBtn').addEventListener('click', () => {
+            document.getElementById('deleteModal').style.display = 'flex';
+          });
+
+          document.getElementById('confirmDelete').addEventListener('click', () => {
+            alert('Wydarzenie usunięte!\n\nUczestnicy zostali powiadomieni.');
+            window.location.href = 'index.html';
+          });
+
+          document.getElementById('cancelDelete').addEventListener('click', () => {
+            document.getElementById('deleteModal').style.display = 'none';
+          });
+
+          document.getElementById('deleteModal').addEventListener('click', (e) => {
+            if (e.target.id === 'deleteModal') {
+              document.getElementById('deleteModal').style.display = 'none';
+            }
+          });
+        </script>
+
+      </div>
+      <div class="bottom">
+        <a href="index.html" class="">📅<div>Wydarzenia</div></a>
+        <a href="dashboard.html" class="">👥<div>Grupy</div></a>
+        <a href="profile.html" class="">👤<div>Profil</div></a>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

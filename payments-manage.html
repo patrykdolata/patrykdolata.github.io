@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="pl">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Płatności • Meet‑App</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="phone">
+    <div class="app">
+      <div class="status-bar-right"></div>
+      <div class="topbar">
+        <a href="event.html" class="link">← Wróć</a>
+        <div class="title">Płatności</div>
+        <span></span>
+      </div>
+      <div class="content">
+
+        <div class="muted">Śr 06.11 • 18:30 - 20:30 • Kościelna 53, Przeźmierowo</div>
+
+        <!-- Stats -->
+        <div class="card" style="margin-top:12px">
+          <div style="display:flex;justify-content:space-around;text-align:center">
+            <div>
+              <div class="h1" style="margin:0;color:var(--success)">6/8</div>
+              <div class="muted" style="font-size:12px">Opłacone</div>
+            </div>
+            <div style="border-left:1px solid var(--border)"></div>
+            <div>
+              <div class="h1" style="margin:0;color:var(--primary)">150 PLN</div>
+              <div class="muted" style="font-size:12px">Zebrano</div>
+            </div>
+            <div style="border-left:1px solid var(--border)"></div>
+            <div>
+              <div class="h1" style="margin:0;color:var(--danger)">50 PLN</div>
+              <div class="muted" style="font-size:12px">Brakuje</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Payment table -->
+        <div class="card" style="margin-top:12px">
+          <div class="h2">Lista płatności</div>
+          <table class="table" id="payTable" style="margin-top:8px">
+            <thead>
+              <tr>
+                <th>Gracz</th>
+                <th>Status</th>
+                <th>Metoda</th>
+                <th>Czas</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Ola P.</td>
+                <td style="font-size:16px">💰</td>
+                <td>Blik</td>
+                <td>18:55</td>
+              </tr>
+              <tr>
+                <td>Kuba M.</td>
+                <td>
+                  <button class="btn btn-success btn-small" data-mark data-name="Kuba M.">Oznacz</button>
+                </td>
+                <td>—</td>
+                <td>—</td>
+              </tr>
+              <tr>
+                <td>Anna K.</td>
+                <td style="font-size:16px">💰</td>
+                <td>Blik</td>
+                <td>17:12</td>
+              </tr>
+              <tr>
+                <td>Tomasz W.</td>
+                <td style="font-size:16px">💰</td>
+                <td>Cash</td>
+                <td>18:02</td>
+              </tr>
+              <tr>
+                <td>Michał S.</td>
+                <td>
+                  <button class="btn btn-success btn-small" data-mark data-name="Michał S.">Oznacz</button>
+                </td>
+                <td>—</td>
+                <td>—</td>
+              </tr>
+              <tr>
+                <td>Ewa L.</td>
+                <td style="font-size:16px">💰</td>
+                <td>Transfer</td>
+                <td>16:45</td>
+              </tr>
+              <tr style="background:#dcfce7">
+                <td><strong>Patryk (TY)</strong></td>
+                <td style="font-size:16px">💰</td>
+                <td>Blik</td>
+                <td>19:02</td>
+              </tr>
+              <tr>
+                <td>Bartek N.</td>
+                <td style="font-size:16px">💰</td>
+                <td>Blik</td>
+                <td>17:35</td>
+              </tr>
+              <tr>
+                <td colspan="4" class="muted" style="text-align:center;font-size:12px">
+                  ... 4 wolne miejsca
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Payment method modal -->
+        <div id="paymentModal" class="modal-overlay" style="display:none">
+          <div class="modal">
+            <div class="h2">Oznacz jako opłacone</div>
+            <div class="muted" id="playerName" style="margin-bottom:12px"></div>
+
+            <div class="form-group">
+              <label>Metoda płatności</label>
+              <select id="paymentMethod">
+                <option>Blik</option>
+                <option>Cash</option>
+                <option>Transfer</option>
+                <option>Karta</option>
+              </select>
+            </div>
+
+            <div style="display:flex;gap:8px;margin-top:16px">
+              <button class="btn btn-success" style="flex:1" id="confirmPayment">Potwierdź</button>
+              <button class="btn btn-ghost" id="cancelPayment">Anuluj</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="card" style="margin-top:12px">
+          <div class="h2">Akcje</div>
+          <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px">
+            <button class="btn btn-ghost btn-small">📧 Przypomnienie do nieopłaconych</button>
+            <button class="btn btn-ghost btn-small">✓ Oznacz wszystkich jako opłaconych</button>
+          </div>
+        </div>
+
+        <div style="margin-top:16px">
+          <a href="event.html" class="btn btn-primary" style="width:100%">Gotowe</a>
+        </div>
+
+        <script>
+          let currentRow = null;
+
+          document.querySelectorAll('[data-mark]').forEach(btn => {
+            btn.addEventListener('click', () => {
+              currentRow = btn.closest('tr');
+              const playerName = btn.getAttribute('data-name');
+              document.getElementById('playerName').textContent = playerName;
+              document.getElementById('paymentModal').style.display = 'flex';
+            });
+          });
+
+          document.getElementById('confirmPayment').addEventListener('click', () => {
+            if (currentRow) {
+              const method = document.getElementById('paymentMethod').value;
+              const now = new Date();
+              const time = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
+
+              currentRow.cells[1].innerHTML = '<span class="badge ok">✓</span>';
+              currentRow.cells[2].textContent = method;
+              currentRow.cells[3].textContent = time;
+
+              document.getElementById('paymentModal').style.display = 'none';
+
+              // Update stats
+              alert('Płatność potwierdzona!');
+            }
+          });
+
+          document.getElementById('cancelPayment').addEventListener('click', () => {
+            document.getElementById('paymentModal').style.display = 'none';
+          });
+
+          // Close modal on overlay click
+          document.getElementById('paymentModal').addEventListener('click', (e) => {
+            if (e.target.id === 'paymentModal') {
+              document.getElementById('paymentModal').style.display = 'none';
+            }
+          });
+        </script>
+
+      </div>
+      <div class="bottom">
+        <a href="index.html" class="">📅<div>Wydarzenia</div></a>
+        <a href="dashboard.html" class="">👥<div>Grupy</div></a>
+        <a href="profile.html" class="">👤<div>Profil</div></a>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
