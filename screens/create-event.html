@@ -46,7 +46,7 @@
           <label for="level">Poziom umiejętności *</label>
           <input type="range" id="level" min="1" max="5" value="3" oninput="updateLevelDisplay(this.value)">
           <div class="muted" style="text-align:center; margin-top:-8px; margin-bottom:16px">
-            <strong id="level-val">⭐⭐⭐</strong>
+            <strong><span id="level-val" class="stars-stacked" data-level="3"></span></strong>
           </div>
 
           <label for="price">Cena (PLN) *</label>
@@ -80,8 +80,9 @@
   <script src="../js/app.js"></script>
   <script>
     function updateLevelDisplay(value) {
-      const stars = '⭐'.repeat(parseInt(value));
-      document.getElementById('level-val').textContent = stars;
+      const levelEl = document.getElementById('level-val');
+      levelEl.setAttribute('data-level', value);
+      levelEl.innerHTML = renderStarsStacked(parseInt(value));
     }
 
     function handleCreate(e) {

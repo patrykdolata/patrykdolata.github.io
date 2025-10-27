@@ -310,11 +310,36 @@ function validatePassword(password) {
   return password.length >= 6;
 }
 
+// Star level display function
+function renderStarsStacked(level) {
+  const configurations = {
+    1: ['⭐'],
+    2: ['⭐⭐'],
+    3: ['⭐⭐', '⭐'],
+    4: ['⭐⭐', '⭐⭐'],
+    5: ['⭐⭐', '⭐⭐⭐']
+  };
+
+  const rows = configurations[level] || ['⭐'.repeat(level)];
+  return rows.map(row => `<div>${row}</div>`).join('');
+}
+
+function initStarsStacked() {
+  document.querySelectorAll('.stars-stacked').forEach(el => {
+    const level = parseInt(el.getAttribute('data-level'));
+    el.innerHTML = renderStarsStacked(level);
+  });
+}
+
 // Initialize app when DOM is ready
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initApp);
+  document.addEventListener('DOMContentLoaded', () => {
+    initApp();
+    initStarsStacked();
+  });
 } else {
   initApp();
+  initStarsStacked();
 }
 
 // Add slideDown animation for snackbar
