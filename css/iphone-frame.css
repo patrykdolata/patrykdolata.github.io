@@ -302,7 +302,6 @@ a.card:active,
   gap: 0;
   line-height: 0.85;
   letter-spacing: -2px;
-  background: white;
 }
 
 .stars-stacked div {
@@ -323,8 +322,8 @@ a.card:active,
 
 .badge.ok {
   color: var(--success);
-  border-color: #bbf7d0;
-  background: #dcfce7;
+  border-color: #e0e0e0;
+  background: #fff;
 }
 
 .badge.danger {
