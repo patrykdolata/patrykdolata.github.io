@@ -334,16 +334,9 @@
       panel.classList.toggle('visible');
     }
 
-    // Get level name with stars
+    // Get level with stars
     function getLevelName(level) {
-      const levels = {
-        1: 'Początkujący ⭐',
-        2: 'Amator ⭐⭐',
-        3: 'Średni ⭐⭐⭐',
-        4: 'Zaawansowany ⭐⭐⭐⭐',
-        5: 'Pro ⭐⭐⭐⭐⭐'
-      };
-      return levels[level] || level + '⭐';
+      return '⭐'.repeat(parseInt(level));
     }
 
     // Update filters

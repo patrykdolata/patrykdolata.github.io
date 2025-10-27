@@ -291,6 +291,7 @@ a.card:active,
   background: #fff;
   color: #1f2937;
   font-weight: 500;
+  letter-spacing: -2px;
 }
 
 .badge.primary {

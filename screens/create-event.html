@@ -46,7 +46,7 @@
           <label for="level">Poziom umiejętności *</label>
           <input type="range" id="level" min="1" max="5" value="3" oninput="updateLevelDisplay(this.value)">
           <div class="muted" style="text-align:center; margin-top:-8px; margin-bottom:16px">
-            <strong id="level-val">Średni ⭐⭐⭐</strong>
+            <strong id="level-val">⭐⭐⭐</strong>
           </div>
 
           <label for="price">Cena (PLN) *</label>
@@ -80,14 +80,8 @@
   <script src="../js/app.js"></script>
   <script>
     function updateLevelDisplay(value) {
-      const levels = {
-        '1': 'Początkujący ⭐',
-        '2': 'Amator ⭐⭐',
-        '3': 'Średni ⭐⭐⭐',
-        '4': 'Zaawansowany ⭐⭐⭐⭐',
-        '5': 'Pro ⭐⭐⭐⭐⭐'
-      };
-      document.getElementById('level-val').textContent = levels[value];
+      const stars = '⭐'.repeat(parseInt(value));
+      document.getElementById('level-val').textContent = stars;
     }
 
     function handleCreate(e) {
