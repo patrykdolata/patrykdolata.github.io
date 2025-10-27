@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nowe wydarzenie • Meet App</title>
+  <link rel="stylesheet" href="../css/iphone-frame.css">
+  <style>
+    input, select, textarea {
+      margin-bottom: 16px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="phone">
+    <div class="app">
+      <div class="status-bar-right"></div>
+
+      <div class="topbar">
+        <a href="events-list.html">← Anuluj</a>
+        <div class="title">Nowe wydarzenie</div>
+        <div></div>
+      </div>
+
+      <div class="content">
+        <form onsubmit="handleCreate(event)">
+          <label for="datetime">Data i czas *</label>
+          <input type="datetime-local" id="datetime" required>
+
+          <label for="location">Lokalizacja *</label>
+          <select id="location" required>
+            <option value="">Wybierz lokalizację...</option>
+            <option>Hala Sportowa Malta</option>
+            <option>AWF Poznań</option>
+            <option>Orlik Grunwald</option>
+            <option>Arena Poznań</option>
+          </select>
+
+          <label for="duration">Czas trwania (godz) *</label>
+          <input type="number" id="duration" value="2" min="1" max="8" step="0.5" required>
+
+          <label for="slots">Liczba miejsc *</label>
+          <input type="number" id="slots" value="12" min="2" max="50" required>
+
+          <label for="level">Poziom (0-10) *</label>
+          <input type="range" id="level" min="0" max="10" value="5" oninput="document.getElementById('level-val').textContent = this.value">
+          <div class="muted" style="text-align:center; margin-top:-8px; margin-bottom:16px">
+            Poziom: <strong id="level-val">5</strong>/10
+          </div>
+
+          <label for="price">Cena (PLN) *</label>
+          <input type="number" id="price" value="15" min="0" step="0.01" required>
+
+          <label for="description">Opis</label>
+          <textarea id="description" placeholder="Opisz wydarzenie..."></textarea>
+
+          <button type="submit" class="btn btn-primary">Utwórz wydarzenie</button>
+        </form>
+      </div>
+
+      <div class="bottom">
+        <a href="events-list.html">
+          📅
+          <div>Wydarzenia</div>
+        </a>
+        <a href="map-home.html">
+          🗺️
+          <div>Mapa</div>
+        </a>
+        <a href="user-profile.html">
+          👤
+          <div>Profil</div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/mock-data.js"></script>
+  <script src="../js/app.js"></script>
+  <script>
+    function handleCreate(e) {
+      e.preventDefault();
+      alert('Wydarzenie utworzone!');
+      window.location.href = 'events-list.html';
+    }
+  </script>
+</body>
+</html>

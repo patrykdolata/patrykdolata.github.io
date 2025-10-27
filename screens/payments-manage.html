@@ -1,41 +1,88 @@
 <!doctype html>
 <html lang="pl">
-
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Płatności • Meet‑App</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Płatności • Meet App</title>
+  <link rel="stylesheet" href="../css/iphone-frame.css">
+  <style>
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    .table thead th {
+      text-align: left;
+      padding: 8px;
+      border-bottom: 2px solid var(--border);
+      font-weight: 600;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .table tbody td {
+      padding: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+    .table tbody tr:last-child td {
+      border-bottom: none;
+    }
+    .table tbody tr.current-user {
+      background: #dcfce7;
+    }
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+    .modal {
+      background: white;
+      border-radius: 16px;
+      padding: 20px;
+      max-width: 320px;
+      margin: 0 20px;
+    }
+    input, select {
+      margin-bottom: 16px;
+    }
+  </style>
 </head>
 
 <body>
   <div class="phone">
     <div class="app">
       <div class="status-bar-right"></div>
+
       <div class="topbar">
-        <a href="event.html" class="link">← Wróć</a>
+        <a href="event-details.html">← Wróć</a>
         <div class="title">Płatności</div>
         <span></span>
       </div>
-      <div class="content">
 
-        <div class="muted">Śr 06.11 • 18:30 - 20:30 • Kościelna 53, Przeźmierowo</div>
+      <div class="content">
+        <div class="muted">Śr 28.10 • 18:00 - 20:00 • Hala Sportowa Malta</div>
 
         <!-- Stats -->
         <div class="card" style="margin-top:12px">
           <div style="display:flex;justify-content:space-around;text-align:center">
             <div>
-              <div class="h1" style="margin:0;color:var(--success)">6/8</div>
+              <div class="h1" style="margin:0;color:var(--success)">4/5</div>
               <div class="muted" style="font-size:12px">Opłacone</div>
             </div>
             <div style="border-left:1px solid var(--border)"></div>
             <div>
-              <div class="h1" style="margin:0;color:var(--primary)">150 PLN</div>
+              <div class="h1" style="margin:0;color:var(--primary)">60 PLN</div>
               <div class="muted" style="font-size:12px">Zebrano</div>
             </div>
             <div style="border-left:1px solid var(--border)"></div>
             <div>
-              <div class="h1" style="margin:0;color:var(--danger)">50 PLN</div>
+              <div class="h1" style="margin:0;color:var(--danger)">15 PLN</div>
               <div class="muted" style="font-size:12px">Brakuje</div>
             </div>
           </div>
@@ -55,7 +102,7 @@
             </thead>
             <tbody>
               <tr>
-                <td>Iza S.</td>
+                <td>Anna S.</td>
                 <td style="font-size:16px">💰</td>
                 <td>Blik</td>
                 <td>18:55</td>
@@ -63,16 +110,10 @@
               <tr>
                 <td>Kuba M.</td>
                 <td>
-                  <button class="btn btn-success btn-small" data-mark data-name="Kuba M.">Oznacz</button>
+                  <button class="btn-success btn-small" data-mark data-name="Kuba M.">Oznacz</button>
                 </td>
                 <td>—</td>
                 <td>—</td>
-              </tr>
-              <tr>
-                <td>Anna K.</td>
-                <td style="font-size:16px">💰</td>
-                <td>Blik</td>
-                <td>17:12</td>
               </tr>
               <tr>
                 <td>Tomasz W.</td>
@@ -82,33 +123,19 @@
               </tr>
               <tr>
                 <td>Michał S.</td>
-                <td>
-                  <button class="btn btn-success btn-small" data-mark data-name="Michał S.">Oznacz</button>
-                </td>
-                <td>—</td>
-                <td>—</td>
-              </tr>
-              <tr>
-                <td>Ewa L.</td>
                 <td style="font-size:16px">💰</td>
                 <td>Transfer</td>
                 <td>16:45</td>
               </tr>
-              <tr style="background:#dcfce7">
-                <td><strong>Patryk (TY)</strong></td>
-                <td style="font-size:16px">💰</td>
-                <td>Blik</td>
-                <td>19:02</td>
-              </tr>
               <tr>
-                <td>Bartek N.</td>
+                <td>Ewa L.</td>
                 <td style="font-size:16px">💰</td>
                 <td>Blik</td>
                 <td>17:35</td>
               </tr>
               <tr>
                 <td colspan="4" class="muted" style="text-align:center;font-size:12px">
-                  ... 4 wolne miejsca
+                  ... 7 wolnych miejsc
                 </td>
               </tr>
             </tbody>
@@ -121,8 +148,8 @@
             <div class="h2">Oznacz jako opłacone</div>
             <div class="muted" id="playerName" style="margin-bottom:12px"></div>
 
-            <div class="form-group">
-              <label>Metoda płatności</label>
+            <div>
+              <label for="paymentMethod">Metoda płatności</label>
               <select id="paymentMethod">
                 <option>Blik</option>
                 <option>Cash</option>
@@ -148,7 +175,7 @@
         </div>
 
         <div style="margin-top:16px">
-          <a href="event.html" class="btn btn-primary" style="width:100%">Gotowe</a>
+          <a href="event-details.html" class="btn btn-primary" style="width:100%">Gotowe</a>
         </div>
 
         <script>
@@ -169,13 +196,11 @@
               const now = new Date();
               const time = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
 
-              currentRow.cells[1].innerHTML = '<span class="badge ok">✓</span>';
+              currentRow.cells[1].innerHTML = '<span style="font-size:16px">💰</span>';
               currentRow.cells[2].textContent = method;
               currentRow.cells[3].textContent = time;
 
               document.getElementById('paymentModal').style.display = 'none';
-
-              // Update stats
               alert('Płatność potwierdzona!');
             }
           });
@@ -184,7 +209,6 @@
             document.getElementById('paymentModal').style.display = 'none';
           });
 
-          // Close modal on overlay click
           document.getElementById('paymentModal').addEventListener('click', (e) => {
             if (e.target.id === 'paymentModal') {
               document.getElementById('paymentModal').style.display = 'none';
@@ -193,13 +217,25 @@
         </script>
 
       </div>
+
       <div class="bottom">
-        <a href="index.html" class="">📅<div>Wydarzenia</div></a>
-        <a href="dashboard.html" class="">👥<div>Grupy</div></a>
-        <a href="profile.html" class="">👤<div>Profil</div></a>
+        <a href="events-list.html">
+          📅
+          <div>Wydarzenia</div>
+        </a>
+        <a href="map-home.html">
+          🗺️
+          <div>Mapa</div>
+        </a>
+        <a href="user-profile.html">
+          👤
+          <div>Profil</div>
+        </a>
       </div>
     </div>
   </div>
-</body>
 
+  <script src="../js/mock-data.js"></script>
+  <script src="../js/app.js"></script>
+</body>
 </html>

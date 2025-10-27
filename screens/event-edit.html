@@ -1,51 +1,80 @@
 <!doctype html>
 <html lang="pl">
-
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Edytuj wydarzenie • Meet‑App</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Edytuj wydarzenie • Meet App</title>
+  <link rel="stylesheet" href="../css/iphone-frame.css">
+  <style>
+    input, select, textarea {
+      margin-bottom: 16px;
+    }
+    .form-group {
+      margin-bottom: 16px;
+    }
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+    .modal {
+      background: white;
+      border-radius: 16px;
+      padding: 20px;
+      max-width: 320px;
+      margin: 0 20px;
+    }
+  </style>
 </head>
 
 <body>
   <div class="phone">
     <div class="app">
       <div class="status-bar-right"></div>
-      <div class="topbar">
-        <a href="event.html" class="link">← Anuluj</a>
-        <div class="title">Edytuj wydarzenie</div>
-        <button class="link" id="saveBtn">Zapisz</button>
-      </div>
-      <div class="content">
 
+      <div class="topbar">
+        <a href="event-details.html">← Anuluj</a>
+        <div class="title">Edytuj wydarzenie</div>
+        <button id="saveBtn">Zapisz</button>
+      </div>
+
+      <div class="content">
         <div class="card" style="background:#fef3c7;border-color:#fde68a">
           <div style="font-size:12px;color:#92400e">
-            ⚠️ <strong>8 osób</strong> jest już zapisanych. Niektóre zmiany mogą ich dotknąć.
+            ⚠️ <strong>5 osób</strong> jest już zapisanych. Niektóre zmiany mogą ich dotknąć.
           </div>
         </div>
 
         <div class="card" style="margin-top:12px">
           <div class="form-group">
-            <label>Sport</label>
+            <label for="sport">Sport</label>
             <select id="sport">
               <option selected>Siatkówka</option>
+              <option>Koszykówka</option>
+              <option>Piłka nożna</option>
             </select>
           </div>
 
           <div class="form-group">
-            <label>Data i godzina</label>
-            <input type="datetime-local" id="datetime" value="2024-11-06T18:30">
+            <label for="datetime">Data i godzina</label>
+            <input type="datetime-local" id="datetime" value="2024-10-28T18:00">
           </div>
 
           <div class="form-group">
-            <label>Miejsce</label>
-            <input type="text" id="venue" value="Kościelna 53, Przeźmierowo">
+            <label for="venue">Miejsce</label>
+            <input type="text" id="venue" value="Hala Sportowa Malta">
           </div>
 
           <div class="form-group">
-            <label>Cena (PLN)</label>
-            <input type="number" id="price" value="25" min="0">
+            <label for="price">Cena (PLN)</label>
+            <input type="number" id="price" value="15" min="0">
           </div>
         </div>
 
@@ -53,15 +82,15 @@
           <div class="h2">Konfiguracja listy</div>
 
           <div class="form-group">
-            <label>Liczba miejsc</label>
+            <label for="capacity">Liczba miejsc</label>
             <input type="number" id="capacity" value="12" disabled style="background:#f1f5f9;color:var(--muted)">
-            <div class="muted" style="font-size:12px;margin-top:4px">
+            <div class="muted" style="font-size:12px;margin-top:-12px">
               🔒 Liczba miejsc nie może być zmieniona (stała: 12)
             </div>
           </div>
 
           <div class="form-group">
-            <label>Max liczba osób na rezerwie</label>
+            <label for="waitlistMax">Max liczba osób na rezerwie</label>
             <input type="number" id="waitlistMax" value="5" min="0" max="20">
           </div>
 
@@ -77,7 +106,7 @@
           <div class="h2">Opcje zaawansowane</div>
 
           <div class="form-group">
-            <label>Deadline na zapisy</label>
+            <label for="deadline">Deadline na zapisy</label>
             <select id="deadline">
               <option>Brak</option>
               <option>30 minut przed</option>
@@ -102,7 +131,7 @@
           </div>
 
           <div class="form-group">
-            <label>Notatka</label>
+            <label for="notes">Notatka</label>
             <textarea id="notes" placeholder="Dodatkowe informacje...">Pamiętajcie o butach halowych!</textarea>
           </div>
         </div>
@@ -110,7 +139,7 @@
         <div style="margin-top:16px;display:flex;flex-direction:column;gap:8px">
           <button class="btn btn-primary" id="updateBtn">💾 Zapisz zmiany</button>
           <button class="btn btn-danger" id="deleteBtn">🗑️ Usuń wydarzenie</button>
-          <a href="event.html" class="btn btn-ghost">Anuluj</a>
+          <a href="event-details.html" class="btn btn-ghost">Anuluj</a>
         </div>
 
         <!-- Delete confirmation modal -->
@@ -118,9 +147,9 @@
           <div class="modal">
             <div class="h2">⚠️ Usuń wydarzenie?</div>
             <div class="muted" style="margin:12px 0">
-              Czy na pewno chcesz usunąć wydarzenie <strong>Czw 07.11 • 19:00</strong>?
+              Czy na pewno chcesz usunąć wydarzenie <strong>Śr 28.10 • 18:00</strong>?
               <br><br>
-              <strong>4 osoby</strong> są zapisane i zostaną powiadomione o odwołaniu.
+              <strong>5 osób</strong> jest zapisanych i zostanie powiadomionych o odwołaniu.
               <br><br>
               <span style="color:var(--danger);font-weight:600">Ta akcja jest nieodwracalna!</span>
             </div>
@@ -135,7 +164,7 @@
         <script>
           document.getElementById('updateBtn').addEventListener('click', () => {
             alert('Zmiany zapisane!\n\nZapisani uczestnicy zostali powiadomieni o zmianach.');
-            window.location.href = 'event.html';
+            window.location.href = 'event-details.html';
           });
 
           document.getElementById('saveBtn').addEventListener('click', () => {
@@ -148,7 +177,7 @@
 
           document.getElementById('confirmDelete').addEventListener('click', () => {
             alert('Wydarzenie usunięte!\n\nUczestnicy zostali powiadomieni.');
-            window.location.href = 'index.html';
+            window.location.href = 'events-list.html';
           });
 
           document.getElementById('cancelDelete').addEventListener('click', () => {
@@ -163,13 +192,25 @@
         </script>
 
       </div>
+
       <div class="bottom">
-        <a href="index.html" class="">📅<div>Wydarzenia</div></a>
-        <a href="dashboard.html" class="">👥<div>Grupy</div></a>
-        <a href="profile.html" class="">👤<div>Profil</div></a>
+        <a href="events-list.html">
+          📅
+          <div>Wydarzenia</div>
+        </a>
+        <a href="map-home.html">
+          🗺️
+          <div>Mapa</div>
+        </a>
+        <a href="user-profile.html">
+          👤
+          <div>Profil</div>
+        </a>
       </div>
     </div>
   </div>
-</body>
 
+  <script src="../js/mock-data.js"></script>
+  <script src="../js/app.js"></script>
+</body>
 </html>

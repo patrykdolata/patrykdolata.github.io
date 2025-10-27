@@ -1,49 +1,59 @@
 <!doctype html>
 <html lang="pl">
-
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Nowa seria • Meet‑App</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Nowa seria • Meet App</title>
+  <link rel="stylesheet" href="../css/iphone-frame.css">
+  <style>
+    input, select, textarea {
+      margin-bottom: 16px;
+    }
+    .form-group {
+      margin-bottom: 16px;
+    }
+  </style>
 </head>
 
 <body>
   <div class="phone">
     <div class="app">
       <div class="status-bar-right"></div>
-      <div class="topbar">
-        <a href="series.html" class="link">← Anuluj</a>
-        <div class="title">Nowa seria</div>
-        <button class="link" id="saveBtn">Zapisz</button>
-      </div>
-      <div class="content">
 
+      <div class="topbar">
+        <a href="series.html">← Anuluj</a>
+        <div class="title">Nowa seria</div>
+        <button id="saveBtn">Zapisz</button>
+      </div>
+
+      <div class="content">
         <div class="muted">Utwórz serię cyklicznych wydarzeń</div>
 
         <div class="card" style="margin-top:12px">
           <div class="h2">Podstawowe informacje</div>
 
           <div class="form-group">
-            <label>Nazwa serii</label>
-            <input type="text" id="seriesName" placeholder="np. Środy 18:30" value="">
+            <label for="seriesName">Nazwa serii</label>
+            <input type="text" id="seriesName" placeholder="np. Środy 18:30">
           </div>
 
           <div class="form-group">
-            <label>Sport</label>
+            <label for="sport">Sport</label>
             <select id="sport">
               <option selected>Siatkówka</option>
+              <option>Koszykówka</option>
+              <option>Piłka nożna</option>
             </select>
           </div>
 
           <div class="form-group">
-            <label>Miejsce</label>
-            <input type="text" id="venue" placeholder="np. Kościelna 53, Przeźmierowo" value="Kościelna 53, Przeźmierowo">
+            <label for="venue">Miejsce</label>
+            <input type="text" id="venue" placeholder="np. Hala Sportowa Malta" value="Hala Sportowa Malta">
           </div>
 
           <div class="form-group">
-            <label>Cena (PLN)</label>
-            <input type="number" id="price" value="25" min="0">
+            <label for="price">Cena (PLN)</label>
+            <input type="number" id="price" value="15" min="0">
           </div>
         </div>
 
@@ -51,12 +61,12 @@
           <div class="h2">Harmonogram</div>
 
           <div class="form-group">
-            <label>Dzień tygodnia</label>
+            <label for="dayOfWeek">Dzień tygodnia</label>
             <select id="dayOfWeek">
               <option value="1">Poniedziałek</option>
               <option value="2">Wtorek</option>
-              <option value="3">Środa</option>
-              <option value="4" selected>Czwartek</option>
+              <option value="3" selected>Środa</option>
+              <option value="4">Czwartek</option>
               <option value="5">Piątek</option>
               <option value="6">Sobota</option>
               <option value="0">Niedziela</option>
@@ -64,12 +74,17 @@
           </div>
 
           <div class="form-group">
-            <label>Godzina</label>
-            <input type="time" id="time" value="19:00">
+            <label for="time">Godzina rozpoczęcia</label>
+            <input type="time" id="time" value="18:00">
           </div>
 
           <div class="form-group">
-            <label>Częstotliwość</label>
+            <label for="duration">Czas trwania (godz)</label>
+            <input type="number" id="duration" value="2" min="1" max="8" step="0.5">
+          </div>
+
+          <div class="form-group">
+            <label for="frequency">Częstotliwość</label>
             <select id="frequency">
               <option value="1" selected>Co tydzień</option>
               <option value="2">Co 2 tygodnie</option>
@@ -83,17 +98,17 @@
           <div class="h2">Konfiguracja wydarzeń</div>
 
           <div class="form-group">
-            <label>Liczba miejsc (stała)</label>
+            <label for="capacity">Liczba miejsc (stała)</label>
             <input type="number" id="capacity" value="12" min="2" max="50">
           </div>
 
           <div class="form-group">
-            <label>Max liczba osób na rezerwie</label>
+            <label for="waitlistMax">Max liczba osób na rezerwie</label>
             <input type="number" id="waitlistMax" value="5" min="0" max="20">
           </div>
 
           <div class="form-group">
-            <label>Kiedy wydarzenie pojawia się w aplikacji</label>
+            <label for="visibilityTime">Kiedy wydarzenie pojawia się w aplikacji</label>
             <select id="visibilityTime">
               <option>1 dzień przed</option>
               <option>3 dni przed</option>
@@ -108,7 +123,7 @@
           </div>
 
           <div class="form-group">
-            <label>Deadline na zapisy</label>
+            <label for="deadline">Deadline na zapisy</label>
             <select id="deadline">
               <option>Brak</option>
               <option>30 minut przed</option>
@@ -140,7 +155,7 @@
           </div>
 
           <div class="form-group">
-            <label>Notatka (opcjonalnie)</label>
+            <label for="notes">Notatka (opcjonalnie)</label>
             <textarea id="notes" placeholder="Dodatkowe informacje..."></textarea>
           </div>
         </div>
@@ -167,13 +182,25 @@
         </script>
 
       </div>
+
       <div class="bottom">
-        <a href="index.html" class="">📅<div>Wydarzenia</div></a>
-        <a href="dashboard.html" class="">👥<div>Grupy</div></a>
-        <a href="profile.html" class="">👤<div>Profil</div></a>
+        <a href="events-list.html">
+          📅
+          <div>Wydarzenia</div>
+        </a>
+        <a href="map-home.html">
+          🗺️
+          <div>Mapa</div>
+        </a>
+        <a href="user-profile.html">
+          👤
+          <div>Profil</div>
+        </a>
       </div>
     </div>
   </div>
-</body>
 
+  <script src="../js/mock-data.js"></script>
+  <script src="../js/app.js"></script>
+</body>
 </html>

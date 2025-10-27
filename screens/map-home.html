@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mapa • Meet App</title>
+  <link rel="stylesheet" href="../css/iphone-frame.css">
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+  <style>
+    #map {
+      height: 100%;
+      width: 100%;
+      border-radius: var(--radius);
+    }
+
+    .leaflet-popup-content-wrapper {
+      border-radius: 12px;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .leaflet-popup-content {
+      margin: 0;
+      min-width: 240px;
+    }
+
+    .event-popup {
+      padding: 12px;
+    }
+
+    .event-popup__title {
+      font-weight: 600;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+
+    .event-popup__info {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-bottom: 12px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .event-popup__footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 8px;
+      border-top: 1px solid var(--border);
+    }
+
+    .event-popup__price {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .btn-small {
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 0;
+      font-size: 12px;
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .custom-marker {
+      background-color: var(--primary);
+      border: 3px solid white;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      box-shadow: var(--shadow-sm);
+      cursor: pointer;
+    }
+
+    .map-container {
+      height: 100%;
+      width: 100%;
+      position: relative;
+    }
+
+    .filter-fab {
+      position: absolute;
+      bottom: 16px;
+      right: 16px;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: white;
+      border: 0;
+      box-shadow: var(--shadow);
+      cursor: pointer;
+      font-size: 20px;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .filter-panel {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 2000;
+      display: none;
+    }
+
+    .filter-panel.visible {
+      display: block;
+    }
+
+    .filter-content {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: white;
+      border-radius: 20px 20px 0 0;
+      padding: 20px;
+      max-height: 60%;
+      overflow-y: auto;
+    }
+
+    .filter-section {
+      margin-bottom: 20px;
+    }
+
+    .filter-section label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .filter-section input[type="range"] {
+      width: 100%;
+      margin-bottom: 4px;
+    }
+
+    .filter-value {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--muted);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="phone">
+    <div class="app">
+      <div class="status-bar-right"></div>
+
+      <div class="topbar">
+        <a href="events-list.html">← Wróć</a>
+        <div class="title">Mapa</div>
+        <div></div>
+      </div>
+
+      <div class="content" style="padding-left:0; padding-right:0; padding-top:0;">
+        <div class="map-container">
+          <div id="map"></div>
+        </div>
+
+        <!-- Filter Panel -->
+        <div id="filter-panel" class="filter-panel" onclick="if(event.target === this) toggleFilter()">
+          <div class="filter-content">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+              <div class="h2" style="margin:0;">Filtry</div>
+              <button style="background:none; border:0; font-size:24px; cursor:pointer;" onclick="toggleFilter()">×</button>
+            </div>
+
+            <div class="filter-section">
+              <label for="level-min">Poziom (0-10)</label>
+              <input type="range" id="level-min" min="0" max="10" value="0" oninput="updateFilters()">
+              <input type="range" id="level-max" min="0" max="10" value="10" oninput="updateFilters()">
+              <div class="filter-value">
+                <span id="level-min-value">0</span>
+                <span id="level-max-value">10</span>
+              </div>
+            </div>
+
+            <div class="filter-section">
+              <label for="price-filter">Maksymalna cena</label>
+              <input type="range" id="price-filter" min="0" max="50" value="50" oninput="updateFilters()">
+              <div class="filter-value">
+                <span id="price-value">50 PLN</span>
+              </div>
+            </div>
+
+            <div class="filter-section">
+              <label for="slots-filter">Minimum wolnych miejsc</label>
+              <input type="range" id="slots-filter" min="0" max="10" value="0" oninput="updateFilters()">
+              <div class="filter-value">
+                <span id="slots-value">0</span>
+              </div>
+            </div>
+
+            <button class="btn btn-primary" onclick="resetFilters()">
+              Resetuj filtry
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="bottom">
+        <a href="events-list.html">
+          📅
+          <div>Wydarzenia</div>
+        </a>
+        <a href="map-home.html" class="active">
+          🗺️
+          <div>Mapa</div>
+        </a>
+        <a href="user-profile.html">
+          👤
+          <div>Profil</div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="../js/mock-data.js"></script>
+  <script src="../js/app.js"></script>
+  <script>
+    let map;
+    let markers = [];
+    let filters = {
+      levelMin: 0,
+      levelMax: 10,
+      maxPrice: 50,
+      minSlots: 0
+    };
+
+    // Initialize map
+    function initMap() {
+      // Center on Poznań
+      map = L.map('map').setView([52.4064, 16.9252], 13);
+
+      // Add OpenStreetMap tiles
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap',
+        maxZoom: 19
+      }).addTo(map);
+
+      // Add event markers
+      addEventMarkers();
+    }
+
+    // Add markers for all events
+    function addEventMarkers() {
+      // Clear existing markers
+      markers.forEach(marker => map.removeLayer(marker));
+      markers = [];
+
+      // Filter events
+      const filteredEvents = events.filter(event =>
+        event.level >= filters.levelMin &&
+        event.level <= filters.levelMax &&
+        event.price <= filters.maxPrice &&
+        event.slotsAvailable >= filters.minSlots
+      );
+
+      filteredEvents.forEach(event => {
+        // Create custom marker icon
+        const markerIcon = L.divIcon({
+          html: '<div class="custom-marker">🏐</div>',
+          className: '',
+          iconSize: [30, 30],
+          iconAnchor: [15, 15],
+          popupAnchor: [0, -15]
+        });
+
+        // Create marker
+        const marker = L.marker(
+          [parseFloat(event.location.latitude), parseFloat(event.location.longitude)],
+          { icon: markerIcon }
+        ).addTo(map);
+
+        // Format date/time in Polish
+        const date = new Date(event.startDateTime);
+        const days = ['Ndz', 'Pon', 'Wt', 'Śr', 'Czw', 'Pt', 'Sob'];
+        const dayName = days[date.getDay()];
+        const day = date.getDate();
+        const month = date.getMonth() + 1;
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+
+        // Create popup content
+        const popupContent = `
+          <div class="event-popup">
+            <div class="event-popup__title">${event.title}</div>
+            <div class="event-popup__info">
+              <div>📅 ${dayName} ${day}.${month}</div>
+              <div>🕐 ${hours}:${minutes}</div>
+              <div>📍 ${event.location.name}</div>
+              <div>👥 ${event.slotsAvailable}/${event.slots} wolnych</div>
+              <div>⭐ Poziom: ${event.level}/10</div>
+            </div>
+            <div class="event-popup__footer">
+              <div class="event-popup__price">${event.price} PLN</div>
+              <button class="btn-small" onclick="window.location.href='event-details.html?eventId=${event.id}'">
+                Szczegóły
+              </button>
+            </div>
+          </div>
+        `;
+
+        marker.bindPopup(popupContent);
+        markers.push(marker);
+      });
+    }
+
+    // Toggle filter panel
+    function toggleFilter() {
+      const panel = document.getElementById('filter-panel');
+      panel.classList.toggle('visible');
+    }
+
+    // Update filters
+    function updateFilters() {
+      filters.levelMin = parseInt(document.getElementById('level-min').value);
+      filters.levelMax = parseInt(document.getElementById('level-max').value);
+      filters.maxPrice = parseInt(document.getElementById('price-filter').value);
+      filters.minSlots = parseInt(document.getElementById('slots-filter').value);
+
+      document.getElementById('level-min-value').textContent = filters.levelMin;
+      document.getElementById('level-max-value').textContent = filters.levelMax;
+      document.getElementById('price-value').textContent = filters.maxPrice + ' PLN';
+      document.getElementById('slots-value').textContent = filters.minSlots;
+
+      addEventMarkers();
+    }
+
+    // Reset filters
+    function resetFilters() {
+      document.getElementById('level-min').value = 0;
+      document.getElementById('level-max').value = 10;
+      document.getElementById('price-filter').value = 50;
+      document.getElementById('slots-filter').value = 0;
+      updateFilters();
+    }
+
+    // Initialize
+    setTimeout(() => {
+      initMap();
+    }, 100);
+  </script>
+</body>
+</html>

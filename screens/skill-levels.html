@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Poziomy umiejętności • Meet App</title>
+  <link rel="stylesheet" href="../css/iphone-frame.css">
+  <style>
+    .intro {
+      background: linear-gradient(135deg, var(--primary) 0%, #0066cc 100%);
+      color: white;
+      padding: 20px;
+      border-radius: var(--radius);
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .scale-legend {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .scale-point {
+      background: var(--card);
+      padding: 12px;
+      border-radius: var(--radius);
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .scale-value {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 4px;
+    }
+
+    .scale-label {
+      font-size: 12px;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    .skill-section {
+      margin-bottom: 20px;
+    }
+
+    .skill-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--primary);
+    }
+
+    .skill-icon {
+      font-size: 28px;
+    }
+
+    .skill-title {
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .level-item {
+      display: flex;
+      gap: 12px;
+      padding: 10px;
+      background: var(--card);
+      border-radius: var(--radius);
+      margin-bottom: 8px;
+      border-left: 3px solid var(--primary);
+    }
+
+    .level-badge {
+      min-width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--primary);
+      color: white;
+      font-weight: 700;
+      border-radius: 8px;
+      font-size: 18px;
+    }
+
+    .level-desc {
+      flex: 1;
+      font-size: 13px;
+      line-height: 1.4;
+      display: flex;
+      align-items: center;
+    }
+
+    .tip-box {
+      background: #FFF3E0;
+      border-left: 4px solid #FF9800;
+      border-radius: var(--radius);
+      padding: 16px;
+      margin-top: 20px;
+    }
+
+    .tip-title {
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #E65100;
+    }
+
+    .tip-content {
+      font-size: 13px;
+      color: #E65100;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="phone">
+    <div class="app">
+      <div class="status-bar-right"></div>
+
+      <div class="topbar">
+        <a href="events-list.html">← Wróć</a>
+        <div class="title">Poziomy</div>
+        <div></div>
+      </div>
+
+      <div class="content">
+        <div class="intro">
+          <div style="font-size:32px; margin-bottom:8px;">⭐</div>
+          <div style="font-weight:700; font-size:16px; margin-bottom:4px;">Skala umiejętności 0-10</div>
+          <div style="font-size:13px; opacity:0.9;">System dopasowywania graczy</div>
+        </div>
+
+        <div class="scale-legend">
+          <div class="scale-point">
+            <div class="scale-value">0-2</div>
+            <div class="scale-label">Początkujący</div>
+          </div>
+          <div class="scale-point">
+            <div class="scale-value">3-5</div>
+            <div class="scale-label">Średnio</div>
+          </div>
+          <div class="scale-point">
+            <div class="scale-value">6-8</div>
+            <div class="scale-label">Zaawansowany</div>
+          </div>
+          <div class="scale-point">
+            <div class="scale-value">9-10</div>
+            <div class="scale-label">Profesjonalny</div>
+          </div>
+        </div>
+
+        <!-- Atakowanie -->
+        <div class="skill-section">
+          <div class="skill-header">
+            <div class="skill-icon">⚡</div>
+            <div class="skill-title">Atakowanie</div>
+          </div>
+          <div class="level-item">
+            <div class="level-badge">0</div>
+            <div class="level-desc">Brak doświadczenia z atakiem</div>
+          </div>
+          <div class="level-item">
+            <div class="level-badge">3</div>
+            <div class="level-desc">Podstawowe uderzenia z lotu</div>
+          </div>
+          <div class="level-item">
+            <div class="level-badge">5</div>
+            <div class="level-desc">Skuteczne ataki z rozbiegu</div>
+          </div>
+          <div class="level-item">
+            <div class="level-badge">7</div>
+            <div class="level-desc">Atak z różnych pozycji i wysokości</div>
+          </div>
+          <div class="level-item">
+            <div class="level-badge">10</div>
+            <div class="level-desc">Perfekcyjna technika i siła</div>
+          </div>
+        </div>
+
+        <!-- Rozgrywanie -->
+        <div class="skill-section">
+          <div class="skill-header">
+            <div class="skill-icon">🤲</div>
+            <div class="skill-title">Rozgrywanie</div>
+          </div>
+          <div class="level-item">
+            <div class="level-badge">0</div>
+            <div class="level-desc">Brak umiejętności rozgrywania</div>
+          </div>
+          <div class="level-item">
+            <div class="level-badge">3</div>
+            <div class="level-desc">Proste wystawienia dla atakujących</div>
+          </div>
+          <div class="level-item">
+            <div class="level-badge">5</div>
+            <div class="level-desc">Dobre tempo i precyzja</div>
+          </div>
+          <div class="level-item">
+            <div class="level-badge">7</div>
+            <div class="level-desc">Różnorodne akcje i tempo gry</div>
+          </div>
+          <div class="level-item">
+            <div class="level-badge">10</div>
+            <div class="level-desc">Profesjonalna dystrybucja piłki</div>
+          </div>
+        </div>
+
+        <!-- Przyjęcie -->
+        <div class="skill-section">
+          <div class="skill-header">
+            <div class="skill-icon">✋</div>
+            <div class="skill-title">Przyjęcie</div>
+          </div>
+          <div class="level-item">
+            <div class="level-badge">0</div>
+            <div class="level-desc">Brak umiejętności przyjęcia</div>
+          </div>
+          <div class="level-item">
+            <div class="level-badge">3</div>
+            <div class="level-desc">Podstawowe przyjęcie zagrywki</div>
+          </div>
+          <div class="level-item">
+            <div class="level-badge">5</div>
+            <div class="level-desc">Stabilne przyjęcie z dobrą kontrolą</div>
+          </div>
+          <div class="level-item">
+            <div class="level-badge">7</div>
+            <div class="level-desc">Przyjęcie trudnych zagrywek</div>
+          </div>
+          <div class="level-item">
+            <div class="level-badge">10</div>
+            <div class="level-desc">Perfekcyjne czytanie i pozycja</div>
+          </div>
+        </div>
+
+        <!-- Zagrywka -->
+        <div class="skill-section">
+          <div class="skill-header">
+            <div class="skill-icon">🎯</div>
+            <div class="skill-title">Zagrywka</div>
+          </div>
+          <div class="level-item">
+            <div class="level-badge">0</div>
+            <div class="level-desc">Podstawowa zagrywka spodem</div>
+          </div>
+          <div class="level-item">
+            <div class="level-badge">3</div>
+            <div class="level-desc">Zagrywka górna w pole</div>
+          </div>
+          <div class="level-item">
+            <div class="level-badge">5</div>
+            <div class="level-desc">Celne zagrywki z mocą</div>
+          </div>
+          <div class="level-item">
+            <div class="level-badge">7</div>
+            <div class="level-desc">Zagrywki na asy i taktyczne</div>
+          </div>
+          <div class="level-item">
+            <div class="level-badge">10</div>
+            <div class="level-desc">Zagrywki z skokiem na asy</div>
+          </div>
+        </div>
+
+        <div class="tip-box">
+          <div class="tip-title">💡 Wskazówka</div>
+          <div class="tip-content">
+            Bądź szczery co do swojego poziomu! Lepiej dołączyć do wydarzenia odpowiadającego Twoim umiejętnościom.
+            Dzięki temu wszyscy będą się dobrze bawić, a gra pozostanie zrównoważona.
+          </div>
+        </div>
+      </div>
+
+      <div class="bottom">
+        <a href="events-list.html">
+          📅
+          <div>Wydarzenia</div>
+        </a>
+        <a href="map-home.html">
+          🗺️
+          <div>Mapa</div>
+        </a>
+        <a href="user-profile.html">
+          👤
+          <div>Profil</div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/mock-data.js"></script>
+  <script src="../js/app.js"></script>
+</body>
+</html>

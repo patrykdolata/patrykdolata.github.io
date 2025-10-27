@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Logowanie • Meet App</title>
+  <link rel="stylesheet" href="../css/iphone-frame.css">
+  <style>
+    .auth-tabs {
+      display: flex;
+      margin-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    .auth-tab {
+      flex: 1;
+      padding: 12px;
+      text-align: center;
+      font-weight: 600;
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      transition: all 0.2s ease;
+      color: var(--muted);
+    }
+    .auth-tab.active {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
+    }
+    .auth-form {
+      display: none;
+    }
+    .auth-form.active {
+      display: block;
+    }
+    input {
+      margin-bottom: 12px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="phone">
+    <div class="app">
+      <div class="status-bar-right"></div>
+
+      <div class="topbar">
+        <a href="events-list.html">← Wróć</a>
+        <div class="title">Konto</div>
+        <div></div>
+      </div>
+
+      <div class="content">
+        <div class="auth-tabs">
+          <div class="auth-tab active" onclick="switchTab('login')">
+            Zaloguj
+          </div>
+          <div class="auth-tab" onclick="switchTab('register')">
+            Zarejestruj
+          </div>
+        </div>
+
+        <!-- Login Form -->
+        <div id="login-form" class="auth-form active">
+          <div class="card">
+            <div class="h2">Witaj ponownie!</div>
+            <div class="muted" style="margin-bottom:20px">Zaloguj się do swojego konta</div>
+
+            <form onsubmit="handleLogin(event)">
+              <label for="login-email">Email</label>
+              <input type="email" id="login-email" placeholder="twoj@email.com" required>
+
+              <label for="login-password">Hasło</label>
+              <input type="password" id="login-password" placeholder="••••••••" required>
+
+              <button type="submit" class="btn btn-primary">Zaloguj się</button>
+            </form>
+
+            <div class="muted" style="margin-top:16px; font-size:12px; text-align:center">
+              Demo: użyj user@example.com
+            </div>
+          </div>
+        </div>
+
+        <!-- Register Form -->
+        <div id="register-form" class="auth-form">
+          <div class="card">
+            <div class="h2">Utwórz konto</div>
+            <div class="muted" style="margin-bottom:20px">Dołącz do społeczności siatkówki</div>
+
+            <form onsubmit="handleRegister(event)">
+              <label for="register-name">Nazwa użytkownika</label>
+              <input type="text" id="register-name" placeholder="jankowalski" required>
+
+              <label for="register-nickname">Pseudonim</label>
+              <input type="text" id="register-nickname" placeholder="Janek" required>
+
+              <label for="register-email">Email</label>
+              <input type="email" id="register-email" placeholder="twoj@email.com" required>
+
+              <label for="register-password">Hasło</label>
+              <input type="password" id="register-password" placeholder="••••••••" minlength="6" required>
+
+              <button type="submit" class="btn btn-primary">Zarejestruj się</button>
+            </form>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="bottom">
+        <a href="events-list.html">
+          📅
+          <div>Wydarzenia</div>
+        </a>
+        <a href="map-home.html">
+          🗺️
+          <div>Mapa</div>
+        </a>
+        <a href="user-profile.html" class="active">
+          👤
+          <div>Profil</div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/mock-data.js"></script>
+  <script src="../js/app.js"></script>
+  <script>
+    function switchTab(tab) {
+      const tabs = document.querySelectorAll('.auth-tab');
+      const forms = document.querySelectorAll('.auth-form');
+
+      tabs.forEach(t => t.classList.remove('active'));
+      forms.forEach(f => f.classList.remove('active'));
+
+      if (tab === 'login') {
+        tabs[0].classList.add('active');
+        document.getElementById('login-form').classList.add('active');
+      } else {
+        tabs[1].classList.add('active');
+        document.getElementById('register-form').classList.add('active');
+      }
+    }
+
+    function handleLogin(e) {
+      e.preventDefault();
+      const email = document.getElementById('login-email').value;
+      if (login(email, 'demo')) {
+        window.location.href = 'user-profile.html';
+      }
+    }
+
+    function handleRegister(e) {
+      e.preventDefault();
+      const login = document.getElementById('register-name').value;
+      const nickname = document.getElementById('register-nickname').value;
+      const email = document.getElementById('register-email').value;
+      const password = document.getElementById('register-password').value;
+
+      if (register(login, nickname, email, password)) {
+        window.location.href = 'user-profile.html';
+      }
+    }
+  </script>
+</body>
+</html>

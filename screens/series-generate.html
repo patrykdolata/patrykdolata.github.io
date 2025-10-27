@@ -1,29 +1,37 @@
 <!doctype html>
 <html lang="pl">
-
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Generuj wydarzenia • Meet‑App</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Generuj wydarzenia • Meet App</title>
+  <link rel="stylesheet" href="../css/iphone-frame.css">
+  <style>
+    input, select {
+      margin-bottom: 16px;
+    }
+    .form-group {
+      margin-bottom: 16px;
+    }
+  </style>
 </head>
 
 <body>
   <div class="phone">
     <div class="app">
       <div class="status-bar-right"></div>
+
       <div class="topbar">
-        <a href="series.html" class="link">← Wróć</a>
+        <a href="series.html">← Wróć</a>
         <div class="title">Generuj wydarzenia</div>
         <span></span>
       </div>
-      <div class="content">
 
+      <div class="content">
         <div class="card">
-          <div class="h2" style="margin:0 0 4px 0">Środy 18:30</div>
-          <div class="muted" style="font-size:12px">🏐 Siatkówka • Kościelna 53, Przeźmierowo • 25 PLN</div>
+          <div class="h2" style="margin:0 0 4px 0">Środy 18:00</div>
+          <div class="muted" style="font-size:12px">🏐 Siatkówka • Hala Sportowa Malta • 15 PLN</div>
           <div style="margin-top:8px">
-            <span class="badge ok">Śr 18:30 - 20:30 co tydzień</span>
+            <span class="badge ok">Śr 18:00 - 20:00 co tydzień</span>
           </div>
         </div>
 
@@ -31,24 +39,24 @@
           <div class="h2">Zakres dat</div>
 
           <div class="form-group">
-            <label>Data początkowa</label>
+            <label for="startDate">Data początkowa</label>
             <input type="date" id="startDate" value="2024-11-07">
-            <div class="muted" style="font-size:12px;margin-top:4px">
+            <div class="muted" style="font-size:12px;margin-top:-12px">
               Pierwsze wydarzenie zostanie utworzone na ten dzień (lub najbliższą środę)
             </div>
           </div>
 
           <div class="form-group">
-            <label>Data końcowa</label>
+            <label for="endDate">Data końcowa</label>
             <input type="date" id="endDate" value="2024-12-31">
-            <div class="muted" style="font-size:12px;margin-top:4px">
+            <div class="muted" style="font-size:12px;margin-top:-12px">
               Ostatnie wydarzenie nie później niż ta data
             </div>
           </div>
 
           <div class="form-group">
-            <label>Lub liczba wydarzeń</label>
-            <select id="eventCount">
+            <label for="eventCount">Lub liczba wydarzeń</label>
+            <select id="eventCount" onchange="updatePreview()">
               <option value="0">Użyj daty końcowej</option>
               <option value="4">4 wydarzenia</option>
               <option value="6">6 wydarzeń</option>
@@ -101,9 +109,6 @@
         <script>
           function updatePreview() {
             const eventCount = document.getElementById('eventCount').value;
-            const startDate = document.getElementById('startDate').value;
-            const endDate = document.getElementById('endDate').value;
-
             const preview = document.getElementById('preview');
             if (eventCount > 0) {
               preview.innerHTML = `Zostanie utworzonych <strong>${eventCount} wydarzeń</strong> w środy od <strong>07.11.2024</strong>.`;
@@ -111,10 +116,6 @@
               preview.innerHTML = `Zostanie utworzonych <strong>8 wydarzeń</strong> w środy od <strong>07.11.2024</strong> do <strong>26.12.2024</strong>.`;
             }
           }
-
-          document.getElementById('eventCount').addEventListener('change', updatePreview);
-          document.getElementById('startDate').addEventListener('change', updatePreview);
-          document.getElementById('endDate').addEventListener('change', updatePreview);
 
           document.getElementById('generateBtn').addEventListener('click', () => {
             const eventCount = document.getElementById('eventCount').value || 8;
@@ -124,13 +125,25 @@
         </script>
 
       </div>
+
       <div class="bottom">
-        <a href="index.html" class="">📅<div>Wydarzenia</div></a>
-        <a href="dashboard.html" class="">👥<div>Grupy</div></a>
-        <a href="profile.html" class="">👤<div>Profil</div></a>
+        <a href="events-list.html">
+          📅
+          <div>Wydarzenia</div>
+        </a>
+        <a href="map-home.html">
+          🗺️
+          <div>Mapa</div>
+        </a>
+        <a href="user-profile.html">
+          👤
+          <div>Profil</div>
+        </a>
       </div>
     </div>
   </div>
-</body>
 
+  <script src="../js/mock-data.js"></script>
+  <script src="../js/app.js"></script>
+</body>
 </html>

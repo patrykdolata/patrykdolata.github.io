@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Meet App • Wydarzenia</title>
+  <link rel="stylesheet" href="../css/iphone-frame.css">
+</head>
+
+<body>
+  <div class="phone">
+    <div class="app">
+      <div class="status-bar-right"></div>
+
+      <div class="topbar">
+        <a href="create-event.html">+ Nowe</a>
+        <div class="title">Meet App</div>
+        <a href="series.html" style="font-size:20px">∞</a>
+      </div>
+
+      <div class="content">
+        <!-- Group selector -->
+        <div class="muted">Grupa</div>
+        <div class="card" style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px">
+          <div>
+            <div class="h2" style="margin:0;">Siatkówka Poznań</div>
+            <div class="muted">Śr 18:00 • Ndz 12:00</div>
+          </div>
+          <a href="group-info.html" class="btn btn-ghost btn-small">Zmień</a>
+        </div>
+
+        <div class="h2">Najbliższe wydarzenia</div>
+
+        <!-- Event 1 -->
+        <div class="card clickable" style="margin-top:12px" onclick="window.location.href='event-details.html?eventId=evt-001'">
+          <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:6px">
+            <div style="flex:1">
+              <div class="h2" style="margin:0 0 4px 0;">Śr 28.10 • 18:00 - 20:00</div>
+              <div class="muted">📍 Hala Sportowa Malta</div>
+            </div>
+            <div style="color:var(--muted);font-size:20px;margin-left:8px">›</div>
+          </div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;align-items:center">
+            <span class="badge primary">5/12</span>
+            <span class="badge ok">Poziom 4/10</span>
+            <span class="badge" style="font-weight:700">15 PLN</span>
+          </div>
+        </div>
+
+        <!-- Event 3 -->
+        <div class="card clickable" style="margin-top:12px" onclick="window.location.href='event-details.html?eventId=evt-003'">
+          <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:6px">
+            <div style="flex:1">
+              <div class="h2" style="margin:0 0 4px 0;">Pt 30.10 • 17:00 - 19:00</div>
+              <div class="muted">📍 Orlik Poznań Grunwald</div>
+            </div>
+            <div style="color:var(--muted);font-size:20px;margin-left:8px">›</div>
+          </div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap">
+            <span class="badge primary">10/10</span>
+            <span class="badge ok">Poziom 2/10</span>
+            <span class="badge danger">Pełne</span>
+          </div>
+        </div>
+
+        <!-- Event 6 -->
+        <div class="card clickable" style="margin-top:12px" onclick="window.location.href='event-details.html?eventId=evt-006'">
+          <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:6px">
+            <div style="flex:1">
+              <div class="h2" style="margin:0 0 4px 0;">Ndz 03.11 • 10:00 - 12:00</div>
+              <div class="muted">📍 Hala MOSiR Chwiałka</div>
+            </div>
+            <div style="color:var(--muted);font-size:20px;margin-left:8px">›</div>
+          </div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap">
+            <span class="badge primary">7/14</span>
+            <span class="badge ok">Poziom 3/10</span>
+            <span class="badge" style="font-weight:700">12 PLN</span>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="bottom">
+        <a href="events-list.html" class="active">
+          📅
+          <div>Wydarzenia</div>
+        </a>
+        <a href="map-home.html">
+          🗺️
+          <div>Mapa</div>
+        </a>
+        <a href="user-profile.html">
+          👤
+          <div>Profil</div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="../js/mock-data.js"></script>
+  <script src="../js/app.js"></script>
+</body>
+</html>

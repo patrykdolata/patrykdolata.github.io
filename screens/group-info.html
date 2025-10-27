@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Grupy • Meet App</title>
+  <link rel="stylesheet" href="../css/iphone-frame.css">
+  <style>
+    .intro {
+      background: linear-gradient(135deg, var(--primary) 0%, #0066cc 100%);
+      color: white;
+      padding: 20px;
+      border-radius: var(--radius);
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .group-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 16px;
+      margin-bottom: 12px;
+      box-shadow: var(--shadow-sm);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: 2px solid transparent;
+    }
+
+    .group-card:active {
+      border-color: var(--primary);
+      transform: scale(0.98);
+    }
+
+    .group-icon {
+      font-size: 40px;
+      margin-bottom: 8px;
+    }
+
+    .group-name {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .group-stats {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 8px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .group-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.4;
+      margin-bottom: 8px;
+    }
+
+    .group-link {
+      color: var(--primary);
+      font-weight: 600;
+      font-size: 12px;
+    }
+
+    .benefits-section {
+      margin-top: 20px;
+    }
+
+    .benefit-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      background: var(--card);
+      border-radius: var(--radius);
+      margin-bottom: 8px;
+    }
+
+    .benefit-icon {
+      font-size: 24px;
+      flex-shrink: 0;
+    }
+
+    .benefit-content {
+      flex: 1;
+    }
+
+    .benefit-title {
+      font-weight: 600;
+      font-size: 14px;
+      margin-bottom: 2px;
+    }
+
+    .benefit-desc {
+      font-size: 12px;
+      color: var(--muted);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="phone">
+    <div class="app">
+      <div class="status-bar-right"></div>
+
+      <div class="topbar">
+        <a href="events-list.html">← Wróć</a>
+        <div class="title">Grupy</div>
+        <div></div>
+      </div>
+
+      <div class="content">
+        <div class="intro">
+          <div style="font-size:48px; margin-bottom:8px;">👥</div>
+          <div style="font-weight:700; font-size:16px; margin-bottom:4px;">Społeczność siatkówki</div>
+          <div style="font-size:13px; opacity:0.9;">Dołącz do grupy i graj regularnie!</div>
+        </div>
+
+        <div class="h2">Grupy w Poznaniu</div>
+
+        <!-- Group 1 -->
+        <div class="group-card" onclick="window.open('https://facebook.com/groups/poznan-volleyball', '_blank')">
+          <div class="group-icon">🏐</div>
+          <div class="group-name">Siatkówka Poznań</div>
+          <div class="group-stats">
+            <span>👥 347 członków</span>
+            <span>📅 28 wydarzeń</span>
+          </div>
+          <div class="group-desc">
+            Największa społeczność siatkówki w Poznaniu! Organizujemy regularne gry dla wszystkich poziomów.
+          </div>
+          <div class="group-link">Zobacz na Facebooku →</div>
+        </div>
+
+        <!-- Group 2 -->
+        <div class="group-card" onclick="window.open('https://facebook.com/groups/amateur-volleyball-poznan', '_blank')">
+          <div class="group-icon">🎯</div>
+          <div class="group-name">Amatorska Siatkówka</div>
+          <div class="group-stats">
+            <span>👥 215 członków</span>
+            <span>📅 19 wydarzeń</span>
+          </div>
+          <div class="group-desc">
+            Grupa dla amatorów. Luźne gry bez presji, idealne dla osób grających dla zabawy.
+          </div>
+          <div class="group-link">Zobacz na Facebooku →</div>
+        </div>
+
+        <!-- Group 3 -->
+        <div class="group-card" onclick="window.open('https://facebook.com/groups/beach-volleyball-poznan', '_blank')">
+          <div class="group-icon">🏖️</div>
+          <div class="group-name">Beach Volleyball Poznań</div>
+          <div class="group-stats">
+            <span>👥 189 członków</span>
+            <span>📅 15 wydarzeń</span>
+          </div>
+          <div class="group-desc">
+            Entuzjaści siatkówki plażowej! Gry na świeżym powietrzu i turnieje plażowe.
+          </div>
+          <div class="group-link">Zobacz na Facebooku →</div>
+        </div>
+
+        <!-- Group 4 -->
+        <div class="group-card" onclick="window.open('https://facebook.com/groups/student-volleyball', '_blank')">
+          <div class="group-icon">🎓</div>
+          <div class="group-name">Studencka Siatkówka</div>
+          <div class="group-stats">
+            <span>👥 423 członków</span>
+            <span>📅 31 wydarzeń</span>
+          </div>
+          <div class="group-desc">
+            Grupa dla studentów w Poznaniu. Przystępne ceny i świetna atmosfera!
+          </div>
+          <div class="group-link">Zobacz na Facebooku →</div>
+        </div>
+
+        <div class="h2" style="margin-top:24px;">Dlaczego warto?</div>
+
+        <div class="benefits-section">
+          <div class="benefit-item">
+            <div class="benefit-icon">📅</div>
+            <div class="benefit-content">
+              <div class="benefit-title">Regularne wydarzenia</div>
+              <div class="benefit-desc">Dostęp do zaplanowanych gier i treningów</div>
+            </div>
+          </div>
+
+          <div class="benefit-item">
+            <div class="benefit-icon">🤝</div>
+            <div class="benefit-content">
+              <div class="benefit-title">Poznaj ludzi</div>
+              <div class="benefit-desc">Nawiąż znajomości z graczami na Twoim poziomie</div>
+            </div>
+          </div>
+
+          <div class="benefit-item">
+            <div class="benefit-icon">🏆</div>
+            <div class="benefit-content">
+              <div class="benefit-title">Turnieje</div>
+              <div class="benefit-desc">Udział w ekskluzywnych turniejach grupy</div>
+            </div>
+          </div>
+
+          <div class="benefit-item">
+            <div class="benefit-icon">💰</div>
+            <div class="benefit-content">
+              <div class="benefit-title">Lepsze ceny</div>
+              <div class="benefit-desc">Członkowie często mają zniżki na wydarzenia</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="bottom">
+        <a href="events-list.html">
+          📅
+          <div>Wydarzenia</div>
+        </a>
+        <a href="map-home.html">
+          🗺️
+          <div>Mapa</div>
+        </a>
+        <a href="user-profile.html">
+          👤
+          <div>Profil</div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/mock-data.js"></script>
+  <script src="../js/app.js"></script>
+</body>
+</html>

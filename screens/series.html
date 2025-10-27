@@ -1,44 +1,43 @@
 <!doctype html>
 <html lang="pl">
-
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Serie cykliczne • Meet‑App</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Serie cykliczne • Meet App</title>
+  <link rel="stylesheet" href="../css/iphone-frame.css">
 </head>
 
 <body>
   <div class="phone">
     <div class="app">
       <div class="status-bar-right"></div>
-      <div class="topbar">
-        <a href="index.html" class="link">← Wróć</a>
-        <div class="title">Serie cykliczne</div>
-        <a href="series-create.html" class="link">+ Nowa</a>
-      </div>
-      <div class="content">
 
+      <div class="topbar">
+        <a href="events-list.html">← Wróć</a>
+        <div class="title">Serie cykliczne</div>
+        <a href="series-create.html">+ Nowa</a>
+      </div>
+
+      <div class="content">
         <div class="muted">Zarządzaj cyklicznymi wydarzeniami</div>
 
         <!-- Series 1 -->
         <div class="card" style="margin-top:12px">
           <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:8px">
             <div>
-              <div class="h2" style="margin:0 0 4px 0">Środy 18:30</div>
-              <div class="muted" style="font-size:12px">🏐 Siatkówka • Kościelna 53, Przeźmierowo • 25 PLN</div>
+              <div class="h2" style="margin:0 0 4px 0">Środy 18:00</div>
+              <div class="muted" style="font-size:12px">🏐 Siatkówka • Hala Sportowa Malta • 15 PLN</div>
             </div>
             <span class="badge ok">aktywna</span>
           </div>
 
-          <div
-            style="display:flex;align-items:center;gap:12px;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)">
+          <div style="display:flex;align-items:center;gap:12px;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)">
             <div style="flex:1">
               <div style="font-size:12px;color:var(--muted)">Harmonogram</div>
-              <div style="font-weight:600">Śr 18:30 - 20:30 co tydzień</div>
+              <div style="font-weight:600">Śr 18:00 - 20:00 co tydzień</div>
             </div>
             <div style="flex:1">
-              <div style="font-size:12px;color:var(--muted)">Ostatnio</div>
+              <div style="font-size:12px;color:var(--muted)">Utworzono</div>
               <div style="font-weight:600">8 wydarzeń</div>
             </div>
           </div>
@@ -46,7 +45,7 @@
           <div style="display:flex;gap:8px;margin-top:12px">
             <a href="series-generate.html" class="btn btn-success btn-small" style="flex:1">∞ Generuj</a>
             <a href="series-create.html" class="btn btn-ghost btn-small">✏️</a>
-            <button class="btn btn-danger btn-small" onclick="confirmDelete('Środy 18:30')">🗑️</button>
+            <button class="btn btn-danger btn-small" onclick="confirmDelete('Środy 18:00')">🗑️</button>
           </div>
         </div>
 
@@ -55,19 +54,18 @@
           <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:8px">
             <div>
               <div class="h2" style="margin:0 0 4px 0">Niedziele 12:00</div>
-              <div class="muted" style="font-size:12px">🏐 Siatkówka • Kościelna 53, Przeźmierowo • 25 PLN</div>
+              <div class="muted" style="font-size:12px">🏐 Siatkówka • Hala Sportowa Malta • 15 PLN</div>
             </div>
             <span class="badge ok">aktywna</span>
           </div>
 
-          <div
-            style="display:flex;align-items:center;gap:12px;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)">
+          <div style="display:flex;align-items:center;gap:12px;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)">
             <div style="flex:1">
               <div style="font-size:12px;color:var(--muted)">Harmonogram</div>
               <div style="font-weight:600">Ndz 12:00 - 14:00 co tydzień</div>
             </div>
             <div style="flex:1">
-              <div style="font-size:12px;color:var(--muted)">Ostatnio</div>
+              <div style="font-size:12px;color:var(--muted)">Utworzono</div>
               <div style="font-weight:600">6 wydarzeń</div>
             </div>
           </div>
@@ -79,7 +77,7 @@
           </div>
         </div>
 
-        <!-- Empty state if no series -->
+        <!-- Empty state (hidden by default) -->
         <div class="card" style="margin-top:12px;text-align:center;padding:32px;display:none" id="emptyState">
           <div style="font-size:48px;margin-bottom:8px">📋</div>
           <div class="h2">Brak serii</div>
@@ -91,19 +89,30 @@
           function confirmDelete(name) {
             if (confirm('Czy na pewno usunąć serię "' + name + '"?\n\nWszystkie przyszłe wydarzenia pozostaną, ale nie będą już częścią tej serii.')) {
               alert('Seria usunięta!');
-              // In real app: delete series
             }
           }
         </script>
 
       </div>
+
       <div class="bottom">
-        <a href="index.html" class="">📅<div>Wydarzenia</div></a>
-        <a href="dashboard.html" class="">👥<div>Grupy</div></a>
-        <a href="profile.html" class="">👤<div>Profil</div></a>
+        <a href="events-list.html">
+          📅
+          <div>Wydarzenia</div>
+        </a>
+        <a href="map-home.html">
+          🗺️
+          <div>Mapa</div>
+        </a>
+        <a href="user-profile.html">
+          👤
+          <div>Profil</div>
+        </a>
       </div>
     </div>
   </div>
-</body>
 
+  <script src="../js/mock-data.js"></script>
+  <script src="../js/app.js"></script>
+</body>
 </html>
