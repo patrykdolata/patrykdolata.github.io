@@ -302,6 +302,7 @@ a.card:active,
   gap: 0;
   line-height: 0.85;
   letter-spacing: -2px;
+  background: white;
 }
 
 .stars-stacked div {
