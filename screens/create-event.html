@@ -46,7 +46,7 @@
           <label for="level">Poziom umiejętności *</label>
           <input type="range" id="level" min="1" max="5" value="3" oninput="updateLevelDisplay(this.value)">
           <div class="muted" style="text-align:center; margin-top:-8px; margin-bottom:16px">
-            <strong><span id="level-val" class="stars-stacked" data-level="3"></span></strong>
+            <strong><span id="level-val" class="stars-stacked" data-level="3" title="Poziom 3/5"></span></strong>
           </div>
 
           <label for="price">Cena (PLN) *</label>
@@ -82,6 +82,7 @@
     function updateLevelDisplay(value) {
       const levelEl = document.getElementById('level-val');
       levelEl.setAttribute('data-level', value);
+      levelEl.setAttribute('title', `Poziom ${value}/5`);
       levelEl.innerHTML = renderStarsStacked(parseInt(value));
     }
 

@@ -322,6 +322,12 @@ a.card:active,
 
 .badge.ok {
   color: var(--success);
+  border-color: #bbf7d0;
+  background: #dcfce7;
+}
+
+.badge.stars {
+  color: #F59E0B;
   border-color: #e0e0e0;
   background: #fff;
 }

@@ -312,7 +312,7 @@
               <div>🕐 ${hours}:${minutes}</div>
               <div>📍 ${event.location.name}</div>
               <div>👥 ${event.slotsAvailable}/${event.slots} wolnych</div>
-              <div>⭐ <span class="stars-stacked" data-level="${event.level}" style="display:inline-flex;"></span></div>
+              <div><span class="badge stars" title="Poziom ${event.level}/5"><span class="stars-stacked" data-level="${event.level}"></span></span></div>
             </div>
             <div class="event-popup__footer">
               <div class="event-popup__price">${event.price} PLN</div>
