@@ -186,12 +186,12 @@
             </div>
 
             <div class="filter-section">
-              <label for="level-min">Poziom (0-10)</label>
-              <input type="range" id="level-min" min="0" max="10" value="0" oninput="updateFilters()">
-              <input type="range" id="level-max" min="0" max="10" value="10" oninput="updateFilters()">
+              <label for="level-min">Poziom umiejętności (1-5 ⭐)</label>
+              <input type="range" id="level-min" min="1" max="5" value="1" oninput="updateFilters()">
+              <input type="range" id="level-max" min="1" max="5" value="5" oninput="updateFilters()">
               <div class="filter-value">
-                <span id="level-min-value">0</span>
-                <span id="level-max-value">10</span>
+                <span id="level-min-value">1⭐</span>
+                <span id="level-max-value">5⭐</span>
               </div>
             </div>
 
@@ -243,8 +243,8 @@
     let map;
     let markers = [];
     let filters = {
-      levelMin: 0,
-      levelMax: 10,
+      levelMin: 1,
+      levelMax: 5,
       maxPrice: 50,
       minSlots: 0
     };
@@ -312,7 +312,7 @@
               <div>🕐 ${hours}:${minutes}</div>
               <div>📍 ${event.location.name}</div>
               <div>👥 ${event.slotsAvailable}/${event.slots} wolnych</div>
-              <div>⭐ Poziom: ${event.level}/10</div>
+              <div>⭐ ${getLevelName(event.level)}</div>
             </div>
             <div class="event-popup__footer">
               <div class="event-popup__price">${event.price} PLN</div>
@@ -334,6 +334,18 @@
       panel.classList.toggle('visible');
     }
 
+    // Get level name with stars
+    function getLevelName(level) {
+      const levels = {
+        1: 'Początkujący ⭐',
+        2: 'Amator ⭐⭐',
+        3: 'Średni ⭐⭐⭐',
+        4: 'Zaawansowany ⭐⭐⭐⭐',
+        5: 'Pro ⭐⭐⭐⭐⭐'
+      };
+      return levels[level] || level + '⭐';
+    }
+
     // Update filters
     function updateFilters() {
       filters.levelMin = parseInt(document.getElementById('level-min').value);
@@ -341,8 +353,8 @@
       filters.maxPrice = parseInt(document.getElementById('price-filter').value);
       filters.minSlots = parseInt(document.getElementById('slots-filter').value);
 
-      document.getElementById('level-min-value').textContent = filters.levelMin;
-      document.getElementById('level-max-value').textContent = filters.levelMax;
+      document.getElementById('level-min-value').textContent = filters.levelMin + '⭐';
+      document.getElementById('level-max-value').textContent = filters.levelMax + '⭐';
       document.getElementById('price-value').textContent = filters.maxPrice + ' PLN';
       document.getElementById('slots-value').textContent = filters.minSlots;
 
@@ -351,8 +363,8 @@
 
     // Reset filters
     function resetFilters() {
-      document.getElementById('level-min').value = 0;
-      document.getElementById('level-max').value = 10;
+      document.getElementById('level-min').value = 1;
+      document.getElementById('level-max').value = 5;
       document.getElementById('price-filter').value = 50;
       document.getElementById('slots-filter').value = 0;
       updateFilters();
