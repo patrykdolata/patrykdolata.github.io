@@ -315,7 +315,7 @@ function renderSignalBars(level) {
   let bars = '';
   for (let i = 1; i <= 5; i++) {
     const filled = i <= level ? 'filled' : '';
-    bars += `<span class="bar h${i} ${filled}"></span>`;
+    bars += `<span class="bar bar-${i} ${filled}"></span>`;
   }
   return bars;
 }
