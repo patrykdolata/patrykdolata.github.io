@@ -34,6 +34,44 @@
     input {
       margin-bottom: 12px;
     }
+    .error-message {
+      background: #fee2e2;
+      border-left: 4px solid #dc2626;
+      color: #991b1b;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      font-size: 14px;
+      display: none;
+      animation: slideIn 0.3s ease;
+    }
+    .error-message.show {
+      display: block;
+    }
+    .success-message {
+      background: #d1fae5;
+      border-left: 4px solid #10b981;
+      color: #065f46;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      font-size: 14px;
+      display: none;
+      animation: slideIn 0.3s ease;
+    }
+    .success-message.show {
+      display: block;
+    }
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
   </style>
 </head>
 
@@ -64,6 +102,14 @@
             <div class="h2">Witaj ponownie!</div>
             <div class="muted" style="margin-bottom:20px">Zaloguj się do swojego konta</div>
 
+            <div id="login-error" class="error-message">
+              ❌ Nieprawidłowy email lub hasło. Spróbuj ponownie.
+            </div>
+
+            <div id="login-success" class="success-message">
+              ✅ Logowanie pomyślne! Przekierowywanie...
+            </div>
+
             <form onsubmit="handleLogin(event)">
               <label for="login-email">Email</label>
               <input type="email" id="login-email" placeholder="twoj@email.com" required>
@@ -85,6 +131,14 @@
           <div class="card">
             <div class="h2">Utwórz konto</div>
             <div class="muted" style="margin-bottom:20px">Dołącz do społeczności siatkówki</div>
+
+            <div id="register-error" class="error-message">
+              ❌ Wystąpił błąd podczas rejestracji. Sprawdź wprowadzone dane.
+            </div>
+
+            <div id="register-success" class="success-message">
+              ✅ Rejestracja pomyślna! Przekierowywanie...
+            </div>
 
             <form onsubmit="handleRegister(event)">
               <label for="register-name">Nazwa użytkownika</label>
@@ -133,6 +187,12 @@
       tabs.forEach(t => t.classList.remove('active'));
       forms.forEach(f => f.classList.remove('active'));
 
+      // Hide all messages
+      document.getElementById('login-error').classList.remove('show');
+      document.getElementById('login-success').classList.remove('show');
+      document.getElementById('register-error').classList.remove('show');
+      document.getElementById('register-success').classList.remove('show');
+
       if (tab === 'login') {
         tabs[0].classList.add('active');
         document.getElementById('login-form').classList.add('active');
@@ -145,8 +205,31 @@
     function handleLogin(e) {
       e.preventDefault();
       const email = document.getElementById('login-email').value;
-      if (login(email, 'demo')) {
-        window.location.href = 'user-profile.html';
+      const password = document.getElementById('login-password').value;
+      const errorMsg = document.getElementById('login-error');
+      const successMsg = document.getElementById('login-success');
+
+      // Hide messages
+      errorMsg.classList.remove('show');
+      successMsg.classList.remove('show');
+
+      // Check if user exists
+      const user = users.find(u => u.email === email);
+
+      if (user && password) {
+        // Login successful
+        appState.currentUser = user;
+        appState.isAuthenticated = true;
+        localStorage.setItem('currentUser', JSON.stringify(user));
+
+        // Show success message and redirect after delay
+        successMsg.classList.add('show');
+        setTimeout(() => {
+          window.location.href = 'user-profile.html';
+        }, 800);
+      } else {
+        // Show error message
+        errorMsg.classList.add('show');
       }
     }
 
@@ -156,10 +239,51 @@
       const nickname = document.getElementById('register-nickname').value;
       const email = document.getElementById('register-email').value;
       const password = document.getElementById('register-password').value;
+      const errorMsg = document.getElementById('register-error');
+      const successMsg = document.getElementById('register-success');
 
-      if (register(login, nickname, email, password)) {
-        window.location.href = 'user-profile.html';
+      // Hide messages
+      errorMsg.classList.remove('show');
+      successMsg.classList.remove('show');
+
+      // Validate password length
+      if (password.length < 6) {
+        errorMsg.textContent = '❌ Hasło musi mieć co najmniej 6 znaków.';
+        errorMsg.classList.add('show');
+        return;
       }
+
+      // Check if email already exists
+      const existingUser = users.find(u => u.email === email);
+      if (existingUser) {
+        errorMsg.textContent = '❌ Ten adres email jest już zarejestrowany.';
+        errorMsg.classList.add('show');
+        return;
+      }
+
+      // Register successful
+      const newUser = {
+        id: users.length + 1,
+        login: login,
+        email: email,
+        nickName: nickname,
+        avatar: null,
+        facebookProfileUri: '',
+        thumbsUp: 0,
+        thumbsDown: 0,
+        role: 'USER'
+      };
+
+      users.push(newUser);
+      appState.currentUser = newUser;
+      appState.isAuthenticated = true;
+      localStorage.setItem('currentUser', JSON.stringify(newUser));
+
+      // Show success message and redirect after delay
+      successMsg.classList.add('show');
+      setTimeout(() => {
+        window.location.href = 'user-profile.html';
+      }, 800);
     }
   </script>
 </body>
