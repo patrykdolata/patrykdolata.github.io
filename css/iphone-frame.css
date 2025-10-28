@@ -332,6 +332,12 @@ a.card:active,
   background: #fff;
 }
 
+.badge.waitlist {
+  color: #7c3aed;
+  border-color: #ddd6fe;
+  background: #f5f3ff;
+}
+
 .badge.danger {
   color: var(--danger);
   border-color: #fecaca;
