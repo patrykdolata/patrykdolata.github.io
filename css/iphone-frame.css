@@ -295,18 +295,28 @@ a.card:active,
   min-height: 28px;
 }
 
-.stars-stacked {
+.signal-bars {
   display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0;
-  line-height: 0.85;
-  letter-spacing: -2px;
+  gap: 2px;
+  align-items: flex-end;
+  height: 14px;
 }
 
-.stars-stacked div {
-  line-height: 0.85;
+.signal-bars .bar {
+  width: 3px;
+  background: #cbd5e1;
+  border-radius: 1px;
 }
+
+.signal-bars .bar.filled {
+  background: #2196F3;
+}
+
+.signal-bars .bar.h1 { height: 20%; }
+.signal-bars .bar.h2 { height: 40%; }
+.signal-bars .bar.h3 { height: 60%; }
+.signal-bars .bar.h4 { height: 80%; }
+.signal-bars .bar.h5 { height: 100%; }
 
 .badge.primary {
   color: var(--primary);
@@ -327,9 +337,9 @@ a.card:active,
 }
 
 .badge.stars {
-  color: #F59E0B;
-  border-color: #e0e0e0;
-  background: #fff;
+  color: var(--primary);
+  border-color: #bfdcff;
+  background: #eff6ff;
 }
 
 .badge.waitlist {

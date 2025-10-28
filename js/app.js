@@ -310,24 +310,20 @@ function validatePassword(password) {
   return password.length >= 6;
 }
 
-// Star level display function
-function renderStarsStacked(level) {
-  const configurations = {
-    1: ['⭐'],
-    2: ['⭐⭐'],
-    3: ['⭐⭐', '⭐'],
-    4: ['⭐⭐', '⭐⭐'],
-    5: ['⭐⭐', '⭐⭐⭐']
-  };
-
-  const rows = configurations[level] || ['⭐'.repeat(level)];
-  return rows.map(row => `<div>${row}</div>`).join('');
+// Signal bars level display function
+function renderSignalBars(level) {
+  let bars = '';
+  for (let i = 1; i <= 5; i++) {
+    const filled = i <= level ? 'filled' : '';
+    bars += `<span class="bar h${i} ${filled}"></span>`;
+  }
+  return bars;
 }
 
-function initStarsStacked() {
-  document.querySelectorAll('.stars-stacked').forEach(el => {
+function initSignalBars() {
+  document.querySelectorAll('.signal-bars').forEach(el => {
     const level = parseInt(el.getAttribute('data-level'));
-    el.innerHTML = renderStarsStacked(level);
+    el.innerHTML = renderSignalBars(level);
   });
 }
 
@@ -335,11 +331,11 @@ function initStarsStacked() {
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', () => {
     initApp();
-    initStarsStacked();
+    initSignalBars();
   });
 } else {
   initApp();
-  initStarsStacked();
+  initSignalBars();
 }
 
 // Add slideDown animation for snackbar
