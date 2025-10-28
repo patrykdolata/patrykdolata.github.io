@@ -299,26 +299,26 @@ a.card:active,
   display: inline-flex;
   gap: 2px;
   align-items: flex-end;
-  height: 16px;
+  height: 14px;
   vertical-align: middle;
 }
 
 .signal-bars .bar {
-  display: inline-block;
   width: 3px;
   background: #cbd5e1;
-  border-radius: 1px;
+  border-radius: 1px 1px 0 0;
+  align-self: flex-end;
 }
 
 .signal-bars .bar.filled {
   background: #2196F3;
 }
 
-.signal-bars .bar.h1 { height: 4px; }
-.signal-bars .bar.h2 { height: 7px; }
-.signal-bars .bar.h3 { height: 10px; }
-.signal-bars .bar.h4 { height: 13px; }
-.signal-bars .bar.h5 { height: 16px; }
+.signal-bars .bar.h1 { height: 3px; }
+.signal-bars .bar.h2 { height: 6px; }
+.signal-bars .bar.h3 { height: 9px; }
+.signal-bars .bar.h4 { height: 11px; }
+.signal-bars .bar.h5 { height: 14px; }
 
 .badge.primary {
   color: var(--primary);
