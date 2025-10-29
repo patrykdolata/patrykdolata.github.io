@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TODO - Meet App Implementation Plan</title>
+  <link rel="stylesheet" href="css/design-system.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/iphone-frame.css">
+  <style>
+    body {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: var(--space-2xl) var(--space-md);
+    }
+
+    .todo-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: white;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-2xl);
+      padding: var(--space-2xl);
+    }
+
+    .todo-header {
+      text-align: center;
+      margin-bottom: var(--space-2xl);
+      padding-bottom: var(--space-xl);
+      border-bottom: 2px solid var(--color-border);
+    }
+
+    .todo-header h1 {
+      font-size: 2.5rem;
+      color: var(--color-primary);
+      margin-bottom: var(--space-md);
+    }
+
+    .todo-header .subtitle {
+      font-size: 1.1rem;
+      color: var(--color-text-secondary);
+      margin-bottom: var(--space-sm);
+    }
+
+    .legend {
+      display: flex;
+      gap: var(--space-lg);
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: var(--space-lg);
+      padding: var(--space-md);
+      background: var(--color-background);
+      border-radius: var(--radius-md);
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+      font-size: 0.9rem;
+    }
+
+    .legend-checkbox {
+      width: 20px;
+      height: 20px;
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-xs);
+      display: inline-block;
+    }
+
+    .legend-checkbox.done {
+      background: var(--color-success);
+      border-color: var(--color-success);
+      position: relative;
+    }
+
+    .legend-checkbox.done::after {
+      content: '✓';
+      position: absolute;
+      color: white;
+      font-weight: bold;
+      left: 3px;
+      top: -2px;
+    }
+
+    .legend-checkbox.maybe {
+      background: var(--color-warning);
+      border-color: var(--color-warning);
+      position: relative;
+    }
+
+    .legend-checkbox.maybe::after {
+      content: '?';
+      position: absolute;
+      color: white;
+      font-weight: bold;
+      left: 5px;
+      top: -2px;
+    }
+
+    .sprint-section {
+      margin-bottom: var(--space-2xl);
+    }
+
+    .sprint-header {
+      background: linear-gradient(135deg, var(--color-primary), #5a67d8);
+      color: white;
+      padding: var(--space-lg);
+      border-radius: var(--radius-md);
+      margin-bottom: var(--space-lg);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .sprint-header h2 {
+      margin: 0;
+      font-size: 1.5rem;
+    }
+
+    .sprint-badge {
+      background: rgba(255, 255, 255, 0.2);
+      padding: var(--space-xs) var(--space-md);
+      border-radius: var(--radius-full);
+      font-size: 0.9rem;
+    }
+
+    .subsection {
+      margin-bottom: var(--space-xl);
+      padding-left: var(--space-lg);
+      border-left: 3px solid var(--color-primary);
+    }
+
+    .subsection h3 {
+      color: var(--color-primary);
+      margin-bottom: var(--space-md);
+      font-size: 1.2rem;
+    }
+
+    .task-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .task-item {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-md);
+      padding: var(--space-sm) 0;
+      border-bottom: 1px solid var(--color-border-light);
+    }
+
+    .task-item:last-child {
+      border-bottom: none;
+    }
+
+    .task-checkbox {
+      width: 20px;
+      height: 20px;
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius-xs);
+      flex-shrink: 0;
+      margin-top: 2px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .task-checkbox:hover {
+      border-color: var(--color-primary);
+      transform: scale(1.1);
+    }
+
+    .task-checkbox.done {
+      background: var(--color-success);
+      border-color: var(--color-success);
+      position: relative;
+    }
+
+    .task-checkbox.done::after {
+      content: '✓';
+      position: absolute;
+      color: white;
+      font-weight: bold;
+      left: 3px;
+      top: -2px;
+      font-size: 14px;
+    }
+
+    .task-checkbox.maybe {
+      background: var(--color-warning);
+      border-color: var(--color-warning);
+      position: relative;
+    }
+
+    .task-checkbox.maybe::after {
+      content: '?';
+      position: absolute;
+      color: white;
+      font-weight: bold;
+      left: 6px;
+      top: -3px;
+      font-size: 12px;
+    }
+
+    .task-text {
+      flex: 1;
+      color: var(--color-text);
+      line-height: 1.6;
+    }
+
+    .task-estimate {
+      color: var(--color-text-secondary);
+      font-size: 0.85rem;
+      font-weight: 600;
+      background: var(--color-background);
+      padding: 2px 8px;
+      border-radius: var(--radius-sm);
+      flex-shrink: 0;
+    }
+
+    .summary-section {
+      background: var(--color-background);
+      padding: var(--space-xl);
+      border-radius: var(--radius-md);
+      margin-top: var(--space-2xl);
+    }
+
+    .summary-section h2 {
+      color: var(--color-primary);
+      margin-bottom: var(--space-lg);
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: var(--space-lg);
+      margin-top: var(--space-lg);
+    }
+
+    .summary-card {
+      background: white;
+      padding: var(--space-lg);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-md);
+    }
+
+    .summary-card h3 {
+      color: var(--color-primary);
+      margin-bottom: var(--space-sm);
+      font-size: 1rem;
+    }
+
+    .summary-card .value {
+      font-size: 2rem;
+      font-weight: bold;
+      color: var(--color-primary);
+    }
+
+    .summary-card .label {
+      color: var(--color-text-secondary);
+      font-size: 0.9rem;
+    }
+
+    .priority-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: var(--radius-full);
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-left: var(--space-sm);
+    }
+
+    .priority-critical {
+      background: #fee2e2;
+      color: #dc2626;
+    }
+
+    .priority-high {
+      background: #fef3c7;
+      color: #d97706;
+    }
+
+    .priority-medium {
+      background: #dbeafe;
+      color: #2563eb;
+    }
+
+    .back-button {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background: white;
+      color: var(--color-primary);
+      padding: var(--space-sm) var(--space-lg);
+      border-radius: var(--radius-full);
+      text-decoration: none;
+      box-shadow: var(--shadow-lg);
+      font-weight: 600;
+      transition: all 0.2s;
+      z-index: 100;
+    }
+
+    .back-button:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-xl);
+    }
+
+    @media (max-width: 768px) {
+      .todo-container {
+        padding: var(--space-lg);
+      }
+
+      .todo-header h1 {
+        font-size: 1.8rem;
+      }
+
+      .summary-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .collapsible {
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .collapsible::before {
+      content: '▼';
+      display: inline-block;
+      margin-right: var(--space-xs);
+      transition: transform 0.2s;
+      font-size: 0.8em;
+    }
+
+    .collapsible.collapsed::before {
+      transform: rotate(-90deg);
+    }
+
+    .collapsible-content {
+      max-height: 10000px;
+      overflow: hidden;
+      transition: max-height 0.3s ease-out;
+    }
+
+    .collapsible-content.collapsed {
+      max-height: 0;
+    }
+  </style>
+</head>
+<body>
+  <a href="index.html" class="back-button">← Wróć</a>
+
+  <div class="todo-container">
+    <div class="todo-header">
+      <h1>✅ Meet App - TODO Implementation Plan</h1>
+      <p class="subtitle">Plan rozwoju backendu i aplikacji mobilnej</p>
+      <p class="subtitle" style="font-size: 0.95rem; color: var(--color-text);">
+        <strong>Backend:</strong> meet-app-be (Spring Boot) • <strong>Frontend:</strong> meet-app-fe (Flutter) • <strong>Time:</strong> 15h/tygodniu
+      </p>
+
+      <div class="legend">
+        <div class="legend-item">
+          <span class="legend-checkbox"></span>
+          <span>Do zrobienia</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-checkbox maybe"></span>
+          <span>Prawdopodobnie zrobione (do weryfikacji)</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-checkbox done"></span>
+          <span>Potwierdzone ukończone</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sprint 1 -->
+    <div class="sprint-section">
+      <div class="sprint-header">
+        <h2>Sprint 1: Backend Setup & Auth</h2>
+        <span class="sprint-badge">DONE - do weryfikacji</span>
+      </div>
+
+      <div class="subsection">
+        <h3 class="collapsible">Setup Projektu</h3>
+        <div class="collapsible-content">
+          <ul class="task-list">
+            <li class="task-item">
+              <span class="task-checkbox maybe"></span>
+              <span class="task-text">Utworzenie projektu Spring Boot</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox maybe"></span>
+              <span class="task-text">Konfiguracja PostgreSQL</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox maybe"></span>
+              <span class="task-text">Setup application.yml</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox maybe"></span>
+              <span class="task-text">Struktura pakietów (controller, service, repository, entity)</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h3 class="collapsible">Model Bazy Danych - Encje JPA</h3>
+        <div class="collapsible-content">
+          <ul class="task-list">
+            <li class="task-item">
+              <span class="task-checkbox maybe"></span>
+              <span class="task-text">Encja User (id, login, email, password, role...)</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox maybe"></span>
+              <span class="task-text">Encja Location (id, name, latitude, longitude...)</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox maybe"></span>
+              <span class="task-text">Encja Event (id, title, location, organizer...)</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">Encja EventParticipant (event, user, position, status...)</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">Encja EventSeries (id, name, schedule...)</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox maybe"></span>
+              <span class="task-text">Encja FavoritePlace</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h3 class="collapsible">Spring Security & JWT</h3>
+        <div class="collapsible-content">
+          <ul class="task-list">
+            <li class="task-item">
+              <span class="task-checkbox maybe"></span>
+              <span class="task-text">JwtService (generateToken, validateToken)</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox maybe"></span>
+              <span class="task-text">JwtAuthenticationFilter</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox maybe"></span>
+              <span class="task-text">SecurityConfiguration (CORS, stateless session)</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox maybe"></span>
+              <span class="task-text">PasswordEncoder (BCrypt)</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sprint 2 -->
+    <div class="sprint-section">
+      <div class="sprint-header">
+        <h2>Sprint 2: Events Core API <span class="priority-badge priority-critical">CRITICAL</span></h2>
+        <span class="sprint-badge">~4 tygodnie (57h)</span>
+      </div>
+
+      <div class="subsection">
+        <h3 class="collapsible">Events CRUD - Controller & DTOs</h3>
+        <div class="collapsible-content">
+          <ul class="task-list">
+            <li class="task-item">
+              <span class="task-checkbox maybe"></span>
+              <span class="task-text">EventController + podstawowe endpointy</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">DELETE /api/events/{id}</span>
+              <span class="task-estimate">~2h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">Query params: minLevel, maxLevel, locationId, maxPrice...</span>
+              <span class="task-estimate">~3h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">Uzupełnić EventRequest: duration, slots, level</span>
+              <span class="task-estimate">~2h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">DTOs: EventDTO, EventDetailDTO</span>
+              <span class="task-estimate">~5h</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h3 class="collapsible">Join/Leave Event - KLUCZOWA LOGIKA</h3>
+        <div class="collapsible-content">
+          <ul class="task-list">
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">POST /api/events/{id}/join</span>
+              <span class="task-estimate">~4h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">DELETE /api/events/{id}/leave</span>
+              <span class="task-estimate">~3h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">GET /api/events/{id}/participants</span>
+              <span class="task-estimate">~2h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">EventService.joinEvent() - main list vs waitlist</span>
+              <span class="task-estimate">~5h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">EventService.leaveEvent() - awans z waitlist</span>
+              <span class="task-estimate">~5h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">promoteFirstFromWaitlist() + notification</span>
+              <span class="task-estimate">~4h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">renumberMainList() i renumberWaitlist()</span>
+              <span class="task-estimate">~4h</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sprint 3 -->
+    <div class="sprint-section">
+      <div class="sprint-header">
+        <h2>Sprint 3: Participant Management <span class="priority-badge priority-critical">CRITICAL</span></h2>
+        <span class="sprint-badge">~4 tygodnie (55h)</span>
+      </div>
+
+      <div class="subsection">
+        <h3 class="collapsible">Participant Management Endpoints</h3>
+        <div class="collapsible-content">
+          <ul class="task-list">
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">ParticipantManagementController</span>
+              <span class="task-estimate">~3h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">PUT /participants/{userId}/position - zmiana pozycji</span>
+              <span class="task-estimate">~4h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">PUT /participants/{userId}/confirm - toggle</span>
+              <span class="task-estimate">~2h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">PUT /participants/{userId}/payment - toggle</span>
+              <span class="task-estimate">~2h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">POST /participants/{userId}/promote - awans z waitlist</span>
+              <span class="task-estimate">~4h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">DELETE /participants/{userId} - usunięcie</span>
+              <span class="task-estimate">~3h</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h3 class="collapsible">Participant Service Logic</h3>
+        <div class="collapsible-content">
+          <ul class="task-list">
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">Sprawdzanie uprawnień: tylko organizator</span>
+              <span class="task-estimate">~2h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">changePosition() - swap + renumber</span>
+              <span class="task-estimate">~4h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">promoteToMainList() - check space</span>
+              <span class="task-estimate">~3h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">removeParticipant() - remove + promote</span>
+              <span class="task-estimate">~4h</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sprint 4 -->
+    <div class="sprint-section">
+      <div class="sprint-header">
+        <h2>Sprint 4: Users, Locations, Series <span class="priority-badge priority-high">HIGH</span></h2>
+        <span class="sprint-badge">~5.5 tygodni (78h)</span>
+      </div>
+
+      <div class="subsection">
+        <h3 class="collapsible">Users API</h3>
+        <div class="collapsible-content">
+          <ul class="task-list">
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">GET /api/users/me - profil</span>
+              <span class="task-estimate">~2h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">PUT /api/users/me - update profilu</span>
+              <span class="task-estimate">~3h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">GET /api/users/me/events - wydarzenia jako uczestnik</span>
+              <span class="task-estimate">~3h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">GET /api/users/me/history - historia</span>
+              <span class="task-estimate">~4h</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h3 class="collapsible">Event Series API</h3>
+        <div class="collapsible-content">
+          <ul class="task-list">
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">SeriesController + CRUD endpoints</span>
+              <span class="task-estimate">~15h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">POST /api/series/{id}/generate - generowanie</span>
+              <span class="task-estimate">~8h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">SeriesService.generateEvents() - parsowanie schedule</span>
+              <span class="task-estimate">~6h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">Logika generowania weekly/monthly</span>
+              <span class="task-estimate">~8h</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sprint 5 -->
+    <div class="sprint-section">
+      <div class="sprint-header">
+        <h2>Sprint 5: Testing & Documentation <span class="priority-badge priority-critical">CRITICAL</span></h2>
+        <span class="sprint-badge">~5.5 tygodni (78h)</span>
+      </div>
+
+      <div class="subsection">
+        <h3 class="collapsible">Unit Tests</h3>
+        <div class="collapsible-content">
+          <ul class="task-list">
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">EventServiceTest - CRUD + filters</span>
+              <span class="task-estimate">~6h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">EventServiceTest.joinEvent - main list & waitlist</span>
+              <span class="task-estimate">~6h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">EventServiceTest.leaveEvent - promotion & renumbering</span>
+              <span class="task-estimate">~7h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">ParticipantServiceTest</span>
+              <span class="task-estimate">~6h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">Coverage 80%+</span>
+              <span class="task-estimate">~5h</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h3 class="collapsible">API Documentation</h3>
+        <div class="collapsible-content">
+          <ul class="task-list">
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">Swagger/OpenAPI setup (springdoc-openapi-ui)</span>
+              <span class="task-estimate">~2h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">Swagger UI na /swagger-ui.html</span>
+              <span class="task-estimate">~1h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">Adnotacje @Operation na wszystkich endpoints</span>
+              <span class="task-estimate">~6h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">Przykłady request/response w Swagger</span>
+              <span class="task-estimate">~4h</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h3 class="collapsible">Postman Collection</h3>
+        <div class="collapsible-content">
+          <ul class="task-list">
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">Postman workspace + folders (Auth, Events, Users...)</span>
+              <span class="task-estimate">~8h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">Environment variables + example requests</span>
+              <span class="task-estimate">~3h</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Raspberry Pi -->
+    <div class="sprint-section">
+      <div class="sprint-header">
+        <h2>Raspberry Pi Deploy <span class="priority-badge priority-critical">CRITICAL</span></h2>
+        <span class="sprint-badge">~3 tygodnie (45h)</span>
+      </div>
+
+      <div class="subsection">
+        <h3 class="collapsible">Hardware & System Setup</h3>
+        <div class="collapsible-content">
+          <ul class="task-list">
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">Zakup: RPi 4B 8GB + karta SD 64GB + zasilacz (~530-640 PLN)</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">Instalacja Raspberry Pi OS Lite (64-bit)</span>
+              <span class="task-estimate">~2h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">SSH setup + firewall UFW</span>
+              <span class="task-estimate">~2h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">DuckDNS / No-IP dla dynamicznego IP</span>
+              <span class="task-estimate">~1.5h</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h3 class="collapsible">PostgreSQL + Java Setup</h3>
+        <div class="collapsible-content">
+          <ul class="task-list">
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">Instalacja PostgreSQL + utworzenie bazy</span>
+              <span class="task-estimate">~2h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">Instalacja OpenJDK 21 + Maven</span>
+              <span class="task-estimate">~2.5h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">Backup cron job (pg_dump)</span>
+              <span class="task-estimate">~1h</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h3 class="collapsible">Backend Deployment</h3>
+        <div class="collapsible-content">
+          <ul class="task-list">
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">Clone repo + build JAR</span>
+              <span class="task-estimate">~1.5h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">Systemd service setup + enable/start</span>
+              <span class="task-estimate">~3h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">Nginx reverse proxy (8080→80)</span>
+              <span class="task-estimate">~4.5h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">Let's Encrypt SSL certificate</span>
+              <span class="task-estimate">~2.5h</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h3 class="collapsible">Monitoring & Security</h3>
+        <div class="collapsible-content">
+          <ul class="task-list">
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">Uptimerobot external monitoring</span>
+              <span class="task-estimate">~1h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">Fail2ban + SSH whitelist</span>
+              <span class="task-estimate">~2.5h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">Seed testowych użytkowników + wydarzeń</span>
+              <span class="task-estimate">~3h</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Flutter Integration -->
+    <div class="sprint-section">
+      <div class="sprint-header">
+        <h2>Flutter Integration</h2>
+        <span class="sprint-badge">~2 tygodnie (32h)</span>
+      </div>
+
+      <div class="subsection">
+        <h3 class="collapsible">Backend-Flutter Connection</h3>
+        <div class="collapsible-content">
+          <ul class="task-list">
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">Konfiguracja API_BASE_URL w Flutter .env</span>
+              <span class="task-estimate">~0.5h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">Test /api/auth/login i /register z Flutter</span>
+              <span class="task-estimate">~4h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">JWT storage w Flutter (SharedPreferences)</span>
+              <span class="task-estimate">~2h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">HTTP client (dio) z Authorization header</span>
+              <span class="task-estimate">~2h</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h3 class="collapsible">Events Integration</h3>
+        <div class="collapsible-content">
+          <ul class="task-list">
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">Test GET /api/events - lista wydarzeń</span>
+              <span class="task-estimate">~2h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">Test POST /api/events/{id}/join</span>
+              <span class="task-estimate">~2h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">UI updates po join/leave</span>
+              <span class="task-estimate">~3h</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h3 class="collapsible">Participant Management UI</h3>
+        <div class="collapsible-content">
+          <ul class="task-list">
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">Test toggle confirm/payment z Flutter</span>
+              <span class="task-estimate">~2h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">UI dla zarządzania uczestnikami</span>
+              <span class="task-estimate">~4h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">Fix błędów integracji + iteracje na DTOs</span>
+              <span class="task-estimate">~5h</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Summary Section -->
+    <div class="summary-section">
+      <h2>📊 Podsumowanie Estymat</h2>
+      <p style="margin-bottom: var(--space-lg); color: var(--color-text-secondary);">
+        Przy dostępności <strong>15h/tydzień</strong> w wolnym czasie (Solo Developer - backend + Flutter)
+      </p>
+
+      <div class="summary-grid">
+        <div class="summary-card">
+          <h3>Sprint 2</h3>
+          <div class="value">~57h</div>
+          <div class="label">4 tygodnie</div>
+          <p style="margin-top: var(--space-sm); font-size: 0.85rem; color: var(--color-text-secondary);">Events Core API</p>
+        </div>
+
+        <div class="summary-card">
+          <h3>Sprint 3</h3>
+          <div class="value">~55h</div>
+          <div class="label">4 tygodnie</div>
+          <p style="margin-top: var(--space-sm); font-size: 0.85rem; color: var(--color-text-secondary);">Participant Management</p>
+        </div>
+
+        <div class="summary-card">
+          <h3>Sprint 4</h3>
+          <div class="value">~78.5h</div>
+          <div class="label">5.5 tygodnia</div>
+          <p style="margin-top: var(--space-sm); font-size: 0.85rem; color: var(--color-text-secondary);">Users/Series</p>
+        </div>
+
+        <div class="summary-card">
+          <h3>Sprint 5</h3>
+          <div class="value">~78h</div>
+          <div class="label">5.5 tygodnia</div>
+          <p style="margin-top: var(--space-sm); font-size: 0.85rem; color: var(--color-text-secondary);">Testing & Docs</p>
+        </div>
+
+        <div class="summary-card">
+          <h3>RPi Deploy</h3>
+          <div class="value">~45h</div>
+          <div class="label">3 tygodnie</div>
+          <p style="margin-top: var(--space-sm); font-size: 0.85rem; color: var(--color-text-secondary);">Raspberry Pi Setup</p>
+        </div>
+
+        <div class="summary-card">
+          <h3>Flutter</h3>
+          <div class="value">~32.5h</div>
+          <div class="label">2 tygodnie</div>
+          <p style="margin-top: var(--space-sm); font-size: 0.85rem; color: var(--color-text-secondary);">Integration</p>
+        </div>
+      </div>
+
+      <div style="margin-top: var(--space-2xl); padding: var(--space-xl); background: white; border-radius: var(--radius-md); border: 2px solid var(--color-primary);">
+        <h3 style="color: var(--color-primary); margin-bottom: var(--space-md);">🎯 TOTAL MVP</h3>
+        <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: var(--space-lg);">
+          <div style="text-align: center;">
+            <div style="font-size: 2.5rem; font-weight: bold; color: var(--color-primary);">~346h</div>
+            <div style="color: var(--color-text-secondary);">Całkowite godziny</div>
+          </div>
+          <div style="text-align: center;">
+            <div style="font-size: 2.5rem; font-weight: bold; color: var(--color-primary);">~23 tyg.</div>
+            <div style="color: var(--color-text-secondary);">Tygodni pracy</div>
+          </div>
+          <div style="text-align: center;">
+            <div style="font-size: 2.5rem; font-weight: bold; color: var(--color-primary);">~5.75 mies.</div>
+            <div style="color: var(--color-text-secondary);">Miesięcy</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top: var(--space-xl); padding: var(--space-lg); background: #fee2e2; border-radius: var(--radius-md); border-left: 4px solid #dc2626;">
+        <h3 style="color: #dc2626; margin-bottom: var(--space-sm);">🔴 Critical Path (minimum do pokazania użytkownikom)</h3>
+        <p style="font-size: 1.1rem; margin: 0;"><strong>~15 tygodni = 3.75 miesiąca</strong></p>
+        <p style="margin-top: var(--space-sm); font-size: 0.9rem; color: var(--color-text-secondary);">
+          Sprint 2 + Sprint 3 + Swagger/Postman + RPi Deploy + Flutter Basic
+        </p>
+      </div>
+
+      <div style="margin-top: var(--space-lg); padding: var(--space-lg); background: #dcfce7; border-radius: var(--radius-md); border-left: 4px solid #16a34a;">
+        <h3 style="color: #16a34a; margin-bottom: var(--space-sm);">✅ Realistyczny Cel</h3>
+        <ul style="margin: 0; padding-left: var(--space-xl);">
+          <li style="margin-bottom: var(--space-xs);">Backend MVP gotowy za <strong>~4 miesiące</strong></li>
+          <li>Pokazanie pierwszym użytkownikom za <strong>~6 miesięcy</strong> (z Flutterem) 🚀</li>
+        </ul>
+      </div>
+
+      <div style="margin-top: var(--space-xl); padding: var(--space-lg); background: #eff6ff; border-radius: var(--radius-md);">
+        <h3 style="color: var(--color-primary); margin-bottom: var(--space-md);">💰 Koszty</h3>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-lg);">
+          <div>
+            <h4 style="margin-bottom: var(--space-sm);">Jednorazowe:</h4>
+            <p style="margin: 0; font-size: 0.9rem;">Raspberry Pi 4B 8GB + akcesoria:<br><strong>~530-640 PLN</strong></p>
+          </div>
+          <div>
+            <h4 style="margin-bottom: var(--space-sm);">Miesięczne:</h4>
+            <p style="margin: 0; font-size: 0.9rem;">Energia (5W) + wszystkie usługi DARMOWE:<br><strong>~3 PLN/miesiąc</strong></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Collapsible sections
+    document.querySelectorAll('.collapsible').forEach(header => {
+      header.addEventListener('click', () => {
+        header.classList.toggle('collapsed');
+        const content = header.nextElementSibling;
+        content.classList.toggle('collapsed');
+      });
+    });
+
+    // Task checkbox interaction
+    document.querySelectorAll('.task-checkbox').forEach(checkbox => {
+      checkbox.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (checkbox.classList.contains('done')) {
+          checkbox.classList.remove('done');
+          checkbox.classList.add('maybe');
+        } else if (checkbox.classList.contains('maybe')) {
+          checkbox.classList.remove('maybe');
+        } else {
+          checkbox.classList.add('maybe');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

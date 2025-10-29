@@ -1,40 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Meet App - Volleyball Events</title>
+  <title>Meet App - Wydarzenia siatkówki</title>
   <link rel="stylesheet" href="css/design-system.css">
   <link rel="stylesheet" href="css/components.css">
   <style>
-    .hero {
-      background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
-      color: white;
-      padding: var(--space-4xl) var(--space-base);
-      text-align: center;
-      margin-bottom: var(--space-3xl);
-    }
-
-    .hero__title {
-      font-size: var(--font-size-4xl);
-      font-weight: var(--font-weight-bold);
-      margin-bottom: var(--space-base);
-      color: white;
-    }
-
-    .hero__subtitle {
-      font-size: var(--font-size-lg);
-      opacity: 0.9;
-      margin-bottom: var(--space-2xl);
-    }
-
-    .hero__actions {
-      display: flex;
-      gap: var(--space-base);
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
     .screens-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -78,289 +50,158 @@
       color: var(--color-text-secondary);
       line-height: var(--line-height-relaxed);
     }
-
-    .footer {
-      text-align: center;
-      padding: var(--space-2xl) var(--space-base);
-      margin-top: var(--space-4xl);
-      background-color: var(--color-surface);
-      border-top: 1px solid var(--color-divider);
-    }
-
-    .language-switcher {
-      position: fixed;
-      top: var(--space-base);
-      right: var(--space-base);
-      z-index: var(--z-fixed);
-      display: flex;
-      gap: var(--space-sm);
-      background: var(--color-surface);
-      padding: var(--space-sm);
-      border-radius: var(--radius-md);
-      box-shadow: var(--shadow-md);
-    }
-
-    .language-switcher button {
-      padding: var(--space-sm) var(--space-md);
-      border: 1px solid var(--color-border);
-      background: transparent;
-      border-radius: var(--radius-sm);
-      cursor: pointer;
-      font-weight: var(--font-weight-medium);
-      transition: all var(--transition-base);
-    }
-
-    .language-switcher button.active {
-      background: var(--color-primary);
-      color: white;
-      border-color: var(--color-primary);
-    }
-
-    .language-switcher button:hover:not(.active) {
-      background: var(--color-primary-light);
-    }
   </style>
 </head>
 <body>
-  <!-- Language Switcher -->
-  <div class="language-switcher">
-    <button id="lang-en" onclick="changeLanguage('en')">EN</button>
-    <button id="lang-pl" onclick="changeLanguage('pl')">PL</button>
-  </div>
-
-  <!-- Hero Section -->
-  <div class="hero">
-    <h1 class="hero__title" id="hero-title">🏐 Meet App</h1>
-    <p class="hero__subtitle" id="hero-subtitle">
-      Discover and join volleyball events in your area
-    </p>
-    <div class="hero__actions">
-      <a href="screens/events-list.html" class="app-button app-button--secondary app-button--large">
-        <span id="btn-explore">Explore Events</span>
-      </a>
-      <a href="screens/auth-panel.html" class="app-button app-button--outlined app-button--large" style="color: white; border-color: white;">
-        <span id="btn-login">Login / Register</span>
-      </a>
-    </div>
-  </div>
-
   <!-- Screens Navigation -->
-  <div class="container">
-    <h2 id="screens-title" style="text-align: center; margin-bottom: var(--space-2xl);">
-      Available Screens
+  <div class="container" style="padding-top: var(--space-2xl);">
+    <h2 style="text-align: center; margin-bottom: var(--space-base); color: var(--color-text-primary); font-size: 2.5rem;">
+      Dostępne ekrany
     </h2>
+    <p style="text-align: center; margin-bottom: var(--space-2xl); color: var(--color-text-secondary); font-size: 1.1rem;">
+      Klikalne prototypy ekranów aplikacji mobilnej Meet App do organizacji wydarzeń siatkówki
+    </p>
 
     <div class="screens-grid">
       <!-- Events List Screen -->
       <a href="screens/events-list.html" class="screen-card">
         <div class="screen-card__icon">📅</div>
-        <h3 class="screen-card__title" data-translate="events-title">Events List</h3>
-        <p class="screen-card__description" data-translate="events-desc">
-          Browse all volleyball events with quick info and navigation
+        <h3 class="screen-card__title">Lista wydarzeń</h3>
+        <p class="screen-card__description">
+          Przeglądaj wszystkie wydarzenia siatkówki z szybkim dostępem do informacji
         </p>
       </a>
 
       <!-- Map Home Screen -->
       <a href="screens/map-home.html" class="screen-card">
         <div class="screen-card__icon">🗺️</div>
-        <h3 class="screen-card__title" data-translate="map-home-title">Map & Events</h3>
-        <p class="screen-card__description" data-translate="map-home-desc">
-          Interactive map with volleyball event markers and real-time updates
+        <h3 class="screen-card__title">Mapa i wydarzenia</h3>
+        <p class="screen-card__description">
+          Interaktywna mapa z markerami wydarzeń i aktualizacjami na żywo
         </p>
       </a>
 
       <!-- Auth Panel Screen -->
       <a href="screens/auth-panel.html" class="screen-card">
         <div class="screen-card__icon">🔐</div>
-        <h3 class="screen-card__title" data-translate="auth-title">Login / Register</h3>
-        <p class="screen-card__description" data-translate="auth-desc">
-          User authentication panel with login, registration, and favorite locations
+        <h3 class="screen-card__title">Logowanie / Rejestracja</h3>
+        <p class="screen-card__description">
+          Panel uwierzytelniania z logowaniem, rejestracją i ulubionymi lokalizacjami
         </p>
       </a>
 
       <!-- Event Details Screen -->
       <a href="screens/event-details.html" class="screen-card">
         <div class="screen-card__icon">📋</div>
-        <h3 class="screen-card__title" data-translate="details-title">Event Details</h3>
-        <p class="screen-card__description" data-translate="details-desc">
-          Comprehensive event information including location, time, price, and organizer
+        <h3 class="screen-card__title">Szczegóły wydarzenia</h3>
+        <p class="screen-card__description">
+          Pełne informacje o wydarzeniu wraz z lokalizacją, czasem, ceną i organizatorem
         </p>
       </a>
 
       <!-- Create Event Screen -->
       <a href="screens/create-event.html" class="screen-card">
         <div class="screen-card__icon">➕</div>
-        <h3 class="screen-card__title" data-translate="create-title">Create Event</h3>
-        <p class="screen-card__description" data-translate="create-desc">
-          Form to create new volleyball events with all necessary details
+        <h3 class="screen-card__title">Utwórz wydarzenie</h3>
+        <p class="screen-card__description">
+          Formularz do tworzenia nowych wydarzeń siatkówki ze wszystkimi szczegółami
         </p>
       </a>
 
       <!-- User Profile Screen -->
       <a href="screens/user-profile.html" class="screen-card">
         <div class="screen-card__icon">👤</div>
-        <h3 class="screen-card__title" data-translate="profile-title">User Profile</h3>
-        <p class="screen-card__description" data-translate="profile-desc">
-          View user information, ratings, and Facebook profile link
+        <h3 class="screen-card__title">Profil użytkownika</h3>
+        <p class="screen-card__description">
+          Zobacz informacje o użytkowniku, oceny i link do profilu Facebook
         </p>
       </a>
 
       <!-- Skill Levels Screen -->
       <a href="screens/skill-levels.html" class="screen-card">
         <div class="screen-card__icon">⭐</div>
-        <h3 class="screen-card__title" data-translate="skills-title">Skill Levels</h3>
-        <p class="screen-card__description" data-translate="skills-desc">
-          Detailed descriptions of volleyball skill levels (0-10 scale)
+        <h3 class="screen-card__title">Poziomy umiejętności</h3>
+        <p class="screen-card__description">
+          Szczegółowe opisy poziomów umiejętności w siatkówce (skala 0-10)
         </p>
       </a>
 
       <!-- Group Info Screen -->
       <a href="screens/group-info.html" class="screen-card">
         <div class="screen-card__icon">👥</div>
-        <h3 class="screen-card__title" data-translate="group-title">Group Info</h3>
-        <p class="screen-card__description" data-translate="group-desc">
-          Information about volleyball groups and communities
+        <h3 class="screen-card__title">Info o grupie</h3>
+        <p class="screen-card__description">
+          Informacje o grupach i społecznościach siatkówki
         </p>
       </a>
 
       <!-- Series Management Screen -->
       <a href="screens/series.html" class="screen-card">
         <div class="screen-card__icon">∞</div>
-        <h3 class="screen-card__title">Series Management</h3>
+        <h3 class="screen-card__title">Zarządzanie seriami</h3>
         <p class="screen-card__description">
-          Manage recurring volleyball event series and schedules
+          Zarządzaj cyklicznymi seriami wydarzeń siatkówki i harmonogramami
         </p>
       </a>
 
       <!-- Create Series Screen -->
       <a href="screens/series-create.html" class="screen-card">
         <div class="screen-card__icon">🔄</div>
-        <h3 class="screen-card__title">Create Series</h3>
+        <h3 class="screen-card__title">Utwórz serię</h3>
         <p class="screen-card__description">
-          Create new recurring event series with custom schedules
+          Twórz nowe cykliczne serie wydarzeń z niestandardowymi harmonogramami
         </p>
       </a>
 
       <!-- Generate Events Screen -->
       <a href="screens/series-generate.html" class="screen-card">
         <div class="screen-card__icon">⚡</div>
-        <h3 class="screen-card__title">Generate Events</h3>
+        <h3 class="screen-card__title">Generuj wydarzenia</h3>
         <p class="screen-card__description">
-          Generate multiple events from a series template
+          Generuj wiele wydarzeń z szablonu serii
         </p>
       </a>
 
       <!-- Edit Event Screen -->
       <a href="screens/event-edit.html" class="screen-card">
         <div class="screen-card__icon">✏️</div>
-        <h3 class="screen-card__title">Edit Event</h3>
+        <h3 class="screen-card__title">Edytuj wydarzenie</h3>
         <p class="screen-card__description">
-          Modify event details and configuration settings
+          Modyfikuj szczegóły wydarzenia i ustawienia konfiguracji
         </p>
       </a>
 
       <!-- Manage Participants Screen -->
       <a href="screens/event-manage.html" class="screen-card">
         <div class="screen-card__icon">👥</div>
-        <h3 class="screen-card__title">Manage Participants</h3>
+        <h3 class="screen-card__title">Zarządzaj uczestnikami</h3>
         <p class="screen-card__description">
-          Manage participant lists with drag & drop and status tracking
+          Zarządzaj listą uczestników z funkcją przeciągnij i upuść oraz śledzeniem statusu
         </p>
       </a>
 
       <!-- Payments Management Screen -->
       <a href="screens/payments-manage.html" class="screen-card">
         <div class="screen-card__icon">💰</div>
-        <h3 class="screen-card__title">Payments Management</h3>
+        <h3 class="screen-card__title">Zarządzanie płatnościami</h3>
         <p class="screen-card__description">
-          Track and manage payments for event participants
+          Śledź i zarządzaj płatnościami uczestników wydarzenia
+        </p>
+      </a>
+
+      <!-- TODO Implementation Plan -->
+      <a href="TODO.html" class="screen-card">
+        <div class="screen-card__icon">✅</div>
+        <h3 class="screen-card__title">TODO - Plan Implementacji</h3>
+        <p class="screen-card__description">
+          Kompletny plan rozwoju backendu i lista zadań (Solo Developer)
         </p>
       </a>
     </div>
   </div>
 
-  <!-- Footer -->
-  <div class="footer">
-    <p id="footer-text">
-      Meet App - Interactive Mockup (2025)
-    </p>
-    <p style="margin-top: var(--space-sm); font-size: var(--font-size-sm); color: var(--color-text-secondary);" id="footer-note">
-      This is a clickable prototype based on the Meet App mobile application
-    </p>
-  </div>
-
   <!-- Scripts -->
   <script src="js/mock-data.js"></script>
   <script src="js/app.js"></script>
-  <script>
-    // Update language UI
-    function updateLanguageUI() {
-      const lang = appState.currentLanguage;
-
-      // Update active button
-      document.getElementById('lang-en').classList.toggle('active', lang === 'en');
-      document.getElementById('lang-pl').classList.toggle('active', lang === 'pl');
-
-      // Update text content
-      const texts = {
-        en: {
-          'hero-subtitle': 'Discover and join volleyball events in your area',
-          'btn-explore': 'Explore Events',
-          'btn-login': 'Login / Register',
-          'screens-title': 'Available Screens',
-          'map-home-title': 'Map & Events',
-          'map-home-desc': 'Interactive map with volleyball event markers and real-time updates',
-          'auth-title': 'Login / Register',
-          'auth-desc': 'User authentication panel with login, registration, and favorite locations',
-          'details-title': 'Event Details',
-          'details-desc': 'Comprehensive event information including location, time, price, and organizer',
-          'create-title': 'Create Event',
-          'create-desc': 'Form to create new volleyball events with all necessary details',
-          'profile-title': 'User Profile',
-          'profile-desc': 'View user information, ratings, and Facebook profile link',
-          'skills-title': 'Skill Levels',
-          'skills-desc': 'Detailed descriptions of volleyball skill levels (0-10 scale)',
-          'group-title': 'Group Info',
-          'group-desc': 'Information about volleyball groups and communities',
-          'footer-note': 'This is a clickable prototype based on the Meet App mobile application'
-        },
-        pl: {
-          'hero-subtitle': 'Odkrywaj i dołączaj do wydarzeń siatkówki w Twojej okolicy',
-          'btn-explore': 'Zobacz wydarzenia',
-          'btn-login': 'Zaloguj / Zarejestruj',
-          'screens-title': 'Dostępne ekrany',
-          'map-home-title': 'Mapa i wydarzenia',
-          'map-home-desc': 'Interaktywna mapa z markerami wydarzeń i aktualizacjami na żywo',
-          'auth-title': 'Logowanie / Rejestracja',
-          'auth-desc': 'Panel uwierzytelniania z logowaniem, rejestracją i ulubionymi lokalizacjami',
-          'details-title': 'Szczegóły wydarzenia',
-          'details-desc': 'Pełne informacje o wydarzeniu wraz z lokalizacją, czasem, ceną i organizatorem',
-          'create-title': 'Utwórz wydarzenie',
-          'create-desc': 'Formularz do tworzenia nowych wydarzeń siatkówki ze wszystkimi szczegółami',
-          'profile-title': 'Profil użytkownika',
-          'profile-desc': 'Zobacz informacje o użytkowniku, oceny i link do profilu Facebook',
-          'skills-title': 'Poziomy umiejętności',
-          'skills-desc': 'Szczegółowe opisy poziomów umiejętności w siatkówce (skala 0-10)',
-          'group-title': 'Info o grupie',
-          'group-desc': 'Informacje o grupach i społecznościach siatkówki',
-          'footer-note': 'To jest klikalny prototyp oparty na aplikacji mobilnej Meet App'
-        }
-      };
-
-      Object.keys(texts[lang]).forEach(id => {
-        const element = document.getElementById(id);
-        if (element) {
-          element.textContent = texts[lang][id];
-        }
-      });
-    }
-
-    function changeLanguage(lang) {
-      setLanguage(lang);
-    }
-
-    // Initialize on load
-    updateLanguageUI();
-  </script>
 </body>
 </html>

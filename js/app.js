@@ -4,7 +4,7 @@
 let appState = {
   currentUser: null,
   isAuthenticated: false,
-  currentLanguage: 'en',
+  currentLanguage: 'pl',
   favoriteLocations: [],
   selectedEvent: null
 };
