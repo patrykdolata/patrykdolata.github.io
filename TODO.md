@@ -1,4 +1,4 @@
-# Meet App - TODO Lista Implementacji (Solo Developer)
+# Meet App - TODO Lista Implementacji (Feature-Based)
 
 > **Uwaga:** Pliki HTML w tym repo (`patrykdolata.github.io`) to tylko klikalna makieta prototypowa.
 >
@@ -8,6 +8,8 @@
 >
 > **Solo project:** Robisz wszystko sam (backend + Flutter)
 >
+> **Strategia:** Feature-based development - każdy feature jest implementowany end-to-end (backend + frontend)
+>
 > **Legend:**
 > - `[ ]` - Do zrobienia
 > - `[?]` - Prawdopodobnie już zrobione (wymaga weryfikacji)
@@ -15,7 +17,7 @@
 
 ---
 
-## Sprint 1: Backend Setup & Auth (DONE - do weryfikacji)
+## Sprint 0: Backend Setup & Auth (DONE - do weryfikacji)
 
 ### Setup Projektu
 - [?] Utworzenie projektu Spring Boot przez Spring Initializr
@@ -28,23 +30,13 @@
 - [?] Encja `User` (id, login, email, password, nickName, avatar, thumbsUp/Down, role)
 - [?] Encja `Location` (id, name, address, latitude, longitude, description)
 - [?] Encja `Event` (id, title, message, location, organizer, dateTime, duration, slots, price, level, status)
-- [ ] Encja `EventParticipant` (event, user, position, status, isConfirmed, isPaid, joinedAt, waitlistPosition)
-- [ ] Encja `EventSeries` (id, name, organizer, location, schedule, slots, price, level, status)
 - [?] Encja `FavoritePlace` (id, user, location, notes, createdAt)
-- [ ] Encja `Group` (id, name, url, memberCount)
-- [ ] Enums: Role, EventStatus, ParticipantStatus, SeriesStatus
 
 ### Migracje Bazy Danych (Flyway)
 - [?] Setup Flyway w projekcie
 - [?] V1_0__Initial_schema.sql (user, token, location, event, favorite_place)
 - [?] V1_1__Fix_null_user_roles.sql
 - [?] V1_2__Add_default_user.sql
-- [ ] V1_3__Add_event_participant_table.sql
-- [ ] V1_4__Add_event_slots_and_level.sql
-- [ ] V1_5__Add_event_series_table.sql
-- [ ] V1_6__Add_groups_table.sql
-- [ ] V1_7__Add_performance_indexes.sql
-- [ ] V1_8__Seed_test_data.sql (dane z mock-data.js)
 
 ### Spring Security & JWT
 - [?] Dependency: io.jsonwebtoken (JWT)
@@ -62,204 +54,292 @@
 - [?] Allow methods: GET, POST, PUT, DELETE, OPTIONS
 - [?] Allow credentials: true
 
-### Auth Endpoints
+### Auth Endpoints (Backend)
 - [?] `AuthController`
 - [?] POST `/api/auth/register`
 - [?] POST `/api/auth/login`
 - [?] POST `/api/auth/logout`
 - [?] DTOs: RegisterRequest, AuthenticationRequest, AuthenticationResponse
-- [ ] DTO: `UserDTO` (kompletny)
 
-### Auth Service
+### Auth Service (Backend)
 - [?] `AuthenticationService.register()` - hash password BCrypt
 - [?] `AuthenticationService.authenticate()` - generate JWT
 - [ ] Custom exceptions
 
+### Auth Implementation (Flutter)
+- [x] JWT storage w Flutter (SecureStorage)
+- [x] HTTP client setup (dio) z Authorization header
+- [x] UserAuthNotifier (login/logout state management)
+- [x] Login/Register forms w UserPanelWidget
+- [x] Token validation i refresh
+
+**Sprint 0 Status: ~90% done (mostly backend, Flutter auth complete)**
+
 ---
 
-## Sprint 2: Events Core API (~4 tygodnie = 60h)
+## Feature 1: Events Core CRUD (~4 tygodnie = 60h)
 
-### Events CRUD - Controller & DTOs
-- [?] `EventController`
-- [?] GET `/api/events` - lista wydarzeń
-- [?] GET `/api/events/{id}` - szczegóły
-- [?] POST `/api/events` - utworzenie
-- [?] PUT `/api/events/{id}` - edycja
+> **Cel:** Podstawowe operacje CRUD na wydarzeniach (tworzenie, edycja, usuwanie, lista, szczegóły)
+
+### Backend - Events CRUD (Part 1: ~25h)
+- [?] `EventController` - podstawowa struktura
+- [?] GET `/api/events` - lista wydarzeń (paginated)
+- [?] GET `/api/events/{id}` - szczegóły wydarzenia
+- [?] POST `/api/events` - utworzenie wydarzenia **[~3h]**
+- [?] PUT `/api/events/{id}` - edycja wydarzenia **[~3h]**
 - [ ] DELETE `/api/events/{id}` **[~2h]**
-- [ ] Query params: minLevel, maxLevel, locationId, maxPrice, availableOnly, page, size **[~3h]**
-- [ ] Uzupełnić EventRequest: duration, slots, level, groupName **[~2h]**
-- [ ] DTOs: UpdateEventRequest, EventDTO, EventDetailDTO **[~5h]**
-
-**Estymata Part 1: ~12h**
-
-### Events Service
-- [?] `EventService.createEvent()`
-- [?] `EventService.updateEvent()`
-- [ ] `EventService.deleteEvent()` **[~2h]**
+- [ ] Query params: minLevel, maxLevel, locationId, maxPrice, availableOnly **[~3h]**
+- [ ] DTOs: CreateEventRequest, UpdateEventRequest, EventDTO, EventDetailDTO **[~5h]**
+- [ ] EventService: createEvent(), updateEvent(), deleteEvent() **[~5h]**
 - [ ] Walidacje (startDateTime, slots, level, duration) **[~3h]**
+- [ ] EventRepository queries (filters, search) **[~3h]**
 
-**Estymata Part 2: ~5h**
+### Flutter - Events CRUD (Part 2: ~35h)
+- [ ] EventsListScreen (lista jako alternatywa dla mapy) **[~4h]**
+- [ ] EventListItem widget **[~3h]**
+- [ ] Pull-to-refresh + infinite scroll **[~5h]**
+- [ ] Switch między mapą a listą **[~2h]**
+- [ ] Filter bottom sheet (level, price, location) **[~5h]**
+- [ ] Search bar z debounce **[~3h]**
+- [ ] CreateEventScreen + formularz **[~8h]**
+- [ ] EditEventScreen (reuse CreateEvent logic) **[~3h]**
+- [ ] Delete event + confirm dialog **[~3h]**
+- [ ] Form validation **[~4h]**
+- [ ] CreateEventService + Notifier **[~4h]**
+- [ ] HTTP: PUT `/api/events`, PUT `/api/events/{id}`, DELETE **[~3h]**
 
-### Join/Leave Event - Endpoints
-- [ ] POST `/api/events/{id}/join` **[~4h]**
-- [ ] DELETE `/api/events/{id}/leave` **[~3h]**
-- [ ] GET `/api/events/{id}/participants` **[~2h]**
-- [ ] DTOs: ParticipantDTO, ParticipantsListDTO **[~2h]**
-
-**Estymata Part 3: ~11h**
-
-### Join/Leave Service - KLUCZOWA LOGIKA
-- [ ] `EventService.joinEvent()` - main list vs waitlist **[~5h]**
-- [ ] `EventService.leaveEvent()` - awans z waitlist **[~5h]**
-- [ ] `EventService.promoteFirstFromWaitlist()` **[~4h]**
-- [ ] `EventService.renumberMainList()` **[~2h]**
-- [ ] `EventService.renumberWaitlist()` **[~2h]**
-- [ ] Custom exceptions (AlreadyJoinedException, EventFullException...) **[~1.5h]**
-
-**Estymata Part 4: ~19.5h**
-
-### Repository Queries
-- [ ] `EventParticipantRepository` - nowe repo **[~2h]**
-- [ ] Query methods (existsByEventAndUser, countByEventAndStatus...) **[~4h]**
-- [ ] Event filters queries **[~3h]**
-
-**Estymata Part 5: ~9h**
-
-**TOTAL Sprint 2: ~56.5h ≈ 4 tygodnie**
+**Feature 1 Total: ~60h ≈ 4 tygodnie**
 
 ---
 
-## Sprint 3: Participant Management (~4 tygodnie = 55h)
+## Feature 2: Join/Leave Events (~5 tygodni = 75h)
 
-### Participant Management Endpoints
+> **Cel:** Użytkownicy mogą dołączać i opuszczać wydarzenia, z obsługą main list i waitlist
+
+### Backend - Join/Leave Logic (Part 1: ~35h)
+- [ ] Encja `EventParticipant` (event, user, position, status, isConfirmed, isPaid) **[~3h]**
+- [ ] Migracja V1_3__Add_event_participant_table.sql **[~2h]**
+- [ ] Enums: ParticipantStatus (MAIN_LIST, WAITLIST) **[~1h]**
+- [ ] POST `/api/events/{id}/join` endpoint **[~3h]**
+- [ ] DELETE `/api/events/{id}/leave` endpoint **[~3h]**
+- [ ] GET `/api/events/{id}/participants` endpoint **[~2h]**
+- [ ] DTOs: ParticipantDTO, ParticipantsListDTO **[~3h]**
+- [ ] EventService.joinEvent() - main list vs waitlist logic **[~5h]**
+- [ ] EventService.leaveEvent() - awans z waitlist **[~5h]**
+- [ ] promoteFirstFromWaitlist() **[~3h]**
+- [ ] renumberMainList() i renumberWaitlist() **[~3h]**
+- [ ] EventParticipantRepository + query methods **[~4h]**
+- [ ] Custom exceptions (AlreadyJoinedException, EventFullException) **[~2h]**
+
+### Flutter - Join/Leave UI (Part 2: ~40h)
+- [ ] Join button w EventDetailsScreen **[~2h]**
+- [ ] HTTP POST `/api/events/{id}/join` **[~2h]**
+- [ ] Leave button (jeśli już dołączony) **[~2h]**
+- [ ] HTTP DELETE `/api/events/{id}/leave` **[~2h]**
+- [ ] Update UI po join/leave (slots, participants count) **[~3h]**
+- [ ] Handling waitlist status (badge, info) **[~3h]**
+- [ ] Toast notifications (success/error) **[~2h]**
+- [ ] EventParticipantService + EventParticipantNotifier **[~4h]**
+- [ ] ParticipantsListScreen **[~3h]**
+- [ ] Main list display (pozycja, nick, status) **[~4h]**
+- [ ] Waitlist display (pozycja waitlist) **[~3h]**
+- [ ] Participant avatars + fallback **[~2h]**
+- [ ] Status badges (confirmed, paid, waitlist) **[~3h]**
+- [ ] HTTP GET `/api/events/{id}/participants` **[~2h]**
+- [ ] Pull-to-refresh dla listy uczestników **[~2h]**
+- [ ] Empty states (brak uczestników) **[~1h]**
+
+**Feature 2 Total: ~75h ≈ 5 tygodni**
+
+---
+
+## Feature 3: Participant Management (~6 tygodni = 90h)
+
+> **Cel:** Organizator może zarządzać uczestnikami (zmiana pozycji, confirm, payment, promote/demote, remove)
+
+### Backend - Participant Management (Part 1: ~45h)
 - [ ] `ParticipantManagementController` **[~3h]**
 - [ ] PUT `/api/events/{eventId}/participants/{userId}/position` **[~4h]**
-- [ ] PUT `/api/events/{eventId}/participants/{userId}/confirm` **[~2h]**
-- [ ] PUT `/api/events/{eventId}/participants/{userId}/payment` **[~2h]**
+- [ ] PUT `/api/events/{eventId}/participants/{userId}/confirm` (toggle) **[~2h]**
+- [ ] PUT `/api/events/{eventId}/participants/{userId}/payment` (toggle) **[~2h]**
 - [ ] POST `/api/events/{eventId}/participants/{userId}/promote` **[~4h]**
 - [ ] POST `/api/events/{eventId}/participants/{userId}/demote` **[~3h]**
 - [ ] DELETE `/api/events/{eventId}/participants/{userId}` **[~3h]**
-- [ ] POST `/api/events/{eventId}/participants` **[~3h]**
-- [ ] DTOs: ChangePositionRequest, AddParticipantRequest **[~1h]**
-
-**Estymata Part 1: ~25h**
-
-### Participant Management Service
+- [ ] POST `/api/events/{eventId}/participants` (manual add) **[~3h]**
+- [ ] DTOs: ChangePositionRequest, AddParticipantRequest **[~2h]**
+- [ ] ParticipantService.changePosition() **[~4h]**
+- [ ] ParticipantService.toggleConfirm() **[~2h]**
+- [ ] ParticipantService.togglePayment() **[~2h]**
+- [ ] ParticipantService.promoteToMainList() **[~3h]**
+- [ ] ParticipantService.demoteToWaitlist() **[~3h]**
+- [ ] ParticipantService.removeParticipant() **[~4h]**
+- [ ] ParticipantService.addParticipant() **[~3h]**
 - [ ] Sprawdzanie uprawnień: tylko organizator **[~2h]**
-- [ ] `ParticipantService.changePosition()` **[~4h]**
-- [ ] `ParticipantService.toggleConfirm()` **[~1h]**
-- [ ] `ParticipantService.togglePayment()` **[~1h]**
-- [ ] `ParticipantService.promoteToMainList()` **[~3h]**
-- [ ] `ParticipantService.demoteToWaitlist()` **[~3h]**
-- [ ] `ParticipantService.removeParticipant()` **[~4h]**
-- [ ] `ParticipantService.addParticipant()` **[~3h]**
 - [ ] Custom exceptions **[~1h]**
 
-**Estymata Part 2: ~22h**
+### Flutter - Participant Management UI (Part 2: ~45h)
+- [ ] Check: czy user jest organizatorem wydarzenia **[~2h]**
+- [ ] Management mode toggle button (organize mode) **[~2h]**
+- [ ] Drag & drop reordering (main list) **[~8h]**
+- [ ] Confirm checkbox toggle (w management mode) **[~3h]**
+- [ ] Payment checkbox toggle (w management mode) **[~3h]**
+- [ ] Promote from waitlist button **[~3h]**
+- [ ] Demote to waitlist button **[~3h]**
+- [ ] Remove participant button + confirm dialog **[~3h]**
+- [ ] Add participant button + dialog (manual add) **[~4h]**
+- [ ] HTTP PUT/POST/DELETE dla management endpoints **[~5h]**
+- [ ] Optimistic UI updates **[~3h]**
+- [ ] Error rollback (jeśli API call fails) **[~2h]**
+- [ ] Loading states dla każdej akcji **[~2h]**
+- [ ] Success animations/feedback **[~2h]**
+- [ ] PaymentsManageScreen (dedicated screen) **[~3h]**
+- [ ] Payment summary (total, paid, unpaid) **[~3h]**
+- [ ] Filter: paid/unpaid/all **[~2h]**
 
-### Bulk Actions
-- [ ] PUT `/api/events/{eventId}/participants/confirm-all` **[~2h]**
-- [ ] PUT `/api/events/{eventId}/participants/pay-all` **[~2h]**
-- [ ] POST `/api/events/{eventId}/participants/send-reminder` **[~4h]**
-
-**Estymata Part 3: ~8h**
-
-**TOTAL Sprint 3: ~55h ≈ 4 tygodnie**
+**Feature 3 Total: ~90h ≈ 6 tygodni**
 
 ---
 
-## Sprint 4: Users, Locations, Series (~5.5 tygodni = 78h)
+## Feature 4: Series Management (~5 tygodni = 75h)
 
-### Users API
-- [ ] `UserController` **[~2h]**
-- [ ] GET `/api/users/me` **[~2h]**
-- [ ] PUT `/api/users/me` **[~3h]**
-- [ ] GET `/api/users/{id}` **[~2h]**
-- [ ] GET `/api/users/me/events` **[~3h]**
-- [ ] GET `/api/users/me/organized` **[~2h]**
-- [ ] GET `/api/users/me/history` **[~4h]**
-- [ ] DTOs: UpdateUserRequest, UserProfileDTO, EventHistoryDTO **[~4h]**
+> **Cel:** Cykliczne wydarzenia (weekly/monthly), generowanie wydarzeń z szablonu
 
-**Estymata Part 1: ~22h**
-
-### Locations & Favorites
-- [ ] GET `/api/locations/{id}` **[~2h]**
-- [ ] GET `/api/locations/{id}/events` **[~3h]**
-- [ ] DTOs: AddFavoriteRequest, FavoritePlaceDTO **[~1.5h]**
-
-**Estymata Part 2: ~6.5h**
-
-### Event Series API
+### Backend - Series API (Part 1: ~40h)
+- [ ] Encja `EventSeries` (id, name, organizer, location, schedule, slots, price, level) **[~3h]**
+- [ ] Migracja V1_5__Add_event_series_table.sql **[~2h]**
+- [ ] Enum: SeriesStatus (ACTIVE, PAUSED) **[~1h]**
+- [ ] Link Event → Series (series_id FK) **[~2h]**
 - [ ] `SeriesController` **[~3h]**
-- [ ] GET `/api/series` **[~3h]**
-- [ ] GET `/api/series/{id}` **[~2h]**
-- [ ] POST `/api/series` **[~4h]**
-- [ ] PUT `/api/series/{id}` **[~3h]**
-- [ ] DELETE `/api/series/{id}` **[~2h]**
-- [ ] POST `/api/series/{id}/generate` **[~8h]**
+- [ ] GET `/api/series` - lista serii **[~3h]**
+- [ ] GET `/api/series/{id}` - szczegóły serii **[~2h]**
+- [ ] POST `/api/series` - utworzenie serii **[~4h]**
+- [ ] PUT `/api/series/{id}` - edycja serii **[~3h]**
+- [ ] DELETE `/api/series/{id}` - usunięcie serii **[~2h]**
+- [ ] POST `/api/series/{id}/generate` - generowanie wydarzeń **[~8h]**
 - [ ] PUT `/api/series/{id}/pause` **[~1h]**
 - [ ] PUT `/api/series/{id}/resume` **[~1h]**
 - [ ] DTOs: CreateSeriesRequest, GenerateEventsRequest, SeriesDTO **[~5h]**
-
-**Estymata Part 3: ~32h**
-
-### Series Service - Generation Logic
-- [ ] `SeriesService.generateEvents()` - parsowanie schedule **[~6h]**
-- [ ] Logika generowania (weekly/monthly) **[~8h]**
-- [ ] Link do series (series_id FK) **[~2h]**
+- [ ] SeriesService.generateEvents() - parsowanie schedule **[~6h]**
+- [ ] Logika generowania (weekly/monthly) **[~6h]**
 - [ ] Walidacje (przeszłość, max 52 events) **[~2h]**
 
-**Estymata Part 4: ~18h**
+### Flutter - Series Management UI (Part 2: ~35h)
+- [ ] SeriesListScreen **[~3h]**
+- [ ] SeriesListItem widget **[~2h]**
+- [ ] Display: name, schedule, location, status **[~2h]**
+- [ ] Filter: active/paused **[~2h]**
+- [ ] HTTP GET `/api/series` **[~2h]**
+- [ ] CreateSeriesScreen **[~3h]**
+- [ ] Form fields: name, location, schedule **[~4h]**
+- [ ] Schedule type picker: weekly/monthly **[~3h]**
+- [ ] Days of week selector (multi-select) **[~4h]**
+- [ ] Time picker **[~2h]**
+- [ ] Default slots, price, level inputs **[~2h]**
+- [ ] HTTP POST `/api/series` **[~2h]**
+- [ ] Generate events screen **[~2h]**
+- [ ] Date range picker (start/end) **[~2h]**
+- [ ] Preview list wydarzeń do wygenerowania **[~3h]**
+- [ ] HTTP POST `/api/series/{id}/generate` **[~2h]**
+- [ ] Success feedback z liczbą wygenerowanych **[~1h]**
 
-**TOTAL Sprint 4: ~78.5h ≈ 5.5 tygodnia**
+**Feature 4 Total: ~75h ≈ 5 tygodni**
 
 ---
 
-## Sprint 5: Testing & Documentation (~5.5 tygodni = 79h)
+## Feature 5: User Profile & History (~3 tygodnie = 45h)
 
-### Unit Tests
-- [ ] `UserServiceTest` **[~4h]**
-- [ ] `EventServiceTest` - CRUD **[~6h]**
-- [ ] `EventServiceTest.joinEvent` - main list **[~3h]**
-- [ ] `EventServiceTest.joinEvent` - waitlist **[~3h]**
-- [ ] `EventServiceTest.leaveEvent` - promotion **[~4h]**
-- [ ] `EventServiceTest.leaveEvent` - renumbering **[~3h]**
-- [ ] `ParticipantServiceTest` **[~6h]**
-- [ ] `SeriesServiceTest` **[~4h]**
-- [ ] Coverage 80%+ **[~5h dodatkowe]**
+> **Cel:** Pełny profil użytkownika, historia wydarzeń, edycja profilu
+
+### Backend - User API (Part 1: ~22h)
+- [ ] `UserController` **[~2h]**
+- [ ] GET `/api/users/me` - profil zalogowanego **[~2h]**
+- [ ] PUT `/api/users/me` - update profilu **[~3h]**
+- [ ] GET `/api/users/{id}` - profil innego użytkownika (public view) **[~2h]**
+- [ ] GET `/api/users/me/events` - wydarzenia jako uczestnik **[~3h]**
+- [ ] GET `/api/users/me/organized` - wydarzenia jako organizator **[~2h]**
+- [ ] GET `/api/users/me/history` - historia (past events) **[~4h]**
+- [ ] DTOs: UpdateUserRequest, UserProfileDTO, EventHistoryDTO **[~4h]**
+
+### Flutter - User Profile UI (Part 2: ~23h)
+- [ ] Enhanced UserProfileScreen (replace current basic one) **[~4h]**
+- [ ] Display: avatar, nickname, email, thumbsUp/Down, level **[~3h]**
+- [ ] Edit profile button → EditProfileScreen **[~3h]**
+- [ ] EditProfileScreen (nickname, avatar upload) **[~5h]**
+- [ ] HTTP PUT `/api/users/me` **[~2h]**
+- [ ] My Events tab (lista wydarzeń jako uczestnik) **[~3h]**
+- [ ] My Organized tab (lista wydarzeń jako organizator) **[~3h]**
+- [ ] History tab (past events) **[~2h]**
+- [ ] HTTP GET endpoints dla każdego tab **[~2h]**
+
+**Feature 5 Total: ~45h ≈ 3 tygodnie**
+
+---
+
+## Feature 6: UI Polish & Navigation (~2 tygodnie = 30h)
+
+> **Cel:** Dopracowanie UI, animacje, loading states, error handling
+
+### Flutter - UI Polish & Navigation (30h)
+- [ ] Bottom Navigation Bar (Home/Map, Events, Profile) **[~4h]**
+- [ ] App drawer z dodatkowymi opcjami **[~3h]**
+- [ ] Loading skeletons na wszystkich ekranach **[~4h]**
+- [ ] Error states z retry button **[~3h]**
+- [ ] Hero animations (event card → details) **[~2h]**
+- [ ] Smooth page transitions **[~2h]**
+- [ ] Haptic feedback na button clicks **[~1h]**
+- [ ] Success animations (Lottie) **[~3h]**
+- [ ] Toast notifications system **[~2h]**
+- [ ] Network error handling (offline mode info) **[~2h]**
+- [ ] Token expiration handling **[~2h]**
+- [ ] Validation error messages z backendu **[~2h]**
+
+**Feature 6 Total: ~30h ≈ 2 tygodnie**
+
+---
+
+## Sprint Testing & Documentation (~5 tygodni = 75h)
+
+### Unit Tests (Backend)
+- [ ] UserServiceTest **[~4h]**
+- [ ] EventServiceTest - CRUD **[~6h]**
+- [ ] EventServiceTest.joinEvent - main list & waitlist **[~6h]**
+- [ ] EventServiceTest.leaveEvent - promotion & renumbering **[~7h]**
+- [ ] ParticipantServiceTest **[~6h]**
+- [ ] SeriesServiceTest **[~4h]**
+- [ ] Coverage 80%+ **[~5h]**
 
 **Estymata Part 1: ~38h**
 
-### Integration Tests
-- [ ] `AuthControllerIntegrationTest` **[~3h]**
-- [ ] `EventControllerIntegrationTest` - CRUD **[~4h]**
-- [ ] `EventControllerIntegrationTest` - join/leave **[~4h]**
-- [ ] `ParticipantManagementControllerIntegrationTest` **[~4h]**
+### Integration Tests (Backend)
+- [ ] AuthControllerIntegrationTest **[~3h]**
+- [ ] EventControllerIntegrationTest - CRUD **[~4h]**
+- [ ] EventControllerIntegrationTest - join/leave **[~4h]**
+- [ ] ParticipantManagementControllerIntegrationTest **[~4h]**
 
 **Estymata Part 2: ~15h**
 
 ### API Documentation
 - [ ] Swagger/OpenAPI setup (springdoc-openapi-ui) **[~2h]**
 - [ ] Swagger UI na `/swagger-ui.html` **[~1h]**
-- [ ] Adnotacje @Operation, @ApiResponse **[~6h]**
+- [ ] Adnotacje @Operation na wszystkich endpoints **[~6h]**
 - [ ] Przykłady request/response **[~4h]**
 - [ ] Export openapi.json **[~1h]**
 
 **Estymata Part 3: ~14h**
 
 ### Postman Collection
-- [ ] Workspace + folders (Auth, Events, Participants, Users, Series) **[~8h]**
+- [ ] Workspace + folders (Auth, Events, Participants, Users, Series) **[~6h]**
 - [ ] Environment variables **[~0.5h]**
 - [ ] Example requests z danymi **[~2h]**
 - [ ] Export collection **[~0.5h]**
 
-**Estymata Part 4: ~11h**
+**Estymata Part 4: ~9h**
 
-**TOTAL Sprint 5: ~78h ≈ 5.5 tygodnia**
+**Sprint Testing Total: ~76h ≈ 5 tygodni**
 
 ---
 
-## Raspberry Pi Deploy (~3.5 tygodnia = 50h)
+## Sprint Deploy: Raspberry Pi (~3 tygodnie = 45h)
 
 ### Hardware & System Setup
 - [ ] Zakup: RPi 4B 8GB + karta SD 64GB + zasilacz **[~500-600 PLN]**
@@ -267,7 +347,6 @@
 - [ ] Statyczny IP / DuckDNS setup **[~1h]**
 - [ ] SSH setup (klucze SSH) **[~1h]**
 - [ ] UFW firewall (porty 22, 80, 443, 8080, 5432) **[~1h]**
-- [ ] System update **[~0.5h]**
 
 **Estymata Part 1: ~5.5h**
 
@@ -275,118 +354,44 @@
 - [ ] Instalacja PostgreSQL **[~1h]**
 - [ ] Utworzenie użytkownika i bazy **[~1h]**
 - [ ] Konfiguracja postgresql.conf i pg_hba.conf **[~1h]**
-- [ ] Test połączenia **[~0.5h]**
 - [ ] Backup cron job (pg_dump) **[~1h]**
 
-**Estymata Part 2: ~4.5h**
+**Estymata Part 2: ~4h**
 
-### Java & Maven
-- [ ] Instalacja OpenJDK 21 **[~1h]**
-- [ ] Instalacja Maven **[~1h]**
-- [ ] Weryfikacja wersji **[~0.5h]**
-
-**Estymata Part 3: ~2.5h**
-
-### Backend Deployment
+### Java & Backend Deployment
+- [ ] Instalacja OpenJDK 21 + Maven **[~2.5h]**
 - [ ] Clone repo meet-app-be **[~0.5h]**
 - [ ] Konfiguracja .env (DB credentials, JWT_SECRET) **[~1h]**
 - [ ] Build: mvn clean package **[~0.5h]**
-- [ ] Test uruchomienia JAR **[~1h]**
 - [ ] Systemd service setup **[~2h]**
 - [ ] Enable & start service **[~1h]**
-- [ ] Monitoring logs **[~0.5h]**
 
-**Estymata Part 4: ~6.5h**
+**Estymata Part 3: ~7.5h**
 
-### Nginx Reverse Proxy
+### Nginx Reverse Proxy + SSL
 - [ ] Instalacja Nginx **[~1h]**
 - [ ] Konfiguracja proxy (8080→80) **[~2h]**
-- [ ] Config file + symlink **[~1h]**
-- [ ] Test + restart **[~0.5h]**
-
-**Estymata Part 5: ~4.5h**
-
-### SSL Certificate (Let's Encrypt)
-- [ ] Instalacja Certbot **[~1h]**
-- [ ] Uzyskanie certyfikatu dla domeny **[~1h]**
+- [ ] Let's Encrypt SSL certificate **[~2.5h]**
 - [ ] Auto-renewal test **[~0.5h]**
 
-**Estymata Part 6: ~2.5h**
+**Estymata Part 4: ~6h**
 
-### Monitoring & Maintenance
-- [ ] htop instalacja **[~0.5h]**
-- [ ] logrotate setup **[~1h]**
-- [ ] Backup skrypt + cron **[~2h]**
-- [ ] Retention policy (7 dni) **[~0.5h]**
+### Monitoring & Security
 - [ ] Uptimerobot setup **[~1h]**
-- [ ] Actuator health check **[~0.5h]**
-
-**Estymata Part 7: ~5.5h**
-
-### Network & Security
-- [ ] Port forwarding (router) **[~1h]**
-- [ ] DuckDNS / No-IP **[~1.5h]**
-- [ ] Test zewnętrzny dostęp **[~0.5h]**
-- [ ] SSH whitelist IP **[~1h]**
 - [ ] Fail2ban setup **[~1.5h]**
+- [ ] Backup skrypt + cron **[~2.5h]**
+- [ ] Logrotate setup **[~1h]**
 
-**Estymata Part 8: ~5.5h**
-
-### Performance Tuning
-- [ ] JVM heap (-Xmx4G -Xms2G) **[~0.5h]**
-- [ ] PostgreSQL shared_buffers **[~0.5h]**
-- [ ] PostgreSQL max_connections **[~0.5h]**
-- [ ] Swap file 2GB **[~1h]**
-
-**Estymata Part 9: ~2.5h**
+**Estymata Part 5: ~6h**
 
 ### Seed Data & Testing
-- [ ] Utworzenie 5-10 testowych użytkowników **[~1h]**
-- [ ] Seed 10-20 wydarzeń (różne lokalizacje, daty) **[~2h]**
+- [ ] Seed 5-10 testowych użytkowników **[~1h]**
+- [ ] Seed 10-20 wydarzeń **[~2h]**
 - [ ] Test wszystkich endpoints z Postman **[~2h]**
-- [ ] Współdzielenie URL backendu (dla siebie na Flutter) **[~0.5h]**
 
-**Estymata Part 10: ~5.5h**
+**Estymata Part 6: ~5h**
 
-**TOTAL Raspberry Pi: ~45h ≈ 3 tygodnie**
-
----
-
-## Flutter Integration (~2 tygodnie = 30h)
-
-### Backend-Flutter Connection
-- [ ] Konfiguracja `API_BASE_URL` w Flutter .env **[~0.5h]**
-- [ ] Test `/api/auth/login` z Flutter **[~2h]**
-- [ ] Test `/api/auth/register` z Flutter **[~2h]**
-- [ ] Implementacja JWT storage w Flutter (SharedPreferences) **[~2h]**
-- [ ] HTTP client setup (dio) z Authorization header **[~2h]**
-
-**Estymata Part 1: ~8.5h**
-
-### Events Integration
-- [ ] Test GET `/api/events` - lista wydarzeń **[~2h]**
-- [ ] Test GET `/api/events/{id}` - szczegóły **[~2h]**
-- [ ] Test POST `/api/events/{id}/join` **[~2h]**
-- [ ] Test DELETE `/api/events/{id}/leave` **[~2h]**
-- [ ] UI updates po join/leave **[~3h]**
-
-**Estymata Part 2: ~11h**
-
-### Participant Management (organizator view)
-- [ ] Test toggle confirm z Flutter **[~1h]**
-- [ ] Test toggle payment z Flutter **[~1h]**
-- [ ] Test promote/demote **[~2h]**
-- [ ] UI dla zarządzania uczestnikami **[~4h]**
-
-**Estymata Part 3: ~8h**
-
-### API Adjustments (na podstawie testów Flutter)
-- [ ] Iteracje na DTOs (dodanie/usunięcie pól) **[~3h]**
-- [ ] Fix błędów integracji **[~2h]**
-
-**Estymata Part 4: ~5h**
-
-**TOTAL Flutter Integration: ~32.5h ≈ 2 tygodnie**
+**Sprint Deploy Total: ~45h ≈ 3 tygodnie**
 
 ---
 
@@ -398,13 +403,11 @@
 - [ ] Thymeleaf templates **[~6h]**
 - [ ] Przypomnienie 24h przed eventem **[~3h]**
 - [ ] Awans z waitlist notification **[~2h]**
-- [ ] Przypomnienie o płatności **[~2h]**
 - [ ] Event cancelled notification **[~2h]**
 - [ ] Scheduler (@Scheduled) **[~2h]**
 
 ### Push Notifications (~3 tygodnie = 45h)
 - [ ] Firebase FCM setup backend **[~4h]**
-- [ ] FCM dependency **[~1h]**
 - [ ] Push: Przypomnienie **[~3h]**
 - [ ] Push: Awans z waitlist **[~3h]**
 - [ ] Push: Zmiana eventu **[~4h]**
@@ -426,94 +429,80 @@
 
 **MVP - Do pokazania pierwszym grupom:**
 
-| Sprint | Zadania | Godziny | Tygodnie | Miesiące |
-|--------|---------|---------|----------|----------|
-| Sprint 2 | Events Core (join/leave) | ~57h | 4 tyg. | 1 mies. |
-| Sprint 3 | Participant Management | ~55h | 4 tyg. | 1 mies. |
-| Sprint 4 | Users/Series | ~78.5h | 5.5 tyg. | 1.5 mies. |
-| Sprint 5 | Testing & Docs | ~78h | 5.5 tyg. | 1.5 mies. |
-| RPi Deploy | Raspberry Pi Setup | ~45h | 3 tyg. | 0.75 mies. |
-| Flutter | Integration & Testing | ~32.5h | 2 tyg. | 0.5 mies. |
-| **TOTAL MVP** | **Core functionality** | **~346h** | **~23 tyg.** | **~5.75 mies.** |
+| Feature | Backend | Flutter | Total | Tygodnie |
+|---------|---------|---------|-------|----------|
+| Sprint 0: Auth & Setup | ~Done | ~Done | ~0h | 0 tyg. |
+| Feature 1: Events CRUD | ~25h | ~35h | ~60h | 4 tyg. |
+| Feature 2: Join/Leave | ~35h | ~40h | ~75h | 5 tyg. |
+| Feature 3: Participant Mgmt | ~45h | ~45h | ~90h | 6 tyg. |
+| Feature 4: Series | ~40h | ~35h | ~75h | 5 tyg. |
+| Feature 5: User Profile | ~22h | ~23h | ~45h | 3 tyg. |
+| Feature 6: UI Polish | - | ~30h | ~30h | 2 tyg. |
+| Sprint Testing & Docs | ~76h | - | ~76h | 5 tyg. |
+| Sprint Deploy (RPi) | - | - | ~45h | 3 tyg. |
+| **TOTAL MVP** | **~243h** | **~208h** | **~496h** | **~33 tyg.** |
+
+**Czyli: ~496h / 15h/tydzień = 33 tygodnie = ~8.25 miesiąca**
 
 **Post-MVP (po feedbacku od użytkowników):**
 
-| Feature | Godziny | Tygodnie | Miesiące |
-|---------|---------|----------|----------|
-| Email Notifications | ~30h | 2 tyg. | 0.5 mies. |
-| Push Notifications | ~45h | 3 tyg. | 0.75 mies. |
-| Payments (Stripe) | ~60h | 4 tyg. | 1 mies. |
-| **TOTAL Post-MVP** | **~135h** | **9 tyg.** | **~2.25 mies.** |
+| Feature | Godziny | Tygodnie |
+|---------|---------|----------|
+| Email Notifications | ~30h | 2 tyg. |
+| Push Notifications | ~45h | 3 tyg. |
+| Payments (Stripe) | ~60h | 4 tyg. |
+| **TOTAL Post-MVP** | **~135h** | **9 tyg.** |
 
-**GRAND TOTAL: ~481h = ~32 tygodnie = ~8 miesięcy**
+**GRAND TOTAL: ~631h = ~42 tygodnie = ~10.5 miesiąca**
 
 ---
 
 ## Timeline (realistyczny dla 15h/tydzień solo)
 
-### Faza 1: Backend MVP (5-6 miesięcy)
-- **Miesiąc 1-2:** Sprint 2 - Events Core API (join/leave)
-- **Miesiąc 2-3:** Sprint 3 - Participant Management
-- **Miesiąc 3-5:** Sprint 4 - Users/Series
-- **Miesiąc 5-6:** Sprint 5 - Testing & Documentation
+### Faza 1: Core Features (6 miesięcy)
+- **Miesiąc 1:** Feature 1 - Events CRUD (4 tyg.)
+- **Miesiąc 2:** Feature 2 - Join/Leave (5 tyg.)
+- **Miesiąc 3-4:** Feature 3 - Participant Management (6 tyg.)
+- **Miesiąc 4-5:** Feature 4 - Series (5 tyg.)
+- **Miesiąc 5-6:** Feature 5 - User Profile (3 tyg.) + Feature 6 - UI Polish (2 tyg.)
 
-### Faza 2: Deploy & Flutter Integration (1 miesiąc)
-- **Tydzień 1-3:** Raspberry Pi Setup
-- **Tydzień 4-5:** Flutter Integration & Testing
-- **Tydzień 6:** Bug fixes & polish
+### Faza 2: Testing & Deploy (2 miesiące)
+- **Miesiąc 6-7:** Testing & Documentation (5 tyg.)
+- **Miesiąc 7-8:** Raspberry Pi Deploy (3 tyg.)
 
 ### Faza 3: Pokazanie Pierwszym Grupom
-- **Miesiąc 6-7:** First users testing
-- **Miesiąc 7:** Zbieranie feedbacku
+- **Miesiąc 8:** First users testing
+- **Miesiąc 8-9:** Zbieranie feedbacku + bug fixes
 
-### Faza 4: Post-MVP (2-3 miesiące)
-- **Miesiąc 8:** Email Notifications
-- **Miesiąc 8-9:** Push Notifications
-- **Miesiąc 9-10:** Payments (jeśli potrzebne)
+### Faza 4: Post-MVP (2 miesiące)
+- **Miesiąc 9-10:** Email Notifications (2 tyg.) + Push Notifications (3 tyg.)
+- **Miesiąc 10-11:** Payments (4 tyg.)
 
 ---
 
 ## Priorytety (Critical Path)
 
 **🔴 CRITICAL - musi być przed pokazaniem użytkownikom:**
-1. Sprint 2: Join/Leave logic - **4 tygodnie**
-2. Sprint 3: Participant Management - **4 tygodnie**
-3. Sprint 5 Part 3-4: Swagger + Postman - **2 tygodnie**
-4. Raspberry Pi Deploy - **3 tygodnie**
-5. Flutter Integration (basic) - **2 tygodnie**
+1. Feature 1: Events CRUD (backend + Flutter) - **4 tygodnie**
+2. Feature 2: Join/Leave (backend + Flutter) - **5 tygodni**
+3. Feature 3: Participant Management (backend + Flutter) - **6 tygodni**
+4. Feature 6: UI Polish - **2 tygodnie**
+5. Sprint Deploy: Raspberry Pi - **3 tygodnie**
 
-**Critical Path: ~15 tygodni (3.75 miesiąca)**
+**Critical Path: ~20 tygodni (5 miesięcy)**
 
 **🟡 HIGH - bardzo przydatne:**
-6. Sprint 4: Series (cykliczne wydarzenia) - **2 tygodnie**
-7. Sprint 4: User Profile - **1.5 tygodnia**
-8. Sprint 5: Tests - **3.5 tygodnia**
+6. Feature 4: Series Management - **5 tygodni**
+7. Feature 5: User Profile - **3 tygodnie**
+8. Sprint Testing & Docs - **5 tygodni**
 
 **🟢 MEDIUM:**
 9. Email Notifications - **2 tygodnie**
 10. Push Notifications - **3 tygodnie**
 
 **⚪ LOW:**
-11. Payments - **4 tygodnie**
-12. Advanced features - **TBD**
+11. Payments (Stripe integration) - **4 tygodnie**
 
 ---
 
-## Koszty (bardzo niskie!)
-
-**Jednorazowe:**
-- Raspberry Pi 4B 8GB: ~400-450 PLN
-- Karta SD 64GB: ~50-80 PLN
-- Zasilacz: ~40-50 PLN
-- Obudowa (opcja): ~40-60 PLN
-- **Total hardware: ~530-640 PLN**
-
-**Miesięczne:**
-- Energia (5W): ~3 PLN/miesiąc
-- Internet: masz już (0 PLN)
-- Wszystkie usługi: DARMOWE (PostgreSQL, Nginx, SSL, DDNS, monitoring)
-- **Total miesięczne: ~3 PLN**
-
----
-
-**Realistyczny cel: MVP gotowe za ~4 miesiące, pokazanie pierwszym użytkownikom za ~6 miesięcy!** 🚀
+**Realistyczny cel: Podstawowe MVP (Features 1-3 + UI Polish + Deploy) gotowe za ~5-6 miesięcy, pełne MVP za ~8 miesięcy, pokazanie pierwszym użytkownikom za ~8-9 miesięcy!** 🚀

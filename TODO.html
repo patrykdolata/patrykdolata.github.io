@@ -3,10 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TODO - Meet App Implementation Plan</title>
+  <title>TODO - Meet App Implementation Plan (Feature-Based)</title>
   <link rel="stylesheet" href="css/design-system.css">
   <link rel="stylesheet" href="css/components.css">
-  <link rel="stylesheet" href="css/iphone-frame.css">
   <style>
     body {
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -41,6 +40,88 @@
       color: var(--color-text-secondary);
       margin-bottom: var(--space-sm);
     }
+
+    /* Progress Bar */
+    .progress-section {
+      margin: var(--space-2xl) 0;
+      padding: var(--space-xl);
+      background: var(--color-background);
+      border-radius: var(--radius-lg);
+    }
+
+    .progress-section h2 {
+      color: var(--color-primary);
+      margin-bottom: var(--space-md);
+      text-align: center;
+    }
+
+    .progress-bar-container {
+      background: #e5e7eb;
+      border-radius: var(--radius-full);
+      height: 40px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .progress-bar {
+      display: flex;
+      height: 100%;
+      transition: all 0.3s ease;
+    }
+
+    .progress-segment {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+    }
+
+    .progress-completed {
+      background: linear-gradient(90deg, #10b981, #059669);
+    }
+
+    .progress-verified {
+      background: linear-gradient(90deg, #f59e0b, #d97706);
+    }
+
+    .progress-pending {
+      background: #9ca3af;
+    }
+
+    .progress-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: var(--space-md);
+      margin-top: var(--space-lg);
+    }
+
+    .progress-stat {
+      text-align: center;
+      padding: var(--space-md);
+      background: white;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .progress-stat-value {
+      font-size: 2rem;
+      font-weight: bold;
+      margin-bottom: var(--space-xs);
+    }
+
+    .progress-stat-label {
+      font-size: 0.9rem;
+      color: var(--color-text-secondary);
+    }
+
+    .stat-completed { color: #10b981; }
+    .stat-verified { color: #f59e0b; }
+    .stat-pending { color: #6b7280; }
+    .stat-total { color: var(--color-primary); }
 
     .legend {
       display: flex;
@@ -98,31 +179,45 @@
       top: -2px;
     }
 
-    .sprint-section {
+    .feature-section {
       margin-bottom: var(--space-2xl);
     }
 
-    .sprint-header {
+    .feature-header {
       background: linear-gradient(135deg, var(--color-primary), #5a67d8);
       color: white;
       padding: var(--space-lg);
       border-radius: var(--radius-md);
       margin-bottom: var(--space-lg);
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.2s;
+    }
+
+    .feature-header:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .feature-header h2 {
+      margin: 0;
+      font-size: 1.5rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
-    .sprint-header h2 {
-      margin: 0;
-      font-size: 1.5rem;
-    }
-
-    .sprint-badge {
+    .feature-badge {
       background: rgba(255, 255, 255, 0.2);
       padding: var(--space-xs) var(--space-md);
       border-radius: var(--radius-full);
       font-size: 0.9rem;
+    }
+
+    .feature-description {
+      margin-top: var(--space-sm);
+      font-size: 0.95rem;
+      opacity: 0.95;
     }
 
     .subsection {
@@ -135,6 +230,8 @@
       color: var(--color-primary);
       margin-bottom: var(--space-md);
       font-size: 1.2rem;
+      cursor: pointer;
+      user-select: none;
     }
 
     .task-list {
@@ -230,35 +327,33 @@
       margin-bottom: var(--space-lg);
     }
 
-    .summary-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: var(--space-lg);
+    .summary-table {
+      width: 100%;
+      border-collapse: collapse;
       margin-top: var(--space-lg);
-    }
-
-    .summary-card {
       background: white;
-      padding: var(--space-lg);
       border-radius: var(--radius-md);
+      overflow: hidden;
       box-shadow: var(--shadow-md);
     }
 
-    .summary-card h3 {
-      color: var(--color-primary);
-      margin-bottom: var(--space-sm);
-      font-size: 1rem;
+    .summary-table th,
+    .summary-table td {
+      padding: var(--space-md);
+      text-align: left;
+      border-bottom: 1px solid var(--color-border-light);
     }
 
-    .summary-card .value {
-      font-size: 2rem;
-      font-weight: bold;
-      color: var(--color-primary);
+    .summary-table th {
+      background: var(--color-primary);
+      color: white;
+      font-weight: 600;
     }
 
-    .summary-card .label {
-      color: var(--color-text-secondary);
-      font-size: 0.9rem;
+    .summary-table tr:last-child td {
+      border-bottom: none;
+      font-weight: 700;
+      background: #f3f4f6;
     }
 
     .priority-badge {
@@ -305,20 +400,6 @@
       box-shadow: var(--shadow-xl);
     }
 
-    @media (max-width: 768px) {
-      .todo-container {
-        padding: var(--space-lg);
-      }
-
-      .todo-header h1 {
-        font-size: 1.8rem;
-      }
-
-      .summary-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
     .collapsible {
       cursor: pointer;
       user-select: none;
@@ -345,6 +426,20 @@
     .collapsible-content.collapsed {
       max-height: 0;
     }
+
+    @media (max-width: 768px) {
+      .todo-container {
+        padding: var(--space-lg);
+      }
+
+      .todo-header h1 {
+        font-size: 1.8rem;
+      }
+
+      .progress-stats {
+        grid-template-columns: 1fr;
+      }
+    }
   </style>
 </head>
 <body>
@@ -353,7 +448,7 @@
   <div class="todo-container">
     <div class="todo-header">
       <h1>✅ Meet App - TODO Implementation Plan</h1>
-      <p class="subtitle">Plan rozwoju backendu i aplikacji mobilnej</p>
+      <p class="subtitle"><strong>Strategia:</strong> Feature-based development (Backend + Flutter razem)</p>
       <p class="subtitle" style="font-size: 0.95rem; color: var(--color-text);">
         <strong>Backend:</strong> meet-app-be (Spring Boot) • <strong>Frontend:</strong> meet-app-fe (Flutter) • <strong>Time:</strong> 15h/tygodniu
       </p>
@@ -365,7 +460,7 @@
         </div>
         <div class="legend-item">
           <span class="legend-checkbox maybe"></span>
-          <span>Prawdopodobnie zrobione (do weryfikacji)</span>
+          <span>Do weryfikacji (prawdopodobnie zrobione)</span>
         </div>
         <div class="legend-item">
           <span class="legend-checkbox done"></span>
@@ -374,11 +469,44 @@
       </div>
     </div>
 
-    <!-- Sprint 1 -->
-    <div class="sprint-section">
-      <div class="sprint-header">
-        <h2>Sprint 1: Backend Setup & Auth</h2>
-        <span class="sprint-badge">DONE - do weryfikacji</span>
+    <!-- Progress Bar -->
+    <div class="progress-section">
+      <h2>📊 Postęp Implementacji</h2>
+      <div class="progress-bar-container">
+        <div class="progress-bar">
+          <div class="progress-segment progress-completed" style="width: 2%;" title="Ukończone (2%)">2%</div>
+          <div class="progress-segment progress-verified" style="width: 8%;" title="Do weryfikacji (8%)">8%</div>
+          <div class="progress-segment progress-pending" style="width: 90%;" title="Do zrobienia (90%)">90%</div>
+        </div>
+      </div>
+      <div class="progress-stats">
+        <div class="progress-stat">
+          <div class="progress-stat-value stat-completed">~5</div>
+          <div class="progress-stat-label">Ukończone</div>
+        </div>
+        <div class="progress-stat">
+          <div class="progress-stat-value stat-verified">~30</div>
+          <div class="progress-stat-label">Do weryfikacji</div>
+        </div>
+        <div class="progress-stat">
+          <div class="progress-stat-value stat-pending">~265</div>
+          <div class="progress-stat-label">Do zrobienia</div>
+        </div>
+        <div class="progress-stat">
+          <div class="progress-stat-value stat-total">~300</div>
+          <div class="progress-stat-label">Wszystkie zadania</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sprint 0: Auth & Setup -->
+    <div class="feature-section">
+      <div class="feature-header">
+        <h2>
+          <span>Sprint 0: Backend Setup & Auth</span>
+          <span class="feature-badge">~90% DONE</span>
+        </h2>
+        <p class="feature-description">Projekt Spring Boot, PostgreSQL, JWT Auth, podstawowe encje</p>
       </div>
 
       <div class="subsection">
@@ -391,47 +519,11 @@
             </li>
             <li class="task-item">
               <span class="task-checkbox maybe"></span>
-              <span class="task-text">Konfiguracja PostgreSQL</span>
+              <span class="task-text">Konfiguracja PostgreSQL + application.yml</span>
             </li>
             <li class="task-item">
               <span class="task-checkbox maybe"></span>
-              <span class="task-text">Setup application.yml</span>
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox maybe"></span>
-              <span class="task-text">Struktura pakietów (controller, service, repository, entity)</span>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="subsection">
-        <h3 class="collapsible">Model Bazy Danych - Encje JPA</h3>
-        <div class="collapsible-content">
-          <ul class="task-list">
-            <li class="task-item">
-              <span class="task-checkbox maybe"></span>
-              <span class="task-text">Encja User (id, login, email, password, role...)</span>
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox maybe"></span>
-              <span class="task-text">Encja Location (id, name, latitude, longitude...)</span>
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox maybe"></span>
-              <span class="task-text">Encja Event (id, title, location, organizer...)</span>
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox"></span>
-              <span class="task-text">Encja EventParticipant (event, user, position, status...)</span>
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox"></span>
-              <span class="task-text">Encja EventSeries (id, name, schedule...)</span>
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox maybe"></span>
-              <span class="task-text">Encja FavoritePlace</span>
+              <span class="task-text">Struktura pakietów (controller, service, repository)</span>
             </li>
           </ul>
         </div>
@@ -443,39 +535,61 @@
           <ul class="task-list">
             <li class="task-item">
               <span class="task-checkbox maybe"></span>
-              <span class="task-text">JwtService (generateToken, validateToken)</span>
+              <span class="task-text">JwtService + JwtAuthenticationFilter</span>
             </li>
             <li class="task-item">
               <span class="task-checkbox maybe"></span>
-              <span class="task-text">JwtAuthenticationFilter</span>
+              <span class="task-text">SecurityConfiguration (CORS, stateless)</span>
             </li>
             <li class="task-item">
               <span class="task-checkbox maybe"></span>
-              <span class="task-text">SecurityConfiguration (CORS, stateless session)</span>
+              <span class="task-text">Auth endpoints (register, login, logout)</span>
             </li>
             <li class="task-item">
-              <span class="task-checkbox maybe"></span>
-              <span class="task-text">PasswordEncoder (BCrypt)</span>
+              <span class="task-checkbox done"></span>
+              <span class="task-text">Flutter: JWT storage (SecureStorage)</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox done"></span>
+              <span class="task-text">Flutter: HTTP client (dio) + Authorization header</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox done"></span>
+              <span class="task-text">Flutter: UserAuthNotifier + Login/Register forms</span>
             </li>
           </ul>
         </div>
       </div>
     </div>
 
-    <!-- Sprint 2 -->
-    <div class="sprint-section">
-      <div class="sprint-header">
-        <h2>Sprint 2: Events Core API <span class="priority-badge priority-critical">CRITICAL</span></h2>
-        <span class="sprint-badge">~4 tygodnie (57h)</span>
+    <!-- Feature 1: Events CRUD -->
+    <div class="feature-section">
+      <div class="feature-header">
+        <h2>
+          <span>Feature 1: Events Core CRUD <span class="priority-badge priority-critical">CRITICAL</span></span>
+          <span class="feature-badge">4 tygodnie (60h)</span>
+        </h2>
+        <p class="feature-description">Podstawowe operacje CRUD: tworzenie, edycja, usuwanie, lista, szczegóły wydarzeń</p>
       </div>
 
       <div class="subsection">
-        <h3 class="collapsible">Events CRUD - Controller & DTOs</h3>
+        <h3 class="collapsible">Backend - Events CRUD (~25h)</h3>
         <div class="collapsible-content">
           <ul class="task-list">
             <li class="task-item">
               <span class="task-checkbox maybe"></span>
-              <span class="task-text">EventController + podstawowe endpointy</span>
+              <span class="task-text">EventController + GET /api/events (lista)</span>
+              <span class="task-estimate">~3h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">POST /api/events (utworzenie)</span>
+              <span class="task-estimate">~3h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">PUT /api/events/{id} (edycja)</span>
+              <span class="task-estimate">~3h</span>
             </li>
             <li class="task-item">
               <span class="task-checkbox"></span>
@@ -484,31 +598,105 @@
             </li>
             <li class="task-item">
               <span class="task-checkbox"></span>
-              <span class="task-text">Query params: minLevel, maxLevel, locationId, maxPrice...</span>
+              <span class="task-text">Query params: minLevel, maxLevel, locationId, maxPrice</span>
               <span class="task-estimate">~3h</span>
             </li>
             <li class="task-item">
               <span class="task-checkbox"></span>
-              <span class="task-text">Uzupełnić EventRequest: duration, slots, level</span>
-              <span class="task-estimate">~2h</span>
+              <span class="task-text">DTOs: CreateEventRequest, UpdateEventRequest, EventDTO</span>
+              <span class="task-estimate">~5h</span>
             </li>
             <li class="task-item">
               <span class="task-checkbox"></span>
-              <span class="task-text">DTOs: EventDTO, EventDetailDTO</span>
+              <span class="task-text">EventService: createEvent, updateEvent, deleteEvent</span>
               <span class="task-estimate">~5h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">Walidacje (startDateTime, slots, level, duration)</span>
+              <span class="task-estimate">~3h</span>
             </li>
           </ul>
         </div>
       </div>
 
       <div class="subsection">
-        <h3 class="collapsible">Join/Leave Event - KLUCZOWA LOGIKA</h3>
+        <h3 class="collapsible">Flutter - Events CRUD (~35h)</h3>
         <div class="collapsible-content">
           <ul class="task-list">
             <li class="task-item">
               <span class="task-checkbox"></span>
-              <span class="task-text">POST /api/events/{id}/join</span>
+              <span class="task-text">EventsListScreen (lista jako alternatywa dla mapy)</span>
               <span class="task-estimate">~4h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">Pull-to-refresh + infinite scroll</span>
+              <span class="task-estimate">~5h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">Switch między mapą a listą</span>
+              <span class="task-estimate">~2h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">Filter bottom sheet (level, price, location)</span>
+              <span class="task-estimate">~5h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">Search bar z debounce</span>
+              <span class="task-estimate">~3h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">CreateEventScreen + formularz</span>
+              <span class="task-estimate">~8h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">EditEventScreen (reuse CreateEvent logic)</span>
+              <span class="task-estimate">~3h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">Delete event + confirm dialog</span>
+              <span class="task-estimate">~3h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">Form validation + CreateEventService</span>
+              <span class="task-estimate">~4h</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Feature 2: Join/Leave -->
+    <div class="feature-section">
+      <div class="feature-header">
+        <h2>
+          <span>Feature 2: Join/Leave Events <span class="priority-badge priority-critical">CRITICAL</span></span>
+          <span class="feature-badge">5 tygodni (75h)</span>
+        </h2>
+        <p class="feature-description">Dołączanie i opuszczanie wydarzeń z obsługą main list i waitlist</p>
+      </div>
+
+      <div class="subsection">
+        <h3 class="collapsible">Backend - Join/Leave Logic (~35h)</h3>
+        <div class="collapsible-content">
+          <ul class="task-list">
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">Encja EventParticipant + migracja</span>
+              <span class="task-estimate">~5h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">POST /api/events/{id}/join</span>
+              <span class="task-estimate">~3h</span>
             </li>
             <li class="task-item">
               <span class="task-checkbox"></span>
@@ -532,68 +720,96 @@
             </li>
             <li class="task-item">
               <span class="task-checkbox"></span>
-              <span class="task-text">promoteFirstFromWaitlist() + notification</span>
+              <span class="task-text">promoteFirstFromWaitlist() + renumbering</span>
+              <span class="task-estimate">~6h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">EventParticipantRepository + query methods</span>
+              <span class="task-estimate">~4h</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h3 class="collapsible">Flutter - Join/Leave UI (~40h)</h3>
+        <div class="collapsible-content">
+          <ul class="task-list">
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">Join button w EventDetailsScreen</span>
+              <span class="task-estimate">~2h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">HTTP POST/DELETE dla join/leave</span>
               <span class="task-estimate">~4h</span>
             </li>
             <li class="task-item">
               <span class="task-checkbox"></span>
-              <span class="task-text">renumberMainList() i renumberWaitlist()</span>
+              <span class="task-text">Update UI po join/leave (slots, count)</span>
+              <span class="task-estimate">~3h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">Handling waitlist status (badge, info)</span>
+              <span class="task-estimate">~3h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">EventParticipantService + Notifier</span>
               <span class="task-estimate">~4h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">ParticipantsListScreen (main + waitlist)</span>
+              <span class="task-estimate">~10h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">Status badges (confirmed, paid, waitlist)</span>
+              <span class="task-estimate">~3h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">HTTP GET /api/events/{id}/participants</span>
+              <span class="task-estimate">~2h</span>
             </li>
           </ul>
         </div>
       </div>
     </div>
 
-    <!-- Sprint 3 -->
-    <div class="sprint-section">
-      <div class="sprint-header">
-        <h2>Sprint 3: Participant Management <span class="priority-badge priority-critical">CRITICAL</span></h2>
-        <span class="sprint-badge">~4 tygodnie (55h)</span>
+    <!-- Feature 3: Participant Management -->
+    <div class="feature-section">
+      <div class="feature-header">
+        <h2>
+          <span>Feature 3: Participant Management <span class="priority-badge priority-critical">CRITICAL</span></span>
+          <span class="feature-badge">6 tygodni (90h)</span>
+        </h2>
+        <p class="feature-description">Organizator: zarządzanie uczestnikami (pozycje, confirm, payment, promote/demote)</p>
       </div>
 
       <div class="subsection">
-        <h3 class="collapsible">Participant Management Endpoints</h3>
+        <h3 class="collapsible">Backend - Participant Management (~45h)</h3>
         <div class="collapsible-content">
           <ul class="task-list">
             <li class="task-item">
               <span class="task-checkbox"></span>
-              <span class="task-text">ParticipantManagementController</span>
-              <span class="task-estimate">~3h</span>
+              <span class="task-text">ParticipantManagementController + endpoints</span>
+              <span class="task-estimate">~15h</span>
             </li>
             <li class="task-item">
               <span class="task-checkbox"></span>
-              <span class="task-text">PUT /participants/{userId}/position - zmiana pozycji</span>
-              <span class="task-estimate">~4h</span>
+              <span class="task-text">ParticipantService (changePosition, toggleConfirm, togglePayment)</span>
+              <span class="task-estimate">~10h</span>
             </li>
             <li class="task-item">
               <span class="task-checkbox"></span>
-              <span class="task-text">PUT /participants/{userId}/confirm - toggle</span>
-              <span class="task-estimate">~2h</span>
+              <span class="task-text">Promote/Demote/Remove/Add participant logic</span>
+              <span class="task-estimate">~15h</span>
             </li>
-            <li class="task-item">
-              <span class="task-checkbox"></span>
-              <span class="task-text">PUT /participants/{userId}/payment - toggle</span>
-              <span class="task-estimate">~2h</span>
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox"></span>
-              <span class="task-text">POST /participants/{userId}/promote - awans z waitlist</span>
-              <span class="task-estimate">~4h</span>
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox"></span>
-              <span class="task-text">DELETE /participants/{userId} - usunięcie</span>
-              <span class="task-estimate">~3h</span>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="subsection">
-        <h3 class="collapsible">Participant Service Logic</h3>
-        <div class="collapsible-content">
-          <ul class="task-list">
             <li class="task-item">
               <span class="task-checkbox"></span>
               <span class="task-text">Sprawdzanie uprawnień: tylko organizator</span>
@@ -601,63 +817,81 @@
             </li>
             <li class="task-item">
               <span class="task-checkbox"></span>
-              <span class="task-text">changePosition() - swap + renumber</span>
-              <span class="task-estimate">~4h</span>
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox"></span>
-              <span class="task-text">promoteToMainList() - check space</span>
+              <span class="task-text">DTOs + Custom exceptions</span>
               <span class="task-estimate">~3h</span>
             </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h3 class="collapsible">Flutter - Management UI (~45h)</h3>
+        <div class="collapsible-content">
+          <ul class="task-list">
             <li class="task-item">
               <span class="task-checkbox"></span>
-              <span class="task-text">removeParticipant() - remove + promote</span>
+              <span class="task-text">Management mode toggle + auth check</span>
               <span class="task-estimate">~4h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">Drag & drop reordering (main list)</span>
+              <span class="task-estimate">~8h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">Confirm/Payment checkbox toggles</span>
+              <span class="task-estimate">~6h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">Promote/Demote/Remove buttons</span>
+              <span class="task-estimate">~8h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">Add participant dialog (manual add)</span>
+              <span class="task-estimate">~4h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">HTTP PUT/POST/DELETE dla management</span>
+              <span class="task-estimate">~5h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">Optimistic UI updates + error rollback</span>
+              <span class="task-estimate">~5h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">PaymentsManageScreen + payment summary</span>
+              <span class="task-estimate">~6h</span>
             </li>
           </ul>
         </div>
       </div>
     </div>
 
-    <!-- Sprint 4 -->
-    <div class="sprint-section">
-      <div class="sprint-header">
-        <h2>Sprint 4: Users, Locations, Series <span class="priority-badge priority-high">HIGH</span></h2>
-        <span class="sprint-badge">~5.5 tygodni (78h)</span>
+    <!-- Feature 4: Series -->
+    <div class="feature-section">
+      <div class="feature-header">
+        <h2>
+          <span>Feature 4: Series Management <span class="priority-badge priority-high">HIGH</span></span>
+          <span class="feature-badge">5 tygodni (75h)</span>
+        </h2>
+        <p class="feature-description">Cykliczne wydarzenia (weekly/monthly), generowanie z szablonu</p>
       </div>
 
       <div class="subsection">
-        <h3 class="collapsible">Users API</h3>
+        <h3 class="collapsible">Backend - Series API (~40h)</h3>
         <div class="collapsible-content">
           <ul class="task-list">
             <li class="task-item">
               <span class="task-checkbox"></span>
-              <span class="task-text">GET /api/users/me - profil</span>
-              <span class="task-estimate">~2h</span>
+              <span class="task-text">Encja EventSeries + migracja</span>
+              <span class="task-estimate">~6h</span>
             </li>
-            <li class="task-item">
-              <span class="task-checkbox"></span>
-              <span class="task-text">PUT /api/users/me - update profilu</span>
-              <span class="task-estimate">~3h</span>
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox"></span>
-              <span class="task-text">GET /api/users/me/events - wydarzenia jako uczestnik</span>
-              <span class="task-estimate">~3h</span>
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox"></span>
-              <span class="task-text">GET /api/users/me/history - historia</span>
-              <span class="task-estimate">~4h</span>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="subsection">
-        <h3 class="collapsible">Event Series API</h3>
-        <div class="collapsible-content">
-          <ul class="task-list">
             <li class="task-item">
               <span class="task-checkbox"></span>
               <span class="task-text">SeriesController + CRUD endpoints</span>
@@ -665,7 +899,7 @@
             </li>
             <li class="task-item">
               <span class="task-checkbox"></span>
-              <span class="task-text">POST /api/series/{id}/generate - generowanie</span>
+              <span class="task-text">POST /api/series/{id}/generate (generowanie)</span>
               <span class="task-estimate">~8h</span>
             </li>
             <li class="task-item">
@@ -675,76 +909,79 @@
             </li>
             <li class="task-item">
               <span class="task-checkbox"></span>
-              <span class="task-text">Logika generowania weekly/monthly</span>
-              <span class="task-estimate">~8h</span>
+              <span class="task-text">Logika generowania (weekly/monthly)</span>
+              <span class="task-estimate">~6h</span>
             </li>
           </ul>
         </div>
       </div>
-    </div>
-
-    <!-- Sprint 5 -->
-    <div class="sprint-section">
-      <div class="sprint-header">
-        <h2>Sprint 5: Testing & Documentation <span class="priority-badge priority-critical">CRITICAL</span></h2>
-        <span class="sprint-badge">~5.5 tygodni (78h)</span>
-      </div>
 
       <div class="subsection">
-        <h3 class="collapsible">Unit Tests</h3>
+        <h3 class="collapsible">Flutter - Series Management (~35h)</h3>
         <div class="collapsible-content">
           <ul class="task-list">
             <li class="task-item">
               <span class="task-checkbox"></span>
-              <span class="task-text">EventServiceTest - CRUD + filters</span>
-              <span class="task-estimate">~6h</span>
+              <span class="task-text">SeriesListScreen + SeriesListItem widget</span>
+              <span class="task-estimate">~5h</span>
             </li>
             <li class="task-item">
               <span class="task-checkbox"></span>
-              <span class="task-text">EventServiceTest.joinEvent - main list & waitlist</span>
-              <span class="task-estimate">~6h</span>
+              <span class="task-text">CreateSeriesScreen + form fields</span>
+              <span class="task-estimate">~10h</span>
             </li>
             <li class="task-item">
               <span class="task-checkbox"></span>
-              <span class="task-text">EventServiceTest.leaveEvent - promotion & renumbering</span>
+              <span class="task-text">Schedule type picker: weekly/monthly</span>
+              <span class="task-estimate">~3h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">Days of week selector (multi-select)</span>
+              <span class="task-estimate">~4h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">Generate events screen + preview</span>
               <span class="task-estimate">~7h</span>
             </li>
             <li class="task-item">
               <span class="task-checkbox"></span>
-              <span class="task-text">ParticipantServiceTest</span>
-              <span class="task-estimate">~6h</span>
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox"></span>
-              <span class="task-text">Coverage 80%+</span>
-              <span class="task-estimate">~5h</span>
+              <span class="task-text">HTTP GET/POST dla series</span>
+              <span class="task-estimate">~4h</span>
             </li>
           </ul>
         </div>
       </div>
+    </div>
+
+    <!-- Feature 5: User Profile -->
+    <div class="feature-section">
+      <div class="feature-header">
+        <h2>
+          <span>Feature 5: User Profile & History <span class="priority-badge priority-high">HIGH</span></span>
+          <span class="feature-badge">3 tygodnie (45h)</span>
+        </h2>
+        <p class="feature-description">Pełny profil użytkownika, historia wydarzeń, edycja profilu</p>
+      </div>
 
       <div class="subsection">
-        <h3 class="collapsible">API Documentation</h3>
+        <h3 class="collapsible">Backend - User API (~22h)</h3>
         <div class="collapsible-content">
           <ul class="task-list">
             <li class="task-item">
               <span class="task-checkbox"></span>
-              <span class="task-text">Swagger/OpenAPI setup (springdoc-openapi-ui)</span>
-              <span class="task-estimate">~2h</span>
+              <span class="task-text">UserController + endpoints</span>
+              <span class="task-estimate">~10h</span>
             </li>
             <li class="task-item">
               <span class="task-checkbox"></span>
-              <span class="task-text">Swagger UI na /swagger-ui.html</span>
-              <span class="task-estimate">~1h</span>
+              <span class="task-text">GET /api/users/me (profil + events + history)</span>
+              <span class="task-estimate">~9h</span>
             </li>
             <li class="task-item">
               <span class="task-checkbox"></span>
-              <span class="task-text">Adnotacje @Operation na wszystkich endpoints</span>
-              <span class="task-estimate">~6h</span>
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox"></span>
-              <span class="task-text">Przykłady request/response w Swagger</span>
+              <span class="task-text">DTOs: UserProfileDTO, EventHistoryDTO</span>
               <span class="task-estimate">~4h</span>
             </li>
           </ul>
@@ -752,208 +989,192 @@
       </div>
 
       <div class="subsection">
-        <h3 class="collapsible">Postman Collection</h3>
+        <h3 class="collapsible">Flutter - User Profile UI (~23h)</h3>
         <div class="collapsible-content">
           <ul class="task-list">
             <li class="task-item">
               <span class="task-checkbox"></span>
-              <span class="task-text">Postman workspace + folders (Auth, Events, Users...)</span>
+              <span class="task-text">Enhanced UserProfileScreen</span>
+              <span class="task-estimate">~4h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">EditProfileScreen (nickname, avatar)</span>
               <span class="task-estimate">~8h</span>
             </li>
             <li class="task-item">
               <span class="task-checkbox"></span>
-              <span class="task-text">Environment variables + example requests</span>
+              <span class="task-text">My Events tab (jako uczestnik)</span>
               <span class="task-estimate">~3h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">My Organized tab</span>
+              <span class="task-estimate">~3h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">History tab (past events)</span>
+              <span class="task-estimate">~2h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">HTTP GET/PUT dla user endpoints</span>
+              <span class="task-estimate">~2h</span>
             </li>
           </ul>
         </div>
       </div>
     </div>
 
-    <!-- Raspberry Pi -->
-    <div class="sprint-section">
-      <div class="sprint-header">
-        <h2>Raspberry Pi Deploy <span class="priority-badge priority-critical">CRITICAL</span></h2>
-        <span class="sprint-badge">~3 tygodnie (45h)</span>
+    <!-- Feature 6: UI Polish -->
+    <div class="feature-section">
+      <div class="feature-header">
+        <h2>
+          <span>Feature 6: UI Polish & Navigation</span>
+          <span class="feature-badge">2 tygodnie (30h)</span>
+        </h2>
+        <p class="feature-description">Dopracowanie UI, animacje, loading states, error handling</p>
       </div>
 
       <div class="subsection">
-        <h3 class="collapsible">Hardware & System Setup</h3>
+        <h3 class="collapsible">Flutter - UI Polish (~30h)</h3>
         <div class="collapsible-content">
           <ul class="task-list">
             <li class="task-item">
               <span class="task-checkbox"></span>
-              <span class="task-text">Zakup: RPi 4B 8GB + karta SD 64GB + zasilacz (~530-640 PLN)</span>
+              <span class="task-text">Bottom Navigation Bar (Home, Events, Profile)</span>
+              <span class="task-estimate">~4h</span>
             </li>
             <li class="task-item">
               <span class="task-checkbox"></span>
-              <span class="task-text">Instalacja Raspberry Pi OS Lite (64-bit)</span>
-              <span class="task-estimate">~2h</span>
+              <span class="task-text">Loading skeletons na wszystkich ekranach</span>
+              <span class="task-estimate">~4h</span>
             </li>
             <li class="task-item">
               <span class="task-checkbox"></span>
-              <span class="task-text">SSH setup + firewall UFW</span>
-              <span class="task-estimate">~2h</span>
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox"></span>
-              <span class="task-text">DuckDNS / No-IP dla dynamicznego IP</span>
-              <span class="task-estimate">~1.5h</span>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="subsection">
-        <h3 class="collapsible">PostgreSQL + Java Setup</h3>
-        <div class="collapsible-content">
-          <ul class="task-list">
-            <li class="task-item">
-              <span class="task-checkbox"></span>
-              <span class="task-text">Instalacja PostgreSQL + utworzenie bazy</span>
-              <span class="task-estimate">~2h</span>
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox"></span>
-              <span class="task-text">Instalacja OpenJDK 21 + Maven</span>
-              <span class="task-estimate">~2.5h</span>
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox"></span>
-              <span class="task-text">Backup cron job (pg_dump)</span>
-              <span class="task-estimate">~1h</span>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="subsection">
-        <h3 class="collapsible">Backend Deployment</h3>
-        <div class="collapsible-content">
-          <ul class="task-list">
-            <li class="task-item">
-              <span class="task-checkbox"></span>
-              <span class="task-text">Clone repo + build JAR</span>
-              <span class="task-estimate">~1.5h</span>
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox"></span>
-              <span class="task-text">Systemd service setup + enable/start</span>
+              <span class="task-text">Error states z retry button</span>
               <span class="task-estimate">~3h</span>
             </li>
             <li class="task-item">
               <span class="task-checkbox"></span>
-              <span class="task-text">Nginx reverse proxy (8080→80)</span>
-              <span class="task-estimate">~4.5h</span>
+              <span class="task-text">Hero animations (event card → details)</span>
+              <span class="task-estimate">~2h</span>
             </li>
             <li class="task-item">
               <span class="task-checkbox"></span>
-              <span class="task-text">Let's Encrypt SSL certificate</span>
-              <span class="task-estimate">~2.5h</span>
+              <span class="task-text">Success animations (Lottie)</span>
+              <span class="task-estimate">~3h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">Toast notifications system</span>
+              <span class="task-estimate">~2h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">Network error handling + token expiration</span>
+              <span class="task-estimate">~4h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">Validation error messages z backendu</span>
+              <span class="task-estimate">~2h</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sprint Testing -->
+    <div class="feature-section">
+      <div class="feature-header">
+        <h2>
+          <span>Sprint Testing & Documentation</span>
+          <span class="feature-badge">5 tygodni (76h)</span>
+        </h2>
+        <p class="feature-description">Unit tests, integration tests, Swagger, Postman collection</p>
+      </div>
+
+      <div class="subsection">
+        <h3 class="collapsible">Backend Testing (~53h)</h3>
+        <div class="collapsible-content">
+          <ul class="task-list">
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">Unit tests (UserService, EventService, ParticipantService, SeriesService)</span>
+              <span class="task-estimate">~38h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">Integration tests (Controller tests)</span>
+              <span class="task-estimate">~15h</span>
             </li>
           </ul>
         </div>
       </div>
 
       <div class="subsection">
-        <h3 class="collapsible">Monitoring & Security</h3>
+        <h3 class="collapsible">API Documentation (~23h)</h3>
         <div class="collapsible-content">
           <ul class="task-list">
             <li class="task-item">
               <span class="task-checkbox"></span>
-              <span class="task-text">Uptimerobot external monitoring</span>
-              <span class="task-estimate">~1h</span>
+              <span class="task-text">Swagger/OpenAPI setup + adnotacje</span>
+              <span class="task-estimate">~14h</span>
             </li>
             <li class="task-item">
               <span class="task-checkbox"></span>
-              <span class="task-text">Fail2ban + SSH whitelist</span>
-              <span class="task-estimate">~2.5h</span>
+              <span class="task-text">Postman Collection + Environment variables</span>
+              <span class="task-estimate">~9h</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sprint Deploy -->
+    <div class="feature-section">
+      <div class="feature-header">
+        <h2>
+          <span>Sprint Deploy: Raspberry Pi</span>
+          <span class="feature-badge">3 tygodnie (45h)</span>
+        </h2>
+        <p class="feature-description">Hardware setup, PostgreSQL, Java, Nginx, SSL, monitoring, seed data</p>
+      </div>
+
+      <div class="subsection">
+        <h3 class="collapsible">Raspberry Pi Setup (~45h)</h3>
+        <div class="collapsible-content">
+          <ul class="task-list">
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">Hardware + System Setup (RPi OS, SSH, firewall)</span>
+              <span class="task-estimate">~5.5h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">PostgreSQL Setup + backup cron</span>
+              <span class="task-estimate">~4h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">Java & Backend Deployment (OpenJDK, systemd)</span>
+              <span class="task-estimate">~7.5h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">Nginx Reverse Proxy + Let's Encrypt SSL</span>
+              <span class="task-estimate">~6h</span>
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox"></span>
+              <span class="task-text">Monitoring & Security (Uptimerobot, Fail2ban)</span>
+              <span class="task-estimate">~6h</span>
             </li>
             <li class="task-item">
               <span class="task-checkbox"></span>
               <span class="task-text">Seed testowych użytkowników + wydarzeń</span>
-              <span class="task-estimate">~3h</span>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-
-    <!-- Flutter Integration -->
-    <div class="sprint-section">
-      <div class="sprint-header">
-        <h2>Flutter Integration</h2>
-        <span class="sprint-badge">~2 tygodnie (32h)</span>
-      </div>
-
-      <div class="subsection">
-        <h3 class="collapsible">Backend-Flutter Connection</h3>
-        <div class="collapsible-content">
-          <ul class="task-list">
-            <li class="task-item">
-              <span class="task-checkbox"></span>
-              <span class="task-text">Konfiguracja API_BASE_URL w Flutter .env</span>
-              <span class="task-estimate">~0.5h</span>
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox"></span>
-              <span class="task-text">Test /api/auth/login i /register z Flutter</span>
-              <span class="task-estimate">~4h</span>
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox"></span>
-              <span class="task-text">JWT storage w Flutter (SharedPreferences)</span>
-              <span class="task-estimate">~2h</span>
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox"></span>
-              <span class="task-text">HTTP client (dio) z Authorization header</span>
-              <span class="task-estimate">~2h</span>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="subsection">
-        <h3 class="collapsible">Events Integration</h3>
-        <div class="collapsible-content">
-          <ul class="task-list">
-            <li class="task-item">
-              <span class="task-checkbox"></span>
-              <span class="task-text">Test GET /api/events - lista wydarzeń</span>
-              <span class="task-estimate">~2h</span>
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox"></span>
-              <span class="task-text">Test POST /api/events/{id}/join</span>
-              <span class="task-estimate">~2h</span>
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox"></span>
-              <span class="task-text">UI updates po join/leave</span>
-              <span class="task-estimate">~3h</span>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="subsection">
-        <h3 class="collapsible">Participant Management UI</h3>
-        <div class="collapsible-content">
-          <ul class="task-list">
-            <li class="task-item">
-              <span class="task-checkbox"></span>
-              <span class="task-text">Test toggle confirm/payment z Flutter</span>
-              <span class="task-estimate">~2h</span>
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox"></span>
-              <span class="task-text">UI dla zarządzania uczestnikami</span>
-              <span class="task-estimate">~4h</span>
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox"></span>
-              <span class="task-text">Fix błędów integracji + iteracje na DTOs</span>
               <span class="task-estimate">~5h</span>
             </li>
           </ul>
@@ -965,99 +1186,115 @@
     <div class="summary-section">
       <h2>📊 Podsumowanie Estymat</h2>
       <p style="margin-bottom: var(--space-lg); color: var(--color-text-secondary);">
-        Przy dostępności <strong>15h/tydzień</strong> w wolnym czasie (Solo Developer - backend + Flutter)
+        Przy dostępności <strong>15h/tydzień</strong> w wolnym czasie (Solo Developer)
       </p>
 
-      <div class="summary-grid">
-        <div class="summary-card">
-          <h3>Sprint 2</h3>
-          <div class="value">~57h</div>
-          <div class="label">4 tygodnie</div>
-          <p style="margin-top: var(--space-sm); font-size: 0.85rem; color: var(--color-text-secondary);">Events Core API</p>
-        </div>
-
-        <div class="summary-card">
-          <h3>Sprint 3</h3>
-          <div class="value">~55h</div>
-          <div class="label">4 tygodnie</div>
-          <p style="margin-top: var(--space-sm); font-size: 0.85rem; color: var(--color-text-secondary);">Participant Management</p>
-        </div>
-
-        <div class="summary-card">
-          <h3>Sprint 4</h3>
-          <div class="value">~78.5h</div>
-          <div class="label">5.5 tygodnia</div>
-          <p style="margin-top: var(--space-sm); font-size: 0.85rem; color: var(--color-text-secondary);">Users/Series</p>
-        </div>
-
-        <div class="summary-card">
-          <h3>Sprint 5</h3>
-          <div class="value">~78h</div>
-          <div class="label">5.5 tygodnia</div>
-          <p style="margin-top: var(--space-sm); font-size: 0.85rem; color: var(--color-text-secondary);">Testing & Docs</p>
-        </div>
-
-        <div class="summary-card">
-          <h3>RPi Deploy</h3>
-          <div class="value">~45h</div>
-          <div class="label">3 tygodnie</div>
-          <p style="margin-top: var(--space-sm); font-size: 0.85rem; color: var(--color-text-secondary);">Raspberry Pi Setup</p>
-        </div>
-
-        <div class="summary-card">
-          <h3>Flutter</h3>
-          <div class="value">~32.5h</div>
-          <div class="label">2 tygodnie</div>
-          <p style="margin-top: var(--space-sm); font-size: 0.85rem; color: var(--color-text-secondary);">Integration</p>
-        </div>
-      </div>
+      <table class="summary-table">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>Backend</th>
+            <th>Flutter</th>
+            <th>Total</th>
+            <th>Tygodnie</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Sprint 0: Auth & Setup</td>
+            <td>~Done</td>
+            <td>~Done</td>
+            <td>~0h</td>
+            <td>0</td>
+          </tr>
+          <tr>
+            <td>Feature 1: Events CRUD</td>
+            <td>~25h</td>
+            <td>~35h</td>
+            <td>~60h</td>
+            <td>4</td>
+          </tr>
+          <tr>
+            <td>Feature 2: Join/Leave</td>
+            <td>~35h</td>
+            <td>~40h</td>
+            <td>~75h</td>
+            <td>5</td>
+          </tr>
+          <tr>
+            <td>Feature 3: Participant Mgmt</td>
+            <td>~45h</td>
+            <td>~45h</td>
+            <td>~90h</td>
+            <td>6</td>
+          </tr>
+          <tr>
+            <td>Feature 4: Series</td>
+            <td>~40h</td>
+            <td>~35h</td>
+            <td>~75h</td>
+            <td>5</td>
+          </tr>
+          <tr>
+            <td>Feature 5: User Profile</td>
+            <td>~22h</td>
+            <td>~23h</td>
+            <td>~45h</td>
+            <td>3</td>
+          </tr>
+          <tr>
+            <td>Feature 6: UI Polish</td>
+            <td>-</td>
+            <td>~30h</td>
+            <td>~30h</td>
+            <td>2</td>
+          </tr>
+          <tr>
+            <td>Sprint Testing & Docs</td>
+            <td>~76h</td>
+            <td>-</td>
+            <td>~76h</td>
+            <td>5</td>
+          </tr>
+          <tr>
+            <td>Sprint Deploy (RPi)</td>
+            <td>-</td>
+            <td>-</td>
+            <td>~45h</td>
+            <td>3</td>
+          </tr>
+          <tr>
+            <td><strong>TOTAL MVP</strong></td>
+            <td><strong>~243h</strong></td>
+            <td><strong>~208h</strong></td>
+            <td><strong>~496h</strong></td>
+            <td><strong>33</strong></td>
+          </tr>
+        </tbody>
+      </table>
 
       <div style="margin-top: var(--space-2xl); padding: var(--space-xl); background: white; border-radius: var(--radius-md); border: 2px solid var(--color-primary);">
-        <h3 style="color: var(--color-primary); margin-bottom: var(--space-md);">🎯 TOTAL MVP</h3>
-        <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: var(--space-lg);">
-          <div style="text-align: center;">
-            <div style="font-size: 2.5rem; font-weight: bold; color: var(--color-primary);">~346h</div>
-            <div style="color: var(--color-text-secondary);">Całkowite godziny</div>
-          </div>
-          <div style="text-align: center;">
-            <div style="font-size: 2.5rem; font-weight: bold; color: var(--color-primary);">~23 tyg.</div>
-            <div style="color: var(--color-text-secondary);">Tygodni pracy</div>
-          </div>
-          <div style="text-align: center;">
-            <div style="font-size: 2.5rem; font-weight: bold; color: var(--color-primary);">~5.75 mies.</div>
-            <div style="color: var(--color-text-secondary);">Miesięcy</div>
-          </div>
+        <h3 style="color: var(--color-primary); margin-bottom: var(--space-md);">🎯 Realistyczny Timeline</h3>
+        <div style="font-size: 1.1rem; line-height: 1.8;">
+          <p><strong>~496h / 15h/tydzień = 33 tygodnie = ~8.25 miesiąca</strong></p>
         </div>
       </div>
 
       <div style="margin-top: var(--space-xl); padding: var(--space-lg); background: #fee2e2; border-radius: var(--radius-md); border-left: 4px solid #dc2626;">
         <h3 style="color: #dc2626; margin-bottom: var(--space-sm);">🔴 Critical Path (minimum do pokazania użytkownikom)</h3>
-        <p style="font-size: 1.1rem; margin: 0;"><strong>~15 tygodni = 3.75 miesiąca</strong></p>
+        <p style="font-size: 1.1rem; margin: 0;"><strong>~20 tygodni = 5 miesięcy</strong></p>
         <p style="margin-top: var(--space-sm); font-size: 0.9rem; color: var(--color-text-secondary);">
-          Sprint 2 + Sprint 3 + Swagger/Postman + RPi Deploy + Flutter Basic
+          Feature 1: Events CRUD (4 tyg.) + Feature 2: Join/Leave (5 tyg.) + Feature 3: Participant Mgmt (6 tyg.) + Feature 6: UI Polish (2 tyg.) + Deploy (3 tyg.)
         </p>
       </div>
 
       <div style="margin-top: var(--space-lg); padding: var(--space-lg); background: #dcfce7; border-radius: var(--radius-md); border-left: 4px solid #16a34a;">
-        <h3 style="color: #16a34a; margin-bottom: var(--space-sm);">✅ Realistyczny Cel</h3>
-        <ul style="margin: 0; padding-left: var(--space-xl);">
-          <li style="margin-bottom: var(--space-xs);">Backend MVP gotowy za <strong>~4 miesiące</strong></li>
-          <li>Pokazanie pierwszym użytkownikom za <strong>~6 miesięcy</strong> (z Flutterem) 🚀</li>
+        <h3 style="color: #16a34a; margin-bottom: var(--space-sm);">✅ Realistyczne Cele</h3>
+        <ul style="margin: 0; padding-left: var(--space-xl); line-height: 1.8;">
+          <li>Podstawowe MVP (Features 1-3 + UI + Deploy) gotowe za <strong>~5-6 miesięcy</strong></li>
+          <li>Pełne MVP (wszystkie features) gotowe za <strong>~8 miesięcy</strong></li>
+          <li>Pokazanie pierwszym użytkownikom za <strong>~8-9 miesięcy</strong> 🚀</li>
         </ul>
-      </div>
-
-      <div style="margin-top: var(--space-xl); padding: var(--space-lg); background: #eff6ff; border-radius: var(--radius-md);">
-        <h3 style="color: var(--color-primary); margin-bottom: var(--space-md);">💰 Koszty</h3>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-lg);">
-          <div>
-            <h4 style="margin-bottom: var(--space-sm);">Jednorazowe:</h4>
-            <p style="margin: 0; font-size: 0.9rem;">Raspberry Pi 4B 8GB + akcesoria:<br><strong>~530-640 PLN</strong></p>
-          </div>
-          <div>
-            <h4 style="margin-bottom: var(--space-sm);">Miesięczne:</h4>
-            <p style="margin: 0; font-size: 0.9rem;">Energia (5W) + wszystkie usługi DARMOWE:<br><strong>~3 PLN/miesiąc</strong></p>
-          </div>
-        </div>
       </div>
     </div>
   </div>
@@ -1083,6 +1320,32 @@
           checkbox.classList.remove('maybe');
         } else {
           checkbox.classList.add('maybe');
+        }
+      });
+    });
+
+    // Feature header click to toggle entire section
+    document.querySelectorAll('.feature-header').forEach(header => {
+      header.addEventListener('click', () => {
+        const section = header.nextElementSibling;
+        if (section && section.classList.contains('subsection')) {
+          // Get all subsections in this feature
+          let currentElement = header.nextElementSibling;
+          const subsections = [];
+          while (currentElement && currentElement.classList.contains('subsection')) {
+            subsections.push(currentElement);
+            currentElement = currentElement.nextElementSibling;
+          }
+
+          // Toggle all subsections
+          subsections.forEach(sub => {
+            const subHeader = sub.querySelector('.collapsible');
+            const subContent = sub.querySelector('.collapsible-content');
+            if (subHeader && subContent) {
+              subHeader.classList.toggle('collapsed');
+              subContent.classList.toggle('collapsed');
+            }
+          });
         }
       });
     });
