@@ -73,8 +73,12 @@
 
       <div class="content">
         <!-- Event header -->
-        <div class="card">
-          <div class="h1" style="margin:0 0 8px 0">Ndz 03.11 • 10:00 - 12:00</div>
+        <div class="card" style="position:relative">
+          <div style="position:absolute;top:16px;right:16px;display:flex;gap:12px;align-items:center">
+            <span style="font-size:20px;cursor:pointer;user-select:none;opacity:0.6;transition:opacity 0.2s" onclick="window.open('https://maps.google.com')" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.6'" title="Nawiguj">🗺️</span>
+            <span style="font-size:20px;cursor:pointer;user-select:none;opacity:0.6;transition:opacity 0.2s" onclick="alert('Udostępnij wydarzenie')" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.6'" title="Udostępnij">📤</span>
+          </div>
+          <div class="h1" style="margin:0 0 8px 0;padding-right:64px">Ndz 03.11 • 10:00 - 12:00</div>
           <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;align-items:center">
             <span class="badge primary" title="Rodzaj sportu">Siatkówka</span>
             <span class="badge stars" title="Poziom 2/5"><span class="signal-bars" data-level="2"></span></span>
@@ -198,12 +202,6 @@
           <div style="font-size:14px;color:var(--text)">
             Spotkanie dla amatorek! Relaksowa gra w niedzielny poranek.
           </div>
-        </div>
-
-        <!-- Quick actions -->
-        <div style="margin-top:16px;display:flex;gap:8px">
-          <button class="btn btn-primary" style="flex:1" onclick="alert('Udostępnij wydarzenie')">📤 Udostępnij</button>
-          <button class="btn btn-success" onclick="window.open('https://maps.google.com')">🗺️ Nawiguj</button>
         </div>
 
       </div>

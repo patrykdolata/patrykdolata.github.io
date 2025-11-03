@@ -1,0 +1,11 @@
+{
+  "name": "patrykdolata-github-io",
+  "version": "1.0.0",
+  "description": "Personal website and Meet App prototype",
+  "scripts": {
+    "generate-todo": "node generate-todo.js"
+  },
+  "keywords": [],
+  "author": "Patryk Dolata",
+  "license": "MIT"
+}

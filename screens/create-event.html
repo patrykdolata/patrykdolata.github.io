@@ -83,7 +83,7 @@
       const levelEl = document.getElementById('level-val');
       levelEl.setAttribute('data-level', value);
       levelEl.setAttribute('title', `Poziom ${value}/5`);
-      levelEl.innerHTML = renderStarsStacked(parseInt(value));
+      levelEl.innerHTML = renderSignalBars(parseInt(value));
     }
 
     function handleCreate(e) {

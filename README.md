@@ -149,6 +149,36 @@ meet-app-mockups/
    - Zainstaluj rozszerzenie "Live Server"
    - Kliknij prawym na `index.html` → "Open with Live Server"
 
+## 📋 TODO Management
+
+### Generowanie TODO.html z TODO.md
+
+Ten projekt używa **TODO.md jako źródła prawdy** dla wszystkich zadań implementacyjnych. Plik TODO.html jest **automatycznie generowany** i nie powinien być edytowany ręcznie.
+
+**Jak zaktualizować TODO:**
+1. Edytuj `TODO.md` (zmień statusy zadań: `[ ]`, `[?]`, `[x]`)
+2. Wygeneruj nowy HTML:
+   ```bash
+   npm run generate-todo
+   # lub bezpośrednio:
+   node generate-todo.js
+   ```
+3. Otwórz `TODO.html` w przeglądarce, aby zobaczyć zaktualizowany postęp
+
+**Statusy zadań:**
+- `[ ]` - Do zrobienia (pending)
+- `[?]` - Do weryfikacji (maybe)
+- `[x]` - Potwierdzone ukończone (done)
+
+**Statystyki:**
+Skrypt automatycznie oblicza:
+- Liczbę zadań w każdym statusie
+- Progress bar (% ukończenia)
+- Priorytety feature'ów
+- Szacowany czas dla każdego zadania
+
+**Checkboxy w TODO.html są tylko do odczytu** - służą wyłącznie do wizualizacji postępu z TODO.md.
+
 ## 💡 Użycie
 
 ### Demo konta testowe:
