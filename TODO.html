@@ -1342,7 +1342,12 @@
                 Nowe pola w EventEntity:
                 
                 <ul class="subtask-list">
-                  <li>sportType (enum: VOLLEYBALL, BASKETBALL, FOOTBALL, OTHER)</li><li>visibilityDays (Integer - ile dni przed pokazaniem)</li><li>autoPromoteFromWaitlist (Boolean, default: true)</li><li>sendNotifications (Boolean, default: true)</li><li>status (enum: ACTIVE, CANCELLED, COMPLETED)</li><li>group (ManyToOne → Group)</li>
+                  <li>sportType (enum: VOLLEYBALL, BASKETBALL, FOOTBALL, OTHER)</li>
+                  <li>visibilityDays (Integer - ile dni przed pokazaniem)</li>
+                  <li>autoPromoteFromWaitlist (Boolean, default: true)</li>
+                  <li>sendNotifications (Boolean, default: true)</li>
+                  <li>status (enum: ACTIVE, CANCELLED, COMPLETED)</li>
+                  <li>group (ManyToOne → Group)</li>
                 </ul>
               </span>
               <span class="task-estimate">8h</span>
@@ -1533,7 +1538,15 @@
                 Encja `EventParticipant`
                 
                 <ul class="subtask-list">
-                  <li>event (ManyToOne)</li><li>user (ManyToOne)</li><li>position (Integer)</li><li>status (enum: MAIN_LIST, WAITLIST)</li><li>isConfirmed (Boolean, default: false)</li><li>isPaid (Boolean, default: false)</li><li>paymentMethod (enum: BLIK, CASH, TRANSFER, CARD, null)</li><li>paymentTime (LocalDateTime, nullable)</li><li>joinedAt (LocalDateTime)</li>
+                  <li>event (ManyToOne)</li>
+                  <li>user (ManyToOne)</li>
+                  <li>position (Integer)</li>
+                  <li>status (enum: MAIN_LIST, WAITLIST)</li>
+                  <li>isConfirmed (Boolean, default: false)</li>
+                  <li>isPaid (Boolean, default: false)</li>
+                  <li>paymentMethod (enum: BLIK, CASH, TRANSFER, CARD, null)</li>
+                  <li>paymentTime (LocalDateTime, nullable)</li>
+                  <li>joinedAt (LocalDateTime)</li>
                 </ul>
               </span>
               <span class="task-estimate">4h</span>
@@ -1568,7 +1581,10 @@
                 EventParticipantRepository + query methods
                 
                 <ul class="subtask-list">
-                  <li>findByEventIdAndUserId</li><li>findByEventIdOrderByPositionAsc</li><li>findByEventIdAndStatus</li><li>countByEventIdAndStatus</li>
+                  <li>findByEventIdAndUserId</li>
+                  <li>findByEventIdOrderByPositionAsc</li>
+                  <li>findByEventIdAndStatus</li>
+                  <li>countByEventIdAndStatus</li>
                 </ul>
               </span>
               <span class="task-estimate">4h</span>
@@ -2163,7 +2179,13 @@
                 Encja `Group`
                 
                 <ul class="subtask-list">
-                  <li>id (Long)</li><li>name (String, not null)</li><li>description (String)</li><li>facebookUrl (String)</li><li>membersCount (Integer, default: 0)</li><li>eventsCount (Integer, default: 0)</li><li>createdAt, updatedAt</li>
+                  <li>id (Long)</li>
+                  <li>name (String, not null)</li>
+                  <li>description (String)</li>
+                  <li>facebookUrl (String)</li>
+                  <li>membersCount (Integer, default: 0)</li>
+                  <li>eventsCount (Integer, default: 0)</li>
+                  <li>createdAt, updatedAt</li>
                 </ul>
               </span>
               <span class="task-estimate">3h</span>
@@ -2174,7 +2196,11 @@
                 Encja `UserGroup` (membership)
                 
                 <ul class="subtask-list">
-                  <li>id (Long)</li><li>user (ManyToOne)</li><li>group (ManyToOne)</li><li>joinedAt (LocalDateTime)</li><li>role (enum: MEMBER, ADMIN)</li>
+                  <li>id (Long)</li>
+                  <li>user (ManyToOne)</li>
+                  <li>group (ManyToOne)</li>
+                  <li>joinedAt (LocalDateTime)</li>
+                  <li>role (enum: MEMBER, ADMIN)</li>
                 </ul>
               </span>
               <span class="task-estimate">2h</span>
@@ -2405,7 +2431,14 @@
                 Encja `EventSeries`
                 
                 <ul class="subtask-list">
-                  <li>id, name, organizer, location</li><li>schedule (String - JSON lub cron-like)</li><li>slots, price, level</li><li>status (enum: ACTIVE, PAUSED)</li><li>frequencyType (enum: WEEKLY, BIWEEKLY, MONTHLY)</li><li>frequencyInterval (Integer - co ile tygodni)</li><li>skipHolidays (Boolean, default: false)</li><li>createdAt, updatedAt</li>
+                  <li>id, name, organizer, location</li>
+                  <li>schedule (String - JSON lub cron-like)</li>
+                  <li>slots, price, level</li>
+                  <li>status (enum: ACTIVE, PAUSED)</li>
+                  <li>frequencyType (enum: WEEKLY, BIWEEKLY, MONTHLY)</li>
+                  <li>frequencyInterval (Integer - co ile tygodni)</li>
+                  <li>skipHolidays (Boolean, default: false)</li>
+                  <li>createdAt, updatedAt</li>
                 </ul>
               </span>
               <span class="task-estimate">4h</span>
@@ -3276,7 +3309,9 @@
                 **Skill Levels Info Screen** (edukacyjny)
                 
                 <ul class="subtask-list">
-                  <li>[x] SkillLevelWidget - podstawa jest (route: `/level`)</li><li>[ ] Rozbudowanie o 4 kategorie (Serve, Receive, Pass, Setter, Attacks, Blocks)</li><li>[ ] Link z CreateEvent i filtrów</li>
+                  <li>[x] SkillLevelWidget - podstawa jest (route: `/level`)</li>
+                  <li>[ ] Rozbudowanie o 4 kategorie (Serve, Receive, Pass, Setter, Attacks, Blocks)</li>
+                  <li>[ ] Link z CreateEvent i filtrów</li>
                 </ul>
               </span>
               <span class="task-estimate">5h</span>
@@ -4240,7 +4275,7 @@
             <td>~Done</td>
             <td>~Done</td>
             <td>~5h</td>
-            <td>0.5</td>
+            <td>0.5 tyg.</td>
             <td><span class="status-badge status-done">✅ 95%</span></td>
           </tr>
           <tr>
@@ -4248,7 +4283,7 @@
             <td>~4h</td>
             <td>~19h</td>
             <td>~23h</td>
-            <td>1.5</td>
+            <td>1.5 tyg.</td>
             <td><span class="status-badge status-done">✅ 80%</span></td>
           </tr>
           <tr>
@@ -4256,7 +4291,7 @@
             <td>~35h</td>
             <td>~40h</td>
             <td>~75h</td>
-            <td>5</td>
+            <td>5 tyg.</td>
             <td><span class="status-badge status-progress">🟡 40%</span></td>
           </tr>
           <tr>
@@ -4264,7 +4299,7 @@
             <td>~35h</td>
             <td>~40h</td>
             <td>~75h</td>
-            <td>5</td>
+            <td>5 tyg.</td>
             <td><span class="status-badge status-todo">🔴 0%</span></td>
           </tr>
           <tr>
@@ -4272,7 +4307,7 @@
             <td>~45h</td>
             <td>~45h</td>
             <td>~90h</td>
-            <td>6</td>
+            <td>6 tyg.</td>
             <td><span class="status-badge status-todo">🔴 0%</span></td>
           </tr>
           <tr>
@@ -4280,7 +4315,7 @@
             <td>~30h</td>
             <td>~30h</td>
             <td>~60h</td>
-            <td>4</td>
+            <td>4 tyg.</td>
             <td><span class="status-badge status-todo">🔴 0%</span></td>
           </tr>
           <tr>
@@ -4288,7 +4323,7 @@
             <td>~40h</td>
             <td>~35h</td>
             <td>~75h</td>
-            <td>5</td>
+            <td>5 tyg.</td>
             <td><span class="status-badge status-todo">🔴 0%</span></td>
           </tr>
           <tr>
@@ -4296,7 +4331,7 @@
             <td>~22h</td>
             <td>~23h</td>
             <td>~45h</td>
-            <td>3</td>
+            <td>3 tyg.</td>
             <td><span class="status-badge status-progress">🟡 30%</span></td>
           </tr>
           <tr>
@@ -4304,7 +4339,7 @@
             <td>~0h</td>
             <td>~11h</td>
             <td>~11h</td>
-            <td>1</td>
+            <td>1 tyg.</td>
             <td><span class="status-badge status-done">✅ 90%</span></td>
           </tr>
           <tr>
@@ -4312,7 +4347,7 @@
             <td>-</td>
             <td>~45h</td>
             <td>~45h</td>
-            <td>3</td>
+            <td>3 tyg.</td>
             <td><span class="status-badge status-progress">🟡 20%</span></td>
           </tr>
           <tr>
@@ -4320,7 +4355,7 @@
             <td>~15h</td>
             <td>~10h</td>
             <td>~25h</td>
-            <td>1.5</td>
+            <td>1.5 tyg.</td>
             <td><span class="status-badge status-todo">🔴 0%</span></td>
           </tr>
           <tr>
@@ -4328,7 +4363,7 @@
             <td>~60h</td>
             <td>-</td>
             <td>~60h</td>
-            <td>4</td>
+            <td>4 tyg.</td>
             <td><span class="status-badge status-todo">🔴 0%</span></td>
           </tr>
           <tr>
@@ -4336,7 +4371,7 @@
             <td>-</td>
             <td>-</td>
             <td>~37h</td>
-            <td>2.5</td>
+            <td>2.5 tyg.</td>
             <td><span class="status-badge status-todo">🔴 0%</span></td>
           </tr>
           <tr class="summary-total">
@@ -4344,7 +4379,7 @@
             <td><strong>~286h</strong></td>
             <td><strong>~298h</strong></td>
             <td><strong>~621h</strong></td>
-            <td><strong>~41.5</strong></td>
+            <td><strong>~41.5 tyg.</strong></td>
             <td><span class="status-badge status-progress"><strong>~25%</strong></span></td>
           </tr>
         </tbody>
@@ -4391,22 +4426,22 @@
             <tr>
               <td>Email Notifications</td>
               <td>~30h</td>
-              <td>2</td>
+              <td>2 tyg.</td>
             </tr>
             <tr>
               <td>Push Notifications</td>
               <td>~45h</td>
-              <td>3</td>
+              <td>3 tyg.</td>
             </tr>
             <tr>
               <td>Płatności (Stripe)</td>
               <td>~60h</td>
-              <td>4</td>
+              <td>4 tyg.</td>
             </tr>
             <tr class="summary-total">
               <td><strong>TOTAL Post-MVP</strong></td>
               <td><strong>~135h</strong></td>
-              <td><strong>9</strong></td>
+              <td><strong>9 tyg.</strong></td>
             </tr>
           </tbody>
         </table>

@@ -13,6 +13,11 @@ function parseTodoMd(content) {
   const features = [];
   let currentFeature = null;
   let currentSubsection = null;
+  let inSummarySection = false;
+  let inMvpTable = false;
+  let inPostMvpTable = false;
+  const mvpSummary = [];
+  const postMvpSummary = [];
 
   const stats = {
     done: 0,
@@ -23,6 +28,78 @@ function parseTodoMd(content) {
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
+
+    // Check for summary section
+    if (line.match(/^## Podsumowanie Estymat/)) {
+      inSummarySection = true;
+      continue;
+    }
+
+    // Parse MVP table
+    if (inSummarySection && line.match(/^\| Feature \| Backend \| Flutter \| Total \| Tygodnie \| Status \|$/)) {
+      inMvpTable = true;
+      i++; // Skip separator line
+      continue;
+    }
+
+    // Parse Post-MVP table
+    if (inSummarySection && line.match(/^\| Feature \| Godziny \| Tygodnie \|$/)) {
+      inPostMvpTable = true;
+      inMvpTable = false;
+      i++; // Skip separator line
+      continue;
+    }
+
+    // Parse MVP table rows
+    if (inMvpTable && line.match(/^\|/)) {
+      const parts = line.split('|').map(s => s.trim().replace(/\*\*/g, '')).filter(s => s);
+      if (parts.length === 6 && !parts[0].includes('TOTAL')) {
+        mvpSummary.push({
+          feature: parts[0],
+          backend: parts[1],
+          flutter: parts[2],
+          total: parts[3],
+          weeks: parts[4],
+          status: parts[5]
+        });
+      } else if (parts.length === 6 && parts[0].includes('TOTAL')) {
+        mvpSummary.push({
+          feature: parts[0],
+          backend: parts[1],
+          flutter: parts[2],
+          total: parts[3],
+          weeks: parts[4],
+          status: parts[5],
+          isTotal: true
+        });
+        inMvpTable = false;
+      }
+    }
+
+    // Parse Post-MVP table rows
+    if (inPostMvpTable && line.match(/^\|/)) {
+      const parts = line.split('|').map(s => s.trim().replace(/\*\*/g, '')).filter(s => s);
+      if (parts.length === 3 && !parts[0].includes('TOTAL')) {
+        postMvpSummary.push({
+          feature: parts[0],
+          hours: parts[1],
+          weeks: parts[2]
+        });
+      } else if (parts.length === 3 && parts[0].includes('TOTAL')) {
+        postMvpSummary.push({
+          feature: parts[0],
+          hours: parts[1],
+          weeks: parts[2],
+          isTotal: true
+        });
+        inPostMvpTable = false;
+      }
+    }
+
+    // Exit summary section when hitting next major section
+    if (inSummarySection && line.match(/^## [^P]/)) {
+      inSummarySection = false;
+    }
 
     // Feature header (## Sprint X / Feature X / Sprint: etc.)
     if (line.match(/^## (Sprint|Feature|Przyszłe|Harmonogram)/)) {
@@ -76,8 +153,9 @@ function parseTodoMd(content) {
       }
     }
     // Nested task (bullet point with indent - no checkbox)
-    else if (line.match(/^  - /)) {
-      const subtaskText = line.replace(/^  - /, '').trim();
+    // Supports: 2 spaces, 4 spaces, tabs, or any whitespace before dash
+    else if (line.match(/^(\s{2,}|\t+)\s*-\s+/)) {
+      const subtaskText = line.replace(/^(\s{2,}|\t+)\s*-\s+/, '').trim();
       if (currentSubsection && currentSubsection.tasks.length > 0) {
         const lastTask = currentSubsection.tasks[currentSubsection.tasks.length - 1];
         lastTask.subtasks.push(subtaskText);
@@ -85,7 +163,7 @@ function parseTodoMd(content) {
     }
   }
 
-  return { features, stats };
+  return { features, stats, mvpSummary, postMvpSummary };
 }
 
 function determinePriority(line) {
@@ -98,7 +176,15 @@ function determinePriority(line) {
   return 'medium';
 }
 
-function generateHtml(features, stats) {
+function getStatusBadgeClass(status) {
+  // Extract emoji/icon from status (✅, 🟡, 🔴)
+  if (status.includes('✅')) return 'status-done';
+  if (status.includes('🟡')) return 'status-progress';
+  if (status.includes('🔴')) return 'status-todo';
+  return 'status-progress';
+}
+
+function generateHtml(features, stats, mvpSummary, postMvpSummary) {
   // Calculate percentages
   const donePercent = stats.total > 0 ? Math.round((stats.done / stats.total) * 100) : 0;
   const maybePercent = stats.total > 0 ? Math.round((stats.maybe / stats.total) * 100) : 0;
@@ -716,7 +802,7 @@ function generateHtml(features, stats) {
                 ${task.text}
                 ${task.subtasks.length > 0 ? `
                 <ul class="subtask-list">
-                  ${task.subtasks.map(sub => `<li>${sub}</li>`).join('')}
+                  ${task.subtasks.map(sub => `<li>${sub}</li>`).join('\n                  ')}
                 </ul>` : ''}
               </span>
               ${task.estimate ? `<span class="task-estimate">${task.estimate}</span>` : ''}
@@ -757,119 +843,37 @@ function generateHtml(features, stats) {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Sprint 0: Auth & Setup</td>
-            <td>~Done</td>
-            <td>~Done</td>
-            <td>~5h</td>
-            <td>0.5</td>
-            <td><span class="status-badge status-done">✅ 95%</span></td>
+`;
+
+  // Generate MVP table rows dynamically
+  mvpSummary.forEach(row => {
+    const rowClass = row.isTotal ? ' class="summary-total"' : '';
+    const statusClass = getStatusBadgeClass(row.status);
+
+    if (row.isTotal) {
+      html += `          <tr${rowClass}>
+            <td><strong>${row.feature}</strong></td>
+            <td><strong>${row.backend}</strong></td>
+            <td><strong>${row.flutter}</strong></td>
+            <td><strong>${row.total}</strong></td>
+            <td><strong>${row.weeks}</strong></td>
+            <td><span class="status-badge ${statusClass}"><strong>${row.status}</strong></span></td>
           </tr>
-          <tr>
-            <td>Feature 0: Mapa</td>
-            <td>~4h</td>
-            <td>~19h</td>
-            <td>~23h</td>
-            <td>1.5</td>
-            <td><span class="status-badge status-done">✅ 80%</span></td>
+`;
+    } else {
+      html += `          <tr${rowClass}>
+            <td>${row.feature}</td>
+            <td>${row.backend}</td>
+            <td>${row.flutter}</td>
+            <td>${row.total}</td>
+            <td>${row.weeks}</td>
+            <td><span class="status-badge ${statusClass}">${row.status}</span></td>
           </tr>
-          <tr>
-            <td>Feature 1: Events CRUD</td>
-            <td>~35h</td>
-            <td>~40h</td>
-            <td>~75h</td>
-            <td>5</td>
-            <td><span class="status-badge status-progress">🟡 40%</span></td>
-          </tr>
-          <tr>
-            <td>Feature 2: Join/Leave</td>
-            <td>~35h</td>
-            <td>~40h</td>
-            <td>~75h</td>
-            <td>5</td>
-            <td><span class="status-badge status-todo">🔴 0%</span></td>
-          </tr>
-          <tr>
-            <td>Feature 3: Participant Mgmt</td>
-            <td>~45h</td>
-            <td>~45h</td>
-            <td>~90h</td>
-            <td>6</td>
-            <td><span class="status-badge status-todo">🔴 0%</span></td>
-          </tr>
-          <tr>
-            <td>Feature 3.5: Grupy</td>
-            <td>~30h</td>
-            <td>~30h</td>
-            <td>~60h</td>
-            <td>4</td>
-            <td><span class="status-badge status-todo">🔴 0%</span></td>
-          </tr>
-          <tr>
-            <td>Feature 4: Series</td>
-            <td>~40h</td>
-            <td>~35h</td>
-            <td>~75h</td>
-            <td>5</td>
-            <td><span class="status-badge status-todo">🔴 0%</span></td>
-          </tr>
-          <tr>
-            <td>Feature 5: User Profile</td>
-            <td>~22h</td>
-            <td>~23h</td>
-            <td>~45h</td>
-            <td>3</td>
-            <td><span class="status-badge status-progress">🟡 30%</span></td>
-          </tr>
-          <tr>
-            <td>Feature 5.5: Fav Places</td>
-            <td>~0h</td>
-            <td>~11h</td>
-            <td>~11h</td>
-            <td>1</td>
-            <td><span class="status-badge status-done">✅ 90%</span></td>
-          </tr>
-          <tr>
-            <td>Feature 6: UI Polish</td>
-            <td>-</td>
-            <td>~45h</td>
-            <td>~45h</td>
-            <td>3</td>
-            <td><span class="status-badge status-progress">🟡 20%</span></td>
-          </tr>
-          <tr>
-            <td>Feature 7: EventStatus</td>
-            <td>~15h</td>
-            <td>~10h</td>
-            <td>~25h</td>
-            <td>1.5</td>
-            <td><span class="status-badge status-todo">🔴 0%</span></td>
-          </tr>
-          <tr>
-            <td>Sprint Testowanie</td>
-            <td>~60h</td>
-            <td>-</td>
-            <td>~60h</td>
-            <td>4</td>
-            <td><span class="status-badge status-todo">🔴 0%</span></td>
-          </tr>
-          <tr>
-            <td>Sprint Wdrożenie (RPi)</td>
-            <td>-</td>
-            <td>-</td>
-            <td>~37h</td>
-            <td>2.5</td>
-            <td><span class="status-badge status-todo">🔴 0%</span></td>
-          </tr>
-          <tr class="summary-total">
-            <td><strong>TOTAL MVP</strong></td>
-            <td><strong>~286h</strong></td>
-            <td><strong>~298h</strong></td>
-            <td><strong>~621h</strong></td>
-            <td><strong>~41.5</strong></td>
-            <td><span class="status-badge status-progress"><strong>~25%</strong></span></td>
-          </tr>
-        </tbody>
+`;
+    }
+  });
+
+  html += `        </tbody>
       </table>
 
       <div style="margin-top: var(--space-2xl); padding: var(--space-xl); background: white; border-radius: var(--radius-md); border: 2px solid var(--color-primary);">
@@ -910,27 +914,30 @@ function generateHtml(features, stats) {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>Email Notifications</td>
-              <td>~30h</td>
-              <td>2</td>
+`;
+
+  // Generate Post-MVP table rows dynamically
+  postMvpSummary.forEach(row => {
+    const rowClass = row.isTotal ? ' class="summary-total"' : '';
+
+    if (row.isTotal) {
+      html += `            <tr${rowClass}>
+              <td><strong>${row.feature}</strong></td>
+              <td><strong>${row.hours}</strong></td>
+              <td><strong>${row.weeks}</strong></td>
             </tr>
-            <tr>
-              <td>Push Notifications</td>
-              <td>~45h</td>
-              <td>3</td>
+`;
+    } else {
+      html += `            <tr${rowClass}>
+              <td>${row.feature}</td>
+              <td>${row.hours}</td>
+              <td>${row.weeks}</td>
             </tr>
-            <tr>
-              <td>Płatności (Stripe)</td>
-              <td>~60h</td>
-              <td>4</td>
-            </tr>
-            <tr class="summary-total">
-              <td><strong>TOTAL Post-MVP</strong></td>
-              <td><strong>~135h</strong></td>
-              <td><strong>9</strong></td>
-            </tr>
-          </tbody>
+`;
+    }
+  });
+
+  html += `          </tbody>
         </table>
         <p style="margin-top: var(--space-md); text-align: center; font-size: 1.1rem;">
           <strong>GRAND TOTAL: ~756h = ~50 tygodni = ~12.5 miesiąca</strong>
@@ -974,8 +981,8 @@ function generateHtml(features, stats) {
 }
 
 // Main execution
-const { features, stats } = parseTodoMd(todoMdContent);
-const html = generateHtml(features, stats);
+const { features, stats, mvpSummary, postMvpSummary } = parseTodoMd(todoMdContent);
+const html = generateHtml(features, stats, mvpSummary, postMvpSummary);
 
 // Write TODO.html
 const todoHtmlPath = path.join(__dirname, 'TODO.html');
