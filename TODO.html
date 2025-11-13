@@ -554,6 +554,369 @@
       </div>
     </div>
 
+
+    <!-- Schedule Section -->
+    <div class="schedule-section">
+      <h2 style="color: var(--color-primary); text-align: center; margin-bottom: var(--space-lg);">
+        📅 Harmonogram Projektu
+      </h2>
+
+      <!-- Timeline Visualization -->
+      <div class="timeline-container">
+        <div class="timeline-header">
+          <div class="timeline-item">
+            <span class="timeline-label">Start</span>
+            <span class="timeline-date">2025-11-12</span>
+          </div>
+          <div class="timeline-item timeline-current">
+            <span class="timeline-label">Dzisiaj</span>
+            <span class="timeline-date">2025-11-12</span>
+            <span class="timeline-week">Tydzień 1, Dzień 1</span>
+          </div>
+          <div class="timeline-item">
+            <span class="timeline-label">Koniec (plan)</span>
+            <span class="timeline-date">2026-10-28</span>
+          </div>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="timeline-bar-container">
+          <div class="timeline-bar" style="width: 23.6%;"></div>
+          <div class="timeline-marker" style="left: 23.6%;">
+            23.6%
+          </div>
+        </div>
+
+        <!-- Status Indicators -->
+        <div class="timeline-status">
+
+          <div class="status-indicator status-on-track">
+            <span class="status-icon">✓</span>
+            <span class="status-text">Zgodnie z planem</span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Task Lists Grid -->
+      <div class="task-lists-grid">
+
+        <div class="task-list-card task-list-today">
+          <h3>📋 Dzisiaj (0)</h3>
+          <div class="task-list-content">
+<p class="empty-state">Brak zadań na dzisiaj</p>
+          </div>
+        </div>
+
+        <div class="task-list-card task-list-overdue">
+          <h3>⚠️ Zaległe (0)</h3>
+          <div class="task-list-content">
+<p class="empty-state">Brak zaległości ✓</p>
+          </div>
+        </div>
+
+        <div class="task-list-card task-list-upcoming">
+          <h3>📆 Najbliższy tydzień (3)</h3>
+          <div class="task-list-content">
+<p class="task-list-summary">11h zaplanowane</p>
+            <div class="schedule-task-item">
+              <span class="schedule-task-text">Encja `EventParticipant` (event, user, p...</span>
+              <span class="schedule-task-date">2025-11-16</span>
+            </div>
+
+            <div class="schedule-task-item">
+              <span class="schedule-task-text">Encja `EventSeries` (id, name, organizer...</span>
+              <span class="schedule-task-date">2025-11-18</span>
+            </div>
+
+            <div class="schedule-task-item">
+              <span class="schedule-task-text">Encja `Group` (id, name, description, fa...</span>
+              <span class="schedule-task-date">2025-11-19</span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Statistics Row -->
+      <div class="schedule-stats-row">
+        <div class="schedule-stat">
+          <div class="schedule-stat-label">Ukończone</div>
+          <div class="schedule-stat-value">93/394</div>
+        </div>
+        <div class="schedule-stat">
+          <div class="schedule-stat-label">Pozostało godzin</div>
+          <div class="schedule-stat-value">905h</div>
+        </div>
+        <div class="schedule-stat">
+          <div class="schedule-stat-label">Velocity</div>
+          <div class="schedule-stat-value">N/A</div>
+        </div>
+        <div class="schedule-stat">
+          <div class="schedule-stat-label">Target velocity</div>
+          <div class="schedule-stat-value">2.9h/day</div>
+        </div>
+      </div>
+    </div>
+
+    <style>
+      .schedule-section {
+        margin: var(--space-2xl) 0;
+        padding: var(--space-2xl);
+        background: white;
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-md);
+      }
+
+      .timeline-container {
+        background: var(--color-background);
+        border-radius: var(--radius-md);
+        padding: var(--space-xl);
+        margin-bottom: var(--space-xl);
+      }
+
+      .timeline-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: var(--space-lg);
+        flex-wrap: wrap;
+        gap: var(--space-md);
+      }
+
+      .timeline-item {
+        text-align: center;
+        flex: 1;
+        min-width: 120px;
+      }
+
+      .timeline-current {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        padding: var(--space-md);
+        border-radius: var(--radius-md);
+      }
+
+      .timeline-label {
+        display: block;
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin-bottom: var(--space-xs);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .timeline-date {
+        display: block;
+        font-size: 1.1rem;
+        font-weight: bold;
+      }
+
+      .timeline-week {
+        display: block;
+        font-size: 0.85rem;
+        margin-top: var(--space-xs);
+        opacity: 0.9;
+      }
+
+      .timeline-bar-container {
+        background: #e5e7eb;
+        height: 30px;
+        border-radius: var(--radius-full);
+        position: relative;
+        overflow: visible;
+        margin: var(--space-lg) 0;
+      }
+
+      .timeline-bar {
+        height: 100%;
+        background: linear-gradient(90deg, #10b981, #059669);
+        border-radius: var(--radius-full);
+        transition: width 0.5s ease;
+      }
+
+      .timeline-marker {
+        position: absolute;
+        top: -5px;
+        transform: translateX(-50%);
+        background: white;
+        border: 3px solid #10b981;
+        padding: 4px 12px;
+        border-radius: var(--radius-full);
+        font-weight: bold;
+        font-size: 0.9rem;
+        color: #059669;
+        box-shadow: var(--shadow-md);
+      }
+
+      .timeline-status {
+        display: flex;
+        justify-content: center;
+        margin-top: var(--space-lg);
+      }
+
+      .status-indicator {
+        display: flex;
+        align-items: center;
+        gap: var(--space-sm);
+        padding: var(--space-md) var(--space-lg);
+        border-radius: var(--radius-md);
+        font-weight: 600;
+      }
+
+      .status-on-track {
+        background: #d1fae5;
+        color: #065f46;
+      }
+
+      .status-ahead {
+        background: #dbeafe;
+        color: #1e40af;
+      }
+
+      .status-behind {
+        background: #fee2e2;
+        color: #991b1b;
+      }
+
+      .status-icon {
+        font-size: 1.2rem;
+      }
+
+      .task-lists-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: var(--space-lg);
+        margin-bottom: var(--space-xl);
+      }
+
+      .task-list-card {
+        background: white;
+        border-radius: var(--radius-md);
+        padding: var(--space-lg);
+        box-shadow: var(--shadow-sm);
+        border-left: 4px solid;
+      }
+
+      .task-list-today {
+        border-left-color: #3b82f6;
+      }
+
+      .task-list-overdue {
+        border-left-color: #ef4444;
+      }
+
+      .task-list-upcoming {
+        border-left-color: #10b981;
+      }
+
+      .task-list-card h3 {
+        margin: 0 0 var(--space-md) 0;
+        font-size: 1.1rem;
+      }
+
+      .task-list-content {
+        max-height: 300px;
+        overflow-y: auto;
+      }
+
+      .task-list-summary {
+        font-size: 0.9rem;
+        color: var(--color-text-secondary);
+        margin-bottom: var(--space-md);
+      }
+
+      .schedule-task-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: var(--space-sm);
+        border-bottom: 1px solid var(--color-border-light);
+        gap: var(--space-sm);
+      }
+
+      .schedule-task-text {
+        flex: 1;
+        font-size: 0.9rem;
+        line-height: 1.4;
+      }
+
+      .schedule-task-estimate {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: #3b82f6;
+        background: #dbeafe;
+        padding: 2px 8px;
+        border-radius: var(--radius-sm);
+        flex-shrink: 0;
+      }
+
+      .schedule-task-overdue {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: #dc2626;
+        background: #fee2e2;
+        padding: 2px 8px;
+        border-radius: var(--radius-sm);
+        flex-shrink: 0;
+      }
+
+      .schedule-task-date {
+        font-size: 0.8rem;
+        color: var(--color-text-secondary);
+        flex-shrink: 0;
+      }
+
+      .empty-state {
+        text-align: center;
+        color: var(--color-text-secondary);
+        padding: var(--space-lg);
+        font-style: italic;
+      }
+
+      .more-tasks {
+        text-align: center;
+        color: var(--color-text-secondary);
+        font-size: 0.85rem;
+        margin-top: var(--space-sm);
+      }
+
+      .schedule-stats-row {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: var(--space-md);
+        margin-top: var(--space-xl);
+      }
+
+      .schedule-stat {
+        text-align: center;
+        padding: var(--space-md);
+        background: var(--color-background);
+        border-radius: var(--radius-md);
+      }
+
+      .schedule-stat-label {
+        font-size: 0.85rem;
+        color: var(--color-text-secondary);
+        margin-bottom: var(--space-xs);
+      }
+
+      .schedule-stat-value {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: var(--color-primary);
+      }
+
+      @media (max-width: 768px) {
+        .timeline-header {
+          flex-direction: column;
+        }
+
+        .task-lists-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
     <!-- Sprint 0: Konfiguracja Backend & Autoryzacja -->
     <div class="feature-section">
       <div class="feature-header priority-critical">

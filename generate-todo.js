@@ -184,7 +184,493 @@ function getStatusBadgeClass(status) {
   return 'status-progress';
 }
 
-function generateHtml(features, stats, mvpSummary, postMvpSummary) {
+function generateScheduleSection(scheduleData) {
+  const today = new Date().toISOString().split('T')[0];
+  const todayDate = new Date(today);
+  const startDate = new Date(scheduleData.meta.startDate);
+  const endDate = new Date(scheduleData.meta.estimatedEndDate);
+
+  // Calculate current week and day
+  const daysSinceStart = Math.floor((todayDate - startDate) / (1000 * 60 * 60 * 24));
+  const currentWeek = Math.floor(daysSinceStart / 7) + 1;
+  const currentDay = daysSinceStart >= 0 ? daysSinceStart + 1 : 0;
+
+  // Find today's tasks
+  const todayTasks = scheduleData.schedule.filter(
+    t => t.plannedDate === today && t.status === 'pending'
+  );
+
+  // Find overdue tasks
+  const overdueTasks = scheduleData.schedule.filter(
+    t => t.plannedDate < today && t.status === 'pending'
+  );
+
+  // Find upcoming tasks (next 7 days)
+  const nextWeek = new Date(todayDate);
+  nextWeek.setDate(nextWeek.getDate() + 7);
+  const nextWeekStr = nextWeek.toISOString().split('T')[0];
+
+  const upcomingTasks = scheduleData.schedule.filter(
+    t => t.plannedDate > today && t.plannedDate <= nextWeekStr && t.status === 'pending'
+  );
+
+  // Calculate progress
+  const progress = scheduleData.progress;
+  const percentComplete = parseFloat(progress.percentComplete) || 0;
+  const isAhead = progress.daysAheadBehind > 0;
+  const isBehind = progress.daysAheadBehind < 0;
+  const onTrack = !isAhead && !isBehind;
+
+  let html = `
+    <!-- Schedule Section -->
+    <div class="schedule-section">
+      <h2 style="color: var(--color-primary); text-align: center; margin-bottom: var(--space-lg);">
+        📅 Harmonogram Projektu
+      </h2>
+
+      <!-- Timeline Visualization -->
+      <div class="timeline-container">
+        <div class="timeline-header">
+          <div class="timeline-item">
+            <span class="timeline-label">Start</span>
+            <span class="timeline-date">${scheduleData.meta.startDate}</span>
+          </div>
+          <div class="timeline-item timeline-current">
+            <span class="timeline-label">Dzisiaj</span>
+            <span class="timeline-date">${today}</span>
+            <span class="timeline-week">Tydzień ${currentWeek}, Dzień ${currentDay}</span>
+          </div>
+          <div class="timeline-item">
+            <span class="timeline-label">Koniec (plan)</span>
+            <span class="timeline-date">${scheduleData.meta.estimatedEndDate}</span>
+          </div>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="timeline-bar-container">
+          <div class="timeline-bar" style="width: ${percentComplete}%;"></div>
+          <div class="timeline-marker" style="left: ${percentComplete}%;">
+            ${percentComplete.toFixed(1)}%
+          </div>
+        </div>
+
+        <!-- Status Indicators -->
+        <div class="timeline-status">
+`;
+
+  if (onTrack) {
+    html += `
+          <div class="status-indicator status-on-track">
+            <span class="status-icon">✓</span>
+            <span class="status-text">Zgodnie z planem</span>
+          </div>
+`;
+  } else if (isAhead) {
+    html += `
+          <div class="status-indicator status-ahead">
+            <span class="status-icon">↑</span>
+            <span class="status-text">${progress.daysAheadBehind} dni przed planem</span>
+          </div>
+`;
+  } else if (isBehind) {
+    html += `
+          <div class="status-indicator status-behind">
+            <span class="status-icon">↓</span>
+            <span class="status-text">${Math.abs(progress.daysAheadBehind)} dni opóźnienia</span>
+          </div>
+`;
+  }
+
+  html += `
+        </div>
+      </div>
+
+      <!-- Task Lists Grid -->
+      <div class="task-lists-grid">
+`;
+
+  // Today's Tasks
+  html += `
+        <div class="task-list-card task-list-today">
+          <h3>📋 Dzisiaj (${todayTasks.length})</h3>
+          <div class="task-list-content">
+`;
+
+  if (todayTasks.length === 0) {
+    html += `<p class="empty-state">Brak zadań na dzisiaj</p>`;
+  } else {
+    const totalHours = todayTasks.reduce((sum, t) => sum + t.estimateHours, 0);
+    html += `<p class="task-list-summary">${totalHours}h zaplanowane</p>`;
+
+    for (const task of todayTasks.slice(0, 5)) {
+      html += `
+            <div class="schedule-task-item">
+              <span class="schedule-task-text">${task.task.substring(0, 50)}${task.task.length > 50 ? '...' : ''}</span>
+              <span class="schedule-task-estimate">${task.estimate}</span>
+            </div>
+`;
+    }
+
+    if (todayTasks.length > 5) {
+      html += `<p class="more-tasks">... i ${todayTasks.length - 5} więcej</p>`;
+    }
+  }
+
+  html += `
+          </div>
+        </div>
+`;
+
+  // Overdue Tasks
+  html += `
+        <div class="task-list-card task-list-overdue">
+          <h3>⚠️ Zaległe (${overdueTasks.length})</h3>
+          <div class="task-list-content">
+`;
+
+  if (overdueTasks.length === 0) {
+    html += `<p class="empty-state">Brak zaległości ✓</p>`;
+  } else {
+    const totalHours = overdueTasks.reduce((sum, t) => sum + t.estimateHours, 0);
+    html += `<p class="task-list-summary">${totalHours}h zaległości</p>`;
+
+    for (const task of overdueTasks.slice(0, 5)) {
+      const daysOverdue = Math.floor((todayDate - new Date(task.plannedDate)) / (1000 * 60 * 60 * 24));
+      html += `
+            <div class="schedule-task-item">
+              <span class="schedule-task-text">${task.task.substring(0, 40)}${task.task.length > 40 ? '...' : ''}</span>
+              <span class="schedule-task-overdue">${daysOverdue}d</span>
+            </div>
+`;
+    }
+
+    if (overdueTasks.length > 5) {
+      html += `<p class="more-tasks">... i ${overdueTasks.length - 5} więcej</p>`;
+    }
+  }
+
+  html += `
+          </div>
+        </div>
+`;
+
+  // Upcoming Tasks
+  html += `
+        <div class="task-list-card task-list-upcoming">
+          <h3>📆 Najbliższy tydzień (${upcomingTasks.length})</h3>
+          <div class="task-list-content">
+`;
+
+  if (upcomingTasks.length === 0) {
+    html += `<p class="empty-state">Brak zadań w tym tygodniu</p>`;
+  } else {
+    const totalHours = upcomingTasks.reduce((sum, t) => sum + t.estimateHours, 0);
+    html += `<p class="task-list-summary">${totalHours}h zaplanowane</p>`;
+
+    for (const task of upcomingTasks.slice(0, 5)) {
+      html += `
+            <div class="schedule-task-item">
+              <span class="schedule-task-text">${task.task.substring(0, 40)}${task.task.length > 40 ? '...' : ''}</span>
+              <span class="schedule-task-date">${task.plannedDate}</span>
+            </div>
+`;
+    }
+
+    if (upcomingTasks.length > 5) {
+      html += `<p class="more-tasks">... i ${upcomingTasks.length - 5} więcej</p>`;
+    }
+  }
+
+  html += `
+          </div>
+        </div>
+      </div>
+
+      <!-- Statistics Row -->
+      <div class="schedule-stats-row">
+        <div class="schedule-stat">
+          <div class="schedule-stat-label">Ukończone</div>
+          <div class="schedule-stat-value">${progress.completedTasks}/${progress.totalTasks}</div>
+        </div>
+        <div class="schedule-stat">
+          <div class="schedule-stat-label">Pozostało godzin</div>
+          <div class="schedule-stat-value">${progress.remainingHours}h</div>
+        </div>
+        <div class="schedule-stat">
+          <div class="schedule-stat-label">Velocity</div>
+          <div class="schedule-stat-value">${progress.averageVelocity || 'N/A'}</div>
+        </div>
+        <div class="schedule-stat">
+          <div class="schedule-stat-label">Target velocity</div>
+          <div class="schedule-stat-value">${progress.targetVelocity}</div>
+        </div>
+      </div>
+    </div>
+
+    <style>
+      .schedule-section {
+        margin: var(--space-2xl) 0;
+        padding: var(--space-2xl);
+        background: white;
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-md);
+      }
+
+      .timeline-container {
+        background: var(--color-background);
+        border-radius: var(--radius-md);
+        padding: var(--space-xl);
+        margin-bottom: var(--space-xl);
+      }
+
+      .timeline-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: var(--space-lg);
+        flex-wrap: wrap;
+        gap: var(--space-md);
+      }
+
+      .timeline-item {
+        text-align: center;
+        flex: 1;
+        min-width: 120px;
+      }
+
+      .timeline-current {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        padding: var(--space-md);
+        border-radius: var(--radius-md);
+      }
+
+      .timeline-label {
+        display: block;
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin-bottom: var(--space-xs);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .timeline-date {
+        display: block;
+        font-size: 1.1rem;
+        font-weight: bold;
+      }
+
+      .timeline-week {
+        display: block;
+        font-size: 0.85rem;
+        margin-top: var(--space-xs);
+        opacity: 0.9;
+      }
+
+      .timeline-bar-container {
+        background: #e5e7eb;
+        height: 30px;
+        border-radius: var(--radius-full);
+        position: relative;
+        overflow: visible;
+        margin: var(--space-lg) 0;
+      }
+
+      .timeline-bar {
+        height: 100%;
+        background: linear-gradient(90deg, #10b981, #059669);
+        border-radius: var(--radius-full);
+        transition: width 0.5s ease;
+      }
+
+      .timeline-marker {
+        position: absolute;
+        top: -5px;
+        transform: translateX(-50%);
+        background: white;
+        border: 3px solid #10b981;
+        padding: 4px 12px;
+        border-radius: var(--radius-full);
+        font-weight: bold;
+        font-size: 0.9rem;
+        color: #059669;
+        box-shadow: var(--shadow-md);
+      }
+
+      .timeline-status {
+        display: flex;
+        justify-content: center;
+        margin-top: var(--space-lg);
+      }
+
+      .status-indicator {
+        display: flex;
+        align-items: center;
+        gap: var(--space-sm);
+        padding: var(--space-md) var(--space-lg);
+        border-radius: var(--radius-md);
+        font-weight: 600;
+      }
+
+      .status-on-track {
+        background: #d1fae5;
+        color: #065f46;
+      }
+
+      .status-ahead {
+        background: #dbeafe;
+        color: #1e40af;
+      }
+
+      .status-behind {
+        background: #fee2e2;
+        color: #991b1b;
+      }
+
+      .status-icon {
+        font-size: 1.2rem;
+      }
+
+      .task-lists-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: var(--space-lg);
+        margin-bottom: var(--space-xl);
+      }
+
+      .task-list-card {
+        background: white;
+        border-radius: var(--radius-md);
+        padding: var(--space-lg);
+        box-shadow: var(--shadow-sm);
+        border-left: 4px solid;
+      }
+
+      .task-list-today {
+        border-left-color: #3b82f6;
+      }
+
+      .task-list-overdue {
+        border-left-color: #ef4444;
+      }
+
+      .task-list-upcoming {
+        border-left-color: #10b981;
+      }
+
+      .task-list-card h3 {
+        margin: 0 0 var(--space-md) 0;
+        font-size: 1.1rem;
+      }
+
+      .task-list-content {
+        max-height: 300px;
+        overflow-y: auto;
+      }
+
+      .task-list-summary {
+        font-size: 0.9rem;
+        color: var(--color-text-secondary);
+        margin-bottom: var(--space-md);
+      }
+
+      .schedule-task-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: var(--space-sm);
+        border-bottom: 1px solid var(--color-border-light);
+        gap: var(--space-sm);
+      }
+
+      .schedule-task-text {
+        flex: 1;
+        font-size: 0.9rem;
+        line-height: 1.4;
+      }
+
+      .schedule-task-estimate {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: #3b82f6;
+        background: #dbeafe;
+        padding: 2px 8px;
+        border-radius: var(--radius-sm);
+        flex-shrink: 0;
+      }
+
+      .schedule-task-overdue {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: #dc2626;
+        background: #fee2e2;
+        padding: 2px 8px;
+        border-radius: var(--radius-sm);
+        flex-shrink: 0;
+      }
+
+      .schedule-task-date {
+        font-size: 0.8rem;
+        color: var(--color-text-secondary);
+        flex-shrink: 0;
+      }
+
+      .empty-state {
+        text-align: center;
+        color: var(--color-text-secondary);
+        padding: var(--space-lg);
+        font-style: italic;
+      }
+
+      .more-tasks {
+        text-align: center;
+        color: var(--color-text-secondary);
+        font-size: 0.85rem;
+        margin-top: var(--space-sm);
+      }
+
+      .schedule-stats-row {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: var(--space-md);
+        margin-top: var(--space-xl);
+      }
+
+      .schedule-stat {
+        text-align: center;
+        padding: var(--space-md);
+        background: var(--color-background);
+        border-radius: var(--radius-md);
+      }
+
+      .schedule-stat-label {
+        font-size: 0.85rem;
+        color: var(--color-text-secondary);
+        margin-bottom: var(--space-xs);
+      }
+
+      .schedule-stat-value {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: var(--color-primary);
+      }
+
+      @media (max-width: 768px) {
+        .timeline-header {
+          flex-direction: column;
+        }
+
+        .task-lists-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+`;
+
+  return html;
+}
+
+function generateHtml(features, stats, mvpSummary, postMvpSummary, scheduleData = null) {
   // Calculate percentages
   const donePercent = stats.total > 0 ? Math.round((stats.done / stats.total) * 100) : 0;
   const maybePercent = stats.total > 0 ? Math.round((stats.maybe / stats.total) * 100) : 0;
@@ -764,6 +1250,11 @@ function generateHtml(features, stats, mvpSummary, postMvpSummary) {
 
 `;
 
+  // Add Schedule Section if available
+  if (scheduleData) {
+    html += generateScheduleSection(scheduleData);
+  }
+
   // Generate features
   features.forEach(feature => {
     // Skip features with no subsections that have tasks
@@ -982,7 +1473,15 @@ function generateHtml(features, stats, mvpSummary, postMvpSummary) {
 
 // Main execution
 const { features, stats, mvpSummary, postMvpSummary } = parseTodoMd(todoMdContent);
-const html = generateHtml(features, stats, mvpSummary, postMvpSummary);
+
+// Load schedule data if exists
+let scheduleData = null;
+const schedulePath = path.join(__dirname, '.todo-schedule.json');
+if (fs.existsSync(schedulePath)) {
+  scheduleData = JSON.parse(fs.readFileSync(schedulePath, 'utf8'));
+}
+
+const html = generateHtml(features, stats, mvpSummary, postMvpSummary, scheduleData);
 
 // Write TODO.html
 const todoHtmlPath = path.join(__dirname, 'TODO.html');

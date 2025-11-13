@@ -1,0 +1,43 @@
+{
+  "version": "1.0.0",
+  "projectName": "Meet App",
+  "repositories": [
+    {
+      "name": "patrykdolata.github.io",
+      "path": "/home/dolti/dev/workspace/git/patrykdolata.github.io",
+      "type": "prototype",
+      "enabled": true
+    },
+    {
+      "name": "meet-app-be",
+      "path": "/home/dolti/dev/workspace/git/meet-app-be",
+      "type": "backend",
+      "enabled": true
+    },
+    {
+      "name": "meet-app-fe",
+      "path": "/home/dolti/dev/workspace/git/meet-app-fe",
+      "type": "frontend",
+      "enabled": true
+    }
+  ],
+  "schedule": {
+    "startDate": "2025-11-13",
+    "workingHours": {
+      "Monday": 0,
+      "Tuesday": 1,
+      "Wednesday": 2,
+      "Thursday": 3,
+      "Friday": 2,
+      "Saturday": 4,
+      "Sunday": 4
+    },
+    "totalWeeklyHours": 16
+  },
+  "matching": {
+    "keywordWeight": 0.3,
+    "filePathWeight": 0.4,
+    "semanticWeight": 0.3,
+    "confidenceThreshold": 0.75
+  }
+}
