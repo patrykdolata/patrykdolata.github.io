@@ -27,8 +27,14 @@ function parseTodoMd(content) {
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
 
+    // Stop parsing after Milestone 1 (only parse Core MVP)
+    if (line.match(/^# 📋 MILESTONE (2|3):/)) {
+      console.log('⚠️  Stopping at Milestone 2/3 - parsing Core MVP only');
+      break;
+    }
+
     // Feature header
-    if (line.match(/^## (Sprint|Feature)/)) {
+    if (line.match(/^## (Sprint|Feature|Deployment)/)) {
       const match = line.match(/^## (.+?)(?:\s+[✅🟡].*)?(?:\s+\(~?(.+?)\))?$/);
       if (match) {
         currentFeature = {
@@ -52,7 +58,8 @@ function parseTodoMd(content) {
     }
     // Subtask (indented checkbox) - takes priority if parent has "→ split"
     else if (line.match(/^\s+- \[([ x?])\]/)) {
-      const match = line.match(/^\s+- \[([ x?])\]\s+(.+?)(?:\s+\*\*\[~(.+?)\]\*\*)?$/);
+      // Support both old format **[~3h]** and new format [~3h]
+      const match = line.match(/^\s+- \[([ x?])\]\s+(.+?)(?:\s+(?:\*\*)?\[~?(.+?)\](?:\*\*)?)?$/);
       if (match && currentFeature && currentSubsection && currentParentTask) {
         // Only add subtask if parent is marked as "→ split"
         if (currentParentTask.shouldSplit) {
@@ -74,7 +81,8 @@ function parseTodoMd(content) {
     }
     // Main task line
     else if (line.match(/^- \[([ x?])\]/)) {
-      const match = line.match(/^- \[([ x?])\]\s+(.+?)(?:\s+\*\*\[~(.+?)\]\*\*)?$/);
+      // Support both old format **[~3h]** and new format [~3h]
+      const match = line.match(/^- \[([ x?])\]\s+(.+?)(?:\s+(?:\*\*)?\[~?(.+?)\](?:\*\*)?)?$/);
       if (match && currentFeature && currentSubsection) {
         const status = match[1] === 'x' ? 'completed' : match[1] === '?' ? 'maybe' : 'pending';
         const taskText = match[2].trim();

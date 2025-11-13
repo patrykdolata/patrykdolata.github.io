@@ -102,19 +102,33 @@ function parseTodoMd(content) {
     }
 
     // Feature header (## Sprint X / Feature X / Sprint: etc.)
-    if (line.match(/^## (Sprint|Feature|Przyszłe|Harmonogram)/)) {
-      const match = line.match(/^## (.+?)(?:\s+\(~?(.+?)\))?$/);
-      if (match) {
-        currentFeature = {
-          title: match[1],
-          duration: match[2] || '',
-          description: '',
-          subsections: [],
-          priority: determinePriority(line)
-        };
-        features.push(currentFeature);
-        currentSubsection = null;
-      }
+    if (line.match(/^## (Sprint|Feature|Przyszłe|Harmonogram|Deployment)/)) {
+      // Extract clean feature name, removing emoji and status indicators
+      let featureName = line.replace(/^##\s+/, '');
+
+      // Remove emoji (🔴, 🟡, ✅, etc.)
+      featureName = featureName.replace(/[\u{1F300}-\u{1F9FF}]/gu, '').trim();
+
+      // Remove status indicators like [95% DONE], [40% DONE → 30h], etc.
+      featureName = featureName.replace(/\s*[🔴🟡✅]\s*/g, '').trim();
+      featureName = featureName.replace(/\s*\[.*?\]\s*$/g, '').trim();
+
+      // Extract duration if in parentheses format
+      const durationMatch = featureName.match(/\(~?(.+?)\)$/);
+      const duration = durationMatch ? durationMatch[1] : '';
+
+      // Remove duration from title
+      featureName = featureName.replace(/\s*\(~?.+?\)$/, '').trim();
+
+      currentFeature = {
+        title: featureName,
+        duration: duration,
+        description: '',
+        subsections: [],
+        priority: determinePriority(line)
+      };
+      features.push(currentFeature);
+      currentSubsection = null;
     }
     // Description line (> **Cel:**)
     else if (line.match(/^>\s*\*\*Cel:\*\*/)) {
@@ -124,11 +138,19 @@ function parseTodoMd(content) {
     }
     // Subsection (### Backend - ...)
     else if (line.match(/^### /)) {
-      const match = line.match(/^### (.+?)(?:\s+\(~?(.+?)\))?$/);
-      if (match && currentFeature) {
+      let subsectionName = line.replace(/^###\s+/, '');
+
+      // Extract duration if present (e.g., [15h] or (~15h))
+      const durationMatch = subsectionName.match(/\[(.+?)\]$/);
+      const duration = durationMatch ? durationMatch[1] : '';
+
+      // Remove duration from title
+      subsectionName = subsectionName.replace(/\s*\[.+?\]$/, '').trim();
+
+      if (currentFeature) {
         currentSubsection = {
-          title: match[1],
-          duration: match[2] || '',
+          title: subsectionName,
+          duration: duration,
           tasks: []
         };
         currentFeature.subsections.push(currentSubsection);
@@ -205,6 +227,90 @@ function getStatusBadgeClass(status) {
   if (status.includes('🟡')) return 'status-progress';
   if (status.includes('🔴')) return 'status-todo';
   return 'status-progress';
+}
+
+function generateSummarySection(scheduleData, mvpSummary, postMvpSummary) {
+  const weeklyHours = scheduleData ? scheduleData.meta.weeklyHours : 15;
+
+  let html = `
+    <!-- Summary Section -->
+    <div class="summary-section">
+      <h2>📊 Podsumowanie</h2>
+`;
+
+  // If we have schedule data, show schedule-based summary
+  if (scheduleData && scheduleData.schedule) {
+    const totalWeeks = scheduleData.meta.estimatedWeeks;
+    const endDate = scheduleData.meta.estimatedEndDate;
+    const totalHours = scheduleData.meta.totalEstimatedHours;
+    const completedHours = scheduleData.progress.completedHours;
+    const remainingHours = scheduleData.progress.remainingHours;
+    const percentComplete = scheduleData.progress.percentComplete;
+
+    html += `
+      <p style="margin-bottom: var(--space-sm); color: #2563eb; font-weight: 600; background: #dbeafe; padding: var(--space-md); border-radius: var(--radius-md); border-left: 4px solid #3b82f6;">
+        📌 Widok: <strong>Aktualny Harmonogram (Milestone 1)</strong> - Zadania zaplanowane do ${endDate}
+      </p>
+      <p style="margin-bottom: var(--space-lg); color: var(--color-text-secondary);">
+        Przy dostępności <strong>${weeklyHours}h/tydzień</strong> w wolnym czasie (Solo Developer)
+      </p>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-lg); margin-bottom: var(--space-xl);">
+        <div style="background: white; padding: var(--space-lg); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); border-left: 4px solid #3b82f6;">
+          <div style="font-size: 0.9rem; color: var(--color-text-secondary); margin-bottom: var(--space-xs);">Całkowite godziny</div>
+          <div style="font-size: 2rem; font-weight: bold; color: var(--color-primary);">${totalHours}h</div>
+        </div>
+        <div style="background: white; padding: var(--space-lg); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); border-left: 4px solid #10b981;">
+          <div style="font-size: 0.9rem; color: var(--color-text-secondary); margin-bottom: var(--space-xs);">Ukończone</div>
+          <div style="font-size: 2rem; font-weight: bold; color: #10b981;">${completedHours}h</div>
+        </div>
+        <div style="background: white; padding: var(--space-lg); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); border-left: 4px solid #f59e0b;">
+          <div style="font-size: 0.9rem; color: var(--color-text-secondary); margin-bottom: var(--space-xs);">Pozostałe</div>
+          <div style="font-size: 2rem; font-weight: bold; color: #f59e0b;">${remainingHours}h</div>
+        </div>
+        <div style="background: white; padding: var(--space-lg); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); border-left: 4px solid #8b5cf6;">
+          <div style="font-size: 0.9rem; color: var(--color-text-secondary); margin-bottom: var(--space-xs);">Czas trwania</div>
+          <div style="font-size: 2rem; font-weight: bold; color: #8b5cf6;">${totalWeeks} tyg.</div>
+        </div>
+      </div>
+
+      <div style="margin-top: var(--space-xl); padding: var(--space-xl); background: white; border-radius: var(--radius-md); border: 2px solid var(--color-primary);">
+        <h3 style="color: var(--color-primary); margin-bottom: var(--space-md);">🎯 Milestone 1: Organizer MVP</h3>
+        <div style="font-size: 1.1rem; line-height: 1.8;">
+          <p><strong>${totalHours}h / ${weeklyHours}h/tydzień = ${totalWeeks} tygodni</strong></p>
+          <p style="margin-top: var(--space-sm);"><strong>Deadline:</strong> ${endDate}</p>
+          <p style="margin-top: var(--space-md); font-size: 0.95rem; color: var(--color-text-secondary);">
+            Postęp: <strong>${percentComplete}%</strong> (${completedHours}h / ${totalHours}h)
+          </p>
+        </div>
+      </div>
+
+      <div style="margin-top: var(--space-xl); padding: var(--space-lg); background: #dcfce7; border-radius: var(--radius-md); border-left: 4px solid #16a34a;">
+        <h3 style="color: #16a34a; margin-bottom: var(--space-sm);">✅ Zakres Milestone 1</h3>
+        <ul style="margin: 0; padding-left: var(--space-xl); line-height: 1.8;">
+          <li>Feature 1: Podstawowe operacje na Wydarzeniach (CRUD)</li>
+          <li>Feature 3: Zarządzanie Uczestnikami - MANUAL</li>
+          <li>Feature 4: Cykliczne Wydarzenia - BASIC</li>
+          <li>Feature 6: UI Basics dla Organizatora</li>
+          <li>Deployment + Testing</li>
+        </ul>
+      </div>
+
+      <div style="margin-top: var(--space-lg); padding: var(--space-lg); background: #fef3c7; border-radius: var(--radius-md); border-left: 4px solid #f59e0b;">
+        <h3 style="color: #92400e; margin-bottom: var(--space-sm);">📅 Kolejne Milestones</h3>
+        <ul style="margin: 0; padding-left: var(--space-xl); line-height: 1.8; font-size: 0.95rem;">
+          <li><strong>M2: Self-Service & Advanced</strong> - Q1 2026 (~200h, 13 tyg.)</li>
+          <li><strong>M3: Post-MVP</strong> - Q2 2026 (~195h, 13 tyg.)</li>
+          <li><strong>TOTAL</strong>: ~510h = ~33 tygodnie = ~8 miesięcy</li>
+        </ul>
+      </div>
+`;
+  }
+
+  html += `    </div>
+  `;
+
+  return html;
 }
 
 function generateScheduleSection(scheduleData) {
@@ -693,15 +799,122 @@ function generateScheduleSection(scheduleData) {
   return html;
 }
 
+function filterFeaturesForSchedule(features, scheduleData) {
+  if (!scheduleData || !scheduleData.schedule) {
+    return features; // No schedule, return all features
+  }
+
+  // Get unique feature names from schedule
+  const scheduledFeatures = new Set();
+  scheduleData.schedule.forEach(task => {
+    scheduledFeatures.add(task.feature);
+  });
+
+  // Filter features and subsections based on schedule
+  return features
+    .map(feature => {
+      if (!scheduledFeatures.has(feature.title)) {
+        return null; // Feature not in schedule
+      }
+
+      // Get scheduled subsections for this feature (normalize by removing [XXh])
+      const scheduledSubsections = new Set();
+      scheduleData.schedule
+        .filter(task => task.feature === feature.title)
+        .forEach(task => {
+          // Normalize subsection name by removing [XXh] suffix
+          const normalizedSubsection = task.subsection.replace(/\s*\[.+?\]$/, '').trim();
+          scheduledSubsections.add(normalizedSubsection);
+        });
+
+      // Filter subsections
+      const filteredSubsections = feature.subsections
+        .filter(sub => scheduledSubsections.has(sub.title))
+        .map(sub => {
+          // Get scheduled tasks for this subsection
+          const scheduledTasks = new Set();
+          scheduleData.schedule
+            .filter(task => {
+              const normalizedSubsection = task.subsection.replace(/\s*\[.+?\]$/, '').trim();
+              return task.feature === feature.title && normalizedSubsection === sub.title;
+            })
+            .forEach(task => {
+              // Normalize task text for matching
+              const normalized = task.task
+                .replace(/\*\*/g, '')
+                .replace(/`/g, '')
+                .trim()
+                .toLowerCase();
+              scheduledTasks.add(normalized);
+            });
+
+          // Filter tasks in this subsection
+          const filteredTasks = sub.tasks.filter(task => {
+            const normalizedTaskText = task.text
+              .replace(/\*\*/g, '')
+              .replace(/`/g, '')
+              .trim()
+              .toLowerCase();
+
+            return Array.from(scheduledTasks).some(schedTask =>
+              normalizedTaskText.includes(schedTask) || schedTask.includes(normalizedTaskText)
+            );
+          });
+
+          return { ...sub, tasks: filteredTasks };
+        })
+        .filter(sub => sub.tasks.length > 0); // Only keep subsections with tasks
+
+      if (filteredSubsections.length === 0) {
+        return null;
+      }
+
+      return { ...feature, subsections: filteredSubsections };
+    })
+    .filter(f => f !== null);
+}
+
+function calculateStatsFromFeatures(features) {
+  const stats = { done: 0, maybe: 0, pending: 0, total: 0 };
+
+  features.forEach(feature => {
+    feature.subsections.forEach(subsection => {
+      subsection.tasks.forEach(task => {
+        stats.total++;
+        stats[task.status]++;
+
+        // Count subtasks too
+        task.subtasks.forEach(subtask => {
+          if (typeof subtask === 'object' && subtask.status) {
+            stats.total++;
+            stats[subtask.status]++;
+          }
+        });
+      });
+    });
+  });
+
+  return stats;
+}
+
 function generateHtml(features, stats, mvpSummary, postMvpSummary, scheduleData = null) {
+  // If schedule exists, filter features and recalculate stats
+  let filteredFeatures = features;
+  let displayStats = stats;
+
+  if (scheduleData && scheduleData.schedule) {
+    filteredFeatures = filterFeaturesForSchedule(features, scheduleData);
+    displayStats = calculateStatsFromFeatures(filteredFeatures);
+  }
+
   // Calculate percentages
-  const donePercent = stats.total > 0 ? Math.round((stats.done / stats.total) * 100) : 0;
-  const maybePercent = stats.total > 0 ? Math.round((stats.maybe / stats.total) * 100) : 0;
-  const pendingPercent = stats.total > 0 ? Math.round((stats.pending / stats.total) * 100) : 0;
+  const donePercent = displayStats.total > 0 ? Math.round((displayStats.done / displayStats.total) * 100) : 0;
+  const maybePercent = displayStats.total > 0 ? Math.round((displayStats.maybe / displayStats.total) * 100) : 0;
+  const pendingPercent = displayStats.total > 0 ? Math.round((displayStats.pending / displayStats.total) * 100) : 0;
 
   // Adjust for rounding errors
   let total = donePercent + maybePercent + pendingPercent;
-  if (total !== 100 && stats.total > 0) {
+  if (total !== 100 && displayStats.total > 0) {
     const diff = 100 - total;
     if (pendingPercent > 0) {
       pendingPercent += diff;
@@ -713,7 +926,7 @@ function generateHtml(features, stats, mvpSummary, postMvpSummary, scheduleData 
   }
 
   // Calculate completion percentage for badge
-  const completionPercent = Math.round(((stats.done + stats.maybe * 0.5) / stats.total) * 100);
+  const completionPercent = Math.round(((displayStats.done + displayStats.maybe * 0.5) / displayStats.total) * 100);
 
   let html = `<!DOCTYPE html>
 <html lang="pl">
@@ -1266,19 +1479,19 @@ function generateHtml(features, stats, mvpSummary, postMvpSummary, scheduleData 
       </div>
       <div class="progress-stats">
         <div class="progress-stat">
-          <div class="progress-stat-value stat-completed">${stats.done}</div>
+          <div class="progress-stat-value stat-completed">${displayStats.done}</div>
           <div class="progress-stat-label">Ukończone</div>
         </div>
         <div class="progress-stat">
-          <div class="progress-stat-value stat-verified">${stats.maybe}</div>
+          <div class="progress-stat-value stat-verified">${displayStats.maybe}</div>
           <div class="progress-stat-label">Do weryfikacji</div>
         </div>
         <div class="progress-stat">
-          <div class="progress-stat-value stat-pending">${stats.pending}</div>
+          <div class="progress-stat-value stat-pending">${displayStats.pending}</div>
           <div class="progress-stat-label">Do zrobienia</div>
         </div>
         <div class="progress-stat">
-          <div class="progress-stat-value stat-total">${stats.total}</div>
+          <div class="progress-stat-value stat-total">${displayStats.total}</div>
           <div class="progress-stat-label">Wszystkie zadania</div>
         </div>
       </div>
@@ -1291,8 +1504,8 @@ function generateHtml(features, stats, mvpSummary, postMvpSummary, scheduleData 
     html += generateScheduleSection(scheduleData);
   }
 
-  // Generate features
-  features.forEach(feature => {
+  // Generate features (use filtered features if schedule exists)
+  filteredFeatures.forEach(feature => {
     // Skip features with no subsections that have tasks
     const subsectionsWithTasks = feature.subsections.filter(s => s.tasks.length > 0);
     if (subsectionsWithTasks.length === 0) {
@@ -1361,15 +1574,28 @@ function generateHtml(features, stats, mvpSummary, postMvpSummary, scheduleData 
   });
 
   // Add summary section
+  const weeklyHours = scheduleData ? scheduleData.meta.weeklyHours : 15;
+  const scopeNote = scheduleData
+    ? `<p style="margin-bottom: var(--space-sm); color: #2563eb; font-weight: 600; background: #dbeafe; padding: var(--space-md); border-radius: var(--radius-md); border-left: 4px solid #3b82f6;">
+        📌 Widok: <strong>Aktualny Harmonogram (Milestone 1)</strong> - Zadania zaplanowane do ${scheduleData.meta.estimatedEndDate}
+      </p>`
+    : '';
+
+
+  // Add schedule-based summary if available
+  if (scheduleData && scheduleData.schedule) {
+    html += generateSummarySection(scheduleData, mvpSummary, postMvpSummary);
+  }
   html += `
     <!-- Summary Section -->
-    <div class="summary-section">
+    <div class="summary-section" style="${scheduleData && scheduleData.schedule ? 'display: none;' : ''}">
       <h2>📊 Podsumowanie Estymat</h2>
+      ${scopeNote}
       <p style="margin-bottom: var(--space-lg); color: var(--color-text-secondary);">
-        Przy dostępności <strong>15h/tydzień</strong> w wolnym czasie (Solo Developer)
+        Przy dostępności <strong>${weeklyHours}h/tydzień</strong> w wolnym czasie (Solo Developer)
       </p>
 
-      <table class="summary-table">
+      <table class="summary-table" style="${mvpSummary.length === 0 ? 'display: none;' : ''}">
         <thead>
           <tr>
             <th>Feature</th>
@@ -1383,7 +1609,7 @@ function generateHtml(features, stats, mvpSummary, postMvpSummary, scheduleData 
         <tbody>
 `;
 
-  // Generate MVP table rows dynamically
+  // Generate MVP table rows dynamically (hide if empty)
   mvpSummary.forEach(row => {
     const rowClass = row.isTotal ? ' class="summary-total"' : '';
     const statusClass = getStatusBadgeClass(row.status);
@@ -1414,7 +1640,7 @@ function generateHtml(features, stats, mvpSummary, postMvpSummary, scheduleData 
   html += `        </tbody>
       </table>
 
-      <div style="margin-top: var(--space-2xl); padding: var(--space-xl); background: white; border-radius: var(--radius-md); border: 2px solid var(--color-primary);">
+      <div style="margin-top: var(--space-2xl); padding: var(--space-xl); background: white; border-radius: var(--radius-md); border: 2px solid var(--color-primary); ${scheduleData && scheduleData.schedule ? 'display: none;' : ''}">
         <h3 style="color: var(--color-primary); margin-bottom: var(--space-md);">🎯 Realistyczny Timeline</h3>
         <div style="font-size: 1.1rem; line-height: 1.8;">
           <p><strong>~621h / 15h/tydzień = 41.5 tygodnie = ~10.5 miesiąca</strong></p>
@@ -1424,7 +1650,7 @@ function generateHtml(features, stats, mvpSummary, postMvpSummary, scheduleData 
         </div>
       </div>
 
-      <div style="margin-top: var(--space-xl); padding: var(--space-lg); background: #fee2e2; border-radius: var(--radius-md); border-left: 4px solid #dc2626;">
+      <div style="margin-top: var(--space-xl); padding: var(--space-lg); background: #fee2e2; border-radius: var(--radius-md); border-left: 4px solid #dc2626; ${scheduleData && scheduleData.schedule ? 'display: none;' : ''}">
         <h3 style="color: #dc2626; margin-bottom: var(--space-sm);">🔴 Critical Path (minimum do pokazania użytkownikom)</h3>
         <p style="font-size: 1.1rem; margin: 0;"><strong>~20.5 tygodni = 5 miesięcy</strong></p>
         <p style="margin-top: var(--space-sm); font-size: 0.9rem; color: var(--color-text-secondary);">
@@ -1432,7 +1658,7 @@ function generateHtml(features, stats, mvpSummary, postMvpSummary, scheduleData 
         </p>
       </div>
 
-      <div style="margin-top: var(--space-lg); padding: var(--space-lg); background: #dcfce7; border-radius: var(--radius-md); border-left: 4px solid #16a34a;">
+      <div style="margin-top: var(--space-lg); padding: var(--space-lg); background: #dcfce7; border-radius: var(--radius-md); border-left: 4px solid #16a34a; ${scheduleData && scheduleData.schedule ? 'display: none;' : ''}">
         <h3 style="color: #16a34a; margin-bottom: var(--space-sm);">✅ Realistyczne Cele</h3>
         <ul style="margin: 0; padding-left: var(--space-xl); line-height: 1.8;">
           <li>Podstawowe MVP (Critical Path) gotowe za <strong>~5-6 miesięcy</strong></li>
@@ -1441,7 +1667,7 @@ function generateHtml(features, stats, mvpSummary, postMvpSummary, scheduleData 
         </ul>
       </div>
 
-      <div style="margin-top: var(--space-2xl); padding: var(--space-xl); background: var(--color-background); border-radius: var(--radius-md);">
+      <div style="margin-top: var(--space-2xl); padding: var(--space-xl); background: var(--color-background); border-radius: var(--radius-md); ${scheduleData && scheduleData.schedule ? 'display: none;' : ''}">
         <h3 style="color: var(--color-primary); margin-bottom: var(--space-md);">📈 Post-MVP Features</h3>
         <table class="summary-table">
           <thead>
@@ -1530,10 +1756,18 @@ if (fs.existsSync(schedulePath)) {
 
 const html = generateHtml(features, stats, mvpSummary, postMvpSummary, scheduleData);
 
+// Calculate display stats (filtered if schedule exists)
+let displayStats = stats;
+if (scheduleData && scheduleData.schedule) {
+  const filteredFeatures = filterFeaturesForSchedule(features, scheduleData);
+  displayStats = calculateStatsFromFeatures(filteredFeatures);
+}
+
 // Write TODO.html
 const todoHtmlPath = path.join(__dirname, 'TODO.html');
 fs.writeFileSync(todoHtmlPath, html, 'utf8');
 
+const scopeInfo = scheduleData ? ' (Milestone 1 - Harmonogram)' : '';
 console.log('✅ TODO.html wygenerowany pomyślnie!');
-console.log(`📊 Statystyki: ${stats.done} ukończone, ${stats.maybe} do weryfikacji, ${stats.pending} do zrobienia (${stats.total} razem)`);
-console.log(`📈 Postęp: ${Math.round((stats.done / stats.total) * 100)}% ukończone, ${Math.round((stats.maybe / stats.total) * 100)}% do weryfikacji`);
+console.log(`📊 Statystyki${scopeInfo}: ${displayStats.done} ukończone, ${displayStats.maybe} do weryfikacji, ${displayStats.pending} do zrobienia (${displayStats.total} razem)`);
+console.log(`📈 Postęp: ${Math.round((displayStats.done / displayStats.total) * 100)}% ukończone, ${Math.round((displayStats.maybe / displayStats.total) * 100)}% do weryfikacji`);

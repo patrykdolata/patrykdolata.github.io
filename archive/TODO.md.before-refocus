@@ -1,0 +1,713 @@
+# Meet App - TODO Lista (Milestone-Based)
+
+> **Projekt:** Aplikacja do planowania wydarzeń siatkówki
+> **Stack:** Spring Boot (Backend) + Flutter (Mobile) + PostgreSQL
+> **Solo developer:** Wszystko robione samodzielnie
+> **Start:** 2025-11-13
+> **Cel:** Działający MVP do końca 2025 roku
+
+---
+
+## 🎯 PROJECT STATUS
+
+- **Current Phase:** MILESTONE 1 - Core MVP
+- **Target:** 2025-12-31 (7 tygodni)
+- **Weekly hours:** 15h
+- **Overall progress:** 25%
+- **Last updated:** 2025-11-13
+
+### ✅ What's Working:
+- Sprint 0: Auth & JWT (95% done)
+- Feature 0: Mapa z markerami (80% done)
+- Feature 5.5: Ulubione lokalizacje (90% done)
+- Feature 1: Basic Events API (40% done)
+
+### 🔴 Current Focus:
+- Feature 1: Dokończenie Events CRUD (30h pozostałe)
+- Feature 2: Join/Leave wydarzenia (45h)
+
+---
+
+## 📋 MILESTONE 1: Core MVP 🔴 [DO KOŃCA 2025]
+
+**Deadline:** 2025-12-31 (7 tygodni)
+**Scope:** Minimum viable product - użytkownik może planować i dołączać do wydarzeń
+**Total:** ~105h
+
+### Definicja sukcesu:
+- [x] Użytkownik może się zarejestrować i zalogować
+- [x] Użytkownik widzi wydarzenia na mapie
+- [ ] Użytkownik może dodać swoje wydarzenie
+- [ ] Użytkownik może dołączyć do wydarzenia
+- [ ] Użytkownik widzi listę uczestników
+- [ ] Aplikacja działa na produkcji (live server)
+
+---
+
+## Sprint 0: Konfiguracja Backend & Autoryzacja ✅ [95% DONE]
+
+### Konfiguracja Projektu
+- [x] Utworzenie projektu Spring Boot
+- [x] Konfiguracja PostgreSQL
+- [x] Setup application.yml
+- [x] Struktura pakietów
+- [x] Konfiguracja Lombok, Validation
+
+### Model Bazy Danych - Encje JPA (Podstawowe)
+- [x] Encja UserEntity
+- [x] Encja LocationEntity
+- [x] Encja EventEntity (podstawowa)
+- [x] Encja FavoritePlaceEntity
+- [x] Encja PostEntity
+- [x] Encja TokenEntity
+
+### Migracje Bazy Danych (Flyway)
+- [x] Setup Flyway w projekcie
+- [x] V1_0__Initial_schema.sql
+- [x] V1_1__Fix_null_user_roles.sql
+
+### Spring Security & JWT
+- [x] JwtService (generateToken, validateToken)
+- [x] JwtAuthenticationFilter
+- [x] UserDetailsService implementation
+- [x] SecurityConfiguration (CORS, CSRF)
+- [x] LogoutService
+- [x] TokenEntity & TokenRepository
+
+### Auth Endpoints (Backend)
+- [x] POST /auth/register
+- [x] POST /auth/authenticate
+- [x] POST /auth/refresh-token
+- [x] GET /auth/validate-token
+- [x] POST /auth/logout
+
+### Auth Implementation (Flutter)
+- [x] JWT storage w Flutter (SecureStorage)
+- [x] HTTP client setup (dio) z Authorization header
+- [x] UserService (login/logout state)
+- [x] Login/Register forms
+- [x] Token validation i auto-refresh
+
+**Sprint 0 Status: ✅ DONE**
+
+---
+
+## Feature 0: Mapa z Wydarzeniami ✅ [80% DONE]
+
+### Backend - Mapa API
+- [x] GET /api/events - zwraca wydarzenia z lokalizacjami
+- [x] EventEntity ma relację do LocationEntity
+- [x] LocationEntity ma latitude i longitude
+- [x] EventRepository.findAllWithLocation() - JOIN FETCH
+
+### Flutter - Mapa (Google Maps)
+- [x] GoogleMapWidget z google_maps_flutter
+- [x] Centrowanie na Poznań
+- [x] Markery wydarzeń z custom ikoną
+- [x] Grupowanie wydarzeń w tej samej lokalizacji
+- [x] Pop-up z kartą wydarzenia (EventPopUpCard)
+- [x] PageView dla wielu wydarzeń w jednym miejscu
+- [x] Dots indicator dla paginacji
+- [x] Tap na marker → zoom + centrowanie + pop-up
+- [x] Tap na mapie → ukrywa pop-up
+- [x] FloatingActionButton refresh
+- [x] EventMarkerService - filtruje nieaktualne
+- [x] FavoriteLocationNotifier - centrowanie z ulubionych
+
+**Feature 0 Status: ✅ 80% DONE (brakuje tylko advanced filters)**
+
+---
+
+## Feature 1: Podstawowe operacje na Wydarzeniach 🔴 [40% DONE → 30h pozostałe]
+
+**Priorytet:** CRITICAL - musi być w MVP
+**Deadline:** Tydzień 1-2 (do 2025-11-27)
+**Scope:** Pełny CRUD na wydarzeniach
+
+### Backend - Wydarzenia CRUD [15h]
+
+#### Obecny stan:
+- [x] EventController - podstawowa struktura
+- [x] GET /events - lista wydarzeń
+- [x] GET /events/{id} - szczegóły
+- [x] PUT /events - bulk add/update
+- [x] PUT /events/{id} - edycja
+- [x] DELETE /events/{id} - usunięcie
+- [x] EventService podstawowy
+
+#### Do zrobienia:
+- [ ] **POST /events (single create)** [~3h]
+  - [ ] Endpoint implementation + DTO mapping [~2h]
+  - [ ] Validation logic + error handling [~1h]
+
+- [ ] **DTOs: CreateEventRequest, UpdateEventRequest (rozdzielenie)** [~3h]
+  - [ ] CreateEventRequest DTO + validation [~2h]
+  - [ ] UpdateEventRequest DTO + partial update logic [~1h]
+
+- [ ] **Walidacje rozszerzone** [~3h]
+  - [ ] DateTime & duration validations [~2h]
+  - [ ] Slots & level business logic validations [~1h]
+
+- [ ] **Query params: minLevel, maxLevel, locationId, maxPrice** [~3h]
+  - [ ] minLevel, maxLevel query params [~1.5h]
+  - [ ] locationId, maxPrice params [~1.5h]
+
+- [ ] **EventRepository custom queries (filters)** [~3h]
+  - [ ] Filter queries implementation [~2h]
+  - [ ] Query optimization + indexing [~1h]
+
+### Flutter - Wydarzenia CRUD [15h]
+
+#### Obecny stan:
+- [x] EventDetailsWidget - pełny widok szczegółów
+- [x] EventDetailsScreen - routing + navigation
+
+#### Do zrobienia:
+- [ ] **CreateEventScreen + formularz** [~8h]
+  - [ ] Screen structure + form builder [~2h]
+  - [ ] Basic fields (title, message, dateTime) [~2h]
+  - [ ] Location picker integration [~1h]
+  - [ ] Slots, price, level inputs [~2h]
+  - [ ] Form validation + submission [~1h]
+
+- [ ] **HTTP POST /events integration** [~2h]
+
+- [ ] **EditEventScreen (reuse CreateEvent logic)** [~3h]
+  - [ ] Screen setup + pre-fill data [~2h]
+  - [ ] Update API integration [~1h]
+
+- [ ] **Delete event + confirm dialog** [~2h]
+  - [ ] Confirm dialog UI [~1h]
+  - [ ] Delete API call + UI update [~1h]
+
+**Feature 1 Milestone:** Użytkownik może dodać, edytować i usunąć swoje wydarzenie ✅
+
+---
+
+## Feature 2: Dołączanie/Opuszczanie Wydarzeń 🔴 [0% DONE → 45h]
+
+**Priorytet:** CRITICAL - bez tego MVP nie ma sensu
+**Deadline:** Tydzień 3-5 (do 2025-12-18)
+**Scope:** Użytkownicy mogą dołączać i opuszczać wydarzenia
+
+### Backend - Join/Leave Logic [25h]
+
+- [ ] **Encja EventParticipant** [~4h]
+  - [ ] Podstawowa struktura encji [~2h]
+    - event (ManyToOne → EventEntity)
+    - user (ManyToOne → UserEntity)
+    - position (Integer)
+    - status (enum: MAIN_LIST, WAITLIST)
+    - joinedAt (LocalDateTime)
+  - [ ] Relacje + indeksy [~2h]
+  - **UWAGA:** Bez isPaid, paymentMethod, isConfirmed na razie (to w Feature 3)
+
+- [ ] **Migracja V1_2__Add_event_participant_table.sql** [~2h]
+
+- [ ] **Enum ParticipantStatus (MAIN_LIST, WAITLIST)** [~1h]
+
+- [ ] **EventParticipantRepository + query methods** [~3h]
+  - [ ] Repository interface [~1h]
+  - [ ] findByEventIdAndUserId [~0.5h]
+  - [ ] findByEventIdOrderByPositionAsc [~0.5h]
+  - [ ] countByEventIdAndStatus [~0.5h]
+  - [ ] findMainListByEventId, findWaitlistByEventId [~0.5h]
+
+- [ ] **POST /events/{id}/join endpoint** [~3h]
+  - [ ] Endpoint implementation + DTO [~2h]
+  - [ ] Authorization check + error handling [~1h]
+
+- [ ] **DELETE /events/{id}/leave endpoint** [~3h]
+  - [ ] Endpoint implementation [~2h]
+  - [ ] Error handling + edge cases [~1h]
+
+- [ ] **GET /events/{id}/participants endpoint** [~2h]
+
+- [ ] **DTOs: ParticipantDTO, ParticipantsListDTO** [~2h]
+  - [ ] ParticipantDTO (id, user info, position, status) [~1h]
+  - [ ] ParticipantsListDTO (mainList + waitlist) [~1h]
+
+- [ ] **EventService.joinEvent() - main list vs waitlist logic** [~3h]
+  - [ ] Check if already joined [~0.5h]
+  - [ ] Main list placement (if slots available) [~1h]
+  - [ ] Waitlist placement (if full) [~1h]
+  - [ ] Position assignment [~0.5h]
+
+- [ ] **EventService.leaveEvent() - awans z waitlist** [~3h]
+  - [ ] Remove participant [~1h]
+  - [ ] Promote first from waitlist (if main list) [~1h]
+  - [ ] Renumber positions [~1h]
+
+- [ ] **Custom exceptions** [~1h]
+  - [ ] AlreadyJoinedException
+  - [ ] EventFullException
+  - [ ] NotParticipantException
+
+### Flutter - Join/Leave UI [20h]
+
+- [ ] **Join button w EventDetailsScreen** [~2h]
+  - [ ] Button UI + state handling [~1h]
+  - [ ] Disable logic (full event, already joined) [~1h]
+
+- [ ] **HTTP POST /events/{id}/join** [~1h]
+
+- [ ] **Leave button (jeśli już dołączony)** [~2h]
+  - [ ] Button UI + conditional rendering [~1h]
+  - [ ] Confirmation dialog [~1h]
+
+- [ ] **HTTP DELETE /events/{id}/leave** [~1h]
+
+- [ ] **Update UI po join/leave** [~2h]
+  - [ ] Optimistic UI update (slots, count) [~1h]
+  - [ ] Error rollback + state refresh [~1h]
+
+- [ ] **Handling waitlist status** [~2h]
+  - [ ] Waitlist badge UI [~1h]
+  - [ ] Info dialog/tooltip [~1h]
+
+- [ ] **Toast notifications (success/error)** [~1h]
+
+- [ ] **ParticipantsListScreen - basic view** [~5h]
+  - [ ] Screen structure + tabs (main/waitlist) [~2h]
+  - [ ] ListView builder + participant items [~2h]
+  - [ ] Pull-to-refresh [~1h]
+
+- [ ] **ParticipantListItem widget** [~2h]
+  - [ ] Avatar + nickname + position display [~1h]
+  - [ ] Status badges (main/waitlist) [~1h]
+
+- [ ] **HTTP GET /events/{id}/participants** [~1h]
+
+- [ ] **Navigation: EventDetails → ParticipantsList** [~1h]
+
+- [ ] **EventParticipantService + Notifier** [~2h]
+  - [ ] Service structure + API methods [~1h]
+  - [ ] Notifier state management [~1h]
+
+**Feature 2 Milestone:** Użytkownik może dołączyć do wydarzenia, zobaczyć listę uczestników, opuścić wydarzenie ✅
+
+---
+
+## Feature 6: UI Polish + Basic Features 🔴 [15h]
+
+**Priorytet:** HIGH - żeby MVP było użyteczne
+**Deadline:** Tydzień 6 (do 2025-12-25)
+**Scope:** Aplikacja wygląda profesjonalnie i jest łatwa w użyciu
+
+### Flutter - UI Improvements [15h]
+
+- [ ] **Bottom Navigation Bar (Map/Events, Profile)** [~3h]
+  - [ ] Bottom nav bar UI + icons [~1h]
+  - [ ] Navigation state management [~1h]
+  - [ ] Integration z existing screens [~1h]
+
+- [ ] **EventsListScreen - lista jako alternatywa dla mapy** [~4h]
+  - [ ] Screen structure + ListView [~2h]
+  - [ ] EventListItem widget [~1h]
+  - [ ] Pull-to-refresh [~0.5h]
+  - [ ] Switch między mapą a listą (toggle) [~0.5h]
+
+- [ ] **Loading skeletons (EventCard, Map)** [~2h]
+  - [ ] Skeleton widgets creation [~1h]
+  - [ ] Integration w EventsList + Map [~1h]
+
+- [ ] **Error states z retry button** [~2h]
+  - [ ] Error state widgets [~1h]
+  - [ ] Retry logic integration [~1h]
+
+- [ ] **Form validation messages (user-friendly)** [~2h]
+
+- [ ] **Network error handling (offline mode info)** [~2h]
+  - [ ] Network status detection [~1h]
+  - [ ] Offline mode UI [~1h]
+
+**Feature 6 Milestone:** Aplikacja ma podstawowy navigation i error handling ✅
+
+---
+
+## Deployment + Testing 🔴 [15h]
+
+**Priorytet:** CRITICAL - musi działać live
+**Deadline:** Tydzień 7 (do 2025-12-31)
+**Scope:** Aplikacja dostępna online dla alfa userów
+
+### Backend Deployment [10h]
+
+- [ ] **Konfiguracja .env** [~1h]
+  - [ ] DB credentials
+  - [ ] JWT_SECRET
+  - [ ] Production settings
+
+- [ ] **Test lokalny deployment (docker-compose)** [~2h]
+
+- [ ] **Deployment na serwer produkcyjny** [~4h]
+  - [ ] PostgreSQL setup
+  - [ ] Java application running (systemd service)
+  - [ ] Nginx reverse proxy
+  - [ ] SSL certificate (Let's Encrypt)
+
+- [ ] **Seed danych testowych** [~2h]
+  - [ ] 3-5 użytkowników
+  - [ ] 10-15 wydarzeń w Poznaniu
+  - [ ] 5 lokalizacji (hale sportowe)
+
+- [ ] **Monitoring basic** [~1h]
+  - [ ] Uptime check
+  - [ ] Error logging
+
+### Testing & Bug Fixes [5h]
+
+- [ ] **Smoke tests - główne flow** [~2h]
+  - [ ] Rejestracja → Login
+  - [ ] Dodanie wydarzenia
+  - [ ] Dołączenie do wydarzenia
+  - [ ] Opuszczenie wydarzenia
+  - [ ] Edycja wydarzenia
+
+- [ ] **Critical bug fixes** [~3h]
+
+**Deployment Milestone:** Aplikacja live, można pokazać znajomym! 🚀
+
+---
+
+## 🎊 MILESTONE 1 SUCCESS CRITERIA
+
+Do końca 2025 roku muszą działać:
+- [x] Rejestracja/logowanie
+- [x] Mapa z wydarzeniami
+- [ ] Dodawanie własnych wydarzeń
+- [ ] Edycja/usuwanie swoich wydarzeń
+- [ ] Dołączanie do wydarzeń (main list + waitlist)
+- [ ] Opuszczanie wydarzeń
+- [ ] Lista uczestników
+- [ ] Podstawowy UI (bottom nav, error handling)
+- [ ] Aplikacja działa na produkcji
+
+**Total Milestone 1: ~105h = 7 tygodni (15h/tydzień)**
+
+---
+
+# 📋 MILESTONE 2: Enhanced Features 🟡 [Q1 2026]
+
+**Timeline:** Q1 2026 (Styczeń - Marzec)
+**Scope:** Zaawansowane features po feedbacku od alfa userów
+**Total:** ~270h (~18 tygodni)
+
+## Feature 3: Zarządzanie Uczestnikami [90h]
+
+**Scope:** Organizator może zarządzać uczestnikami
+
+### Backend [45h]
+- [ ] ParticipantManagementController
+- [ ] PUT /events/{eventId}/participants/{userId}/position (zmiana pozycji)
+- [ ] POST /events/{eventId}/participants/{userId}/promote (awans z waitlist)
+- [ ] POST /events/{eventId}/participants/{userId}/demote (degradacja)
+- [ ] DELETE /events/{eventId}/participants/{userId} (remove)
+- [ ] POST /events/{eventId}/participants (manual add)
+- [ ] PUT /events/{eventId}/participants/{userId}/confirm (toggle)
+- [ ] PUT /events/{eventId}/participants/{userId}/payment (toggle)
+- [ ] PUT /events/{eventId}/participants/{userId}/payment-method
+- [ ] ParticipantService (changePosition, promote, demote, remove, etc.)
+- [ ] Sprawdzanie uprawnień: tylko organizator
+
+### Flutter [45h]
+- [ ] EventManageScreen (dedykowany ekran)
+- [ ] Management mode toggle
+- [ ] Drag & drop reordering (ReorderableListView)
+- [ ] Confirm checkbox toggle
+- [ ] Payment checkbox toggle
+- [ ] Payment method selector (BLIK/CASH/TRANSFER/CARD)
+- [ ] Promote/demote buttons
+- [ ] Remove participant + confirm
+- [ ] Add participant manually
+- [ ] PaymentsManageScreen
+- [ ] Payment summary (total, paid, unpaid)
+- [ ] Filter: paid/unpaid/all
+
+**Dlaczego później:** W MVP można zarządzać przez WhatsApp/ręcznie
+
+---
+
+## Feature 3.5: Grupy Siatkówki [60h]
+
+**Scope:** Społeczności/grupy organizujące wydarzenia
+
+### Backend [30h]
+- [ ] Encja Group (name, description, imageUrl, membersCount)
+- [ ] Encja UserGroup (membership)
+- [ ] Enum GroupRole (MEMBER, ADMIN)
+- [ ] Migracja V1_4__Add_group_tables.sql
+- [ ] Link Event → Group (groupId FK)
+- [ ] GroupController
+- [ ] GET /groups
+- [ ] GET /groups/{id}
+- [ ] POST /groups/{id}/join
+- [ ] DELETE /groups/{id}/leave
+- [ ] GET /groups/{id}/members
+- [ ] GroupService
+- [ ] Filtrowanie wydarzeń po groupId
+
+### Flutter [30h]
+- [ ] GroupListScreen
+- [ ] GroupListItem widget
+- [ ] GroupDetailsScreen
+- [ ] Join/Leave group buttons
+- [ ] Group selector w EventsListScreen
+- [ ] Filtrowanie wydarzeń po grupie
+- [ ] GroupService + GroupNotifier
+
+**Dlaczego później:** Można tagować grupy w nazwie wydarzenia w MVP
+
+---
+
+## Feature 4: Zarządzanie Seriami Wydarzeń [75h]
+
+**Scope:** Cykliczne wydarzenia (tygodniowe/miesięczne)
+
+### Backend [40h]
+- [ ] Encja EventSeries
+- [ ] Migracja V1_3__Add_event_series_table.sql
+- [ ] Enum SeriesStatus (ACTIVE, PAUSED)
+- [ ] Link Event → Series
+- [ ] SeriesController
+- [ ] GET /series
+- [ ] POST /series
+- [ ] POST /series/{id}/generate (generowanie wydarzeń)
+- [ ] PUT /series/{id}/pause
+- [ ] PUT /series/{id}/resume
+- [ ] SeriesService.generateEvents() - parsowanie schedule
+- [ ] Logika weekly/biweekly/monthly
+- [ ] Logika skipHolidays
+
+### Flutter [35h]
+- [ ] SeriesListScreen
+- [ ] SeriesDetailsScreen
+- [ ] CreateSeriesScreen
+- [ ] Frequency type picker (weekly/biweekly/monthly)
+- [ ] Days of week selector
+- [ ] Time picker
+- [ ] Generate events screen
+- [ ] Date range picker
+- [ ] Preview list wydarzeń
+
+**Dlaczego później:** Można ręcznie dodawać wydarzenia w MVP
+
+---
+
+## Feature 5: Profil Użytkownika i Historia [45h]
+
+**Scope:** Rozszerzony profil, historia, statystyki
+
+### Backend [22h]
+- [ ] GET /users/me
+- [ ] PUT /users/me
+- [ ] GET /users/me/events (jako uczestnik)
+- [ ] GET /users/me/organized
+- [ ] GET /users/me/history
+- [ ] POST /users/{id}/thumb (thumbUp/Down)
+- [ ] DTOs: UpdateUserRequest, UserProfileDTO
+
+### Flutter [23h]
+- [ ] Enhanced UserProfileScreen
+- [ ] EditProfileScreen (nickname, email, avatar)
+- [ ] My Events tab
+- [ ] My Organized tab
+- [ ] History tab
+- [ ] Thumb buttons (w profilu obcego)
+- [ ] Settings screen
+
+**Dlaczego później:** Podstawowy profil wystarczy w MVP
+
+---
+
+## Feature 7: EventStatus & Cancellation [25h]
+
+**Scope:** Anulowanie wydarzeń, statusy
+
+### Backend [15h]
+- [ ] Enum EventStatus (ACTIVE, CANCELLED, COMPLETED)
+- [ ] Logika anulowania
+- [ ] PUT /events/{id}/cancel
+- [ ] PUT /events/{id}/complete
+- [ ] Powiadomienia o odwołaniu
+- [ ] Filtrowanie: ukrywanie CANCELLED/COMPLETED
+
+### Flutter [10h]
+- [ ] EventStatus badges
+- [ ] Cancel event button
+- [ ] Cancel confirmation dialog
+- [ ] Cancelled events list
+- [ ] Filter: show/hide cancelled
+
+**Dlaczego później:** W MVP można SMS/WhatsApp
+
+---
+
+# 📋 MILESTONE 3: Post-MVP 🟢 [Q2 2026]
+
+**Timeline:** Q2 2026 (Kwiecień - Czerwiec)
+**Scope:** Features po feedbacku od szerszej grupy userów
+**Total:** ~195h (~13 tygodni)
+
+## Email Notifications [30h]
+- [ ] Spring Mail + SMTP config
+- [ ] EmailService
+- [ ] Thymeleaf templates
+- [ ] Przypomnienie 24h przed eventem
+- [ ] Awans z waitlist notification
+- [ ] Event cancelled notification
+- [ ] User preferences (enable/disable)
+
+## Push Notifications [45h]
+- [ ] Firebase FCM setup backend
+- [ ] Push: Przypomnienie
+- [ ] Push: Awans z waitlist
+- [ ] Push: Zmiana eventu
+- [ ] Push: Anulowanie
+- [ ] Flutter FCM integration
+- [ ] Local notifications
+- [ ] Notification center w aplikacji
+
+## Płatności (Stripe) [60h]
+- [ ] Stripe API integration
+- [ ] Payment initiate endpoint
+- [ ] Stripe webhook
+- [ ] Auto mark isPaid
+- [ ] Refund logic
+- [ ] Payment history
+- [ ] Flutter Stripe integration
+- [ ] Payment flow UI
+- [ ] Receipt/invoice generation
+
+## Sprint: Testowanie i Dokumentacja [60h]
+- [ ] Testy jednostkowe (backend)
+- [ ] Testy integracyjne
+- [ ] Swagger/OpenAPI setup
+- [ ] Kolekcja Postman
+- [ ] Coverage 80%+
+
+---
+
+# 📊 PODSUMOWANIE ESTYMAT
+
+| Milestone | Scope | Hours | Weeks (15h) | Timeline |
+|-----------|-------|-------|-------------|----------|
+| **M1: Core MVP** | Planowanie wydarzeń | 105h | 7 tyg. | Do 2025-12-31 |
+| **M2: Enhanced** | Zaawansowane features | 270h | 18 tyg. | Q1 2026 |
+| **M3: Post-MVP** | Notifications + Payments | 195h | 13 tyg. | Q2 2026 |
+| **TOTAL** | | **570h** | **38 tyg.** | **~9 miesięcy** |
+
+---
+
+## 🚀 STRATEGIA REALIZACJI
+
+### Faza 1: Core MVP (7 tygodni - do końca 2025)
+**Focus:** Minimum viable product do pokazania znajomym
+
+**Tydzień 1-2:** Feature 1 - Events CRUD (30h)
+→ Dodawanie, edycja, usuwanie wydarzeń
+
+**Tydzień 3-5:** Feature 2 - Join/Leave (45h)
+→ Dołączanie do wydarzeń + lista uczestników
+
+**Tydzień 6:** UI Polish (15h)
+→ Bottom nav, lista, error handling
+
+**Tydzień 7:** Deployment (15h)
+→ Live na produkcji!
+
+### Faza 2: Feedback & Iteration (2 tygodnie)
+- Pokazanie alfa userom (5-10 znajomych)
+- Zbieranie feedbacku
+- Critical bug fixes
+- Priorytetyzacja Milestone 2 features
+
+### Faza 3: Enhanced Features (Q1 2026 - 18 tygodni)
+Na podstawie feedbacku:
+- Feature 3: Participant Management (jeśli potrzebne)
+- Feature 3.5: Grupy (jeśli społeczności się rozwijają)
+- Feature 4: Serie (jeśli organizatorzy chcą cyklicznych)
+- Feature 5: Rozszerzony profil
+
+### Faza 4: Post-MVP (Q2 2026 - 13 tygodni)
+- Notifications (jeśli brakuje komunikacji)
+- Payments (jeśli płatne wydarzenia)
+- Testing & Polish
+
+---
+
+## 🎯 PRIORYTETY (Critical Path)
+
+### 🔴 MUST HAVE dla pokazania użytkownikom:
+1. Feature 1: Events CRUD - **4 tygodnie**
+2. Feature 2: Join/Leave - **5 tygodni**
+3. UI Polish - **1 tydzień**
+4. Deployment - **1 tydzień**
+
+**Critical Path: 7 tygodni = koniec 2025**
+
+### 🟡 SHOULD HAVE (Q1 2026):
+5. Feature 3: Participant Management
+6. Feature 3.5: Grupy
+7. Feature 4: Serie
+
+### 🟢 NICE TO HAVE (Q2 2026+):
+8. Notifications
+9. Payments
+10. Advanced features
+
+---
+
+## 📅 WEEKLY MILESTONES
+
+| Week | Date | Milestone | Hours |
+|------|------|-----------|-------|
+| W1 | 2025-11-13 | Feature 1 - Backend CRUD | 15h |
+| W2 | 2025-11-20 | Feature 1 - Flutter UI | 15h |
+| W3 | 2025-11-27 | Feature 2 - Backend Join/Leave | 15h |
+| W4 | 2025-12-04 | Feature 2 - Backend Logic | 10h |
+| W5 | 2025-12-11 | Feature 2 - Flutter UI | 20h |
+| W6 | 2025-12-18 | UI Polish + Navigation | 15h |
+| W7 | 2025-12-25 | Deployment + Testing | 15h |
+| **END** | **2025-12-31** | **🎊 MVP READY** | **105h** |
+
+---
+
+## 💡 ZASADY PRACY
+
+1. **Jeden feature na raz** - dokończ zanim zaczniesz następny
+2. **Backend + Flutter razem** - nie rób wszystkiego na backu, potem froncie
+3. **Testuj na żywo** - od tygodnia 3-4 pokazuj znajomym
+4. **Upraszczaj** - jeśli coś nie działa, skip lub zrób prościej
+5. **Git daily** - codzienne commity, będziesz mógł się cofnąć
+6. **Focus na MVP** - odrzucaj scope creep, zostaw na Q1 2026
+
+---
+
+## 🏁 DEFINICJA SUKCESU (31.12.2025)
+
+### MINIMUM (must have):
+- [x] Aplikacja działa na serwerze
+- [ ] Można dodać wydarzenie
+- [ ] Można dołączyć do wydarzenia
+- [ ] Można zobaczyć listę uczestników
+
+### NICE TO HAVE:
+- [ ] 5+ znajomych przetestowało
+- [ ] Zero critical bugs
+- [ ] Pozytywny feedback od userów
+
+---
+
+**Legend:**
+- `[ ]` - Do zrobienia
+- `[x]` - Ukończone
+- `🔴` - CRITICAL (MVP 2025)
+- `🟡` - HIGH (Q1 2026)
+- `🟢` - MEDIUM (Q2 2026+)
+
+---
+
+_Last updated: 2025-11-13_
+_Weekly hours: 15h_
+_Current phase: MILESTONE 1 - Core MVP_
