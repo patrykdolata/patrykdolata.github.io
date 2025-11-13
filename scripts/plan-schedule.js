@@ -22,6 +22,7 @@ function parseTodoMd(content) {
   const tasks = [];
   let currentFeature = null;
   let currentSubsection = null;
+  let currentParentTask = null;
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
@@ -35,6 +36,7 @@ function parseTodoMd(content) {
           duration: match[2] || ''
         };
         currentSubsection = null;
+        currentParentTask = null;
       }
     }
     // Subsection
@@ -45,23 +47,58 @@ function parseTodoMd(content) {
           title: match[1].trim(),
           duration: match[2] || ''
         };
+        currentParentTask = null;
       }
     }
-    // Task line
+    // Subtask (indented checkbox) - takes priority if parent has "→ split"
+    else if (line.match(/^\s+- \[([ x?])\]/)) {
+      const match = line.match(/^\s+- \[([ x?])\]\s+(.+?)(?:\s+\*\*\[~(.+?)\]\*\*)?$/);
+      if (match && currentFeature && currentSubsection && currentParentTask) {
+        // Only add subtask if parent is marked as "→ split"
+        if (currentParentTask.shouldSplit) {
+          const status = match[1] === 'x' ? 'completed' : match[1] === '?' ? 'maybe' : 'pending';
+          const taskText = match[2].trim();
+          const estimate = match[3] || '1h';
+
+          tasks.push({
+            feature: currentFeature.title,
+            subsection: currentSubsection.title,
+            task: `${currentParentTask.text} - ${taskText}`, // Combine parent + subtask for context
+            estimate: estimate,
+            status: status,
+            isSubtask: true,
+            parentTask: currentParentTask.text
+          });
+        }
+      }
+    }
+    // Main task line
     else if (line.match(/^- \[([ x?])\]/)) {
       const match = line.match(/^- \[([ x?])\]\s+(.+?)(?:\s+\*\*\[~(.+?)\]\*\*)?$/);
       if (match && currentFeature && currentSubsection) {
         const status = match[1] === 'x' ? 'completed' : match[1] === '?' ? 'maybe' : 'pending';
         const taskText = match[2].trim();
         const estimate = match[3] || '1h';
+        // Check for "→ split" in the estimate field OR the full line
+        const shouldSplit = (estimate && estimate.includes('→ split')) || line.includes('→ split');
 
-        tasks.push({
-          feature: currentFeature.title,
-          subsection: currentSubsection.title,
-          task: taskText,
-          estimate: estimate,
-          status: status
-        });
+        // Store as current parent for potential subtasks
+        currentParentTask = {
+          text: taskText,
+          shouldSplit: shouldSplit
+        };
+
+        // Only add main task if it's NOT marked for splitting
+        if (!shouldSplit) {
+          tasks.push({
+            feature: currentFeature.title,
+            subsection: currentSubsection.title,
+            task: taskText,
+            estimate: estimate,
+            status: status,
+            isSubtask: false
+          });
+        }
       }
     }
   }

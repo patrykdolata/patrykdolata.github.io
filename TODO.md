@@ -846,7 +846,7 @@
 
 ---
 
-## Sprint: Wdrożenie na Raspberry Pi (~3 tygodnie = 45h)
+## Sprint: Wdrożenie na Raspberry Pi (~2.5 tygodnia = 37h)
 
 ### Konfiguracja Sprzętu i Systemu
 - [ ] Zakup: RPi 4B 8GB + karta SD 64GB + zasilacz **[~500-600 PLN]**

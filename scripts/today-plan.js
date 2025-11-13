@@ -11,6 +11,33 @@ const path = require('path');
 const projectRoot = path.join(__dirname, '..');
 const schedulePath = path.join(projectRoot, '.todo-schedule.json');
 
+/**
+ * Map feature names to documentation files
+ */
+function getFeatureDocLink(featureName) {
+  const mapping = {
+    'Feature 1': 'features/FEATURE_01_Basic_Event_Operations.md',
+    'Feature 2': 'features/FEATURE_02_Join_Leave_Events.md',
+    'Feature 3': 'features/FEATURE_03_Participant_Management.md',
+    'Feature 3.5': 'features/FEATURE_03.5_Volleyball_Groups.md',
+    'Feature 4': 'features/FEATURE_04_Event_Series.md',
+    'Feature 5': 'features/FEATURE_05_User_Profile_History.md',
+    'Feature 5.5': 'features/FEATURE_05.5_Favorite_Locations.md',
+    'Feature 6': 'features/FEATURE_06_UI_Polish_Navigation.md',
+    'Feature 7': 'features/FEATURE_07_Event_Status_Cancellation.md',
+    'Sprint: Testowanie': 'features/FEATURE_Testing_Documentation.md',
+    'Sprint: Wdrożenie': 'features/FEATURE_Deployment.md',
+  };
+
+  // Extract feature identifier (e.g., "Feature 1" from "Feature 1: Podstawowe operacje...")
+  for (const [key, file] of Object.entries(mapping)) {
+    if (featureName.startsWith(key)) {
+      return path.join(projectRoot, file);
+    }
+  }
+  return null;
+}
+
 function main() {
   if (!fs.existsSync(schedulePath)) {
     console.log('⚠️  No schedule found. Run /plan-schedule first.');
@@ -57,6 +84,13 @@ function main() {
     for (const task of todayTasks) {
       if (task.feature !== currentFeature) {
         console.log(`\n${task.feature}`);
+
+        // Add documentation link if available
+        const docLink = getFeatureDocLink(task.feature);
+        if (docLink && fs.existsSync(docLink)) {
+          console.log(`📖 Docs: ${docLink}`);
+        }
+
         console.log('┌' + '─'.repeat(60) + '┐');
         currentFeature = task.feature;
       }
@@ -81,8 +115,20 @@ function main() {
     console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
     console.log(`⚠️  OVERDUE TASKS (${overdueTasks.length} tasks, ${overdueHours}h):\n`);
 
+    let lastOverdueFeature = null;
     for (const task of overdueTasks.slice(0, 5)) {
       const daysOverdue = Math.floor((todayDate - new Date(task.plannedDate)) / (1000 * 60 * 60 * 24));
+
+      // Show feature header if it changes
+      if (task.feature !== lastOverdueFeature) {
+        console.log(`\n  ${task.feature}`);
+        const docLink = getFeatureDocLink(task.feature);
+        if (docLink && fs.existsSync(docLink)) {
+          console.log(`  📖 Docs: ${docLink}`);
+        }
+        lastOverdueFeature = task.feature;
+      }
+
       console.log(`  • ${task.task.substring(0, 50)} [${task.estimate}]`);
       console.log(`    Due: ${task.plannedDate} (${daysOverdue} days ago)\n`);
     }

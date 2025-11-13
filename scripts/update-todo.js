@@ -34,17 +34,20 @@ function updateTaskStatus(todoMdPath, taskText, newStatus = 'x') {
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i];
 
-      // Check if this is a task line
-      if (line.match(/^- \[([ x?])\]/)) {
-        const taskContent = line.replace(/^- \[([ x?])\]\s*/, '');
+      // Check if this is a task line (main or subtask with indent)
+      // Matches: "- [ ]" or "  - [ ]" (with any amount of leading whitespace)
+      if (line.match(/^\s*- \[([ x?])\]/)) {
+        // Extract task content, preserving the indentation for replacement
+        const indent = line.match(/^(\s*)/)[1];
+        const taskContent = line.replace(/^\s*- \[([ x?])\]\s*/, '');
         const normalizedLine = normalizeTaskText(taskContent);
 
         // Check if this line matches our task
         if (normalizedLine.includes(normalizedSearchText) ||
             normalizedSearchText.includes(normalizedLine)) {
 
-          // Update the checkbox
-          lines[i] = line.replace(/^- \[([ x?])\]/, `- [${newStatus}]`);
+          // Update the checkbox, preserving indentation
+          lines[i] = line.replace(/^(\s*)- \[([ x?])\]/, `$1- [${newStatus}]`);
           found = true;
           lineNumber = i + 1;
           break;

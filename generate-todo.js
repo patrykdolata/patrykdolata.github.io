@@ -152,13 +152,36 @@ function parseTodoMd(content) {
         stats.total++;
       }
     }
-    // Nested task (bullet point with indent - no checkbox)
+    // Nested task with checkbox (indented - [ ] / -[x] / -[?])
+    else if (line.match(/^(\s{2,}|\t+)- \[([ x?])\]/)) {
+      const match = line.match(/^(\s{2,}|\t+)- \[([ x?])\]\s+(.+?)(?:\s+\*\*\[~(.+?)\]\*\*)?$/);
+      if (match && currentSubsection && currentSubsection.tasks.length > 0) {
+        const lastTask = currentSubsection.tasks[currentSubsection.tasks.length - 1];
+        const status = match[2] === 'x' ? 'done' : match[2] === '?' ? 'maybe' : 'pending';
+        const subtaskText = match[3].trim();
+        const subtaskEstimate = match[4] || '';
+
+        lastTask.subtasks.push({
+          status: status,
+          text: subtaskText,
+          estimate: subtaskEstimate
+        });
+
+        // Update stats for subtasks too
+        stats[status]++;
+        stats.total++;
+      }
+    }
+    // Nested task (bullet point with indent - no checkbox) - legacy support
     // Supports: 2 spaces, 4 spaces, tabs, or any whitespace before dash
     else if (line.match(/^(\s{2,}|\t+)\s*-\s+/)) {
       const subtaskText = line.replace(/^(\s{2,}|\t+)\s*-\s+/, '').trim();
       if (currentSubsection && currentSubsection.tasks.length > 0) {
         const lastTask = currentSubsection.tasks[currentSubsection.tasks.length - 1];
-        lastTask.subtasks.push(subtaskText);
+        // Check if it's not already added as checkbox subtask
+        if (!line.match(/\[([ x?])\]/)) {
+          lastTask.subtasks.push(subtaskText);
+        }
       }
     }
   }
@@ -1010,7 +1033,7 @@ function generateHtml(features, stats, mvpSummary, postMvpSummary, scheduleData 
       margin-top: var(--space-xs);
       margin-left: var(--space-lg);
       padding-left: var(--space-md);
-      list-style: disc;
+      list-style: none;
       font-size: 0.9rem;
       color: var(--color-text-secondary);
     }
@@ -1018,6 +1041,19 @@ function generateHtml(features, stats, mvpSummary, postMvpSummary, scheduleData 
     .subtask-list li {
       padding: 2px 0;
       line-height: 1.5;
+    }
+
+    .subtask-item {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-sm);
+      padding: var(--space-xs) 0;
+      list-style: none;
+    }
+
+    .subtask-text {
+      flex: 1;
+      color: var(--color-text-secondary);
     }
 
     .task-estimate {
@@ -1293,7 +1329,18 @@ function generateHtml(features, stats, mvpSummary, postMvpSummary, scheduleData 
                 ${task.text}
                 ${task.subtasks.length > 0 ? `
                 <ul class="subtask-list">
-                  ${task.subtasks.map(sub => `<li>${sub}</li>`).join('\n                  ')}
+                  ${task.subtasks.map(sub => {
+                    // Check if subtask is an object with status (new format) or just string (legacy)
+                    if (typeof sub === 'object' && sub.status) {
+                      return `<li class="subtask-item">
+                        <span class="task-checkbox ${sub.status}"></span>
+                        <span class="subtask-text">${sub.text}</span>
+                        ${sub.estimate ? `<span class="task-estimate">${sub.estimate}</span>` : ''}
+                      </li>`;
+                    } else {
+                      return `<li>${sub}</li>`;
+                    }
+                  }).join('\n                  ')}
                 </ul>` : ''}
               </span>
               ${task.estimate ? `<span class="task-estimate">${task.estimate}</span>` : ''}
