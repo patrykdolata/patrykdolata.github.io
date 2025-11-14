@@ -14,16 +14,16 @@
 - **Target:** 2025-12-31 (7-8 tygodni)
 - **Weekly hours:** 15h
 - **Overall progress:** 25%
-- **Last updated:** 2025-11-13
+- **Last updated:** 2025-11-14
 
 ### ✅ What's Working:
 - Sprint 0: Auth & JWT (95% done)
 - Feature 0: Mapa z markerami (80% done)
 - Feature 5.5: Ulubione lokalizacje (90% done)
-- Feature 1: Basic Events API (40% done)
+- Feature 1: Basic Events API (79% done)
 
 ### 🔴 Current Focus:
-- Feature 1: Dokończenie Events CRUD (30h)
+- Feature 1: Dokończenie Events CRUD (8h)
 - Feature 3: Zarządzanie uczestnikami RĘCZNIE (30h)
 - Feature 4: Cykliczne wydarzenia (25h)
 
@@ -41,7 +41,7 @@
 - [ ] **ORGANIZATOR może stworzyć wydarzenie**
 - [ ] **ORGANIZATOR może RĘCZNIE dodać uczestników do wydarzenia**
 - [ ] **ORGANIZATOR może stworzyć serię cyklicznych wydarzeń (co tydzień)**
-- [ ] **ORGANIZATOR widzi swoje wydarzenia (kalendarz/lista)**
+- [x] **ORGANIZATOR widzi swoje wydarzenia (kalendarz/lista)**
 - [ ] Aplikacja działa na produkcji
 
 ---
@@ -120,7 +120,7 @@
 
 ---
 
-## Feature 1: Podstawowe operacje na Wydarzeniach 🔴 [40% DONE → 30h pozostałe]
+## Feature 1: Podstawowe operacje na Wydarzeniach 🔴 [79% DONE → 8h pozostałe]
 
 **Priorytet:** CRITICAL - organizator musi móc tworzyć wydarzenia
 **Deadline:** Tydzień 1-2 (do 2025-11-27)
@@ -138,25 +138,25 @@
 - [x] EventService podstawowy
 
 #### Do zrobienia:
-- [ ] POST /events (single create) [3h]
-  - [ ] Endpoint implementation + DTO mapping [2h]
-  - [ ] Validation logic + error handling [1h]
+- [x] POST /events (single create) [3h]
+  - [x] Endpoint implementation + DTO mapping [2h]
+  - [x] Validation logic + error handling [1h]
 
-- [ ] DTOs: CreateEventRequest, UpdateEventRequest (rozdzielenie) [3h]
-  - [ ] CreateEventRequest DTO + validation [2h]
-  - [ ] UpdateEventRequest DTO + partial update logic [1h]
+- [x] DTOs: CreateEventRequest, UpdateEventRequest (rozdzielenie) [3h]
+  - [x] CreateEventRequest DTO + validation [2h]
+  - [x] UpdateEventRequest DTO + partial update logic [1h]
 
-- [ ] Walidacje rozszerzone [3h]
-  - [ ] DateTime & duration validations [2h]
-  - [ ] Slots & level business logic validations [1h]
+- [x] Walidacje rozszerzone [3h]
+  - [x] DateTime & duration validations [2h]
+  - [x] Slots & level business logic validations [1h]
 
-- [ ] Query params: organizerId (moje wydarzenia) [3h]
-  - [ ] GET /events?organizerId={id} [2h]
-  - [ ] EventRepository.findByOrganizerId [1h]
+- [x] Query params: organizerId (moje wydarzenia) [3h] ✅ (2025-11-14)
+  - [x] GET /events?organizerId={id} [2h]
+  - [x] EventRepository.findByUserIdWithLocation [1h]
 
-- [ ] EventRepository custom queries [3h]
-  - [ ] Filter by organizerId [2h]
-  - [ ] Query optimization + indexing [1h]
+- [x] EventRepository custom queries [3h] ✅ (2025-11-14)
+  - [x] Filter by organizerId with JOIN FETCH [2h]
+  - [x] Query optimization + ordering by startDateTime [1h]
 
 ### Flutter - Wydarzenia CRUD [15h]
 
@@ -165,12 +165,12 @@
 - [x] EventDetailsScreen - routing + navigation
 
 #### Do zrobienia:
-- [ ] CreateEventScreen + formularz [8h]
-  - [ ] Screen structure + form builder [2h]
-  - [ ] Basic fields (title, message, dateTime) [2h]
-  - [ ] Location picker integration [1h]
-  - [ ] Slots, price, level inputs [2h]
-  - [ ] Form validation + submission [1h]
+- [x] CreateEventScreen + formularz [8h] ✅ (2025-11-14)
+  - [x] Screen structure + form builder [2h]
+  - [x] Basic fields (title, message, dateTime) [2h]
+  - [x] Location picker integration [1h]
+  - [x] Slots, price, level inputs [2h]
+  - [x] Form validation + submission [1h]
 
 - [ ] HTTP POST /events integration [2h]
 
@@ -355,6 +355,7 @@
 **Priorytet:** HIGH - organizator musi łatwo zarządzać
 **Deadline:** Tydzień 7 (do 2025-12-28)
 **Scope:** Podstawowy UI dla organizatora
+**Progress:** 6/15h – EventsListScreen + bottom nav gotowe
 
 ### Flutter - Organizer UI [15h]
 
@@ -363,14 +364,14 @@
   - [ ] GET /events?organizerId=me [1h]
   - [ ] EventListItem widget [1h]
 
-- [ ] Bottom Navigation Bar (Map, My Events, Profile) [3h]
-  - [ ] Bottom nav bar UI + icons [1h]
-  - [ ] Navigation state management [1h]
-  - [ ] Integration [1h]
+- [x] Bottom Navigation Bar (Map, My Events, Profile) [3h]
+  - [x] Bottom nav bar UI + icons [1h]
+  - [x] Navigation state management [1h]
+  - [x] Integration [1h]
 
-- [ ] EventsListScreen - lista wszystkich wydarzeń [3h]
-  - [ ] Screen structure + ListView [2h]
-  - [ ] Pull-to-refresh [1h]
+- [x] EventsListScreen - lista wszystkich wydarzeń [3h]
+  - [x] Screen structure + ListView [2h]
+  - [x] Pull-to-refresh [1h]
 
 - [ ] Loading skeletons [2h]
   - [ ] Skeleton widgets [1h]
@@ -443,7 +444,7 @@ Do końca 2025 roku muszą działać:
 - [ ] **Organizator może RĘCZNIE dodać uczestnika do wydarzenia**
 - [ ] **Organizator może usunąć uczestnika**
 - [ ] **Organizator może stworzyć serię cyklicznych wydarzeń**
-- [ ] **Organizator widzi swoje wydarzenia (lista)**
+- [x] **Organizator widzi swoje wydarzenia (lista)**
 - [ ] Aplikacja działa na produkcji
 
 **Total Milestone 1: ~115h = 7-8 tygodni (15h/tydzień)**

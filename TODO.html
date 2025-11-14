@@ -557,11 +557,11 @@
           <div class="progress-stat-label">Do weryfikacji</div>
         </div>
         <div class="progress-stat">
-          <div class="progress-stat-value stat-pending">150</div>
+          <div class="progress-stat-value stat-pending">121</div>
           <div class="progress-stat-label">Do zrobienia</div>
         </div>
         <div class="progress-stat">
-          <div class="progress-stat-value stat-total">150</div>
+          <div class="progress-stat-value stat-total">121</div>
           <div class="progress-stat-label">Wszystkie zadania</div>
         </div>
       </div>
@@ -583,12 +583,12 @@
           </div>
           <div class="timeline-item timeline-current">
             <span class="timeline-label">Dzisiaj</span>
-            <span class="timeline-date">2025-11-13</span>
-            <span class="timeline-week">Tydzień 1, Dzień 1</span>
+            <span class="timeline-date">2025-11-14</span>
+            <span class="timeline-week">Tydzień 1, Dzień 2</span>
           </div>
           <div class="timeline-item">
             <span class="timeline-label">Koniec (plan)</span>
-            <span class="timeline-date">2026-01-04</span>
+            <span class="timeline-date">2025-12-26</span>
           </div>
         </div>
 
@@ -619,7 +619,7 @@
           <div class="task-list-content">
 <p class="task-list-summary">3h zaplanowane</p>
             <div class="schedule-task-item">
-              <span class="schedule-task-text">POST /events (single create)</span>
+              <span class="schedule-task-text">EditEventScreen (reuse CreateEvent logic)</span>
               <span class="schedule-task-estimate">3h</span>
             </div>
 
@@ -627,39 +627,44 @@
         </div>
 
         <div class="task-list-card task-list-overdue">
-          <h3>⚠️ Zaległe (0)</h3>
+          <h3>⚠️ Zaległe (1)</h3>
           <div class="task-list-content">
-<p class="empty-state">Brak zaległości ✓</p>
+<p class="task-list-summary">2h zaległości</p>
+            <div class="schedule-task-item">
+              <span class="schedule-task-text">HTTP POST /events integration</span>
+              <span class="schedule-task-overdue">1d</span>
+            </div>
+
           </div>
         </div>
 
         <div class="task-list-card task-list-upcoming">
           <h3>📆 Najbliższy tydzień (6)</h3>
           <div class="task-list-content">
-<p class="task-list-summary">22h zaplanowane</p>
+<p class="task-list-summary">14h zaplanowane</p>
             <div class="schedule-task-item">
-              <span class="schedule-task-text">DTOs: CreateEventRequest, UpdateEventReq...</span>
-              <span class="schedule-task-date">2025-11-14</span>
-            </div>
-
-            <div class="schedule-task-item">
-              <span class="schedule-task-text">Walidacje rozszerzone</span>
+              <span class="schedule-task-text">Delete event + confirm dialog</span>
               <span class="schedule-task-date">2025-11-15</span>
             </div>
 
             <div class="schedule-task-item">
-              <span class="schedule-task-text">Query params: organizerId (moje wydarzen...</span>
+              <span class="schedule-task-text">Encja EventParticipant (uproszczona)</span>
               <span class="schedule-task-date">2025-11-16</span>
             </div>
 
             <div class="schedule-task-item">
-              <span class="schedule-task-text">EventRepository custom queries</span>
+              <span class="schedule-task-text">Migracja V1_2__Add_event_participant_tab...</span>
               <span class="schedule-task-date">2025-11-18</span>
             </div>
 
             <div class="schedule-task-item">
-              <span class="schedule-task-text">CreateEventScreen + formularz</span>
+              <span class="schedule-task-text">EventParticipantRepository + query metho...</span>
               <span class="schedule-task-date">2025-11-19</span>
+            </div>
+
+            <div class="schedule-task-item">
+              <span class="schedule-task-text">POST /events/{eventId}/participants (man...</span>
+              <span class="schedule-task-date">2025-11-20</span>
             </div>
 <p class="more-tasks">... i 1 więcej</p>
           </div>
@@ -670,11 +675,11 @@
       <div class="schedule-stats-row">
         <div class="schedule-stat">
           <div class="schedule-stat-label">Ukończone</div>
-          <div class="schedule-stat-value">0/57</div>
+          <div class="schedule-stat-value">0/48</div>
         </div>
         <div class="schedule-stat">
           <div class="schedule-stat-label">Pozostało godzin</div>
-          <div class="schedule-stat-value">130h</div>
+          <div class="schedule-stat-value">100h</div>
         </div>
         <div class="schedule-stat">
           <div class="schedule-stat-label">Velocity</div>
@@ -682,7 +687,7 @@
         </div>
         <div class="schedule-stat">
           <div class="schedule-stat-label">Target velocity</div>
-          <div class="schedule-stat-value">2.3h/day</div>
+          <div class="schedule-stat-value">2.0h/day</div>
         </div>
       </div>
     </div>
@@ -956,152 +961,9 @@
       </div>
 
       <div class="subsection">
-        <h3 class="collapsible">Backend - Wydarzenia CRUD (15h)</h3>
-        <div class="collapsible-content">
-          <ul class="task-list">
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                POST /events (single create) [3h]
-                
-                <ul class="subtask-list">
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">Endpoint implementation + DTO mapping [2h]</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">Validation logic + error handling [1h]</span>
-                        
-                      </li>
-                </ul>
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                DTOs: CreateEventRequest, UpdateEventRequest (rozdzielenie) [3h]
-                
-                <ul class="subtask-list">
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">CreateEventRequest DTO + validation [2h]</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">UpdateEventRequest DTO + partial update logic [1h]</span>
-                        
-                      </li>
-                </ul>
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Walidacje rozszerzone [3h]
-                
-                <ul class="subtask-list">
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">DateTime & duration validations [2h]</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">Slots & level business logic validations [1h]</span>
-                        
-                      </li>
-                </ul>
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Query params: organizerId (moje wydarzenia) [3h]
-                
-                <ul class="subtask-list">
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">GET /events?organizerId={id} [2h]</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">EventRepository.findByOrganizerId [1h]</span>
-                        
-                      </li>
-                </ul>
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                EventRepository custom queries [3h]
-                
-                <ul class="subtask-list">
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">Filter by organizerId [2h]</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">Query optimization + indexing [1h]</span>
-                        
-                      </li>
-                </ul>
-              </span>
-              
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="subsection">
         <h3 class="collapsible">Flutter - Wydarzenia CRUD (15h)</h3>
         <div class="collapsible-content">
           <ul class="task-list">
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                CreateEventScreen + formularz [8h]
-                
-                <ul class="subtask-list">
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">Screen structure + form builder [2h]</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">Basic fields (title, message, dateTime) [2h]</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">Location picker integration [1h]</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">Slots, price, level inputs [2h]</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">Form validation + submission [1h]</span>
-                        
-                      </li>
-                </ul>
-              </span>
-              
-            </li>
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
@@ -1745,51 +1607,6 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                Bottom Navigation Bar (Map, My Events, Profile) [3h]
-                
-                <ul class="subtask-list">
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">Bottom nav bar UI + icons [1h]</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">Navigation state management [1h]</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">Integration [1h]</span>
-                        
-                      </li>
-                </ul>
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                EventsListScreen - lista wszystkich wydarzeń [3h]
-                
-                <ul class="subtask-list">
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">Screen structure + ListView [2h]</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">Pull-to-refresh [1h]</span>
-                        
-                      </li>
-                </ul>
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
                 Loading skeletons [2h]
                 
                 <ul class="subtask-list">
@@ -2067,14 +1884,6 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                **Organizator widzi swoje wydarzenia (lista)**
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
                 Aplikacja działa na produkcji
                 
               </span>
@@ -2092,7 +1901,7 @@
       <h2>📊 Podsumowanie</h2>
 
       <p style="margin-bottom: var(--space-sm); color: #2563eb; font-weight: 600; background: #dbeafe; padding: var(--space-md); border-radius: var(--radius-md); border-left: 4px solid #3b82f6;">
-        📌 Widok: <strong>Aktualny Harmonogram (Milestone 1)</strong> - Zadania zaplanowane do 2026-01-04
+        📌 Widok: <strong>Aktualny Harmonogram (Milestone 1)</strong> - Zadania zaplanowane do 2025-12-26
       </p>
       <p style="margin-bottom: var(--space-lg); color: var(--color-text-secondary);">
         Przy dostępności <strong>16h/tydzień</strong> w wolnym czasie (Solo Developer)
@@ -2101,7 +1910,7 @@
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-lg); margin-bottom: var(--space-xl);">
         <div style="background: white; padding: var(--space-lg); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); border-left: 4px solid #3b82f6;">
           <div style="font-size: 0.9rem; color: var(--color-text-secondary); margin-bottom: var(--space-xs);">Całkowite godziny</div>
-          <div style="font-size: 2rem; font-weight: bold; color: var(--color-primary);">130h</div>
+          <div style="font-size: 2rem; font-weight: bold; color: var(--color-primary);">100h</div>
         </div>
         <div style="background: white; padding: var(--space-lg); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); border-left: 4px solid #10b981;">
           <div style="font-size: 0.9rem; color: var(--color-text-secondary); margin-bottom: var(--space-xs);">Ukończone</div>
@@ -2109,21 +1918,21 @@
         </div>
         <div style="background: white; padding: var(--space-lg); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); border-left: 4px solid #f59e0b;">
           <div style="font-size: 0.9rem; color: var(--color-text-secondary); margin-bottom: var(--space-xs);">Pozostałe</div>
-          <div style="font-size: 2rem; font-weight: bold; color: #f59e0b;">130h</div>
+          <div style="font-size: 2rem; font-weight: bold; color: #f59e0b;">100h</div>
         </div>
         <div style="background: white; padding: var(--space-lg); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); border-left: 4px solid #8b5cf6;">
           <div style="font-size: 0.9rem; color: var(--color-text-secondary); margin-bottom: var(--space-xs);">Czas trwania</div>
-          <div style="font-size: 2rem; font-weight: bold; color: #8b5cf6;">8 tyg.</div>
+          <div style="font-size: 2rem; font-weight: bold; color: #8b5cf6;">7 tyg.</div>
         </div>
       </div>
 
       <div style="margin-top: var(--space-xl); padding: var(--space-xl); background: white; border-radius: var(--radius-md); border: 2px solid var(--color-primary);">
         <h3 style="color: var(--color-primary); margin-bottom: var(--space-md);">🎯 Milestone 1: Organizer MVP</h3>
         <div style="font-size: 1.1rem; line-height: 1.8;">
-          <p><strong>130h / 16h/tydzień = 8 tygodni</strong></p>
-          <p style="margin-top: var(--space-sm);"><strong>Deadline:</strong> 2026-01-04</p>
+          <p><strong>100h / 16h/tydzień = 7 tygodni</strong></p>
+          <p style="margin-top: var(--space-sm);"><strong>Deadline:</strong> 2025-12-26</p>
           <p style="margin-top: var(--space-md); font-size: 0.95rem; color: var(--color-text-secondary);">
-            Postęp: <strong>0.0%</strong> (0h / 130h)
+            Postęp: <strong>0.0%</strong> (0h / 100h)
           </p>
         </div>
       </div>
@@ -2153,7 +1962,7 @@
     <div class="summary-section" style="display: none;">
       <h2>📊 Podsumowanie Estymat</h2>
       <p style="margin-bottom: var(--space-sm); color: #2563eb; font-weight: 600; background: #dbeafe; padding: var(--space-md); border-radius: var(--radius-md); border-left: 4px solid #3b82f6;">
-        📌 Widok: <strong>Aktualny Harmonogram (Milestone 1)</strong> - Zadania zaplanowane do 2026-01-04
+        📌 Widok: <strong>Aktualny Harmonogram (Milestone 1)</strong> - Zadania zaplanowane do 2025-12-26
       </p>
       <p style="margin-bottom: var(--space-lg); color: var(--color-text-secondary);">
         Przy dostępności <strong>16h/tydzień</strong> w wolnym czasie (Solo Developer)
