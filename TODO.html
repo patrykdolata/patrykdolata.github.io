@@ -542,14 +542,14 @@
       <h2>📊 Postęp Implementacji</h2>
       <div class="progress-bar-container">
         <div class="progress-bar">
+          <div class="progress-segment progress-completed" style="width: 29%;" title="Ukończone (29%)">29%</div>
           
-          
-          <div class="progress-segment progress-pending" style="width: 100%;" title="Do zrobienia (100%)">100%</div>
+          <div class="progress-segment progress-pending" style="width: 71%;" title="Do zrobienia (71%)">71%</div>
         </div>
       </div>
       <div class="progress-stats">
         <div class="progress-stat">
-          <div class="progress-stat-value stat-completed">0</div>
+          <div class="progress-stat-value stat-completed">87</div>
           <div class="progress-stat-label">Ukończone</div>
         </div>
         <div class="progress-stat">
@@ -557,11 +557,11 @@
           <div class="progress-stat-label">Do weryfikacji</div>
         </div>
         <div class="progress-stat">
-          <div class="progress-stat-value stat-pending">121</div>
+          <div class="progress-stat-value stat-pending">212</div>
           <div class="progress-stat-label">Do zrobienia</div>
         </div>
         <div class="progress-stat">
-          <div class="progress-stat-value stat-total">121</div>
+          <div class="progress-stat-value stat-total">299</div>
           <div class="progress-stat-label">Wszystkie zadania</div>
         </div>
       </div>
@@ -950,6 +950,462 @@
         }
       }
     </style>
+    <!-- Sprint 0: Konfiguracja Backend & Autoryzacja -->
+    <div class="feature-section">
+      <div class="feature-header priority-critical">
+        <h2>
+          <span>Sprint 0: Konfiguracja Backend & Autoryzacja</span>
+          
+        </h2>
+        
+      </div>
+
+      <div class="subsection">
+        <h3 class="collapsible">Konfiguracja Projektu</h3>
+        <div class="collapsible-content">
+          <ul class="task-list">
+            <li class="task-item">
+              <span class="task-checkbox done"></span>
+              <span class="task-text">
+                Utworzenie projektu Spring Boot
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox done"></span>
+              <span class="task-text">
+                Konfiguracja PostgreSQL
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox done"></span>
+              <span class="task-text">
+                Setup application.yml
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox done"></span>
+              <span class="task-text">
+                Struktura pakietów
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox done"></span>
+              <span class="task-text">
+                Konfiguracja Lombok, Validation
+                
+              </span>
+              
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h3 class="collapsible">Model Bazy Danych - Encje JPA (Podstawowe)</h3>
+        <div class="collapsible-content">
+          <ul class="task-list">
+            <li class="task-item">
+              <span class="task-checkbox done"></span>
+              <span class="task-text">
+                Encja UserEntity
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox done"></span>
+              <span class="task-text">
+                Encja LocationEntity
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox done"></span>
+              <span class="task-text">
+                Encja EventEntity (podstawowa)
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox done"></span>
+              <span class="task-text">
+                Encja FavoritePlaceEntity
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox done"></span>
+              <span class="task-text">
+                Encja PostEntity
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox done"></span>
+              <span class="task-text">
+                Encja TokenEntity
+                
+              </span>
+              
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h3 class="collapsible">Migracje Bazy Danych (Flyway)</h3>
+        <div class="collapsible-content">
+          <ul class="task-list">
+            <li class="task-item">
+              <span class="task-checkbox done"></span>
+              <span class="task-text">
+                Setup Flyway w projekcie
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox done"></span>
+              <span class="task-text">
+                V1_0__Initial_schema.sql
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox done"></span>
+              <span class="task-text">
+                V1_1__Fix_null_user_roles.sql
+                
+              </span>
+              
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h3 class="collapsible">Spring Security & JWT</h3>
+        <div class="collapsible-content">
+          <ul class="task-list">
+            <li class="task-item">
+              <span class="task-checkbox done"></span>
+              <span class="task-text">
+                JwtService (generateToken, validateToken)
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox done"></span>
+              <span class="task-text">
+                JwtAuthenticationFilter
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox done"></span>
+              <span class="task-text">
+                UserDetailsService implementation
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox done"></span>
+              <span class="task-text">
+                SecurityConfiguration (CORS, CSRF)
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox done"></span>
+              <span class="task-text">
+                LogoutService
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox done"></span>
+              <span class="task-text">
+                TokenEntity & TokenRepository
+                
+              </span>
+              
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h3 class="collapsible">Auth Endpoints (Backend)</h3>
+        <div class="collapsible-content">
+          <ul class="task-list">
+            <li class="task-item">
+              <span class="task-checkbox done"></span>
+              <span class="task-text">
+                POST /auth/register
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox done"></span>
+              <span class="task-text">
+                POST /auth/authenticate
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox done"></span>
+              <span class="task-text">
+                POST /auth/refresh-token
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox done"></span>
+              <span class="task-text">
+                GET /auth/validate-token
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox done"></span>
+              <span class="task-text">
+                POST /auth/logout
+                
+              </span>
+              
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h3 class="collapsible">Auth Implementation (Flutter)</h3>
+        <div class="collapsible-content">
+          <ul class="task-list">
+            <li class="task-item">
+              <span class="task-checkbox done"></span>
+              <span class="task-text">
+                JWT storage w Flutter (SecureStorage)
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox done"></span>
+              <span class="task-text">
+                HTTP client setup (dio) z Authorization header
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox done"></span>
+              <span class="task-text">
+                UserService (login/logout state)
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox done"></span>
+              <span class="task-text">
+                Login/Register forms
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox done"></span>
+              <span class="task-text">
+                Token validation i auto-refresh
+                
+              </span>
+              
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Feature 0: Mapa z Wydarzeniami -->
+    <div class="feature-section">
+      <div class="feature-header ">
+        <h2>
+          <span>Feature 0: Mapa z Wydarzeniami</span>
+          
+        </h2>
+        
+      </div>
+
+      <div class="subsection">
+        <h3 class="collapsible">Backend - Mapa API</h3>
+        <div class="collapsible-content">
+          <ul class="task-list">
+            <li class="task-item">
+              <span class="task-checkbox done"></span>
+              <span class="task-text">
+                GET /api/events - zwraca wydarzenia z lokalizacjami
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox done"></span>
+              <span class="task-text">
+                EventEntity ma relację do LocationEntity
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox done"></span>
+              <span class="task-text">
+                LocationEntity ma latitude i longitude
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox done"></span>
+              <span class="task-text">
+                EventRepository.findAllWithLocation() - JOIN FETCH
+                
+              </span>
+              
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h3 class="collapsible">Flutter - Mapa (Google Maps)</h3>
+        <div class="collapsible-content">
+          <ul class="task-list">
+            <li class="task-item">
+              <span class="task-checkbox done"></span>
+              <span class="task-text">
+                GoogleMapWidget z google_maps_flutter
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox done"></span>
+              <span class="task-text">
+                Centrowanie na Poznań
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox done"></span>
+              <span class="task-text">
+                Markery wydarzeń z custom ikoną
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox done"></span>
+              <span class="task-text">
+                Grupowanie wydarzeń w tej samej lokalizacji
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox done"></span>
+              <span class="task-text">
+                Pop-up z kartą wydarzenia (EventPopUpCard)
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox done"></span>
+              <span class="task-text">
+                PageView dla wielu wydarzeń w jednym miejscu
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox done"></span>
+              <span class="task-text">
+                Dots indicator dla paginacji
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox done"></span>
+              <span class="task-text">
+                Tap na marker → zoom + centrowanie + pop-up
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox done"></span>
+              <span class="task-text">
+                Tap na mapie → ukrywa pop-up
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox done"></span>
+              <span class="task-text">
+                FloatingActionButton refresh
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox done"></span>
+              <span class="task-text">
+                EventMarkerService - filtruje nieaktualne
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox done"></span>
+              <span class="task-text">
+                FavoriteLocationNotifier - centrowanie z ulubionych
+                
+              </span>
+              
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
     <!-- Feature 1: Podstawowe operacje na Wydarzeniach -->
     <div class="feature-section">
       <div class="feature-header priority-critical">
@@ -961,9 +1417,224 @@
       </div>
 
       <div class="subsection">
+        <h3 class="collapsible">Backend - Wydarzenia CRUD (15h)</h3>
+        <div class="collapsible-content">
+          <ul class="task-list">
+            <li class="task-item">
+              <span class="task-checkbox done"></span>
+              <span class="task-text">
+                EventController - podstawowa struktura
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox done"></span>
+              <span class="task-text">
+                GET /events - lista wydarzeń
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox done"></span>
+              <span class="task-text">
+                GET /events/{id} - szczegóły
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox done"></span>
+              <span class="task-text">
+                PUT /events - bulk add/update
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox done"></span>
+              <span class="task-text">
+                PUT /events/{id} - edycja
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox done"></span>
+              <span class="task-text">
+                DELETE /events/{id} - usunięcie
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox done"></span>
+              <span class="task-text">
+                EventService podstawowy
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox done"></span>
+              <span class="task-text">
+                POST /events (single create) [3h]
+                
+                <ul class="subtask-list">
+                  <li class="subtask-item">
+                        <span class="task-checkbox done"></span>
+                        <span class="subtask-text">Endpoint implementation + DTO mapping [2h]</span>
+                        
+                      </li>
+                  <li class="subtask-item">
+                        <span class="task-checkbox done"></span>
+                        <span class="subtask-text">Validation logic + error handling [1h]</span>
+                        
+                      </li>
+                </ul>
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox done"></span>
+              <span class="task-text">
+                DTOs: CreateEventRequest, UpdateEventRequest (rozdzielenie) [3h]
+                
+                <ul class="subtask-list">
+                  <li class="subtask-item">
+                        <span class="task-checkbox done"></span>
+                        <span class="subtask-text">CreateEventRequest DTO + validation [2h]</span>
+                        
+                      </li>
+                  <li class="subtask-item">
+                        <span class="task-checkbox done"></span>
+                        <span class="subtask-text">UpdateEventRequest DTO + partial update logic [1h]</span>
+                        
+                      </li>
+                </ul>
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox done"></span>
+              <span class="task-text">
+                Walidacje rozszerzone [3h]
+                
+                <ul class="subtask-list">
+                  <li class="subtask-item">
+                        <span class="task-checkbox done"></span>
+                        <span class="subtask-text">DateTime & duration validations [2h]</span>
+                        
+                      </li>
+                  <li class="subtask-item">
+                        <span class="task-checkbox done"></span>
+                        <span class="subtask-text">Slots & level business logic validations [1h]</span>
+                        
+                      </li>
+                </ul>
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox done"></span>
+              <span class="task-text">
+                Query params: organizerId (moje wydarzenia) [3h] ✅ (2025-11-14)
+                
+                <ul class="subtask-list">
+                  <li class="subtask-item">
+                        <span class="task-checkbox done"></span>
+                        <span class="subtask-text">GET /events?organizerId={id} [2h]</span>
+                        
+                      </li>
+                  <li class="subtask-item">
+                        <span class="task-checkbox done"></span>
+                        <span class="subtask-text">EventRepository.findByUserIdWithLocation [1h]</span>
+                        
+                      </li>
+                </ul>
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox done"></span>
+              <span class="task-text">
+                EventRepository custom queries [3h] ✅ (2025-11-14)
+                
+                <ul class="subtask-list">
+                  <li class="subtask-item">
+                        <span class="task-checkbox done"></span>
+                        <span class="subtask-text">Filter by organizerId with JOIN FETCH [2h]</span>
+                        
+                      </li>
+                  <li class="subtask-item">
+                        <span class="task-checkbox done"></span>
+                        <span class="subtask-text">Query optimization + ordering by startDateTime [1h]</span>
+                        
+                      </li>
+                </ul>
+              </span>
+              
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="subsection">
         <h3 class="collapsible">Flutter - Wydarzenia CRUD (15h)</h3>
         <div class="collapsible-content">
           <ul class="task-list">
+            <li class="task-item">
+              <span class="task-checkbox done"></span>
+              <span class="task-text">
+                EventDetailsWidget - pełny widok szczegółów
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox done"></span>
+              <span class="task-text">
+                EventDetailsScreen - routing + navigation
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox done"></span>
+              <span class="task-text">
+                CreateEventScreen + formularz [8h] ✅ (2025-11-14)
+                
+                <ul class="subtask-list">
+                  <li class="subtask-item">
+                        <span class="task-checkbox done"></span>
+                        <span class="subtask-text">Screen structure + form builder [2h]</span>
+                        
+                      </li>
+                  <li class="subtask-item">
+                        <span class="task-checkbox done"></span>
+                        <span class="subtask-text">Basic fields (title, message, dateTime) [2h]</span>
+                        
+                      </li>
+                  <li class="subtask-item">
+                        <span class="task-checkbox done"></span>
+                        <span class="subtask-text">Location picker integration [1h]</span>
+                        
+                      </li>
+                  <li class="subtask-item">
+                        <span class="task-checkbox done"></span>
+                        <span class="subtask-text">Slots, price, level inputs [2h]</span>
+                        
+                      </li>
+                  <li class="subtask-item">
+                        <span class="task-checkbox done"></span>
+                        <span class="subtask-text">Form validation + submission [1h]</span>
+                        
+                      </li>
+                </ul>
+              </span>
+              
+            </li>
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
@@ -1605,6 +2276,51 @@
               
             </li>
             <li class="task-item">
+              <span class="task-checkbox done"></span>
+              <span class="task-text">
+                Bottom Navigation Bar (Map, My Events, Profile) [3h]
+                
+                <ul class="subtask-list">
+                  <li class="subtask-item">
+                        <span class="task-checkbox done"></span>
+                        <span class="subtask-text">Bottom nav bar UI + icons [1h]</span>
+                        
+                      </li>
+                  <li class="subtask-item">
+                        <span class="task-checkbox done"></span>
+                        <span class="subtask-text">Navigation state management [1h]</span>
+                        
+                      </li>
+                  <li class="subtask-item">
+                        <span class="task-checkbox done"></span>
+                        <span class="subtask-text">Integration [1h]</span>
+                        
+                      </li>
+                </ul>
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox done"></span>
+              <span class="task-text">
+                EventsListScreen - lista wszystkich wydarzeń [3h]
+                
+                <ul class="subtask-list">
+                  <li class="subtask-item">
+                        <span class="task-checkbox done"></span>
+                        <span class="subtask-text">Screen structure + ListView [2h]</span>
+                        
+                      </li>
+                  <li class="subtask-item">
+                        <span class="task-checkbox done"></span>
+                        <span class="subtask-text">Pull-to-refresh [1h]</span>
+                        
+                      </li>
+                </ul>
+              </span>
+              
+            </li>
+            <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
                 Loading skeletons [2h]
@@ -1842,6 +2558,22 @@
               
             </li>
             <li class="task-item">
+              <span class="task-checkbox done"></span>
+              <span class="task-text">
+                Rejestracja/logowanie
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox done"></span>
+              <span class="task-text">
+                Mapa z wydarzeniami
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
                 **Organizator może dodać wydarzenie**
@@ -1882,9 +2614,949 @@
               
             </li>
             <li class="task-item">
+              <span class="task-checkbox done"></span>
+              <span class="task-text">
+                **Organizator widzi swoje wydarzenia (lista)**
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
                 Aplikacja działa na produkcji
+                
+              </span>
+              
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Feature 2: Dołączanie/Opuszczanie Wydarzeń -->
+    <div class="feature-section">
+      <div class="feature-header priority-critical">
+        <h2>
+          <span>Feature 2: Dołączanie/Opuszczanie Wydarzeń</span>
+          <span class="feature-badge">Self-Service</span>
+        </h2>
+        
+      </div>
+
+      <div class="subsection">
+        <h3 class="collapsible">Backend (25h)</h3>
+        <div class="collapsible-content">
+          <ul class="task-list">
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                POST /events/{id}/join - uczestnik sam dołącza
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                DELETE /events/{id}/leave - uczestnik sam opuszcza
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Enum ParticipantStatus (MAIN_LIST, WAITLIST)
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Logika main list vs waitlist
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Awans z waitlist po opuszczeniu
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Renumbering positions
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Custom exceptions
+                
+              </span>
+              
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h3 class="collapsible">Flutter (20h)</h3>
+        <div class="collapsible-content">
+          <ul class="task-list">
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Join button w EventDetailsScreen
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Leave button
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Waitlist badge
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Toast notifications
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                ParticipantsListScreen (public view)
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                EventParticipantService
+                
+              </span>
+              
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Feature 3: Zarządzanie Uczestnikami - ADVANCED -->
+    <div class="feature-section">
+      <div class="feature-header priority-critical">
+        <h2>
+          <span>Feature 3: Zarządzanie Uczestnikami - ADVANCED</span>
+          
+        </h2>
+        
+      </div>
+
+      <div class="subsection">
+        <h3 class="collapsible">Backend (25h)</h3>
+        <div class="collapsible-content">
+          <ul class="task-list">
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Pola w EventParticipant: isPaid, isConfirmed, paymentMethod
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                PUT /events/{eventId}/participants/{userId}/confirm (toggle)
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                PUT /events/{eventId}/participants/{userId}/payment (toggle)
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                PUT /events/{eventId}/participants/{userId}/payment-method
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                PUT /events/{eventId}/participants/{userId}/position (zmiana)
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                POST /events/{eventId}/participants/{userId}/promote (z waitlist)
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                POST /events/{eventId}/participants/{userId}/demote (do waitlist)
+                
+              </span>
+              
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h3 class="collapsible">Flutter (20h)</h3>
+        <div class="collapsible-content">
+          <ul class="task-list">
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                PaymentsManageScreen
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Confirm checkbox toggle
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Payment checkbox toggle
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Payment method selector (BLIK/CASH/TRANSFER/CARD)
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Payment summary (total, paid, unpaid)
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Drag & drop reordering (ReorderableListView)
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Promote/demote buttons
+                
+              </span>
+              
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Feature 4: Event Series - ADVANCED -->
+    <div class="feature-section">
+      <div class="feature-header priority-high">
+        <h2>
+          <span>Feature 4: Event Series - ADVANCED</span>
+          
+        </h2>
+        
+      </div>
+
+      <div class="subsection">
+        <h3 class="collapsible">Backend (20h)</h3>
+        <div class="collapsible-content">
+          <ul class="task-list">
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                MONTHLY frequency
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                skipHolidays logic (API świąt)
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                SeriesStatus enum (ACTIVE, PAUSED)
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                PUT /series/{id}/pause
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                PUT /series/{id}/resume
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                PUT /series/{id} (edit series)
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                DELETE /series/{id}
+                
+              </span>
+              
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h3 class="collapsible">Flutter (10h)</h3>
+        <div class="collapsible-content">
+          <ul class="task-list">
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                SeriesListScreen
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                SeriesDetailsScreen
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Preview list przed generowaniem
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Edit series
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Pause/Resume toggle
+                
+              </span>
+              
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Feature 3.5: Grupy Siatkówki -->
+    <div class="feature-section">
+      <div class="feature-header priority-critical">
+        <h2>
+          <span>Feature 3.5: Grupy Siatkówki</span>
+          
+        </h2>
+        
+      </div>
+
+      <div class="subsection">
+        <h3 class="collapsible">Backend (30h)</h3>
+        <div class="collapsible-content">
+          <ul class="task-list">
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Encja Group (name, description, imageUrl)
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Encja UserGroup (membership)
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                GroupController
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                GET /groups
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                POST /groups/{id}/join
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                DELETE /groups/{id}/leave
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Link Event → Group
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Filtrowanie wydarzeń po grupie
+                
+              </span>
+              
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h3 class="collapsible">Flutter (30h)</h3>
+        <div class="collapsible-content">
+          <ul class="task-list">
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                GroupListScreen
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                GroupDetailsScreen
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Join/Leave group
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Group selector w EventsListScreen
+                
+              </span>
+              
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Feature 5: Profil Użytkownika -->
+    <div class="feature-section">
+      <div class="feature-header priority-high">
+        <h2>
+          <span>Feature 5: Profil Użytkownika</span>
+          
+        </h2>
+        
+      </div>
+
+      <div class="subsection">
+        <h3 class="collapsible">Backend (22h)</h3>
+        <div class="collapsible-content">
+          <ul class="task-list">
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                GET /users/me
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                PUT /users/me
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                GET /users/me/events
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                GET /users/me/organized
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                GET /users/me/history
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                POST /users/{id}/thumb
+                
+              </span>
+              
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h3 class="collapsible">Flutter (23h)</h3>
+        <div class="collapsible-content">
+          <ul class="task-list">
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Enhanced UserProfileScreen
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                EditProfileScreen
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                My Events tab
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                My Organized tab
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                History tab
+                
+              </span>
+              
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Feature 7: EventStatus & Cancellation -->
+    <div class="feature-section">
+      <div class="feature-header ">
+        <h2>
+          <span>Feature 7: EventStatus & Cancellation</span>
+          
+        </h2>
+        
+      </div>
+
+      <div class="subsection">
+        <h3 class="collapsible">Backend (15h)</h3>
+        <div class="collapsible-content">
+          <ul class="task-list">
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Enum EventStatus (ACTIVE, CANCELLED, COMPLETED)
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                PUT /events/{id}/cancel
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                PUT /events/{id}/complete
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Powiadomienia o odwołaniu
+                
+              </span>
+              
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h3 class="collapsible">Flutter (10h)</h3>
+        <div class="collapsible-content">
+          <ul class="task-list">
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                EventStatus badges
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Cancel event button
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Cancel confirmation
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Spring Mail + SMTP
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Thymeleaf templates
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Przypomnienie 24h przed
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Awans z waitlist
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Event cancelled
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Firebase FCM setup
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Push: Przypomnienie
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Push: Awans z waitlist
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Push: Zmiana eventu
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Flutter FCM integration
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Stripe API integration
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Payment initiate endpoint
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Stripe webhook
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Flutter Stripe integration
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Payment flow UI
+                
+              </span>
+              
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Sprint: Testowanie -->
+    <div class="feature-section">
+      <div class="feature-header ">
+        <h2>
+          <span>Sprint: Testowanie</span>
+          
+        </h2>
+        
+      </div>
+
+      <div class="subsection">
+        <h3 class="collapsible">MINIMUM (must have):</h3>
+        <div class="collapsible-content">
+          <ul class="task-list">
+            <li class="task-item">
+              <span class="task-checkbox done"></span>
+              <span class="task-text">
+                Aplikacja działa na serwerze
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Organizator może dodać wydarzenie
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Organizator może dodać uczestnika
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Organizator może stworzyć serię cykliczną
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Organizator widzi swoje wydarzenia
+                
+              </span>
+              
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h3 class="collapsible">NICE TO HAVE:</h3>
+        <div class="collapsible-content">
+          <ul class="task-list">
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                2-3 organizatorów przetestowało
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Zero critical bugs
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Pozytywny feedback
                 
               </span>
               

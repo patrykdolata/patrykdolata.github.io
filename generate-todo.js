@@ -799,114 +799,8 @@ function generateScheduleSection(scheduleData) {
   return html;
 }
 
-function filterFeaturesForSchedule(features, scheduleData) {
-  if (!scheduleData || !scheduleData.schedule) {
-    return features; // No schedule, return all features
-  }
-
-  // Get unique feature names from schedule
-  const scheduledFeatures = new Set();
-  scheduleData.schedule.forEach(task => {
-    scheduledFeatures.add(task.feature);
-  });
-
-  // Filter features and subsections based on schedule
-  return features
-    .map(feature => {
-      if (!scheduledFeatures.has(feature.title)) {
-        return null; // Feature not in schedule
-      }
-
-      // Get scheduled subsections for this feature (normalize by removing [XXh])
-      const scheduledSubsections = new Set();
-      scheduleData.schedule
-        .filter(task => task.feature === feature.title)
-        .forEach(task => {
-          // Normalize subsection name by removing [XXh] suffix
-          const normalizedSubsection = task.subsection.replace(/\s*\[.+?\]$/, '').trim();
-          scheduledSubsections.add(normalizedSubsection);
-        });
-
-      // Filter subsections
-      const filteredSubsections = feature.subsections
-        .filter(sub => scheduledSubsections.has(sub.title))
-        .map(sub => {
-          // Get scheduled tasks for this subsection
-          const scheduledTasks = new Set();
-          scheduleData.schedule
-            .filter(task => {
-              const normalizedSubsection = task.subsection.replace(/\s*\[.+?\]$/, '').trim();
-              return task.feature === feature.title && normalizedSubsection === sub.title;
-            })
-            .forEach(task => {
-              // Normalize task text for matching
-              const normalized = task.task
-                .replace(/\*\*/g, '')
-                .replace(/`/g, '')
-                .trim()
-                .toLowerCase();
-              scheduledTasks.add(normalized);
-            });
-
-          // Filter tasks in this subsection
-          const filteredTasks = sub.tasks.filter(task => {
-            const normalizedTaskText = task.text
-              .replace(/\*\*/g, '')
-              .replace(/`/g, '')
-              .trim()
-              .toLowerCase();
-
-            return Array.from(scheduledTasks).some(schedTask =>
-              normalizedTaskText.includes(schedTask) || schedTask.includes(normalizedTaskText)
-            );
-          });
-
-          return { ...sub, tasks: filteredTasks };
-        })
-        .filter(sub => sub.tasks.length > 0); // Only keep subsections with tasks
-
-      if (filteredSubsections.length === 0) {
-        return null;
-      }
-
-      return { ...feature, subsections: filteredSubsections };
-    })
-    .filter(f => f !== null);
-}
-
-function calculateStatsFromFeatures(features) {
-  const stats = { done: 0, maybe: 0, pending: 0, total: 0 };
-
-  features.forEach(feature => {
-    feature.subsections.forEach(subsection => {
-      subsection.tasks.forEach(task => {
-        stats.total++;
-        stats[task.status]++;
-
-        // Count subtasks too
-        task.subtasks.forEach(subtask => {
-          if (typeof subtask === 'object' && subtask.status) {
-            stats.total++;
-            stats[subtask.status]++;
-          }
-        });
-      });
-    });
-  });
-
-  return stats;
-}
-
 function generateHtml(features, stats, mvpSummary, postMvpSummary, scheduleData = null) {
-  // If schedule exists, filter features and recalculate stats
-  let filteredFeatures = features;
-  let displayStats = stats;
-
-  if (scheduleData && scheduleData.schedule) {
-    filteredFeatures = filterFeaturesForSchedule(features, scheduleData);
-    displayStats = calculateStatsFromFeatures(filteredFeatures);
-  }
-
+  const displayStats = stats;
   // Calculate percentages
   const donePercent = displayStats.total > 0 ? Math.round((displayStats.done / displayStats.total) * 100) : 0;
   const maybePercent = displayStats.total > 0 ? Math.round((displayStats.maybe / displayStats.total) * 100) : 0;
@@ -1505,7 +1399,7 @@ function generateHtml(features, stats, mvpSummary, postMvpSummary, scheduleData 
   }
 
   // Generate features (use filtered features if schedule exists)
-  filteredFeatures.forEach(feature => {
+  features.forEach(feature => {
     // Skip features with no subsections that have tasks
     const subsectionsWithTasks = feature.subsections.filter(s => s.tasks.length > 0);
     if (subsectionsWithTasks.length === 0) {
@@ -1756,18 +1650,11 @@ if (fs.existsSync(schedulePath)) {
 
 const html = generateHtml(features, stats, mvpSummary, postMvpSummary, scheduleData);
 
-// Calculate display stats (filtered if schedule exists)
-let displayStats = stats;
-if (scheduleData && scheduleData.schedule) {
-  const filteredFeatures = filterFeaturesForSchedule(features, scheduleData);
-  displayStats = calculateStatsFromFeatures(filteredFeatures);
-}
-
 // Write TODO.html
 const todoHtmlPath = path.join(__dirname, 'TODO.html');
 fs.writeFileSync(todoHtmlPath, html, 'utf8');
 
 const scopeInfo = scheduleData ? ' (Milestone 1 - Harmonogram)' : '';
 console.log('✅ TODO.html wygenerowany pomyślnie!');
-console.log(`📊 Statystyki${scopeInfo}: ${displayStats.done} ukończone, ${displayStats.maybe} do weryfikacji, ${displayStats.pending} do zrobienia (${displayStats.total} razem)`);
-console.log(`📈 Postęp: ${Math.round((displayStats.done / displayStats.total) * 100)}% ukończone, ${Math.round((displayStats.maybe / displayStats.total) * 100)}% do weryfikacji`);
+console.log(`📊 Statystyki${scopeInfo}: ${stats.done} ukończone, ${stats.maybe} do weryfikacji, ${stats.pending} do zrobienia (${stats.total} razem)`);
+console.log(`📈 Postęp: ${Math.round((stats.done / stats.total) * 100)}% ukończone, ${Math.round((stats.maybe / stats.total) * 100)}% do weryfikacji`);
