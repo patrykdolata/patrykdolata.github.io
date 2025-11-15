@@ -1,9 +1,21 @@
 # Feature 5: User Profile & History
 
+## Standardized Spec
+
+- Milestone: M2 (Post‑MVP)
+- Goal: Rozszerzony profil użytkownika z historią wydarzeń i ocenami.
+- In Scope: GET/PUT `/users/me`, listy moich wydarzeń/organizowanych/historii, profile innych użytkowników, thumbs up/down.
+- Out of Scope: rozbudowane statystyki/odznaki (przyszłość).
+- Prerequisites: auth; event status COMPLETED dla historii.
+- Acceptance Criteria: edycja profilu/awataru; zakładki działają; rating nie dotyczy samego siebie.
+- Backend API: zgodnie z sekcją poniżej; walidacja unikalności e‑mail.
+- Frontend UX: `UserProfileScreen`, `EditProfileScreen`, zakładki: My Events/Organized/History.
+- Tests: BE/FE smoke oraz weryfikacje walidacji i uprawnień.
+
 ## Overview
 Extended user profile with event history, rating system, profile editing, and event participation tracking.
 
-**Estimated Time**: 45 hours | **Priority**: MEDIUM | **Status**: 30% → 100%
+**Priority**: MEDIUM | **Status**: 30% → 100%
 
 ## Business Value
 - Users can track their event history

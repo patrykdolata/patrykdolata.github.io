@@ -1,9 +1,20 @@
 # Feature 3.5: Volleyball Groups
 
+## Standardized Spec
+
+- Milestone: M2 (Post‑MVP)
+- Goal: Grupy siatkarskie i filtracja wydarzeń po grupie.
+- In Scope: encje Group/UserGroup, CRUD/Join/Leave, link Event→Group, filtrowanie po grupie.
+- Out of Scope: integracje zewnętrzne (np. Facebook API) – placeholder.
+- Prerequisites: Feature 1; User management.
+- Acceptance Criteria: użytkownik dołącza/opuszcza grupy; eventy można przypisać i filtrować po grupie.
+- Backend API: GET `/groups`, POST `/groups/{id}/join`, DELETE `/groups/{id}/leave`.
+- Frontend UX: listy/detale grup; selector grupy w EventsListScreen.
+- Tests: unikalność membership, uprawnienia; FE flows.
+
 ## Overview
 Implement group management system allowing users to join Facebook volleyball groups, view group details, filter events by group, and organize events within specific communities.
 
-**Estimated Time**: 60 hours
 **Priority**: HIGH PRIORITY
 **Status**: 0% Done → Target 100%
 

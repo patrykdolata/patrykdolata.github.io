@@ -1,9 +1,33 @@
 # Deployment Sprint
 
+## Standardized Spec
+
+- Milestone: M1 (MVP)
+- Goal: Produkcyjny deployment (PL) z TLS, reverse proxy, monitoringiem i backup/DR.
+- In Scope: Nginx + SSL, systemd, PostgreSQL, docker-compose lokalnie, monitoring basic, seed danych.
+- Out of Scope: zaawansowany monitoring/observability.
+- Acceptance Criteria: app online (HTTPS), health OK, smoke na prod przechodzi, backup/restore przetestowane.
+- Security: hardening Nginx/TLS, ufw/fail2ban, non‑root, sekrety poza repo.
+- Backup/DR: nightly full + WAL, retencja, offsite, test restore, runbook.
+
 ## Overview
 Deploy the Meet App to Raspberry Pi 4B with PostgreSQL, Nginx reverse proxy, SSL certificates, monitoring, and automated backups.
 
-**Estimated Time**: 37 hours | **Priority**: PRODUCTION REQUIREMENT | **Status**: 0% → 100%
+**Priority**: PRODUCTION REQUIREMENT | **Status**: 0% → 100%
+
+## Milestone & Scope
+
+- Milestone: M1 (MVP)
+- Scope (M1):
+  - Docker compose local test
+  - Serwer prod: PostgreSQL + Spring Boot (systemd) + Nginx + SSL (Let's Encrypt)
+  - Prosty monitoring (uptime/error logs)
+
+## Acceptance Criteria (M1)
+
+- Aplikacja dostępna online, endpointy zdrowe (health)
+- Certyfikat SSL, reverse proxy działa
+- Krótkie smoke testy na produkcji (login, create event, cancel, list)
 
 ## Business Value
 - Application accessible to real users

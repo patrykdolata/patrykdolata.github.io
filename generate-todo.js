@@ -13,6 +13,7 @@ function parseTodoMd(content) {
   const features = [];
   let currentFeature = null;
   let currentSubsection = null;
+  let currentMilestone = null;
   let inSummarySection = false;
   let inMvpTable = false;
   let inPostMvpTable = false;
@@ -101,6 +102,13 @@ function parseTodoMd(content) {
       inSummarySection = false;
     }
 
+    // Milestone headers (e.g., "## 📋 MILESTONE 1:" or "# 📋 MILESTONE 2:")
+    if (line.match(/^#{1,3} .*MILESTONE\s+(\d+)/i)) {
+      const m = line.match(/^#{1,3} .*MILESTONE\s+(\d+)/i);
+      currentMilestone = m ? parseInt(m[1], 10) : null;
+      continue;
+    }
+
     // Feature header (## Sprint X / Feature X / Sprint: etc.)
     if (line.match(/^## (Sprint|Feature|Przyszłe|Harmonogram|Deployment)/)) {
       // Extract clean feature name, removing emoji and status indicators
@@ -125,7 +133,8 @@ function parseTodoMd(content) {
         duration: duration,
         description: '',
         subsections: [],
-        priority: determinePriority(line)
+        priority: determinePriority(line),
+        milestone: currentMilestone || 1
       };
       features.push(currentFeature);
       currentSubsection = null;
@@ -356,6 +365,7 @@ function generateScheduleSection(scheduleData) {
       <h2 style="color: var(--color-primary); text-align: center; margin-bottom: var(--space-lg);">
         📅 Harmonogram Projektu
       </h2>
+      <div class="scope-note">Zakres: Milestone 1 (Harmonogram MVP)</div>
 
       <!-- Timeline Visualization -->
       <div class="timeline-container">
@@ -865,6 +875,31 @@ function generateHtml(features, stats, mvpSummary, postMvpSummary, scheduleData 
       margin-bottom: var(--space-sm);
     }
 
+    /* Scope Switch */
+    .scope-switch {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-sm);
+      margin-top: var(--space-lg);
+      flex-wrap: wrap;
+    }
+
+    .scope-btn {
+      border: 1px solid var(--color-border);
+      background: white;
+      color: var(--color-text);
+      padding: 6px 12px;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .scope-btn.active {
+      background: #dbeafe;
+      color: #1e40af;
+      border-color: #93c5fd;
+    }
+
     /* Progress Bar */
     .progress-section {
       margin: var(--space-2xl) 0;
@@ -877,6 +912,13 @@ function generateHtml(features, stats, mvpSummary, postMvpSummary, scheduleData 
       color: var(--color-primary);
       margin-bottom: var(--space-md);
       text-align: center;
+    }
+
+    .scope-note {
+      text-align: center;
+      font-size: 0.9rem;
+      color: var(--color-text-secondary);
+      margin-bottom: var(--space-md);
     }
 
     .progress-bar-container {
@@ -1048,6 +1090,15 @@ function generateHtml(features, stats, mvpSummary, postMvpSummary, scheduleData 
       padding: var(--space-xs) var(--space-md);
       border-radius: var(--radius-full);
       font-size: 0.9rem;
+    }
+
+    .feature-milestone-badge {
+      background: rgba(255,255,255,0.25);
+      padding: 2px 10px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      margin-left: 8px;
+      border: 1px solid rgba(255,255,255,0.35);
     }
 
     .feature-description {
@@ -1359,11 +1410,17 @@ function generateHtml(features, stats, mvpSummary, postMvpSummary, scheduleData 
           <span>Potwierdzone ukończone</span>
         </div>
       </div>
+      <div class="scope-switch" id="scopeSwitch">
+        <button class="scope-btn" data-scope="m1">Milestone 1</button>
+        <button class="scope-btn" data-scope="m2plus">Milestone 2+</button>
+        <button class="scope-btn" data-scope="all">Wszystko</button>
+      </div>
     </div>
 
     <!-- Progress Bar -->
     <div class="progress-section">
       <h2>📊 Postęp Implementacji</h2>
+      <div class="scope-note">Zakres: Całe TODO (M1 + M2+)</div>
       <div class="progress-bar-container">
         <div class="progress-bar">
           ${donePercent > 0 ? `<div class="progress-segment progress-completed" style="width: ${donePercent}%;" title="Ukończone (${donePercent}%)">${donePercent}%</div>` : ''}
@@ -1410,11 +1467,12 @@ function generateHtml(features, stats, mvpSummary, postMvpSummary, scheduleData 
                           feature.priority === 'high' ? 'priority-high' : '';
 
     html += `    <!-- ${feature.title} -->
-    <div class="feature-section">
+    <div class="feature-section" data-milestone="${feature.milestone || ''}">
       <div class="feature-header ${priorityClass}">
         <h2>
           <span>${feature.title}</span>
           ${feature.duration ? `<span class="feature-badge">${feature.duration}</span>` : ''}
+          <span class="feature-milestone-badge">M${feature.milestone || 1}</span>
         </h2>
         ${feature.description ? `<p class="feature-description">${feature.description}</p>` : ''}
       </div>
@@ -1605,6 +1663,34 @@ function generateHtml(features, stats, mvpSummary, postMvpSummary, scheduleData 
   </div>
 
   <script>
+    // Scope filtering
+    (function() {
+      const switcher = document.getElementById('scopeSwitch');
+      if (switcher) {
+        const btns = switcher.querySelectorAll('.scope-btn');
+        const sections = document.querySelectorAll('.feature-section');
+
+        function applyScope(scope) {
+          sections.forEach(sec => {
+            const m = parseInt(sec.getAttribute('data-milestone')) || 1;
+            let show = true;
+            if (scope === 'm1') show = (m === 1);
+            else if (scope === 'm2plus') show = (m >= 2);
+            sec.style.display = show ? '' : 'none';
+          });
+
+          btns.forEach(b => b.classList.toggle('active', b.dataset.scope === scope));
+          localStorage.setItem('todoScope', scope);
+        }
+
+        btns.forEach(b => b.addEventListener('click', () => applyScope(b.dataset.scope)));
+
+        const defaultScope = ${scheduleData ? "'m1'" : "'all'"};
+        const saved = localStorage.getItem('todoScope');
+        applyScope(saved || defaultScope);
+      }
+    })();
+
     // Collapsible sections
     document.querySelectorAll('.collapsible').forEach(header => {
       header.addEventListener('click', () => {

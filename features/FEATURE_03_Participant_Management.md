@@ -1,11 +1,56 @@
 # Feature 3: Participant Management
 
+## Standardized Spec
+
+- Milestone: M1 (MVP) – manual; M2 (Advanced) – rozszerzenia
+- Goal: Organizator ręcznie zarządza uczestnikami; w M2 zaawansowane akcje.
+- In Scope (M1): add/remove, lista z pozycją (readonly), organizer‑only checks, prosty UI.
+- Out of Scope (M1): self‑service, płatności, drag&drop.
+- Prerequisites: Feature 1; EventParticipant tabela (uproszczona); Auth.
+- Security/Permissions: Wszystkie mutacje tylko dla organizatora wydarzenia; audyt.
+- Acceptance Criteria (M1): add/remove działa; lista odświeża się; uprawnienia egzekwowane.
+- Backend API (M1):
+  - POST `/events/{eventId}/participants` (manual add)
+  - DELETE `/events/{eventId}/participants/{userId}` (remove)
+  - GET `/events/{eventId}/participants`
+- Data Model:
+  - EventParticipant: `event_id`, `user_id`, `position`, `added_at`, `added_by`.
+- Frontend UX:
+  - Screen „ParticipantsManage”, list, Add/Remove; label “Organizer only”.
+- Tests:
+  - BE: uprawnienia, renumeracja po remove, brak duplikatów; FE: UI flow + refresh.
+
 ## Overview
 Organizer-only tools for managing event participants including position reordering via drag-and-drop, confirmation toggles, payment tracking, manual participant addition/removal, and promotion/demotion between main list and waitlist.
 
-**Estimated Time**: 90 hours
 **Priority**: CRITICAL PATH
 **Status**: 0% Done → Target 100%
+
+---
+
+## Milestone & Scope
+
+- Milestone: M1 (MVP)
+- Scope (M1):
+  - Organizer‑only: manual add/remove uczestników
+  - Lista uczestników + pozycja (readonly)
+  - Prosty label w UI: „Organizer only”
+- Out of scope (Post‑MVP):
+  - Self‑service join/leave (Feature 2)
+  - Drag&drop reordering, confirmation toggles
+  - Płatności
+
+## Acceptance Criteria (M1)
+
+- Organizator może dodać/usuwać uczestników ręcznie
+- Lista uczestników pokazuje pozycje i podstawowe dane
+- Uprawnienia: tylko organizator wydarzenia może zarządzać
+
+## Test Plan (smoke, M1)
+
+- BE: POST add, DELETE remove, GET list – działają i weryfikują uprawnienia organizatora
+- FE: ekran zarządzania – dodanie/wycofanie uczestnika odświeża listę
+
 
 ## Business Value
 - Organizers have full control over participant lists

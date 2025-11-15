@@ -1,11 +1,73 @@
 # Feature 1: Basic Event Operations
 
+## Standardized Spec
+
+- Milestone: M1 (MVP)
+- Goal: Pełny CRUD wydarzeń dla organizatora z minimalnym statusem CANCELLED.
+- In Scope (M1): Create/Edit/Delete, GET list/details, `PATCH /events/{id}/cancel`, badge statusu.
+- Out of Scope: Zaawansowane filtry/sortowanie/wyszukiwanie; automatyzacje (waitlist/notifications).
+- Prerequisites: Sprint 0 (Auth, JWT, DB), Feature 0 (Mapa), EventEntity podstawowy.
+- Security/Permissions: Operacje mutujące tylko dla organizatora danego wydarzenia; walidacja JWT; brak IDOR.
+- Acceptance Criteria:
+  - Organizator tworzy/edytuje/usuwa/odwołuje wydarzenie.
+  - Odwołane wydarzenie ma status CANCELLED i badge w UI.
+  - Lista i szczegóły odzwierciedlają status; brak edycji odwołanego (poza przywróceniem – poza M1).
+- Backend API:
+  - GET `/events`, GET `/events/{id}`, POST `/events`, PUT `/events/{id}`, DELETE `/events/{id}`
+  - GET `/events?organizerId={id|me}`
+  - PATCH `/events/{id}/cancel`
+- Data Model:
+  - EventEntity: `status: {ACTIVE,CANCELLED}`, indeksy: `start_date_time`, `organizer_id`, `location_id`.
+- Frontend UX:
+  - Create/Edit/Delete flow; Cancel action w EventDetails; badge “Cancelled” w listach/szczegółach.
+- Validation:
+  - Daty w przyszłości, duration min, slots range, spójność lokalizacji.
+- Tests:
+  - BE: CRUD + cancel, owner checks, walidacje błędnych danych.
+  - FE: create → cancel → delete smoke; rendering badge.
+- Telemetry:
+  - Log mutacji (audit); error rate; liczba odwołań.
+- Rollout:
+  - Migracja kolumny `status`; wsteczne wypełnienie `ACTIVE`.
+
 ## Overview
 Complete CRUD operations for events with advanced filtering, search capabilities, sport type categorization, and status management. This feature extends the existing basic event functionality to provide a full-featured event management system.
 
-**Estimated Time**: 75 hours
 **Priority**: CRITICAL PATH
 **Status**: 40% Done → Target 100%
+
+---
+
+## Milestone & Scope
+
+- Milestone: M1 (MVP)
+- Scope (M1):
+  - Full CRUD dla wydarzeń (create/edit/delete)
+  - Minimalny status wydarzenia: CANCELLED (odwołanie bez usuwania)
+  - Prosty badge statusu w UI (Active/Cancelled)
+  - Podstawowe indeksy pod filtry (opcjonalnie)
+- Out of scope (Post‑MVP):
+  - Zaawansowane filtrowanie/sortowanie/wyszukiwanie
+  - Rozbudowane pola widoczności/automatyzacje (waitlist/notifications)
+
+## API/DB (M1)
+
+- DB: pole `status` (ACTIVE/CANCELLED) w `EventEntity`
+- Endpointy:
+  - POST/GET/PUT/DELETE `/events`
+  - PATCH `/events/{id}/cancel` – zmiana statusu na CANCELLED
+
+## Acceptance Criteria (M1)
+
+- Organizator może: dodać, edytować, usunąć, odwołać wydarzenie
+- Odwołane wydarzenie ma badge “Cancelled” i nie jest edytowalne (poza przywróceniem statusu – poza M1)
+- Lista wydarzeń poprawnie pokazuje statusy
+
+## Test Plan (smoke, M1)
+
+- FE: create → cancel → delete flow przechodzi bez błędów
+- BE: PATCH `/events/{id}/cancel` zwraca 200, status zmienia się na CANCELLED
+
 
 ## Business Value
 - Users can create, edit, and delete their own events

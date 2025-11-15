@@ -41,6 +41,31 @@
       margin-bottom: var(--space-sm);
     }
 
+    /* Scope Switch */
+    .scope-switch {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-sm);
+      margin-top: var(--space-lg);
+      flex-wrap: wrap;
+    }
+
+    .scope-btn {
+      border: 1px solid var(--color-border);
+      background: white;
+      color: var(--color-text);
+      padding: 6px 12px;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .scope-btn.active {
+      background: #dbeafe;
+      color: #1e40af;
+      border-color: #93c5fd;
+    }
+
     /* Progress Bar */
     .progress-section {
       margin: var(--space-2xl) 0;
@@ -53,6 +78,13 @@
       color: var(--color-primary);
       margin-bottom: var(--space-md);
       text-align: center;
+    }
+
+    .scope-note {
+      text-align: center;
+      font-size: 0.9rem;
+      color: var(--color-text-secondary);
+      margin-bottom: var(--space-md);
     }
 
     .progress-bar-container {
@@ -224,6 +256,15 @@
       padding: var(--space-xs) var(--space-md);
       border-radius: var(--radius-full);
       font-size: 0.9rem;
+    }
+
+    .feature-milestone-badge {
+      background: rgba(255,255,255,0.25);
+      padding: 2px 10px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      margin-left: 8px;
+      border: 1px solid rgba(255,255,255,0.35);
     }
 
     .feature-description {
@@ -535,11 +576,17 @@
           <span>Potwierdzone ukończone</span>
         </div>
       </div>
+      <div class="scope-switch" id="scopeSwitch">
+        <button class="scope-btn" data-scope="m1">Milestone 1</button>
+        <button class="scope-btn" data-scope="m2plus">Milestone 2+</button>
+        <button class="scope-btn" data-scope="all">Wszystko</button>
+      </div>
     </div>
 
     <!-- Progress Bar -->
     <div class="progress-section">
       <h2>📊 Postęp Implementacji</h2>
+      <div class="scope-note">Zakres: Całe TODO (M1 + M2+)</div>
       <div class="progress-bar-container">
         <div class="progress-bar">
           <div class="progress-segment progress-completed" style="width: 29%;" title="Ukończone (29%)">29%</div>
@@ -549,7 +596,7 @@
       </div>
       <div class="progress-stats">
         <div class="progress-stat">
-          <div class="progress-stat-value stat-completed">87</div>
+          <div class="progress-stat-value stat-completed">95</div>
           <div class="progress-stat-label">Ukończone</div>
         </div>
         <div class="progress-stat">
@@ -557,11 +604,11 @@
           <div class="progress-stat-label">Do weryfikacji</div>
         </div>
         <div class="progress-stat">
-          <div class="progress-stat-value stat-pending">212</div>
+          <div class="progress-stat-value stat-pending">234</div>
           <div class="progress-stat-label">Do zrobienia</div>
         </div>
         <div class="progress-stat">
-          <div class="progress-stat-value stat-total">299</div>
+          <div class="progress-stat-value stat-total">329</div>
           <div class="progress-stat-label">Wszystkie zadania</div>
         </div>
       </div>
@@ -573,6 +620,7 @@
       <h2 style="color: var(--color-primary); text-align: center; margin-bottom: var(--space-lg);">
         📅 Harmonogram Projektu
       </h2>
+      <div class="scope-note">Zakres: Milestone 1 (Harmonogram MVP)</div>
 
       <!-- Timeline Visualization -->
       <div class="timeline-container">
@@ -583,20 +631,20 @@
           </div>
           <div class="timeline-item timeline-current">
             <span class="timeline-label">Dzisiaj</span>
-            <span class="timeline-date">2025-11-14</span>
-            <span class="timeline-week">Tydzień 1, Dzień 2</span>
+            <span class="timeline-date">2025-11-15</span>
+            <span class="timeline-week">Tydzień 1, Dzień 3</span>
           </div>
           <div class="timeline-item">
             <span class="timeline-label">Koniec (plan)</span>
-            <span class="timeline-date">2025-12-26</span>
+            <span class="timeline-date">2025-12-20</span>
           </div>
         </div>
 
         <!-- Progress Bar -->
         <div class="timeline-bar-container">
-          <div class="timeline-bar" style="width: 0%;"></div>
-          <div class="timeline-marker" style="left: 0%;">
-            0.0%
+          <div class="timeline-bar" style="width: 57.5%;"></div>
+          <div class="timeline-marker" style="left: 57.5%;">
+            57.5%
           </div>
         </div>
 
@@ -619,7 +667,7 @@
           <div class="task-list-content">
 <p class="task-list-summary">3h zaplanowane</p>
             <div class="schedule-task-item">
-              <span class="schedule-task-text">EditEventScreen (reuse CreateEvent logic)</span>
+              <span class="schedule-task-text">Encja EventParticipant (uproszczona)</span>
               <span class="schedule-task-estimate">3h</span>
             </div>
 
@@ -627,11 +675,21 @@
         </div>
 
         <div class="task-list-card task-list-overdue">
-          <h3>⚠️ Zaległe (1)</h3>
+          <h3>⚠️ Zaległe (3)</h3>
           <div class="task-list-content">
-<p class="task-list-summary">2h zaległości</p>
+<p class="task-list-summary">4h zaległości</p>
             <div class="schedule-task-item">
-              <span class="schedule-task-text">HTTP POST /events integration</span>
+              <span class="schedule-task-text">EventStatus = CANCELLED + walidacje</span>
+              <span class="schedule-task-overdue">2d</span>
+            </div>
+
+            <div class="schedule-task-item">
+              <span class="schedule-task-text">PUT /api/v1/events/{id}/cancel (odwołani...</span>
+              <span class="schedule-task-overdue">2d</span>
+            </div>
+
+            <div class="schedule-task-item">
+              <span class="schedule-task-text">Cancel event + status badge</span>
               <span class="schedule-task-overdue">1d</span>
             </div>
 
@@ -639,34 +697,34 @@
         </div>
 
         <div class="task-list-card task-list-upcoming">
-          <h3>📆 Najbliższy tydzień (6)</h3>
+          <h3>📆 Najbliższy tydzień (8)</h3>
           <div class="task-list-content">
-<p class="task-list-summary">14h zaplanowane</p>
+<p class="task-list-summary">16h zaplanowane</p>
             <div class="schedule-task-item">
-              <span class="schedule-task-text">Delete event + confirm dialog</span>
-              <span class="schedule-task-date">2025-11-15</span>
-            </div>
-
-            <div class="schedule-task-item">
-              <span class="schedule-task-text">Encja EventParticipant (uproszczona)</span>
+              <span class="schedule-task-text">Migracja V1_2__Add_event_participant_tab...</span>
               <span class="schedule-task-date">2025-11-16</span>
             </div>
 
             <div class="schedule-task-item">
-              <span class="schedule-task-text">Migracja V1_2__Add_event_participant_tab...</span>
+              <span class="schedule-task-text">EventParticipantRepository + query metho...</span>
+              <span class="schedule-task-date">2025-11-16</span>
+            </div>
+
+            <div class="schedule-task-item">
+              <span class="schedule-task-text">POST /api/v1/events/{eventId}/participan...</span>
               <span class="schedule-task-date">2025-11-18</span>
             </div>
 
             <div class="schedule-task-item">
-              <span class="schedule-task-text">EventParticipantRepository + query metho...</span>
+              <span class="schedule-task-text">DELETE /api/v1/events/{eventId}/particip...</span>
               <span class="schedule-task-date">2025-11-19</span>
             </div>
 
             <div class="schedule-task-item">
-              <span class="schedule-task-text">POST /events/{eventId}/participants (man...</span>
+              <span class="schedule-task-text">GET /api/v1/events/{eventId}/participant...</span>
               <span class="schedule-task-date">2025-11-20</span>
             </div>
-<p class="more-tasks">... i 1 więcej</p>
+<p class="more-tasks">... i 3 więcej</p>
           </div>
         </div>
       </div>
@@ -675,11 +733,11 @@
       <div class="schedule-stats-row">
         <div class="schedule-stat">
           <div class="schedule-stat-label">Ukończone</div>
-          <div class="schedule-stat-value">0/48</div>
+          <div class="schedule-stat-value">69/120</div>
         </div>
         <div class="schedule-stat">
           <div class="schedule-stat-label">Pozostało godzin</div>
-          <div class="schedule-stat-value">100h</div>
+          <div class="schedule-stat-value">86h</div>
         </div>
         <div class="schedule-stat">
           <div class="schedule-stat-label">Velocity</div>
@@ -687,7 +745,7 @@
         </div>
         <div class="schedule-stat">
           <div class="schedule-stat-label">Target velocity</div>
-          <div class="schedule-stat-value">2.0h/day</div>
+          <div class="schedule-stat-value">4.0h/day</div>
         </div>
       </div>
     </div>
@@ -951,11 +1009,12 @@
       }
     </style>
     <!-- Sprint 0: Konfiguracja Backend & Autoryzacja -->
-    <div class="feature-section">
+    <div class="feature-section" data-milestone="1">
       <div class="feature-header priority-critical">
         <h2>
           <span>Sprint 0: Konfiguracja Backend & Autoryzacja</span>
           
+          <span class="feature-milestone-badge">M1</span>
         </h2>
         
       </div>
@@ -1159,7 +1218,7 @@
             <li class="task-item">
               <span class="task-checkbox done"></span>
               <span class="task-text">
-                POST /auth/register
+                POST /api/v1/auth/register
                 
               </span>
               
@@ -1167,7 +1226,7 @@
             <li class="task-item">
               <span class="task-checkbox done"></span>
               <span class="task-text">
-                POST /auth/authenticate
+                POST /api/v1/auth/authenticate
                 
               </span>
               
@@ -1175,7 +1234,7 @@
             <li class="task-item">
               <span class="task-checkbox done"></span>
               <span class="task-text">
-                POST /auth/refresh-token
+                POST /api/v1/auth/refresh-token
                 
               </span>
               
@@ -1183,7 +1242,7 @@
             <li class="task-item">
               <span class="task-checkbox done"></span>
               <span class="task-text">
-                GET /auth/validate-token
+                GET /api/v1/auth/validate-token
                 
               </span>
               
@@ -1191,7 +1250,7 @@
             <li class="task-item">
               <span class="task-checkbox done"></span>
               <span class="task-text">
-                POST /auth/logout
+                POST /api/v1/auth/logout
                 
               </span>
               
@@ -1251,11 +1310,12 @@
     </div>
 
     <!-- Feature 0: Mapa z Wydarzeniami -->
-    <div class="feature-section">
+    <div class="feature-section" data-milestone="1">
       <div class="feature-header ">
         <h2>
           <span>Feature 0: Mapa z Wydarzeniami</span>
           
+          <span class="feature-milestone-badge">M1</span>
         </h2>
         
       </div>
@@ -1267,7 +1327,7 @@
             <li class="task-item">
               <span class="task-checkbox done"></span>
               <span class="task-text">
-                GET /api/events - zwraca wydarzenia z lokalizacjami
+                GET /api/v1/events - zwraca wydarzenia z lokalizacjami
                 
               </span>
               
@@ -1407,11 +1467,12 @@
     </div>
 
     <!-- Feature 1: Podstawowe operacje na Wydarzeniach -->
-    <div class="feature-section">
+    <div class="feature-section" data-milestone="1">
       <div class="feature-header priority-critical">
         <h2>
           <span>Feature 1: Podstawowe operacje na Wydarzeniach</span>
           
+          <span class="feature-milestone-badge">M1</span>
         </h2>
         
       </div>
@@ -1431,7 +1492,7 @@
             <li class="task-item">
               <span class="task-checkbox done"></span>
               <span class="task-text">
-                GET /events - lista wydarzeń
+                GET /api/v1/events - lista wydarzeń
                 
               </span>
               
@@ -1439,7 +1500,7 @@
             <li class="task-item">
               <span class="task-checkbox done"></span>
               <span class="task-text">
-                GET /events/{id} - szczegóły
+                GET /api/v1/events/{id} - szczegóły
                 
               </span>
               
@@ -1447,7 +1508,7 @@
             <li class="task-item">
               <span class="task-checkbox done"></span>
               <span class="task-text">
-                PUT /events - bulk add/update
+                PUT /api/v1/events - bulk add/update
                 
               </span>
               
@@ -1455,7 +1516,7 @@
             <li class="task-item">
               <span class="task-checkbox done"></span>
               <span class="task-text">
-                PUT /events/{id} - edycja
+                PUT /api/v1/events/{id} - edycja
                 
               </span>
               
@@ -1463,7 +1524,7 @@
             <li class="task-item">
               <span class="task-checkbox done"></span>
               <span class="task-text">
-                DELETE /events/{id} - usunięcie
+                DELETE /api/v1/events/{id} - usunięcie
                 
               </span>
               
@@ -1544,7 +1605,7 @@
                 <ul class="subtask-list">
                   <li class="subtask-item">
                         <span class="task-checkbox done"></span>
-                        <span class="subtask-text">GET /events?organizerId={id} [2h]</span>
+                        <span class="subtask-text">GET /api/v1/events?organizerId={id} [2h]</span>
                         
                       </li>
                   <li class="subtask-item">
@@ -1573,6 +1634,22 @@
                         
                       </li>
                 </ul>
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                EventStatus = CANCELLED + walidacje [1h]
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                PUT /api/v1/events/{id}/cancel (odwołanie wydarzenia) [1h]
+                
               </span>
               
             </li>
@@ -1636,27 +1713,47 @@
               
             </li>
             <li class="task-item">
-              <span class="task-checkbox pending"></span>
+              <span class="task-checkbox done"></span>
               <span class="task-text">
-                HTTP POST /events integration [2h]
+                HTTP POST /api/v1/events integration [2h]
                 
               </span>
               
             </li>
             <li class="task-item">
-              <span class="task-checkbox pending"></span>
+              <span class="task-checkbox done"></span>
               <span class="task-text">
                 EditEventScreen (reuse CreateEvent logic) [3h]
                 
                 <ul class="subtask-list">
                   <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
+                        <span class="task-checkbox done"></span>
                         <span class="subtask-text">Screen setup + pre-fill data [2h]</span>
                         
                       </li>
                   <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
+                        <span class="task-checkbox done"></span>
                         <span class="subtask-text">Update API integration [1h]</span>
+                        
+                      </li>
+                </ul>
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox done"></span>
+              <span class="task-text">
+                Delete event + confirm dialog [2h]
+                
+                <ul class="subtask-list">
+                  <li class="subtask-item">
+                        <span class="task-checkbox done"></span>
+                        <span class="subtask-text">Confirm dialog UI [1h]</span>
+                        
+                      </li>
+                  <li class="subtask-item">
+                        <span class="task-checkbox done"></span>
+                        <span class="subtask-text">Delete API call + UI update [1h]</span>
                         
                       </li>
                 </ul>
@@ -1666,17 +1763,17 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                Delete event + confirm dialog [2h]
+                Cancel event + status badge [2h]
                 
                 <ul class="subtask-list">
                   <li class="subtask-item">
                         <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">Confirm dialog UI [1h]</span>
+                        <span class="subtask-text">Cancel action w EventDetails [1h]</span>
                         
                       </li>
                   <li class="subtask-item">
                         <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">Delete API call + UI update [1h]</span>
+                        <span class="subtask-text">Badge „Cancelled” w listach/szczegółach [1h]</span>
                         
                       </li>
                 </ul>
@@ -1690,11 +1787,12 @@
     </div>
 
     <!-- Feature 3: Zarządzanie Uczestnikami - MANUAL -->
-    <div class="feature-section">
+    <div class="feature-section" data-milestone="1">
       <div class="feature-header priority-critical">
         <h2>
           <span>Feature 3: Zarządzanie Uczestnikami - MANUAL</span>
           
+          <span class="feature-milestone-badge">M1</span>
         </h2>
         
       </div>
@@ -1740,7 +1838,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                EventParticipantRepository + query methods [2h]
+                EventParticipantRepository + query methods [1h]
                 
                 <ul class="subtask-list">
                   <li class="subtask-item">
@@ -1765,7 +1863,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                POST /events/{eventId}/participants (manual add) [3h]
+                POST /api/v1/events/{eventId}/participants (manual add) [3h]
                 
                 <ul class="subtask-list">
                   <li class="subtask-item">
@@ -1790,7 +1888,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                DELETE /events/{eventId}/participants/{userId} (remove) [2h]
+                DELETE /api/v1/events/{eventId}/participants/{userId} (remove) [2h]
                 
                 <ul class="subtask-list">
                   <li class="subtask-item">
@@ -1810,7 +1908,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                GET /events/{eventId}/participants (lista) [2h]
+                GET /api/v1/events/{eventId}/participants (lista) [1h]
                 
                 <ul class="subtask-list">
                   <li class="subtask-item">
@@ -1830,7 +1928,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                ParticipantService - manual management [3h]
+                ParticipantService - manual management [2h]
                 
                 <ul class="subtask-list">
                   <li class="subtask-item">
@@ -1916,7 +2014,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                Dodaj uczestnika - manual [4h]
+                Dodaj uczestnika - manual [3h]
                 
                 <ul class="subtask-list">
                   <li class="subtask-item">
@@ -1929,12 +2027,15 @@
                         <span class="subtask-text">Search user dialog (po nicku/email) [2h]</span>
                         
                       </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">HTTP POST /events/{id}/participants [1h]</span>
-                        
-                      </li>
                 </ul>
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                HTTP POST /api/v1/events/{id}/participants [1h]
+                
               </span>
               
             </li>
@@ -1993,11 +2094,12 @@
     </div>
 
     <!-- Feature 4: Cykliczne Wydarzenia - BASIC -->
-    <div class="feature-section">
+    <div class="feature-section" data-milestone="1">
       <div class="feature-header priority-high">
         <h2>
           <span>Feature 4: Cykliczne Wydarzenia - BASIC</span>
           
+          <span class="feature-milestone-badge">M1</span>
         </h2>
         
       </div>
@@ -2068,27 +2170,31 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                SeriesController [2h]
+                SeriesController [1h]
                 
-                <ul class="subtask-list">
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">POST /series (create series)</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">GET /series?organizerId={id}</span>
-                        
-                      </li>
-                </ul>
               </span>
               
             </li>
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                POST /series/{id}/generate (generowanie wydarzeń) [4h]
+                POST /api/v1/series (create series)
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                GET /api/v1/series?organizerId={id}
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                POST /api/v1/series/{id}/generate (generowanie wydarzeń) [4h]
                 
                 <ul class="subtask-list">
                   <li class="subtask-item">
@@ -2116,7 +2222,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                SeriesService.generateEvents() [3h]
+                SeriesService.generateEvents() [2h]
                 
                 <ul class="subtask-list">
                   <li class="subtask-item">
@@ -2144,7 +2250,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                CreateSeriesScreen (basic) [4h]
+                CreateSeriesScreen (basic) [3h]
                 
                 <ul class="subtask-list">
                   <li class="subtask-item">
@@ -2197,7 +2303,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                Generate events dialog [2h]
+                Generate events dialog [1h]
                 
                 <ul class="subtask-list">
                   <li class="subtask-item">
@@ -2217,7 +2323,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                HTTP POST /series + /series/{id}/generate [1h]
+                HTTP POST /api/v1/series + /api/v1/series/{id}/generate [1h]
                 
               </span>
               
@@ -2237,11 +2343,12 @@
     </div>
 
     <!-- Feature 6: UI Basics dla Organizatora -->
-    <div class="feature-section">
+    <div class="feature-section" data-milestone="1">
       <div class="feature-header ">
         <h2>
           <span>Feature 6: UI Basics dla Organizatora</span>
           
+          <span class="feature-milestone-badge">M1</span>
         </h2>
         
       </div>
@@ -2263,7 +2370,7 @@
                       </li>
                   <li class="subtask-item">
                         <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">GET /events?organizerId=me [1h]</span>
+                        <span class="subtask-text">GET /api/v1/events?organizerId=me [1h]</span>
                         
                       </li>
                   <li class="subtask-item">
@@ -2375,11 +2482,12 @@
     </div>
 
     <!-- Deployment + Testing -->
-    <div class="feature-section">
+    <div class="feature-section" data-milestone="1">
       <div class="feature-header ">
         <h2>
           <span>Deployment + Testing</span>
           
+          <span class="feature-milestone-badge">M1</span>
         </h2>
         
       </div>
@@ -2560,7 +2668,7 @@
             <li class="task-item">
               <span class="task-checkbox done"></span>
               <span class="task-text">
-                Rejestracja/logowanie
+                Rejestracja/logowanie [~0h]
                 
               </span>
               
@@ -2568,7 +2676,7 @@
             <li class="task-item">
               <span class="task-checkbox done"></span>
               <span class="task-text">
-                Mapa z wydarzeniami
+                Mapa z wydarzeniami [~0h]
                 
               </span>
               
@@ -2576,7 +2684,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                **Organizator może dodać wydarzenie**
+                **Organizator może dodać wydarzenie** [~0h]
                 
               </span>
               
@@ -2584,7 +2692,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                **Organizator może edytować/usunąć wydarzenie**
+                **Organizator może edytować/usunąć wydarzenie** [~0h]
                 
               </span>
               
@@ -2592,7 +2700,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                **Organizator może RĘCZNIE dodać uczestnika do wydarzenia**
+                **Organizator może RĘCZNIE dodać uczestnika do wydarzenia** [~0h]
                 
               </span>
               
@@ -2600,7 +2708,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                **Organizator może usunąć uczestnika**
+                **Organizator może usunąć uczestnika** [~0h]
                 
               </span>
               
@@ -2608,7 +2716,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                **Organizator może stworzyć serię cyklicznych wydarzeń**
+                **Organizator może stworzyć serię cyklicznych wydarzeń** [~0h]
                 
               </span>
               
@@ -2616,7 +2724,7 @@
             <li class="task-item">
               <span class="task-checkbox done"></span>
               <span class="task-text">
-                **Organizator widzi swoje wydarzenia (lista)**
+                **Organizator widzi swoje wydarzenia (lista)** [~0h]
                 
               </span>
               
@@ -2624,25 +2732,13 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                Aplikacja działa na produkcji
+                Aplikacja działa na produkcji [~0h]
                 
               </span>
               
             </li>
           </ul>
         </div>
-      </div>
-
-    </div>
-
-    <!-- Feature 2: Dołączanie/Opuszczanie Wydarzeń -->
-    <div class="feature-section">
-      <div class="feature-header priority-critical">
-        <h2>
-          <span>Feature 2: Dołączanie/Opuszczanie Wydarzeń</span>
-          <span class="feature-badge">Self-Service</span>
-        </h2>
-        
       </div>
 
       <div class="subsection">
@@ -2652,7 +2748,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                POST /events/{id}/join - uczestnik sam dołącza
+                POST /api/v1/events/{id}/join - uczestnik sam dołącza [5h]
                 
               </span>
               
@@ -2660,7 +2756,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                DELETE /events/{id}/leave - uczestnik sam opuszcza
+                DELETE /api/v1/events/{id}/leave - uczestnik sam opuszcza [3h]
                 
               </span>
               
@@ -2668,7 +2764,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                Enum ParticipantStatus (MAIN_LIST, WAITLIST)
+                Enum ParticipantStatus (MAIN_LIST, WAITLIST) [2h]
                 
               </span>
               
@@ -2676,7 +2772,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                Logika main list vs waitlist
+                Logika main list vs waitlist [7h]
                 
               </span>
               
@@ -2684,7 +2780,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                Awans z waitlist po opuszczeniu
+                Awans z waitlist po opuszczeniu [4h]
                 
               </span>
               
@@ -2692,7 +2788,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                Renumbering positions
+                Renumbering positions [2h]
                 
               </span>
               
@@ -2700,7 +2796,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                Custom exceptions
+                Custom exceptions [2h]
                 
               </span>
               
@@ -2716,7 +2812,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                Join button w EventDetailsScreen
+                Join button w EventDetailsScreen [4h]
                 
               </span>
               
@@ -2724,7 +2820,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                Leave button
+                Leave button [3h]
                 
               </span>
               
@@ -2732,7 +2828,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                Waitlist badge
+                Waitlist badge [2h]
                 
               </span>
               
@@ -2740,7 +2836,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                Toast notifications
+                Toast notifications [2h]
                 
               </span>
               
@@ -2748,7 +2844,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                ParticipantsListScreen (public view)
+                ParticipantsListScreen (public view) [5h]
                 
               </span>
               
@@ -2756,7 +2852,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                EventParticipantService
+                EventParticipantService [4h]
                 
               </span>
               
@@ -2768,11 +2864,12 @@
     </div>
 
     <!-- Feature 3: Zarządzanie Uczestnikami - ADVANCED -->
-    <div class="feature-section">
+    <div class="feature-section" data-milestone="2">
       <div class="feature-header priority-critical">
         <h2>
           <span>Feature 3: Zarządzanie Uczestnikami - ADVANCED</span>
           
+          <span class="feature-milestone-badge">M2</span>
         </h2>
         
       </div>
@@ -2784,7 +2881,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                Pola w EventParticipant: isPaid, isConfirmed, paymentMethod
+                Pola w EventParticipant: isPaid, isConfirmed, paymentMethod [4h]
                 
               </span>
               
@@ -2792,7 +2889,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                PUT /events/{eventId}/participants/{userId}/confirm (toggle)
+                PUT /api/v1/events/{eventId}/participants/{userId}/confirm (toggle) [3h]
                 
               </span>
               
@@ -2800,7 +2897,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                PUT /events/{eventId}/participants/{userId}/payment (toggle)
+                PUT /api/v1/events/{eventId}/participants/{userId}/payment (toggle) [3h]
                 
               </span>
               
@@ -2808,7 +2905,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                PUT /events/{eventId}/participants/{userId}/payment-method
+                PUT /api/v1/events/{eventId}/participants/{userId}/payment-method [2h]
                 
               </span>
               
@@ -2816,7 +2913,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                PUT /events/{eventId}/participants/{userId}/position (zmiana)
+                PUT /api/v1/events/{eventId}/participants/{userId}/position (zmiana) [4h]
                 
               </span>
               
@@ -2824,7 +2921,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                POST /events/{eventId}/participants/{userId}/promote (z waitlist)
+                POST /api/v1/events/{eventId}/participants/{userId}/promote (z waitlist) [4h]
                 
               </span>
               
@@ -2832,7 +2929,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                POST /events/{eventId}/participants/{userId}/demote (do waitlist)
+                POST /api/v1/events/{eventId}/participants/{userId}/demote (do waitlist) [5h]
                 
               </span>
               
@@ -2848,7 +2945,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                PaymentsManageScreen
+                PaymentsManageScreen [6h]
                 
               </span>
               
@@ -2856,7 +2953,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                Confirm checkbox toggle
+                Confirm checkbox toggle [2h]
                 
               </span>
               
@@ -2864,7 +2961,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                Payment checkbox toggle
+                Payment checkbox toggle [2h]
                 
               </span>
               
@@ -2872,7 +2969,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                Payment method selector (BLIK/CASH/TRANSFER/CARD)
+                Payment method selector (BLIK/CASH/TRANSFER/CARD) [4h]
                 
               </span>
               
@@ -2880,7 +2977,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                Payment summary (total, paid, unpaid)
+                Payment summary (total, paid, unpaid) [3h]
                 
               </span>
               
@@ -2888,7 +2985,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                Drag & drop reordering (ReorderableListView)
+                Drag & drop reordering (ReorderableListView) [2h]
                 
               </span>
               
@@ -2896,7 +2993,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                Promote/demote buttons
+                Promote/demote buttons [1h]
                 
               </span>
               
@@ -2908,11 +3005,12 @@
     </div>
 
     <!-- Feature 4: Event Series - ADVANCED -->
-    <div class="feature-section">
+    <div class="feature-section" data-milestone="2">
       <div class="feature-header priority-high">
         <h2>
           <span>Feature 4: Event Series - ADVANCED</span>
           
+          <span class="feature-milestone-badge">M2</span>
         </h2>
         
       </div>
@@ -2924,7 +3022,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                MONTHLY frequency
+                MONTHLY frequency [5h]
                 
               </span>
               
@@ -2932,7 +3030,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                skipHolidays logic (API świąt)
+                skipHolidays logic (API świąt) [5h]
                 
               </span>
               
@@ -2940,7 +3038,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                SeriesStatus enum (ACTIVE, PAUSED)
+                SeriesStatus enum (ACTIVE, PAUSED) [1h]
                 
               </span>
               
@@ -2948,7 +3046,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                PUT /series/{id}/pause
+                PUT /api/v1/series/{id}/pause [2h]
                 
               </span>
               
@@ -2956,7 +3054,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                PUT /series/{id}/resume
+                PUT /api/v1/series/{id}/resume [2h]
                 
               </span>
               
@@ -2964,7 +3062,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                PUT /series/{id} (edit series)
+                PUT /api/v1/series/{id} (edit series) [3h]
                 
               </span>
               
@@ -2972,7 +3070,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                DELETE /series/{id}
+                DELETE /api/v1/series/{id} [2h]
                 
               </span>
               
@@ -2988,7 +3086,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                SeriesListScreen
+                SeriesListScreen [3h]
                 
               </span>
               
@@ -2996,7 +3094,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                SeriesDetailsScreen
+                SeriesDetailsScreen [3h]
                 
               </span>
               
@@ -3004,7 +3102,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                Preview list przed generowaniem
+                Preview list przed generowaniem [2h]
                 
               </span>
               
@@ -3012,7 +3110,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                Edit series
+                Edit series [1h]
                 
               </span>
               
@@ -3020,7 +3118,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                Pause/Resume toggle
+                Pause/Resume toggle [1h]
                 
               </span>
               
@@ -3032,11 +3130,12 @@
     </div>
 
     <!-- Feature 3.5: Grupy Siatkówki -->
-    <div class="feature-section">
+    <div class="feature-section" data-milestone="2">
       <div class="feature-header priority-critical">
         <h2>
           <span>Feature 3.5: Grupy Siatkówki</span>
           
+          <span class="feature-milestone-badge">M2</span>
         </h2>
         
       </div>
@@ -3048,7 +3147,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                Encja Group (name, description, imageUrl)
+                Encja Group (name, description, imageUrl) [4h]
                 
               </span>
               
@@ -3056,7 +3155,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                Encja UserGroup (membership)
+                Encja UserGroup (membership) [3h]
                 
               </span>
               
@@ -3064,7 +3163,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                GroupController
+                GroupController [3h]
                 
               </span>
               
@@ -3072,7 +3171,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                GET /groups
+                GET /api/v1/groups [3h]
                 
               </span>
               
@@ -3080,7 +3179,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                POST /groups/{id}/join
+                POST /api/v1/groups/{id}/join [3h]
                 
               </span>
               
@@ -3088,7 +3187,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                DELETE /groups/{id}/leave
+                DELETE /api/v1/groups/{id}/leave [3h]
                 
               </span>
               
@@ -3096,7 +3195,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                Link Event → Group
+                Link Event → Group [5h]
                 
               </span>
               
@@ -3104,7 +3203,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                Filtrowanie wydarzeń po grupie
+                Filtrowanie wydarzeń po grupie [6h]
                 
               </span>
               
@@ -3120,7 +3219,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                GroupListScreen
+                GroupListScreen [8h]
                 
               </span>
               
@@ -3128,7 +3227,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                GroupDetailsScreen
+                GroupDetailsScreen [8h]
                 
               </span>
               
@@ -3136,7 +3235,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                Join/Leave group
+                Join/Leave group [6h]
                 
               </span>
               
@@ -3144,7 +3243,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                Group selector w EventsListScreen
+                Group selector w EventsListScreen [8h]
                 
               </span>
               
@@ -3156,11 +3255,12 @@
     </div>
 
     <!-- Feature 5: Profil Użytkownika -->
-    <div class="feature-section">
+    <div class="feature-section" data-milestone="2">
       <div class="feature-header priority-high">
         <h2>
           <span>Feature 5: Profil Użytkownika</span>
           
+          <span class="feature-milestone-badge">M2</span>
         </h2>
         
       </div>
@@ -3170,9 +3270,9 @@
         <div class="collapsible-content">
           <ul class="task-list">
             <li class="task-item">
-              <span class="task-checkbox pending"></span>
+              <span class="task-checkbox done"></span>
               <span class="task-text">
-                GET /users/me
+                GET /api/v1/users/me [3h]
                 
               </span>
               
@@ -3180,7 +3280,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                PUT /users/me
+                PUT /api/v1/users/me [4h]
                 
               </span>
               
@@ -3188,7 +3288,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                GET /users/me/events
+                GET /api/v1/users/me/events [4h]
                 
               </span>
               
@@ -3196,7 +3296,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                GET /users/me/organized
+                GET /api/v1/users/me/organized [4h]
                 
               </span>
               
@@ -3204,7 +3304,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                GET /users/me/history
+                GET /api/v1/users/me/history [4h]
                 
               </span>
               
@@ -3212,7 +3312,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                POST /users/{id}/thumb
+                POST /api/v1/users/{id}/thumb [3h]
                 
               </span>
               
@@ -3228,7 +3328,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                Enhanced UserProfileScreen
+                Enhanced UserProfileScreen [6h]
                 
               </span>
               
@@ -3236,7 +3336,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                EditProfileScreen
+                EditProfileScreen [6h]
                 
               </span>
               
@@ -3244,7 +3344,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                My Events tab
+                My Events tab [4h]
                 
               </span>
               
@@ -3252,7 +3352,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                My Organized tab
+                My Organized tab [3h]
                 
               </span>
               
@@ -3260,7 +3360,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                History tab
+                History tab [4h]
                 
               </span>
               
@@ -3272,11 +3372,12 @@
     </div>
 
     <!-- Feature 7: EventStatus & Cancellation -->
-    <div class="feature-section">
+    <div class="feature-section" data-milestone="2">
       <div class="feature-header ">
         <h2>
           <span>Feature 7: EventStatus & Cancellation</span>
           
+          <span class="feature-milestone-badge">M2</span>
         </h2>
         
       </div>
@@ -3288,7 +3389,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                Enum EventStatus (ACTIVE, CANCELLED, COMPLETED)
+                Enum EventStatus (ACTIVE, CANCELLED, COMPLETED) [2h]
                 
               </span>
               
@@ -3296,7 +3397,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                PUT /events/{id}/cancel
+                PUT /api/v1/events/{id}/cancel [4h]
                 
               </span>
               
@@ -3304,7 +3405,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                PUT /events/{id}/complete
+                PUT /api/v1/events/{id}/complete [3h]
                 
               </span>
               
@@ -3312,7 +3413,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                Powiadomienia o odwołaniu
+                Powiadomienia o odwołaniu [6h]
                 
               </span>
               
@@ -3328,7 +3429,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                EventStatus badges
+                EventStatus badges [3h]
                 
               </span>
               
@@ -3336,7 +3437,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                Cancel event button
+                Cancel event button [3h]
                 
               </span>
               
@@ -3344,7 +3445,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                Cancel confirmation
+                Cancel confirmation [4h]
                 
               </span>
               
@@ -3352,7 +3453,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                Spring Mail + SMTP
+                Spring Mail + SMTP [6h]
                 
               </span>
               
@@ -3360,7 +3461,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                Thymeleaf templates
+                Thymeleaf templates [6h]
                 
               </span>
               
@@ -3368,7 +3469,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                Przypomnienie 24h przed
+                Przypomnienie 24h przed [6h]
                 
               </span>
               
@@ -3376,7 +3477,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                Awans z waitlist
+                Awans z waitlist [6h]
                 
               </span>
               
@@ -3384,7 +3485,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                Event cancelled
+                Event cancelled [6h]
                 
               </span>
               
@@ -3392,7 +3493,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                Firebase FCM setup
+                Firebase FCM setup [9h]
                 
               </span>
               
@@ -3400,7 +3501,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                Push: Przypomnienie
+                Push: Przypomnienie [9h]
                 
               </span>
               
@@ -3408,7 +3509,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                Push: Awans z waitlist
+                Push: Awans z waitlist [9h]
                 
               </span>
               
@@ -3416,7 +3517,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                Push: Zmiana eventu
+                Push: Zmiana eventu [9h]
                 
               </span>
               
@@ -3424,7 +3525,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                Flutter FCM integration
+                Flutter FCM integration [9h]
                 
               </span>
               
@@ -3432,7 +3533,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                Stripe API integration
+                Stripe API integration [12h]
                 
               </span>
               
@@ -3440,7 +3541,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                Payment initiate endpoint
+                Payment initiate endpoint [12h]
                 
               </span>
               
@@ -3448,7 +3549,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                Stripe webhook
+                Stripe webhook [12h]
                 
               </span>
               
@@ -3456,7 +3557,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                Flutter Stripe integration
+                Flutter Stripe integration [12h]
                 
               </span>
               
@@ -3464,7 +3565,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                Payment flow UI
+                Payment flow UI [12h]
                 
               </span>
               
@@ -3476,13 +3577,286 @@
     </div>
 
     <!-- Sprint: Testowanie -->
-    <div class="feature-section">
+    <div class="feature-section" data-milestone="3">
       <div class="feature-header ">
         <h2>
           <span>Sprint: Testowanie</span>
           
+          <span class="feature-milestone-badge">M3</span>
         </h2>
         
+      </div>
+
+      <div class="subsection">
+        <h3 class="collapsible">SAST/Dependency/Secrets Scanning (8h)</h3>
+        <div class="collapsible-content">
+          <ul class="task-list">
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Konfiguracja FindSecBugs/SpotBugs (BE) [2h]
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Semgrep rules (Java Spring + Dart) [2h]
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Dependency scan (OWASP DC lub Snyk) [2h]
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Gitleaks (sekrety) + cleanup historii jeśli potrzeba [2h]
+                
+              </span>
+              
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h3 class="collapsible">DAST/API Fuzz + Business Logic (10h)</h3>
+        <div class="collapsible-content">
+          <ul class="task-list">
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                ZAP baseline + full scan z JWT [3h]
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Schemathesis fuzz (jeśli OpenAPI) lub ręczne negatywne [3h]
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Testy organizer‑only (IDOR) – add/remove participants, cancel, series generate [4h]
+                
+              </span>
+              
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h3 class="collapsible">Auth/JWT/CORS/Rate Limits (8h)</h3>
+        <div class="collapsible-content">
+          <ul class="task-list">
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Rotacja refresh + reuse detection [3h]
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                CORS allow‑list, brak `*` z Credentials [2h]
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Rate limits: login, mutujące endpointy, series generate [3h]
+                
+              </span>
+              
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h3 class="collapsible">Headers/TLS/Nginx (6h)</h3>
+        <div class="collapsible-content">
+          <ul class="task-list">
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Security headers (CSP – na przyszłość web, XFO, XCTO, RP, PP) [3h]
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                TLS hardening + HSTS, SSL Labs A [3h]
+                
+              </span>
+              
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h3 class="collapsible">Logging/Audyt/Monitoring (6h)</h3>
+        <div class="collapsible-content">
+          <ul class="task-list">
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Maskowanie PII/JWT w logach [2h]
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Audit trail dla create/edit/delete/cancel [2h]
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Alerting: 4xx/5xx spikes, auth failures [2h]
+                
+              </span>
+              
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h3 class="collapsible">Infra/Secrets Hardening (6h)</h3>
+        <div class="collapsible-content">
+          <ul class="task-list">
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                ufw/fail2ban, systemd ograniczenia, non‑root service [3h]
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Sekrety poza repo, rotacja, inwentaryzacja [3h]
+                
+              </span>
+              
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h3 class="collapsible">Backup & Disaster Recovery (10h)</h3>
+        <div class="collapsible-content">
+          <ul class="task-list">
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Nightly full + WAL archiving (PITR) [3h]
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Retencja/rotacja + offsite, szyfrowanie [3h]
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Procedury odtworzenia + test restore (runbook) [4h]
+                
+              </span>
+              
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h3 class="collapsible">GDPR/RODO (10h)</h3>
+        <div class="collapsible-content">
+          <ul class="task-list">
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Privacy Policy + Terms (akceptacja przy rejestracji) [2h]
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Eksport/usunięcie/przenoszalność danych (e‑mail, nick, avatar, lokalizacje, telefon) [3h]
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Retencja (logi, backupy) + realizacja w systemie [3h]
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                DPA z dostawcami (hosting PL, e‑mail) [2h]
+                
+              </span>
+              
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h3 class="collapsible">Performance Baseline (4h)</h3>
+        <div class="collapsible-content">
+          <ul class="task-list">
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                k6: GET /api/v1/events (mapa), /api/v1/events?organizerId=me, POST /api/v1/series/{id}/generate [4h]
+                
+              </span>
+              
+            </li>
+          </ul>
+        </div>
       </div>
 
       <div class="subsection">
@@ -3573,7 +3947,7 @@
       <h2>📊 Podsumowanie</h2>
 
       <p style="margin-bottom: var(--space-sm); color: #2563eb; font-weight: 600; background: #dbeafe; padding: var(--space-md); border-radius: var(--radius-md); border-left: 4px solid #3b82f6;">
-        📌 Widok: <strong>Aktualny Harmonogram (Milestone 1)</strong> - Zadania zaplanowane do 2025-12-26
+        📌 Widok: <strong>Aktualny Harmonogram (Milestone 1)</strong> - Zadania zaplanowane do 2025-12-20
       </p>
       <p style="margin-bottom: var(--space-lg); color: var(--color-text-secondary);">
         Przy dostępności <strong>16h/tydzień</strong> w wolnym czasie (Solo Developer)
@@ -3582,29 +3956,29 @@
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-lg); margin-bottom: var(--space-xl);">
         <div style="background: white; padding: var(--space-lg); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); border-left: 4px solid #3b82f6;">
           <div style="font-size: 0.9rem; color: var(--color-text-secondary); margin-bottom: var(--space-xs);">Całkowite godziny</div>
-          <div style="font-size: 2rem; font-weight: bold; color: var(--color-primary);">100h</div>
+          <div style="font-size: 2rem; font-weight: bold; color: var(--color-primary);">166h</div>
         </div>
         <div style="background: white; padding: var(--space-lg); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); border-left: 4px solid #10b981;">
           <div style="font-size: 0.9rem; color: var(--color-text-secondary); margin-bottom: var(--space-xs);">Ukończone</div>
-          <div style="font-size: 2rem; font-weight: bold; color: #10b981;">0h</div>
+          <div style="font-size: 2rem; font-weight: bold; color: #10b981;">80h</div>
         </div>
         <div style="background: white; padding: var(--space-lg); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); border-left: 4px solid #f59e0b;">
           <div style="font-size: 0.9rem; color: var(--color-text-secondary); margin-bottom: var(--space-xs);">Pozostałe</div>
-          <div style="font-size: 2rem; font-weight: bold; color: #f59e0b;">100h</div>
+          <div style="font-size: 2rem; font-weight: bold; color: #f59e0b;">86h</div>
         </div>
         <div style="background: white; padding: var(--space-lg); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); border-left: 4px solid #8b5cf6;">
           <div style="font-size: 0.9rem; color: var(--color-text-secondary); margin-bottom: var(--space-xs);">Czas trwania</div>
-          <div style="font-size: 2rem; font-weight: bold; color: #8b5cf6;">7 tyg.</div>
+          <div style="font-size: 2rem; font-weight: bold; color: #8b5cf6;">6 tyg.</div>
         </div>
       </div>
 
       <div style="margin-top: var(--space-xl); padding: var(--space-xl); background: white; border-radius: var(--radius-md); border: 2px solid var(--color-primary);">
         <h3 style="color: var(--color-primary); margin-bottom: var(--space-md);">🎯 Milestone 1: Organizer MVP</h3>
         <div style="font-size: 1.1rem; line-height: 1.8;">
-          <p><strong>100h / 16h/tydzień = 7 tygodni</strong></p>
-          <p style="margin-top: var(--space-sm);"><strong>Deadline:</strong> 2025-12-26</p>
+          <p><strong>166h / 16h/tydzień = 6 tygodni</strong></p>
+          <p style="margin-top: var(--space-sm);"><strong>Deadline:</strong> 2025-12-20</p>
           <p style="margin-top: var(--space-md); font-size: 0.95rem; color: var(--color-text-secondary);">
-            Postęp: <strong>0.0%</strong> (0h / 100h)
+            Postęp: <strong>57.5%</strong> (80h / 166h)
           </p>
         </div>
       </div>
@@ -3634,7 +4008,7 @@
     <div class="summary-section" style="display: none;">
       <h2>📊 Podsumowanie Estymat</h2>
       <p style="margin-bottom: var(--space-sm); color: #2563eb; font-weight: 600; background: #dbeafe; padding: var(--space-md); border-radius: var(--radius-md); border-left: 4px solid #3b82f6;">
-        📌 Widok: <strong>Aktualny Harmonogram (Milestone 1)</strong> - Zadania zaplanowane do 2025-12-26
+        📌 Widok: <strong>Aktualny Harmonogram (Milestone 1)</strong> - Zadania zaplanowane do 2025-12-20
       </p>
       <p style="margin-bottom: var(--space-lg); color: var(--color-text-secondary);">
         Przy dostępności <strong>16h/tydzień</strong> w wolnym czasie (Solo Developer)
@@ -3703,6 +4077,34 @@
   </div>
 
   <script>
+    // Scope filtering
+    (function() {
+      const switcher = document.getElementById('scopeSwitch');
+      if (switcher) {
+        const btns = switcher.querySelectorAll('.scope-btn');
+        const sections = document.querySelectorAll('.feature-section');
+
+        function applyScope(scope) {
+          sections.forEach(sec => {
+            const m = parseInt(sec.getAttribute('data-milestone')) || 1;
+            let show = true;
+            if (scope === 'm1') show = (m === 1);
+            else if (scope === 'm2plus') show = (m >= 2);
+            sec.style.display = show ? '' : 'none';
+          });
+
+          btns.forEach(b => b.classList.toggle('active', b.dataset.scope === scope));
+          localStorage.setItem('todoScope', scope);
+        }
+
+        btns.forEach(b => b.addEventListener('click', () => applyScope(b.dataset.scope)));
+
+        const defaultScope = 'm1';
+        const saved = localStorage.getItem('todoScope');
+        applyScope(saved || defaultScope);
+      }
+    })();
+
     // Collapsible sections
     document.querySelectorAll('.collapsible').forEach(header => {
       header.addEventListener('click', () => {

@@ -1,11 +1,36 @@
 # Feature 2: Join/Leave Events
 
+## Standardized Spec
+
+- Milestone: M2 (Post‑MVP)
+- Goal: Uczestnicy mogą samodzielnie dołączać/opuszczać wydarzenia; waitlist z automatyczną promocją.
+- In Scope: `POST /events/{id}/join`, `DELETE /events/{id}/leave`, ParticipantStatus MAIN_LIST/WAITLIST, renumeracja pozycji.
+- Out of Scope (M2): Płatności, drag&drop, ręczne zarządzanie przez organizatora (jest w Feature 3).
+- Prerequisites: Feature 1 (CRUD), ParticipantEntity baza (z M1 minimal) – lub tworzymy w tym featurze.
+- Security/Permissions: Join/leave tylko z JWT; brak join duplikatów; limity slotów.
+- Acceptance Criteria: Join/leave działa z logiką list i waitlist; promocja po zwolnieniu miejsca; brak IDOR.
+- Backend API:
+  - POST `/events/{eventId}/join`, DELETE `/events/{eventId}/leave`
+  - GET `/events/{eventId}/participants` (public minimal view)
+- Data Model:
+  - EventParticipant: `status`, `position`, unikalność (event_id,user_id), indeksy.
+- Frontend UX:
+  - Przyciski Join/Leave w EventDetails; badge Waitlist.
+- Validation & Limits:
+  - Brak join jeśli pełny main list; waitlist fallback; atomiczne zmiany pozycji.
+- Tests:
+  - BE: join/leave happy path, edge cases (pełny event, duplikaty), promocja; FE: wizualne badge i stany przycisków.
+
 ## Overview
 Implement participant management system allowing users to join and leave events. This feature includes main list and waitlist logic with automatic promotion when slots become available.
 
-**Estimated Time**: 75 hours
 **Priority**: CRITICAL PATH
 **Status**: 0% Done → Target 100%
+
+> Milestone: M2+ (Post‑MVP)
+
+This feature is intentionally out of scope for Milestone 1 (Organizer MVP). Manual participant management (Feature 3) covers organizer workflows in M1.
+
 
 ## Business Value
 - Users can register for events directly in the app

@@ -1,9 +1,53 @@
 # Feature 4: Event Series Management
 
+## Standardized Spec
+
+- Milestone: M1 (BASIC), M2 (ADVANCED)
+- Goal: Szablony cyklicznych wydarzeń i generowanie eventów wg częstotliwości.
+- In Scope (M1): WEEKLY/BIWEEKLY; generate z `startDate` + `count` (max 20); link event→series.
+- Out of Scope (M1): MONTHLY, skipHolidays, pause/resume, edycja serii.
+- Prerequisites: Feature 1; DB migracja `event_series` i FK `series_id` w `event`.
+- Security/Permissions: CRUD serii tylko dla organizatora; walidacja limitów generacji.
+- Acceptance Criteria (M1): generowanie poprawnych dat; max 20; powiązania zachowane.
+- Backend API:
+  - POST `/series`, GET `/series?organizerId={id|me}`
+  - POST `/series/{id}/generate`
+- Data Model:
+  - event_series: organizer_id, location_id, frequency, dayOfWeek/time, defaults; event.series_id FK.
+- Frontend UX:
+  - CreateSeriesScreen; dialog Generate (startDate, count); prosta lista serii.
+- Tests:
+  - BE: kalkulacja dat (weekly/biweekly), limity, walidacje; FE: submit flows.
+
 ## Overview
 Create recurring event templates with automatic event generation based on schedules (weekly, biweekly, monthly), holiday skipping, and series management.
 
-**Estimated Time**: 75 hours | **Priority**: MEDIUM | **Status**: 0% → 100%
+**Priority**: MEDIUM | **Status**: 0% → 100%
+
+---
+
+## Milestone & Scope
+
+- Milestone: M1 (MVP)
+- Scope (M1):
+  - WEEKLY/BIWEEKLY
+  - Generate: `startDate` + `count` (max 20)
+  - Link event → series (FK)
+- Out of scope (Post‑MVP):
+  - MONTHLY, `skipHolidays`, pause/resume
+  - Edycja serii (poza usunięciem i stworzeniem nowej)
+
+## Acceptance Criteria (M1)
+
+- Utworzenie serii i wygenerowanie wydarzeń dla weekly/biweekly
+- Limit bezpieczeństwa: max 20 eventów w jednym generowaniu
+- Wydarzenia powiązane z serią
+
+## Test Plan (smoke, M1)
+
+- Generacja weekly/biweekly z poprawnymi datami
+- Powiązania event → series istnieją
+
 
 ## Business Value
 - Organizers save time with recurring event templates

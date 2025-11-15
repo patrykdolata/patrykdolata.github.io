@@ -1,9 +1,31 @@
 # Testing & Documentation Sprint
 
+## Standardized Spec
+
+- Milestone: M3 (Post‑MVP)
+- Goal: Kompletny zestaw testów i dokumentacji API przed produkcją.
+- In Scope: unit/integration/e2e smoke, OpenAPI/Swagger, kolekcja Postman, coverage 80%+.
+- Out of Scope: performance (w osobnym zadaniu Performance Baseline) – tu tylko bazowe scenariusze.
+- Acceptance Criteria: pipeline testów green; dokumentacja aktualna; coverage osiągnięty.
+- Security Tests: SAST/DAST/Deps w ramach Security & Privacy Audit.
+
 ## Overview
 Comprehensive testing strategy and API documentation to ensure quality, maintainability, and ease of development.
 
-**Estimated Time**: 60 hours | **Priority**: HIGH (before production) | **Status**: 0% → 100%
+**Priority**: HIGH (before production) | **Status**: 0% → 100%
+
+## Milestone & Scope
+
+- Milestone: M1 (MVP)
+- Scope (M1):
+  - Smoke tests BE: auth + events CRUD + cancel
+  - Smoke tests FE: create → cancel → delete (mock backend jeśli potrzebne)
+  - Minimal API docs dla endpointów M1
+
+## Acceptance Criteria (M1)
+
+- Smoke suite przechodzi lokalnie i na prod po deployu
+- Dostępna podstawowa dokumentacja endpointów M1 (README lub OpenAPI fragment)
 
 ## Business Value
 - Reduces bugs and production issues

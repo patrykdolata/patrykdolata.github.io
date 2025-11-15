@@ -3,6 +3,7 @@
 const { execSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
+const { resolveRepoPath } = require('./repo-resolver');
 
 /**
  * Git Analyzer Module
@@ -215,5 +216,6 @@ module.exports = {
   getChangedFiles,
   getFileContent,
   getLastCommitHash,
-  getRepoStatus
+  getRepoStatus,
+  resolveRepoPath
 };

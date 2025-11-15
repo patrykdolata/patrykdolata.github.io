@@ -1,9 +1,21 @@
 # Feature 7: Event Status & Cancellation
 
+## Standardized Spec
+
+- Milestone: M2 (Post‑MVP)
+- Goal: Pełniejsza obsługa statusów (ACTIVE/CANCELLED/COMPLETED) i opcjonalne notyfikacje.
+- In Scope: Enum statusów; cancel/complete endpointy; (powiadomienia – integracja w M3 Email/Push).
+- Out of Scope (M2): pełna automatyka i raporty.
+- Prerequisites: Feature 1 (minimal CANCELLED), M3: kanały notyfikacji.
+- Acceptance Criteria: statusy działają i są widoczne w UI; operacje autoryzowane.
+- Backend API: PUT `/events/{id}/cancel`, PUT `/events/{id}/complete`.
+- Frontend UX: przyciski cancel/complete; badge’y.
+- Tests: status transitions, uprawnienia; UI odświeża statusy.
+
 ## Overview
 Implement event status management (ACTIVE, CANCELLED, COMPLETED) with cancellation logic, automatic completion, and participant notifications.
 
-**Estimated Time**: 25 hours | **Priority**: MEDIUM | **Status**: 0% → 100%
+**Priority**: MEDIUM | **Status**: 0% → 100%
 
 ## Business Value
 - Clear event lifecycle management

@@ -1,9 +1,19 @@
-# Feature 5.5: Favorite Locations - Complete Remaining 10%
+# Feature 5.5: Favorite Locations
+
+## Standardized Spec
+
+- Milestone: Pre‑M1 (zrealizowane wstępnie)
+- Goal: Ulubione lokalizacje do szybkiego filtrowania i centrowania mapy.
+- In Scope: CRUD ulubionych miejsc; integracja z mapą (centrowanie/filtr); UI polish i błędy.
+- Out of Scope: zaawansowane rekomendacje.
+- Acceptance Criteria: dodawanie/usuwanie działa; mapa centrowana do ulubionych; stany ładowania/błędów w UI.
+- Frontend UX: `FavoriteLocationNotifier`, serwis + ekran ulubionych.
+- Tests: smoke flows; brak regresji mapy.
 
 ## Overview
 Finish the favorite locations feature by adding edge cases, error handling, and UI polish.
 
-**Estimated Time**: 11 hours | **Priority**: LOW | **Status**: 90% → 100%
+**Priority**: LOW | **Status**: 90% → 100%
 
 ## Current Implementation (90% Done)
 

@@ -35,14 +35,19 @@ function main() {
   for (const repo of config.repositories) {
     if (!repo.enabled) continue;
 
-    const validation = gitAnalyzer.validateRepo(repo.path);
+    // Resolve repo path cross-OS (macOS/Ubuntu)
+    const resolvedPath = gitAnalyzer.resolveRepoPath(repo.name) ||
+                         gitAnalyzer.resolveRepoPath(repo.path) ||
+                         repo.path;
+
+    const validation = gitAnalyzer.validateRepo(resolvedPath);
 
     if (!validation.valid) {
       console.log(`⚠️  ${repo.name}: ${validation.reason}`);
       continue;
     }
 
-    const commits = gitAnalyzer.getCommitsSince(repo.path, sinceTimestamp);
+    const commits = gitAnalyzer.getCommitsSince(resolvedPath, sinceTimestamp);
 
     if (commits.length === 0) {
       console.log(`✓ ${repo.name}: 0 commits since ${sinceDisplay}`);
@@ -50,7 +55,7 @@ function main() {
       console.log(`✓ ${repo.name}: ${commits.length} commit(s) since ${sinceDisplay}`);
       commits.forEach(c => {
         c.repo = repo.name;
-        c.repoPath = repo.path;
+        c.repoPath = resolvedPath;
       });
       allCommits.push(...commits);
     }

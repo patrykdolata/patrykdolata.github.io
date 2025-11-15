@@ -13,8 +13,8 @@
 - **Current Phase:** MILESTONE 1 - Organizer MVP
 - **Target:** 2025-12-31 (7-8 tygodni)
 - **Weekly hours:** 15h
-- **Overall progress:** 25%
-- **Last updated:** 2025-11-14
+ - **Overall progress:** 31%
+ - **Last updated:** 2025-11-15
 
 ### ✅ What's Working:
 - Sprint 0: Auth & JWT (95% done)
@@ -77,11 +77,11 @@
 - [x] TokenEntity & TokenRepository
 
 ### Auth Endpoints (Backend)
-- [x] POST /auth/register
-- [x] POST /auth/authenticate
-- [x] POST /auth/refresh-token
-- [x] GET /auth/validate-token
-- [x] POST /auth/logout
+- [x] POST /api/v1/auth/register
+- [x] POST /api/v1/auth/authenticate
+- [x] POST /api/v1/auth/refresh-token
+- [x] GET /api/v1/auth/validate-token
+- [x] POST /api/v1/auth/logout
 
 ### Auth Implementation (Flutter)
 - [x] JWT storage w Flutter (SecureStorage)
@@ -97,7 +97,7 @@
 ## Feature 0: Mapa z Wydarzeniami ✅ [80% DONE]
 
 ### Backend - Mapa API
-- [x] GET /api/events - zwraca wydarzenia z lokalizacjami
+- [x] GET /api/v1/events - zwraca wydarzenia z lokalizacjami
 - [x] EventEntity ma relację do LocationEntity
 - [x] LocationEntity ma latitude i longitude
 - [x] EventRepository.findAllWithLocation() - JOIN FETCH
@@ -130,11 +130,11 @@
 
 #### Obecny stan:
 - [x] EventController - podstawowa struktura
-- [x] GET /events - lista wydarzeń
-- [x] GET /events/{id} - szczegóły
-- [x] PUT /events - bulk add/update
-- [x] PUT /events/{id} - edycja
-- [x] DELETE /events/{id} - usunięcie
+- [x] GET /api/v1/events - lista wydarzeń
+- [x] GET /api/v1/events/{id} - szczegóły
+- [x] PUT /api/v1/events - bulk add/update
+- [x] PUT /api/v1/events/{id} - edycja
+- [x] DELETE /api/v1/events/{id} - usunięcie
 - [x] EventService podstawowy
 
 #### Do zrobienia:
@@ -151,12 +151,16 @@
   - [x] Slots & level business logic validations [1h]
 
 - [x] Query params: organizerId (moje wydarzenia) [3h] ✅ (2025-11-14)
-  - [x] GET /events?organizerId={id} [2h]
+  - [x] GET /api/v1/events?organizerId={id} [2h]
   - [x] EventRepository.findByUserIdWithLocation [1h]
 
 - [x] EventRepository custom queries [3h] ✅ (2025-11-14)
   - [x] Filter by organizerId with JOIN FETCH [2h]
   - [x] Query optimization + ordering by startDateTime [1h]
+
+#### Minimalny status i odwołanie (M1)
+- [ ] EventStatus = CANCELLED + walidacje [1h]
+- [ ] PUT /api/v1/events/{id}/cancel (odwołanie wydarzenia) [1h]
 
 ### Flutter - Wydarzenia CRUD [15h]
 
@@ -172,15 +176,19 @@
   - [x] Slots, price, level inputs [2h]
   - [x] Form validation + submission [1h]
 
-- [ ] HTTP POST /events integration [2h]
+- [x] HTTP POST /api/v1/events integration [2h]
 
-- [ ] EditEventScreen (reuse CreateEvent logic) [3h]
-  - [ ] Screen setup + pre-fill data [2h]
-  - [ ] Update API integration [1h]
+- [x] EditEventScreen (reuse CreateEvent logic) [3h]
+  - [x] Screen setup + pre-fill data [2h]
+  - [x] Update API integration [1h]
 
-- [ ] Delete event + confirm dialog [2h]
-  - [ ] Confirm dialog UI [1h]
-  - [ ] Delete API call + UI update [1h]
+- [x] Delete event + confirm dialog [2h]
+  - [x] Confirm dialog UI [1h]
+  - [x] Delete API call + UI update [1h]
+
+- [ ] Cancel event + status badge [2h]
+  - [ ] Cancel action w EventDetails [1h]
+  - [ ] Badge „Cancelled” w listach/szczegółach [1h]
 
 **Feature 1 Milestone:** Organizator może dodać, edytować i usunąć swoje wydarzenie ✅
 
@@ -208,25 +216,25 @@
 
 - [ ] Migracja V1_2__Add_event_participant_table.sql [2h]
 
-- [ ] EventParticipantRepository + query methods [2h]
+- [ ] EventParticipantRepository + query methods [1h]
   - [ ] Repository interface [1h]
   - [ ] findByEventIdOrderByPositionAsc [0.5h]
   - [ ] countByEventId [0.5h]
 
-- [ ] POST /events/{eventId}/participants (manual add) [3h]
+- [ ] POST /api/v1/events/{eventId}/participants (manual add) [3h]
   - [ ] Endpoint implementation [2h]
   - [ ] DTO: AddParticipantRequest (userId lub email) [0.5h]
   - [ ] Authorization: tylko organizator [0.5h]
 
-- [ ] DELETE /events/{eventId}/participants/{userId} (remove) [2h]
+- [ ] DELETE /api/v1/events/{eventId}/participants/{userId} (remove) [2h]
   - [ ] Endpoint implementation [1h]
   - [ ] Authorization: tylko organizator [1h]
 
-- [ ] GET /events/{eventId}/participants (lista) [2h]
+- [ ] GET /api/v1/events/{eventId}/participants (lista) [1h]
   - [ ] Endpoint + DTO [1h]
   - [ ] ParticipantDTO (user info, position) [1h]
 
-- [ ] ParticipantService - manual management [3h]
+- [ ] ParticipantService - manual management [2h]
   - [ ] addParticipant (manual by organizer) [1h]
   - [ ] removeParticipant [1h]
   - [ ] Renumber positions [1h]
@@ -244,10 +252,10 @@
   - [ ] ParticipantListItem widget [2h]
   - [ ] Avatar + nickname + position display [1h]
 
-- [ ] Dodaj uczestnika - manual [4h]
+- [ ] Dodaj uczestnika - manual [3h]
   - [ ] Add button [1h]
   - [ ] Search user dialog (po nicku/email) [2h]
-  - [ ] HTTP POST /events/{id}/participants [1h]
+- [ ] HTTP POST /api/v1/events/{id}/participants [1h]
 
 - [ ] Usuń uczestnika [2h]
   - [ ] Remove button + confirm dialog [1h]
@@ -296,11 +304,11 @@
 
 - [ ] SeriesRepository [1h]
 
-- [ ] SeriesController [2h]
-  - [ ] POST /series (create series)
-  - [ ] GET /series?organizerId={id}
+- [ ] SeriesController [1h]
+- [ ] POST /api/v1/series (create series)
+- [ ] GET /api/v1/series?organizerId={id}
 
-- [ ] POST /series/{id}/generate (generowanie wydarzeń) [4h]
+- [ ] POST /api/v1/series/{id}/generate (generowanie wydarzeń) [4h]
   - [ ] Endpoint + validation [1h]
   - [ ] DTO: GenerateEventsRequest (startDate, count) [1h]
   - [ ] Logika generowania [2h]
@@ -308,7 +316,7 @@
     - Utwórz wydarzenia (batch insert)
     - Max 20 wydarzeń na raz
 
-- [ ] SeriesService.generateEvents() [3h]
+- [ ] SeriesService.generateEvents() [2h]
   - [ ] Date calculation logic (weekly/biweekly) [2h]
   - [ ] Batch event creation [1h]
 
@@ -320,7 +328,7 @@
 
 ### Flutter - Event Series BASIC UI [10h]
 
-- [ ] CreateSeriesScreen (basic) [4h]
+- [ ] CreateSeriesScreen (basic) [3h]
   - [ ] Screen structure + form [2h]
   - [ ] Basic fields (name, location) [1h]
   - [ ] Default values (slots, price, level) [1h]
@@ -331,11 +339,11 @@
 
 - [ ] Time picker [1h]
 
-- [ ] Generate events dialog [2h]
+- [ ] Generate events dialog [1h]
   - [ ] Start date picker [1h]
   - [ ] Count input (ile wydarzeń wygenerować) [1h]
 
-- [ ] HTTP POST /series + /series/{id}/generate [1h]
+- [ ] HTTP POST /api/v1/series + /api/v1/series/{id}/generate [1h]
 
 - [ ] SeriesService + SeriesNotifier [2h]
 
@@ -361,7 +369,7 @@
 
 - [ ] MyEventsScreen (organizator widzi swoje wydarzenia) [4h]
   - [ ] Screen structure + ListView [2h]
-  - [ ] GET /events?organizerId=me [1h]
+  - [ ] GET /api/v1/events?organizerId=me [1h]
   - [ ] EventListItem widget [1h]
 
 - [x] Bottom Navigation Bar (Map, My Events, Profile) [3h]
@@ -437,15 +445,15 @@
 ## 🎊 MILESTONE 1 SUCCESS CRITERIA
 
 Do końca 2025 roku muszą działać:
-- [x] Rejestracja/logowanie
-- [x] Mapa z wydarzeniami
-- [ ] **Organizator może dodać wydarzenie**
-- [ ] **Organizator może edytować/usunąć wydarzenie**
-- [ ] **Organizator może RĘCZNIE dodać uczestnika do wydarzenia**
-- [ ] **Organizator może usunąć uczestnika**
-- [ ] **Organizator może stworzyć serię cyklicznych wydarzeń**
-- [x] **Organizator widzi swoje wydarzenia (lista)**
-- [ ] Aplikacja działa na produkcji
+- [x] Rejestracja/logowanie [~0h]
+- [x] Mapa z wydarzeniami [~0h]
+- [ ] **Organizator może dodać wydarzenie** [~0h]
+- [ ] **Organizator może edytować/usunąć wydarzenie** [~0h]
+- [ ] **Organizator może RĘCZNIE dodać uczestnika do wydarzenia** [~0h]
+- [ ] **Organizator może usunąć uczestnika** [~0h]
+- [ ] **Organizator może stworzyć serię cyklicznych wydarzeń** [~0h]
+- [x] **Organizator widzi swoje wydarzenia (lista)** [~0h]
+- [ ] Aplikacja działa na produkcji [~0h]
 
 **Total Milestone 1: ~115h = 7-8 tygodni (15h/tydzień)**
 
@@ -453,30 +461,24 @@ Do końca 2025 roku muszą działać:
 
 # 📋 MILESTONE 2: Self-Service & Advanced 🟡 [Q1 2026]
 
-**Timeline:** Q1 2026 (Styczeń - Marzec)
-**Scope:** Self-service dla uczestników + zaawansowane features dla organizatora
-**Total:** ~200h (~13 tygodni)
-
-## Feature 2: Dołączanie/Opuszczanie Wydarzeń (Self-Service) [45h]
-
 **Scope:** Uczestnicy SAMI mogą dołączać i opuszczać wydarzenia
 
 ### Backend [25h]
-- [ ] POST /events/{id}/join - uczestnik sam dołącza
-- [ ] DELETE /events/{id}/leave - uczestnik sam opuszcza
-- [ ] Enum ParticipantStatus (MAIN_LIST, WAITLIST)
-- [ ] Logika main list vs waitlist
-- [ ] Awans z waitlist po opuszczeniu
-- [ ] Renumbering positions
-- [ ] Custom exceptions
+- [ ] POST /api/v1/events/{id}/join - uczestnik sam dołącza [5h]
+- [ ] DELETE /api/v1/events/{id}/leave - uczestnik sam opuszcza [3h]
+- [ ] Enum ParticipantStatus (MAIN_LIST, WAITLIST) [2h]
+- [ ] Logika main list vs waitlist [7h]
+- [ ] Awans z waitlist po opuszczeniu [4h]
+- [ ] Renumbering positions [2h]
+- [ ] Custom exceptions [2h]
 
 ### Flutter [20h]
-- [ ] Join button w EventDetailsScreen
-- [ ] Leave button
-- [ ] Waitlist badge
-- [ ] Toast notifications
-- [ ] ParticipantsListScreen (public view)
-- [ ] EventParticipantService
+- [ ] Join button w EventDetailsScreen [4h]
+- [ ] Leave button [3h]
+- [ ] Waitlist badge [2h]
+- [ ] Toast notifications [2h]
+- [ ] ParticipantsListScreen (public view) [5h]
+- [ ] EventParticipantService [4h]
 
 **Dlaczego Q1 2026:** W MVP organizator zarządza ręcznie, wystarczy WhatsApp
 
@@ -487,22 +489,22 @@ Do końca 2025 roku muszą działać:
 **Scope:** Zaawansowane zarządzanie dla organizatora
 
 ### Backend [25h]
-- [ ] Pola w EventParticipant: isPaid, isConfirmed, paymentMethod
-- [ ] PUT /events/{eventId}/participants/{userId}/confirm (toggle)
-- [ ] PUT /events/{eventId}/participants/{userId}/payment (toggle)
-- [ ] PUT /events/{eventId}/participants/{userId}/payment-method
-- [ ] PUT /events/{eventId}/participants/{userId}/position (zmiana)
-- [ ] POST /events/{eventId}/participants/{userId}/promote (z waitlist)
-- [ ] POST /events/{eventId}/participants/{userId}/demote (do waitlist)
+- [ ] Pola w EventParticipant: isPaid, isConfirmed, paymentMethod [4h]
+- [ ] PUT /api/v1/events/{eventId}/participants/{userId}/confirm (toggle) [3h]
+- [ ] PUT /api/v1/events/{eventId}/participants/{userId}/payment (toggle) [3h]
+- [ ] PUT /api/v1/events/{eventId}/participants/{userId}/payment-method [2h]
+- [ ] PUT /api/v1/events/{eventId}/participants/{userId}/position (zmiana) [4h]
+- [ ] POST /api/v1/events/{eventId}/participants/{userId}/promote (z waitlist) [4h]
+- [ ] POST /api/v1/events/{eventId}/participants/{userId}/demote (do waitlist) [5h]
 
 ### Flutter [20h]
-- [ ] PaymentsManageScreen
-- [ ] Confirm checkbox toggle
-- [ ] Payment checkbox toggle
-- [ ] Payment method selector (BLIK/CASH/TRANSFER/CARD)
-- [ ] Payment summary (total, paid, unpaid)
-- [ ] Drag & drop reordering (ReorderableListView)
-- [ ] Promote/demote buttons
+- [ ] PaymentsManageScreen [6h]
+- [ ] Confirm checkbox toggle [2h]
+- [ ] Payment checkbox toggle [2h]
+- [ ] Payment method selector (BLIK/CASH/TRANSFER/CARD) [4h]
+- [ ] Payment summary (total, paid, unpaid) [3h]
+- [ ] Drag & drop reordering (ReorderableListView) [2h]
+- [ ] Promote/demote buttons [1h]
 
 ---
 
@@ -511,20 +513,20 @@ Do końca 2025 roku muszą działać:
 **Scope:** Zaawansowane funkcje serii
 
 ### Backend [20h]
-- [ ] MONTHLY frequency
-- [ ] skipHolidays logic (API świąt)
-- [ ] SeriesStatus enum (ACTIVE, PAUSED)
-- [ ] PUT /series/{id}/pause
-- [ ] PUT /series/{id}/resume
-- [ ] PUT /series/{id} (edit series)
-- [ ] DELETE /series/{id}
+- [ ] MONTHLY frequency [5h]
+- [ ] skipHolidays logic (API świąt) [5h]
+- [ ] SeriesStatus enum (ACTIVE, PAUSED) [1h]
+- [ ] PUT /api/v1/series/{id}/pause [2h]
+- [ ] PUT /api/v1/series/{id}/resume [2h]
+- [ ] PUT /api/v1/series/{id} (edit series) [3h]
+- [ ] DELETE /api/v1/series/{id} [2h]
 
 ### Flutter [10h]
-- [ ] SeriesListScreen
-- [ ] SeriesDetailsScreen
-- [ ] Preview list przed generowaniem
-- [ ] Edit series
-- [ ] Pause/Resume toggle
+- [ ] SeriesListScreen [3h]
+- [ ] SeriesDetailsScreen [3h]
+- [ ] Preview list przed generowaniem [2h]
+- [ ] Edit series [1h]
+- [ ] Pause/Resume toggle [1h]
 
 ---
 
@@ -533,20 +535,20 @@ Do końca 2025 roku muszą działać:
 **Scope:** Społeczności/grupy organizujące wydarzenia
 
 ### Backend [30h]
-- [ ] Encja Group (name, description, imageUrl)
-- [ ] Encja UserGroup (membership)
-- [ ] GroupController
-- [ ] GET /groups
-- [ ] POST /groups/{id}/join
-- [ ] DELETE /groups/{id}/leave
-- [ ] Link Event → Group
-- [ ] Filtrowanie wydarzeń po grupie
+- [ ] Encja Group (name, description, imageUrl) [4h]
+- [ ] Encja UserGroup (membership) [3h]
+- [ ] GroupController [3h]
+- [ ] GET /api/v1/groups [3h]
+- [ ] POST /api/v1/groups/{id}/join [3h]
+- [ ] DELETE /api/v1/groups/{id}/leave [3h]
+- [ ] Link Event → Group [5h]
+- [ ] Filtrowanie wydarzeń po grupie [6h]
 
 ### Flutter [30h]
-- [ ] GroupListScreen
-- [ ] GroupDetailsScreen
-- [ ] Join/Leave group
-- [ ] Group selector w EventsListScreen
+- [ ] GroupListScreen [8h]
+- [ ] GroupDetailsScreen [8h]
+- [ ] Join/Leave group [6h]
+- [ ] Group selector w EventsListScreen [8h]
 
 ---
 
@@ -555,34 +557,34 @@ Do końca 2025 roku muszą działać:
 **Scope:** Rozszerzony profil, historia
 
 ### Backend [22h]
-- [ ] GET /users/me
-- [ ] PUT /users/me
-- [ ] GET /users/me/events
-- [ ] GET /users/me/organized
-- [ ] GET /users/me/history
-- [ ] POST /users/{id}/thumb
+- [x] GET /api/v1/users/me [3h]
+- [ ] PUT /api/v1/users/me [4h]
+- [ ] GET /api/v1/users/me/events [4h]
+- [ ] GET /api/v1/users/me/organized [4h]
+- [ ] GET /api/v1/users/me/history [4h]
+- [ ] POST /api/v1/users/{id}/thumb [3h]
 
 ### Flutter [23h]
-- [ ] Enhanced UserProfileScreen
-- [ ] EditProfileScreen
-- [ ] My Events tab
-- [ ] My Organized tab
-- [ ] History tab
+- [ ] Enhanced UserProfileScreen [6h]
+- [ ] EditProfileScreen [6h]
+- [ ] My Events tab [4h]
+- [ ] My Organized tab [3h]
+- [ ] History tab [4h]
 
 ---
 
 ## Feature 7: EventStatus & Cancellation [25h]
 
 ### Backend [15h]
-- [ ] Enum EventStatus (ACTIVE, CANCELLED, COMPLETED)
-- [ ] PUT /events/{id}/cancel
-- [ ] PUT /events/{id}/complete
-- [ ] Powiadomienia o odwołaniu
+- [ ] Enum EventStatus (ACTIVE, CANCELLED, COMPLETED) [2h]
+- [ ] PUT /api/v1/events/{id}/cancel [4h]
+- [ ] PUT /api/v1/events/{id}/complete [3h]
+- [ ] Powiadomienia o odwołaniu [6h]
 
 ### Flutter [10h]
-- [ ] EventStatus badges
-- [ ] Cancel event button
-- [ ] Cancel confirmation
+- [ ] EventStatus badges [3h]
+- [ ] Cancel event button [3h]
+- [ ] Cancel confirmation [4h]
 
 ---
 
@@ -593,32 +595,81 @@ Do końca 2025 roku muszą działać:
 **Total:** ~195h (~13 tygodni)
 
 ## Email Notifications [30h]
-- [ ] Spring Mail + SMTP
-- [ ] Thymeleaf templates
-- [ ] Przypomnienie 24h przed
-- [ ] Awans z waitlist
-- [ ] Event cancelled
+- [ ] Spring Mail + SMTP [6h]
+- [ ] Thymeleaf templates [6h]
+- [ ] Przypomnienie 24h przed [6h]
+- [ ] Awans z waitlist [6h]
+- [ ] Event cancelled [6h]
 
 ## Push Notifications [45h]
-- [ ] Firebase FCM setup
-- [ ] Push: Przypomnienie
-- [ ] Push: Awans z waitlist
-- [ ] Push: Zmiana eventu
-- [ ] Flutter FCM integration
+- [ ] Firebase FCM setup [9h]
+- [ ] Push: Przypomnienie [9h]
+- [ ] Push: Awans z waitlist [9h]
+- [ ] Push: Zmiana eventu [9h]
+- [ ] Flutter FCM integration [9h]
 
 ## Płatności (Stripe) [60h]
-- [ ] Stripe API integration
-- [ ] Payment initiate endpoint
-- [ ] Stripe webhook
-- [ ] Flutter Stripe integration
-- [ ] Payment flow UI
+- [ ] Stripe API integration [12h]
+- [ ] Payment initiate endpoint [12h]
+- [ ] Stripe webhook [12h]
+- [ ] Flutter Stripe integration [12h]
+- [ ] Payment flow UI [12h]
 
 ## Sprint: Testowanie [60h]
-- [ ] Testy jednostkowe
-- [ ] Testy integracyjne
-- [ ] Swagger/OpenAPI
-- [ ] Kolekcja Postman
-- [ ] Coverage 80%+
+- [ ] Testy jednostkowe [15h]
+- [ ] Testy integracyjne [15h]
+- [ ] Swagger/OpenAPI [10h]
+- [ ] Kolekcja Postman [10h]
+- [ ] Coverage 80%+ [10h]
+
+## Security & Privacy Audit [~62h]
+
+> Cel: bezpieczeństwo przed publicznym wydaniem + zgodność RODO oraz gotowość backup/DR.
+
+### SAST/Dependency/Secrets Scanning [8h]
+- [ ] Konfiguracja FindSecBugs/SpotBugs (BE) [2h]
+- [ ] Semgrep rules (Java Spring + Dart) [2h]
+- [ ] Dependency scan (OWASP DC lub Snyk) [2h]
+- [ ] Gitleaks (sekrety) + cleanup historii jeśli potrzeba [2h]
+
+### DAST/API Fuzz + Business Logic [10h]
+- [ ] ZAP baseline + full scan z JWT [3h]
+- [ ] Schemathesis fuzz (jeśli OpenAPI) lub ręczne negatywne [3h]
+- [ ] Testy organizer‑only (IDOR) – add/remove participants, cancel, series generate [4h]
+
+### Auth/JWT/CORS/Rate Limits [8h]
+- [ ] Rotacja refresh + reuse detection [3h]
+- [ ] CORS allow‑list, brak `*` z Credentials [2h]
+- [ ] Rate limits: login, mutujące endpointy, series generate [3h]
+
+### Headers/TLS/Nginx [6h]
+- [ ] Security headers (CSP – na przyszłość web, XFO, XCTO, RP, PP) [3h]
+- [ ] TLS hardening + HSTS, SSL Labs A [3h]
+
+### Logging/Audyt/Monitoring [6h]
+- [ ] Maskowanie PII/JWT w logach [2h]
+- [ ] Audit trail dla create/edit/delete/cancel [2h]
+- [ ] Alerting: 4xx/5xx spikes, auth failures [2h]
+
+### Infra/Secrets Hardening [6h]
+- [ ] ufw/fail2ban, systemd ograniczenia, non‑root service [3h]
+- [ ] Sekrety poza repo, rotacja, inwentaryzacja [3h]
+
+### Backup & Disaster Recovery [10h]
+- [ ] Nightly full + WAL archiving (PITR) [3h]
+- [ ] Retencja/rotacja + offsite, szyfrowanie [3h]
+- [ ] Procedury odtworzenia + test restore (runbook) [4h]
+
+### GDPR/RODO [10h]
+- [ ] Privacy Policy + Terms (akceptacja przy rejestracji) [2h]
+- [ ] Eksport/usunięcie/przenoszalność danych (e‑mail, nick, avatar, lokalizacje, telefon) [3h]
+- [ ] Retencja (logi, backupy) + realizacja w systemie [3h]
+- [ ] DPA z dostawcami (hosting PL, e‑mail) [2h]
+
+### Performance Baseline [4h]
+- [ ] k6: GET /api/v1/events (mapa), /api/v1/events?organizerId=me, POST /api/v1/series/{id}/generate [4h]
+
+**Release Gate:** 0 High/Critical otwartych; raporty SAST/DAST/Deps; test restore OK; polityki RODO gotowe.
 
 ---
 
@@ -626,10 +677,10 @@ Do końca 2025 roku muszą działać:
 
 | Milestone | Scope | Hours | Weeks (15h) | Timeline |
 |-----------|-------|-------|-------------|----------|
-| **M1: Organizer MVP** | Zarządzanie wydarzeniami | 115h | 7-8 tyg. | Do 2025-12-31 |
-| **M2: Self-Service & Advanced** | Dla uczestników | 200h | 13 tyg. | Q1 2026 |
-| **M3: Post-MVP** | Notifications + Payments | 195h | 13 tyg. | Q2 2026 |
-| **TOTAL** | | **510h** | **33 tyg.** | **~8 miesięcy** |
+| **M1: Organizer MVP** | Zarządzanie wydarzeniami | 117h | ~8 tyg. | Do 2025-12-31 |
+| **M2: Self-Service & Advanced** | Dla uczestników | 200h | ~13 tyg. | Q1 2026 |
+| **M3: Post-MVP** | Notifications + Payments + Security/RODO | 257h | ~17 tyg. | Q2 2026 |
+| **TOTAL** | | **574h** | **~38 tyg.** | **~9-10 miesięcy** |
 
 ---
 
@@ -702,10 +753,10 @@ Do końca 2025 roku muszą działać:
 | W3 | 2025-11-27 | Feature 3 - Backend Participants | 15h |
 | W4 | 2025-12-04 | Feature 3 - Flutter UI | 15h |
 | W5 | 2025-12-11 | Feature 4 - Backend Series | 15h |
-| W6 | 2025-12-18 | Feature 4 - Flutter UI | 10h |
+| W6 | 2025-12-18 | Feature 4 - Flutter UI | 12h |
 | W7 | 2025-12-25 | UI Basics | 15h |
 | W8 | 2025-01-01 | Deployment + Testing | 15h |
-| **END** | **2025-12-31** | **🎊 ORGANIZER MVP READY** | **115h** |
+| **END** | **2025-12-20** | **🎊 ORGANIZER MVP READY** | **117h** |
 
 ---
 

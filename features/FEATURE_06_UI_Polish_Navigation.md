@@ -1,9 +1,42 @@
 # Feature 6: UI Polish & Navigation
 
+## Standardized Spec
+
+- Milestone: M1 (MVP subset), reszta Post‑MVP
+- Goal: Spójna nawigacja i podstawowy organizer UI (MyEvents).
+- In Scope (M1): MyEvents (lista organizatora) z `organizerId=me`; bottom‑nav.
+- Out of Scope (M1): skeletony/animacje/zaawansowane stany błędów.
+- Prerequisites: Feature 1, endpoint `GET /api/v1/events?organizerId=me`.
+- Acceptance Criteria: Widok MyEvents działa; nawigacja między Map/MyEvents/Profile.
+- Frontend UX: `EventsListScreen` (organizator), `events_bottom_navigation`.
+- Tests: smoke: wejście → poprawne dane; nawigacja działa.
+
+## Milestone & Scope
+
+- Milestone: M1 (MVP)
+- Scope (M1):
+  - MyEvents (lista wydarzeń organizatora)
+  - Integracja: `GET /api/v1/events?organizerId=me`
+  - Link w bottom‑navigation do MyEvents
+- Out of scope (Post‑MVP):
+  - Skeletony/animacje, micro‑interactions
+  - Zaawansowane stany błędów (poza prostym retry)
+
+## Acceptance Criteria (M1)
+
+- Organizator ma widok „Moje wydarzenia” z własnymi eventami
+- Nawigacja: szybki dostęp z bottom‑nav
+- Lista działa z backendem (`organizerId=me`)
+
+## Test Plan (smoke, M1)
+
+- Wejście na MyEvents pokazuje tylko wydarzenia zalogowanego organizatora
+- Navigacja działa: Map → MyEvents → Profile
+
 ## Overview
 Comprehensive UI improvements including bottom navigation, loading skeletons, error states, animations, search, and offline mode.
 
-**Estimated Time**: 45 hours | **Priority**: HIGH | **Status**: 20% → 100%
+**Priority**: HIGH | **Status**: 20% → 100%
 
 ## Business Value
 - Professional, polished app appearance

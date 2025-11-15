@@ -156,9 +156,37 @@ function generateSchedule(tasks, config) {
       console.log(`Processing task ${taskIndex}/${tasks.length}...`);
     }
 
-    // Skip tasks that are already completed
+    // If task already completed, include it in schedule for accurate stats, but do not consume capacity
     if (task.status === 'completed') {
-      taskIndex++;
+      const taskId = task.task
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-|-$/g, '')
+        .substring(0, 50) + `-${taskIndex}`;
+
+      const keywords = extractKeywords(task.task);
+      const associatedFiles = extractPossibleFiles(task.task, task.subsection);
+
+      schedule.push({
+        id: taskId,
+        taskIndex: taskIndex++,
+        feature: task.feature,
+        subsection: task.subsection,
+        task: task.task,
+        estimate: task.estimate,
+        estimateHours: hours,
+        status: task.status, // completed
+        priority: determinePriority(task.feature),
+        plannedDate: null,
+        plannedWeek: null,
+        actualStartDate: null,
+        actualCompletedDate: null,
+        actualHours: null,
+        matchedCommits: [],
+        keywords,
+        associatedFiles,
+        dependencies: []
+      });
       continue;
     }
 
@@ -319,8 +347,11 @@ function main() {
   const schedule = generateSchedule(tasks, config);
   const stats = calculateStats(schedule);
 
-  // Find last scheduled date
-  const lastDate = schedule[schedule.length - 1].plannedDate;
+  // Find last scheduled date among planned items only
+  const plannedItems = schedule.filter(t => !!t.plannedDate);
+  const lastDate = plannedItems.length > 0
+    ? plannedItems[plannedItems.length - 1].plannedDate
+    : config.schedule.startDate;
   const startDate = new Date(config.schedule.startDate);
   const endDate = new Date(lastDate);
   const weeks = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24 * 7));
