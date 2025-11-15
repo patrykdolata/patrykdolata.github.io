@@ -38,10 +38,10 @@
 ### Definicja sukcesu:
 - [x] Użytkownik może się zarejestrować i zalogować
 - [x] Użytkownik widzi wydarzenia na mapie
-- [ ] **ORGANIZATOR może stworzyć wydarzenie**
-- [ ] **ORGANIZATOR może RĘCZNIE dodać uczestników do wydarzenia**
-- [ ] **ORGANIZATOR może stworzyć serię cyklicznych wydarzeń (co tydzień)**
-- [x] **ORGANIZATOR widzi swoje wydarzenia (kalendarz/lista)**
+- [ ] ORGANIZATOR może stworzyć wydarzenie
+- [ ] ORGANIZATOR może RĘCZNIE dodać uczestników do wydarzenia
+- [ ] ORGANIZATOR może stworzyć serię cyklicznych wydarzeń (co tydzień)
+- [x] ORGANIZATOR widzi swoje wydarzenia (kalendarz/lista)
 - [ ] Aplikacja działa na produkcji
 
 ---
@@ -447,12 +447,12 @@
 Do końca 2025 roku muszą działać:
 - [x] Rejestracja/logowanie [~0h]
 - [x] Mapa z wydarzeniami [~0h]
-- [ ] **Organizator może dodać wydarzenie** [~0h]
-- [ ] **Organizator może edytować/usunąć wydarzenie** [~0h]
-- [ ] **Organizator może RĘCZNIE dodać uczestnika do wydarzenia** [~0h]
-- [ ] **Organizator może usunąć uczestnika** [~0h]
-- [ ] **Organizator może stworzyć serię cyklicznych wydarzeń** [~0h]
-- [x] **Organizator widzi swoje wydarzenia (lista)** [~0h]
+- [ ] Organizator może dodać wydarzenie [~0h]
+- [ ] Organizator może edytować/usunąć wydarzenie [~0h]
+- [ ] Organizator może RĘCZNIE dodać uczestnika do wydarzenia [~0h]
+- [ ] Organizator może usunąć uczestnika [~0h]
+- [ ] Organizator może stworzyć serię cyklicznych wydarzeń [~0h]
+- [x] Organizator widzi swoje wydarzenia (lista) [~0h]
 - [ ] Aplikacja działa na produkcji [~0h]
 
 **Total Milestone 1: ~115h = 7-8 tygodni (15h/tydzień)**
