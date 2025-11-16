@@ -15,8 +15,9 @@
 ## Overview
 Implement group management system allowing users to join Facebook volleyball groups, view group details, filter events by group, and organize events within specific communities.
 
-**Priority**: HIGH PRIORITY
-**Status**: 0% Done → Target 100%
+**Priority**: LOW
+**Milestone**: M2 (Post-MVP)
+**Implementation Status**: See TODO.md for current progress
 
 ## Business Value
 - Connects events to Facebook volleyball communities

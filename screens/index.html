@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Meet App - Makieta Interaktywna</title>
+  <link rel="stylesheet" href="../css/iphone-frame.css">
+  <style>
+    .hero {
+      background: linear-gradient(135deg, var(--primary) 0%, #0066cc 100%);
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+      border-radius: var(--radius);
+      margin-bottom: 32px;
+    }
+    .hero h1 {
+      font-size: 32px;
+      margin: 0 0 8px 0;
+    }
+    .hero p {
+      margin: 0;
+      opacity: 0.9;
+    }
+    .milestone-section {
+      margin-bottom: 32px;
+    }
+    .milestone-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .milestone-m1 {
+      background: #22c55e;
+      color: white;
+    }
+    .milestone-m2 {
+      background: #f59e0b;
+      color: white;
+    }
+    .milestone-concept {
+      background: #6366f1;
+      color: white;
+    }
+    .screen-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+    }
+    .screen-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.2s ease;
+    }
+    .screen-card:hover {
+      box-shadow: var(--shadow);
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .screen-card h3 {
+      margin: 0 0 8px 0;
+      font-size: 18px;
+    }
+    .screen-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .status-badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 8px;
+      font-size: 11px;
+      font-weight: 600;
+      margin-top: 8px;
+    }
+    .status-done { background: #dcfce7; color: #16a34a; }
+    .status-progress { background: #fef3c7; color: #d97706; }
+    .status-pending { background: #f3f4f6; color: #6b7280; }
+  </style>
+</head>
+
+<body>
+  <div class="phone">
+    <div class="app">
+      <div class="status-bar-right"></div>
+
+      <div class="topbar">
+        <div></div>
+        <div class="title">Makieta Meet App</div>
+        <div></div>
+      </div>
+
+      <div class="content">
+        <div class="hero">
+          <h1>🏐 Meet App</h1>
+          <p>Interaktywna makieta aplikacji Flutter</p>
+          <p style="font-size: 12px; margin-top: 8px;">Deadline MVP: 2025-12-31</p>
+          <p style="margin-top: 16px;">
+            <a href="../TODO.html" style="background: rgba(255,255,255,0.2); color: white; padding: 8px 16px; border-radius: 20px; text-decoration: none; font-weight: 600; display: inline-block; backdrop-filter: blur(10px); transition: all 0.2s;">
+              ✅ Harmonogram & TODO
+            </a>
+          </p>
+        </div>
+
+        <!-- M1 MVP Screens -->
+        <div class="milestone-section">
+          <span class="milestone-badge milestone-m1">✅ M1 (MVP) - Do końca 2025</span>
+          <h2>Ekrany MVP (Organizer)</h2>
+
+          <div class="screen-grid">
+            <a href="auth-panel.html" class="screen-card">
+              <h3>🔐 Logowanie</h3>
+              <p>Sprint 0 - Auth & JWT</p>
+              <span class="status-badge status-done">✅ 95% DONE</span>
+            </a>
+
+            <a href="map-home.html" class="screen-card">
+              <h3>🗺️ Mapa wydarzeń</h3>
+              <p>Feature 0 - Google Maps</p>
+              <span class="status-badge status-done">✅ 80% DONE</span>
+            </a>
+
+            <a href="events-list.html" class="screen-card">
+              <h3>📅 Lista wydarzeń</h3>
+              <p>Feature 6 - Basic navigation</p>
+              <span class="status-badge status-progress">⏳ 40% DONE</span>
+            </a>
+
+            <a href="create-event.html" class="screen-card">
+              <h3>➕ Nowe wydarzenie</h3>
+              <p>Feature 1 - Create Event</p>
+              <span class="status-badge status-done">✅ 93% DONE</span>
+            </a>
+
+            <a href="event-edit.html" class="screen-card">
+              <h3>✏️ Edycja wydarzenia</h3>
+              <p>Feature 1 - Edit Event</p>
+              <span class="status-badge status-done">✅ 93% DONE</span>
+            </a>
+
+            <a href="event-details.html" class="screen-card">
+              <h3>📋 Szczegóły wydarzenia</h3>
+              <p>Feature 1 - Event Details</p>
+              <span class="status-badge status-done">✅ DONE</span>
+            </a>
+
+            <a href="event-manage.html" class="screen-card">
+              <h3>👥 Zarządzanie uczestnikami</h3>
+              <p>Feature 3 - Manual add/remove</p>
+              <span class="status-badge status-pending">🔴 0% - 30h</span>
+            </a>
+
+            <a href="series-create.html" class="screen-card">
+              <h3>🔁 Nowa seria</h3>
+              <p>Feature 4 - Event Series</p>
+              <span class="status-badge status-pending">🔴 0% - 25h</span>
+            </a>
+
+            <a href="series-generate.html" class="screen-card">
+              <h3>⚙️ Generuj wydarzenia</h3>
+              <p>Feature 4 - Generate from series</p>
+              <span class="status-badge status-pending">🔴 0%</span>
+            </a>
+
+            <a href="series.html" class="screen-card">
+              <h3>📊 Lista serii</h3>
+              <p>Feature 4 - Series list</p>
+              <span class="status-badge status-pending">🔴 0%</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- M2 Post-MVP Screens -->
+        <div class="milestone-section">
+          <span class="milestone-badge milestone-m2">⚠️ M2 (Post-MVP) - Q1 2026+</span>
+          <h2>Ekrany zaawansowane (poza MVP)</h2>
+
+          <div class="screen-grid">
+            <a href="payments-manage.html" class="screen-card">
+              <h3>💰 Płatności</h3>
+              <p>Feature 3 ADVANCED - Payment tracking</p>
+              <span class="status-badge status-pending">⚠️ M2 - LOW Priority</span>
+            </a>
+
+            <a href="group-info.html" class="screen-card">
+              <h3>👥 Grupy siatkarskie</h3>
+              <p>Feature 3.5 - Volleyball Groups</p>
+              <span class="status-badge status-pending">⚠️ M2 - LOW Priority</span>
+            </a>
+
+            <a href="user-profile.html" class="screen-card">
+              <h3>👤 Profil użytkownika</h3>
+              <p>Feature 5 - Profile & History</p>
+              <span class="status-badge status-pending">⚠️ M2 - LOW Priority</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Concepts -->
+        <div class="milestone-section">
+          <span class="milestone-badge milestone-concept">💡 CONCEPTS - Bez specyfikacji</span>
+          <h2>Koncepty designu</h2>
+
+          <div class="screen-grid">
+            <a href="skill-levels.html" class="screen-card">
+              <h3>⭐ Poziomy umiejętności</h3>
+              <p>System skill level 1-5</p>
+              <span class="status-badge status-pending">💡 No spec in TODO</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Stats -->
+        <div style="background: var(--card); border-radius: var(--radius); padding: 20px; margin-top: 32px;">
+          <h3>📊 Statystyki makiety</h3>
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; text-align: center; margin-top: 16px;">
+            <div>
+              <div style="font-size: 24px; font-weight: 700; color: var(--primary);">18</div>
+              <div style="font-size: 12px; color: var(--muted);">Total screens</div>
+            </div>
+            <div>
+              <div style="font-size: 24px; font-weight: 700; color: #22c55e;">10</div>
+              <div style="font-size: 12px; color: var(--muted);">M1 MVP</div>
+            </div>
+            <div>
+              <div style="font-size: 24px; font-weight: 700; color: #f59e0b;">4</div>
+              <div style="font-size: 12px; color: var(--muted);">M2/Concepts</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 32px; color: var(--muted); font-size: 12px;">
+          <p>Last updated: 2025-11-16</p>
+          <p>Synchronized with: TODO.md, features/*.md</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

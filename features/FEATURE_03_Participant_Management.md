@@ -24,7 +24,8 @@
 Organizer-only tools for managing event participants including position reordering via drag-and-drop, confirmation toggles, payment tracking, manual participant addition/removal, and promotion/demotion between main list and waitlist.
 
 **Priority**: CRITICAL PATH
-**Status**: 0% Done → Target 100%
+**Milestone**: M1 (MVP - Manual only), M2 (Advanced features)
+**Implementation Status**: See TODO.md for current progress
 
 ---
 

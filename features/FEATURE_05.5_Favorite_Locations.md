@@ -13,7 +13,9 @@
 ## Overview
 Finish the favorite locations feature by adding edge cases, error handling, and UI polish.
 
-**Priority**: LOW | **Status**: 90% → 100%
+**Priority**: LOW
+**Milestone**: Pre-M1 (already implemented)
+**Implementation Status**: 90% complete - polish and error handling remaining
 
 ## Current Implementation (90% Done)
 

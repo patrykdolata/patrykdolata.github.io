@@ -15,7 +15,9 @@
 ## Overview
 Implement event status management (ACTIVE, CANCELLED, COMPLETED) with cancellation logic, automatic completion, and participant notifications.
 
-**Priority**: MEDIUM | **Status**: 0% → 100%
+**Priority**: MEDIUM
+**Milestone**: M1 (Minimal cancel), M2 (Full status management)
+**Implementation Status**: See TODO.md for current progress
 
 ## Business Value
 - Clear event lifecycle management
