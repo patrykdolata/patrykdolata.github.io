@@ -1,0 +1,29 @@
+<!-- Bottom Navigation (M1 MVP) -->
+<div class="bottom-nav">
+  <a href="map-home.html" class="bottom-nav-item" id="nav-map">
+    <div class="bottom-nav-icon">🗺️</div>
+    <div>Mapa</div>
+  </a>
+  <a href="events-list.html" class="bottom-nav-item" id="nav-events">
+    <div class="bottom-nav-icon">📅</div>
+    <div>Wydarzenia</div>
+  </a>
+  <a href="user-profile.html" class="bottom-nav-item" id="nav-profile">
+    <div class="bottom-nav-icon">👤</div>
+    <div>Profil</div>
+  </a>
+</div>
+
+<script>
+// Highlight active tab based on current page
+(function() {
+  const currentPage = window.location.pathname.split('/').pop() || 'map-home.html';
+  if (currentPage.includes('map-home')) {
+    document.getElementById('nav-map')?.classList.add('active');
+  } else if (currentPage.includes('events-list') || currentPage.includes('event-') || currentPage.includes('create-event') || currentPage.includes('series')) {
+    document.getElementById('nav-events')?.classList.add('active');
+  } else if (currentPage.includes('user-profile')) {
+    document.getElementById('nav-profile')?.classList.add('active');
+  }
+})();
+</script>
