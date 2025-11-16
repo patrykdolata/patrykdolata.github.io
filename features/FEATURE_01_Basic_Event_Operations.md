@@ -34,38 +34,64 @@
 Complete CRUD operations for events with advanced filtering, search capabilities, sport type categorization, and status management. This feature extends the existing basic event functionality to provide a full-featured event management system.
 
 **Priority**: CRITICAL PATH
-**Status**: 40% Done → Target 100%
+**Milestone**: M1 (MVP)
+**Implementation Status**: See TODO.md for current progress
 
 ---
 
 ## Milestone & Scope
 
-- Milestone: M1 (MVP)
-- Scope (M1):
-  - Full CRUD dla wydarzeń (create/edit/delete)
-  - Minimalny status wydarzenia: CANCELLED (odwołanie bez usuwania)
-  - Prosty badge statusu w UI (Active/Cancelled)
-  - Podstawowe indeksy pod filtry (opcjonalnie)
-- Out of scope (Post‑MVP):
-  - Zaawansowane filtrowanie/sortowanie/wyszukiwanie
-  - Rozbudowane pola widoczności/automatyzacje (waitlist/notifications)
+### ✅ M1 (MVP) - MOSTLY COMPLETE
+**Goal:** Organizator może tworzyć, edytować i usuwać wydarzenia
 
-## API/DB (M1)
+**M1 Scope - DONE:**
+- ✅ POST /events - create single event
+- ✅ GET /events - list all events
+- ✅ GET /events?organizerId=me - filter my events
+- ✅ GET /events/{id} - event details
+- ✅ PUT /events/{id} - update event
+- ✅ DELETE /events/{id} - delete event
+- ✅ CreateEventScreen + validation
+- ✅ EditEventScreen + pre-fill data
+- ✅ Delete confirmation dialog
 
-- DB: pole `status` (ACTIVE/CANCELLED) w `EventEntity`
-- Endpointy:
-  - POST/GET/PUT/DELETE `/events`
-  - PATCH `/events/{id}/cancel` – zmiana statusu na CANCELLED
+**M1 Scope - OPTIONAL (not critical):**
+- EventStatus enum with CANCELLED (currently events use DELETE instead)
+- PUT /events/{id}/cancel - cancel without delete
+- Badge "Cancelled" in UI
 
-## Acceptance Criteria (M1)
+**EventEntity M1 fields:**
+- title, message, startDateTime, duration, slots, price, level, location
 
-- Organizator może: dodać, edytować, usunąć, odwołać wydarzenie
-- Odwołane wydarzenie ma badge “Cancelled” i nie jest edytowalne (poza przywróceniem statusu – poza M1)
-- Lista wydarzeń poprawnie pokazuje statusy
+### 🔴 Post-MVP (M2+) - OUT OF SCOPE M1
+This spec describes the **full vision** with advanced features. These are **NOT** in M1:
 
-## Test Plan (smoke, M1)
+**Advanced Features (Post-MVP):**
+- ❌ SportType enum (12 sport types: VOLLEYBALL, FOOTBALL, etc.)
+- ❌ Advanced filters: sportType, minLevel, maxLevel, search query, availableOnly
+- ❌ Visibility days setting
+- ❌ Auto-promote from waitlist toggle
+- ❌ Send notifications toggle
+- ❌ Group linking (see FEATURE_03.5 M2)
+- ❌ EventStatus: COMPLETED, DRAFT (see FEATURE_07 M2)
+- ❌ Full cancellation with notifications (FEATURE_07 M2)
+- ❌ Scheduled auto-completion jobs
 
-- FE: create → cancel → delete flow przechodzi bez błędów
+**Note:** The detailed implementation sections below describe the **full Post-MVP vision**. For M1, only basic CRUD was implemented.
+
+## M1 Acceptance Criteria ✅
+
+- [x] Organizator może dodać wydarzenie
+- [x] Organizator może edytować wydarzenie
+- [x] Organizator może usunąć wydarzenie
+- [x] Lista wydarzeń pokazuje wydarzenia organizatora (organizerId filter)
+- [x] Walidacja podstawowa działa (daty, sloty, wymagane pola)
+
+## M1 Test Plan ✅
+
+- [x] FE: create → edit → delete flow działa
+- [x] Backend: POST/GET/PUT/DELETE endpointy działają
+- [x] Walidacja wymaganych pól
 - BE: PATCH `/events/{id}/cancel` zwraca 200, status zmienia się na CANCELLED
 
 

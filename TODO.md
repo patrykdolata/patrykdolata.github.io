@@ -13,19 +13,19 @@
 - **Current Phase:** MILESTONE 1 - Organizer MVP
 - **Target:** 2025-12-31 (7-8 tygodni)
 - **Weekly hours:** 15h
- - **Overall progress:** 31%
- - **Last updated:** 2025-11-15
+- **Overall progress:** 38%
+- **Last updated:** 2025-11-16
 
 ### ✅ What's Working:
 - Sprint 0: Auth & JWT (95% done)
 - Feature 0: Mapa z markerami (80% done)
 - Feature 5.5: Ulubione lokalizacje (90% done)
-- Feature 1: Basic Events API (79% done)
+- **Feature 1: Basic Events CRUD (93% done)** ✅ CREATE/EDIT/DELETE works!
 
-### 🔴 Current Focus:
-- Feature 1: Dokończenie Events CRUD (8h)
-- Feature 3: Zarządzanie uczestnikami RĘCZNIE (30h)
+### 🔴 Current Focus (Next 2 weeks):
+- Feature 3: Zarządzanie uczestnikami RĘCZNIE (30h) 👈 START HERE
 - Feature 4: Cykliczne wydarzenia (25h)
+- Feature 6: Bottom navigation (15h)
 
 ---
 
@@ -38,7 +38,7 @@
 ### Definicja sukcesu:
 - [x] Użytkownik może się zarejestrować i zalogować
 - [x] Użytkownik widzi wydarzenia na mapie
-- [ ] ORGANIZATOR może stworzyć wydarzenie
+- [x] ORGANIZATOR może stworzyć wydarzenie (CreateEventScreen ✅)
 - [ ] ORGANIZATOR może RĘCZNIE dodać uczestników do wydarzenia
 - [ ] ORGANIZATOR może stworzyć serię cyklicznych wydarzeń (co tydzień)
 - [x] ORGANIZATOR widzi swoje wydarzenia (kalendarz/lista)
@@ -120,11 +120,12 @@
 
 ---
 
-## Feature 1: Podstawowe operacje na Wydarzeniach 🔴 [79% DONE → 8h pozostałe]
+## Feature 1: Podstawowe operacje na Wydarzeniach ✅ [93% DONE → 2h opcjonalne]
 
 **Priorytet:** CRITICAL - organizator musi móc tworzyć wydarzenia
 **Deadline:** Tydzień 1-2 (do 2025-11-27)
-**Scope:** Pełny CRUD na wydarzeniach
+**Scope M1:** Basic CRUD (POST/GET/PUT/DELETE) + minimal cancel
+**Out of Scope M1:** SportType enum, zaawansowane filtry (minLevel, sportType, search) - to Post-MVP
 
 ### Backend - Wydarzenia CRUD [15h]
 
@@ -158,9 +159,12 @@
   - [x] Filter by organizerId with JOIN FETCH [2h]
   - [x] Query optimization + ordering by startDateTime [1h]
 
-#### Minimalny status i odwołanie (M1)
-- [ ] EventStatus = CANCELLED + walidacje [1h]
-- [ ] PUT /api/v1/events/{id}/cancel (odwołanie wydarzenia) [1h]
+#### Minimalny status i odwołanie (M1) - OPCJONALNE
+**Uwaga:** Pełna funkcjonalność cancel to M2 (FEATURE_07), w M1 wystarczy DELETE
+- [ ] EventStatus enum z CANCELLED (bez COMPLETED, DRAFT) [1h]
+- [ ] PUT /api/v1/events/{id}/cancel - tylko zmiana statusu [1h]
+- [ ] Badge "Cancelled" w UI [1h]
+**Total:** 3h (opcjonalne dla M1)
 
 ### Flutter - Wydarzenia CRUD [15h]
 
@@ -186,11 +190,14 @@
   - [x] Confirm dialog UI [1h]
   - [x] Delete API call + UI update [1h]
 
-- [ ] Cancel event + status badge [2h]
-  - [ ] Cancel action w EventDetails [1h]
-  - [ ] Badge „Cancelled” w listach/szczegółach [1h]
+**Feature 1 Milestone M1:** Organizator może dodać, edytować i usunąć swoje wydarzenie ✅
 
-**Feature 1 Milestone:** Organizator może dodać, edytować i usunąć swoje wydarzenie ✅
+**Out of Scope M1** (Post-MVP w FEATURE_01.md):
+- SportType enum (12 typów sportów)
+- Zaawansowane filtry (sportType, minLevel, maxLevel, search, availableOnly)
+- Group linking (to FEATURE_03.5)
+- Visibility days, auto-promote toggles
+- Cancel with notifications (pełna wersja to FEATURE_07)
 
 ---
 
@@ -445,15 +452,15 @@
 ## 🎊 MILESTONE 1 SUCCESS CRITERIA
 
 Do końca 2025 roku muszą działać:
-- [x] Rejestracja/logowanie [~0h]
-- [x] Mapa z wydarzeniami [~0h]
-- [ ] Organizator może dodać wydarzenie [~0h]
-- [ ] Organizator może edytować/usunąć wydarzenie [~0h]
-- [ ] Organizator może RĘCZNIE dodać uczestnika do wydarzenia [~0h]
-- [ ] Organizator może usunąć uczestnika [~0h]
-- [ ] Organizator może stworzyć serię cyklicznych wydarzeń [~0h]
-- [x] Organizator widzi swoje wydarzenia (lista) [~0h]
-- [ ] Aplikacja działa na produkcji [~0h]
+- [x] Rejestracja/logowanie
+- [x] Mapa z wydarzeniami
+- [x] Organizator może dodać wydarzenie (CreateEventScreen ✅)
+- [x] Organizator może edytować/usunąć wydarzenie (EditEventScreen ✅)
+- [ ] Organizator może RĘCZNIE dodać uczestnika do wydarzenia
+- [ ] Organizator może usunąć uczestnika
+- [ ] Organizator może stworzyć serię cyklicznych wydarzeń
+- [x] Organizator widzi swoje wydarzenia (lista)
+- [ ] Aplikacja działa na produkcji
 
 **Total Milestone 1: ~115h = 7-8 tygodni (15h/tydzień)**
 

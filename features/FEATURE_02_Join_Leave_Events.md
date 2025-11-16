@@ -24,8 +24,9 @@
 ## Overview
 Implement participant management system allowing users to join and leave events. This feature includes main list and waitlist logic with automatic promotion when slots become available.
 
-**Priority**: CRITICAL PATH
-**Status**: 0% Done → Target 100%
+**Priority**: MEDIUM
+**Milestone**: M2 (Post-MVP)
+**Implementation Status**: See TODO.md for current progress
 
 > Milestone: M2+ (Post‑MVP)
 

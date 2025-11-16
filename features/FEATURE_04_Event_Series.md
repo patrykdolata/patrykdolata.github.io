@@ -22,7 +22,9 @@
 ## Overview
 Create recurring event templates with automatic event generation based on schedules (weekly, biweekly, monthly), holiday skipping, and series management.
 
-**Priority**: MEDIUM | **Status**: 0% → 100%
+**Priority**: CRITICAL PATH
+**Milestone**: M1 (MVP)
+**Implementation Status**: See TODO.md for current progress
 
 ---
 

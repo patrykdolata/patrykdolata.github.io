@@ -15,7 +15,9 @@
 ## Overview
 Extended user profile with event history, rating system, profile editing, and event participation tracking.
 
-**Priority**: MEDIUM | **Status**: 30% → 100%
+**Priority**: LOW
+**Milestone**: M2 (Post-MVP)
+**Implementation Status**: See TODO.md for current progress
 
 ## Business Value
 - Users can track their event history

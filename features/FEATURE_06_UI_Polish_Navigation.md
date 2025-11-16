@@ -36,7 +36,9 @@
 ## Overview
 Comprehensive UI improvements including bottom navigation, loading skeletons, error states, animations, search, and offline mode.
 
-**Priority**: HIGH | **Status**: 20% → 100%
+**Priority**: MEDIUM
+**Milestone**: M1 (Basic navigation), M2 (Polish & animations)
+**Implementation Status**: See TODO.md for current progress
 
 ## Business Value
 - Professional, polished app appearance
