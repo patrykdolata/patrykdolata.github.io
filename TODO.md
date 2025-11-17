@@ -211,7 +211,7 @@
 
 ### Backend - Manual Participant Management [15h]
 
-- [ ] Encja EventParticipant (uproszczona) [3h]
+- [x] Encja EventParticipant (uproszczona) [3h]
   - [ ] Podstawowa struktura encji [2h]
     - event (ManyToOne → EventEntity)
     - user (ManyToOne → UserEntity)
@@ -221,56 +221,56 @@
   - [ ] Relacje + indeksy [1h]
   - **BEZ:** status (MAIN_LIST/WAITLIST), isPaid, isConfirmed, paymentMethod
 
-- [ ] Migracja V1_2__Add_event_participant_table.sql [2h]
+- [x] Migracja V1_2__Add_event_participant_table.sql [2h]
 
-- [ ] EventParticipantRepository + query methods [1h]
+- [x] EventParticipantRepository + query methods [1h]
   - [ ] Repository interface [1h]
   - [ ] findByEventIdOrderByPositionAsc [0.5h]
   - [ ] countByEventId [0.5h]
 
-- [ ] POST /api/v1/events/{eventId}/participants (manual add) [3h]
+- [x] POST /api/v1/events/{eventId}/participants (manual add) [3h]
   - [ ] Endpoint implementation [2h]
   - [ ] DTO: AddParticipantRequest (userId lub email) [0.5h]
   - [ ] Authorization: tylko organizator [0.5h]
 
-- [ ] DELETE /api/v1/events/{eventId}/participants/{userId} (remove) [2h]
+- [x] DELETE /api/v1/events/{eventId}/participants/{userId} (remove) [2h]
   - [ ] Endpoint implementation [1h]
   - [ ] Authorization: tylko organizator [1h]
 
-- [ ] GET /api/v1/events/{eventId}/participants (lista) [1h]
+- [x] GET /api/v1/events/{eventId}/participants (lista) [1h]
   - [ ] Endpoint + DTO [1h]
   - [ ] ParticipantDTO (user info, position) [1h]
 
-- [ ] ParticipantService - manual management [2h]
+- [x] ParticipantService - manual management [2h]
   - [ ] addParticipant (manual by organizer) [1h]
   - [ ] removeParticipant [1h]
   - [ ] Renumber positions [1h]
 
-- [ ] Sprawdzanie uprawnień: tylko organizator wydarzenia [1h]
+- [x] Sprawdzanie uprawnień: tylko organizator wydarzenia [1h]
 
 ### Flutter - Manual Participant Management UI [15h]
 
-- [ ] ParticipantsManageScreen (dla organizatora) [4h]
+- [x] ParticipantsManageScreen (dla organizatora) [4h]
   - [ ] Screen structure + lista uczestników [2h]
   - [ ] Navigation z EventDetails [1h]
   - [ ] Warunek: tylko dla organizatora [1h]
 
-- [ ] Lista uczestników - prosta [3h]
+- [x] Lista uczestników - prosta [3h]
   - [ ] ParticipantListItem widget [2h]
   - [ ] Avatar + nickname + position display [1h]
 
-- [ ] Dodaj uczestnika - manual [3h]
+- [x] Dodaj uczestnika - manual [3h]
   - [ ] Add button [1h]
   - [ ] Search user dialog (po nicku/email) [2h]
-- [ ] HTTP POST /api/v1/events/{id}/participants [1h]
+- [x] HTTP POST /api/v1/events/{id}/participants [1h]
 
-- [ ] Usuń uczestnika [2h]
+- [x] Usuń uczestnika [2h]
   - [ ] Remove button + confirm dialog [1h]
   - [ ] HTTP DELETE [1h]
 
-- [ ] Update UI po dodaniu/usunięciu [1h]
+- [x] Update UI po dodaniu/usunięciu [1h]
 
-- [ ] ParticipantManagementService + Notifier [2h]
+- [x] ParticipantManagementService + Notifier [2h]
   - [ ] Service structure [1h]
   - [ ] State management [1h]
 
