@@ -247,15 +247,15 @@ rozważ Riverpod/BLoC
 |---------------|--------------|--------------|------------------|
 | 🔴 Krytyczne  | 3 (3✅)      | 3 (2✅ 1✓)   | 100% naprawione  |
 | 🟠 Wysokie    | 7 (5✅ 2🟠)  | 3 (2✅ 1🟠)  | 70% naprawione   |
-| 🟡 Średnie    | 10 (3✅)     | 5 (3✅ 2🟡)  | 40% naprawione   |
+| 🟡 Średnie    | 10 (5✅)     | 5 (3✅ 2🟡)  | 53% naprawione   |
 | 🟢 Niskie     | 9            | 4            | 0% naprawione    |
 | ⚪ Kosmetyczne | 3            | 3            | 0% naprawione    |
 | RAZEM         | 32           | 18           | 50 problemów     |
 
 Łącznie znalezionych problemów: 50
-Naprawione: 18 (36%)
+Naprawione: 20 (40%)
 Zaakceptowane: 1 (#4 - dev credentials OK)
-Do naprawy: 31 (62%)
+Do naprawy: 29 (58%)
 
 Ostatnia aktualizacja metryk: 2025-11-18
 
@@ -281,7 +281,7 @@ Sprint 2-3 (Wysokie) - Status: 7/7 ukończone ✅
 12. ✅ Fix REST convention (BE) - UKOŃCZONE (2025-11-18)
 13. ✅ Dodaj testy dla serwisów (FE) - UKOŃCZONE (2025-11-18)
 
-Q1 2026 (Średnie + reszta) - Status: 6/15 ukończone
+Q1 2026 (Średnie + reszta) - Status: 8/15 ukończone
 
 12. ✅ Duplikacja SnackBar (FE) - UKOŃCZONE (2025-11-17)
 13. ✅ Duplikacja autoryzacji (FE) - UKOŃCZONE (2025-11-17)
@@ -289,14 +289,16 @@ Q1 2026 (Średnie + reszta) - Status: 6/15 ukończone
 15. ✅ Duplikacja kodu update w EventService (BE) - UKOŃCZONE (2025-11-18)
 19. ✅ Problem N+1 w EventService (BE) - UKOŃCZONE (2025-11-18)
 20. ✅ Nieefektywne zapytanie w PostService (BE) - UKOŃCZONE (2025-11-18)
-16-18, 21-50. Systematyczna refaktoryzacja według listy - DO ZROBIENIA
+21. ✅ Brak rate limiting (BE) - UKOŃCZONE (2025-11-18)
+22. ✅ Permisywna konfiguracja CORS (BE) - UKOŃCZONE (2025-11-18)
+16-18, 26-50. Systematyczna refaktoryzacja według listy - DO ZROBIENIA
 
 ---
 📈 PROGRESS TRACKING
 
-Ukończone (18/50): #1, #2, #3, #5, #6, #7, #8, #9, #10, #11, #13, #14, #15, #19, #20, #23, #24, #25
+Ukończone (20/50): #1, #2, #3, #5, #6, #7, #8, #9, #10, #11, #13, #14, #15, #19, #20, #21, #22, #23, #24, #25
 Zaakceptowane (1/50): #4 (dev credentials OK)
 W trakcie (0/50): -
-Pozostałe (31/50): #12, #16-18, #21-22, #26-50
+Pozostałe (29/50): #12, #16-18, #26-50
 
-Następny priorytet: #21 (rate limiting), #22 (CORS), problemy ŚREDNIE (#16-18, #21-27)
+Następny priorytet: problemy ŚREDNIE (#16-18, #26-27), problemy NISKIE (#28-38)
