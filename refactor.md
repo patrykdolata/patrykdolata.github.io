@@ -19,28 +19,20 @@ Naprawione problemy (FEATURE_03 Participant Management):
 - ✅ #23 - Utworzono reużywalne helpery CustomSnackBar (ŚREDNIE)
 - ✅ #24 - Utworzono EventAuthMixin dla logiki autoryzacji (ŚREDNIE)
 - ✅ #25 - Utworzono LoginRequiredDialog (ŚREDNIE)
+- ✅ #12 - Zrefaktoryzowano duże pliki widgetów (WYSOKIE)
+  - details.dart: 304→225 linii (-26%)
+  - create_event_screen.dart: 487→387 linii (-21%)
+  - participant_manage_screen.dart: 420→381 linii (-9%)
+  - events_list_screen.dart: 335→329 linii (-2%)
+  - google_map.dart: 323→261 linii (-19%)
+  - Utworzono ViewModels i helpery
 
 Status testów:
 - Backend: 141/141 testów ✅
-- Frontend: 93+ testów Flutter ✅ (+6 nowych testów dla serwisów)
+- Frontend: 104/104 testów Flutter ✅ (+6 nowych testów dla serwisów)
 
 Notatki:
 - #4 (hardcoded credentials w dev_settings_screen.dart) pozostaje - dozwolone dla dev tools
-
----
-🟠 WYSOKIE (Naprawa w obecnym sprincie)
-
-Frontend
-
-12. Zbyt duże pliki widgetów (>200 linii)
-
-- create_event_screen.dart - 487 linii
-- participant_manage_screen.dart - 420 linii
-- events_list_screen.dart - 332 linie
-- google_map.dart - 330 linii
-- details.dart - 304 linie
-
-Rozdziel na mniejsze komponenty
 
 ---
 🟡 ŚREDNIE (Refaktoryzacja w następnych 2
@@ -106,21 +98,10 @@ permisywne
 
 Frontend
 
-26. Niespójne zarządzanie błędami
+27. Problemy z zarządzaniem stanem w pozostałych widgetach
 
-- create_event_screen.dart - dobre (try-catch z
-feedback)
-- google_map.dart:111-114 - catch i ignorowanie
-błędów
-- Standaryzuj pattern obsługi błędów
-
-27. Problemy z zarządzaniem stanem
-
-Plik: details.dart
-- Wiele bool flag: _isCurrentUserCreator,
-_isCheckingCreator, _isDeleting, _hasCheckedCreator
-- Ręczne zarządzanie listami _mainList, _waitlist
-- Rozważ ViewModel pattern lub BLoC
+- Rozważ rozszerzenie ViewModel pattern na inne
+ekrany
 
 ---
 🟢 NISKIE (Dług techniczny, następny kwartał)
@@ -246,16 +227,16 @@ rozważ Riverpod/BLoC
 | Kategoria     | Backend      | Frontend     | Status           |
 |---------------|--------------|--------------|------------------|
 | 🔴 Krytyczne  | 3 (3✅)      | 3 (2✅ 1✓)   | 100% naprawione  |
-| 🟠 Wysokie    | 7 (5✅ 2🟠)  | 3 (2✅ 1🟠)  | 70% naprawione   |
-| 🟡 Średnie    | 10 (5✅)     | 5 (4✅ 1🟡)  | 60% naprawione   |
+| 🟠 Wysokie    | 7 (5✅ 2🟠)  | 3 (3✅)      | 80% naprawione   |
+| 🟡 Średnie    | 10 (5✅)     | 5 (5✅)      | 67% naprawione   |
 | 🟢 Niskie     | 9            | 4            | 0% naprawione    |
 | ⚪ Kosmetyczne | 3            | 3            | 0% naprawione    |
 | RAZEM         | 32           | 18           | 50 problemów     |
 
 Łącznie znalezionych problemów: 50
-Naprawione: 21 (42%)
+Naprawione: 23 (46%)
 Zaakceptowane: 1 (#4 - dev credentials OK)
-Do naprawy: 28 (56%)
+Do naprawy: 26 (52%)
 
 Ostatnia aktualizacja metryk: 2025-11-18
 
@@ -270,36 +251,37 @@ Sprint 1 (Krytyczne) - Status: 5/5 ukończone ✅
 4. ✅ Dodaj i18n do wszystkich tekstów (FE) - UKOŃCZONE (2025-11-17)
 5. ✅ Zamień hardcoded colors na theme (FE) - UKOŃCZONE (2025-11-17)
 
-Sprint 2-3 (Wysokie) - Status: 7/7 ukończone ✅
+Sprint 2-3 (Wysokie) - Status: 8/8 ukończone ✅
 
 6. ✅ Dodaj @Transactional (BE) - UKOŃCZONE (2025-11-17)
 7. ✅ Fix entity mappings (BE) - UKOŃCZONE (2025-11-18)
 8. ✅ Zamień System.out na logger (BE) - UKOŃCZONE (2025-11-17)
 9. ✅ Użyj custom exceptions (BE) - UKOŃCZONE (2025-11-18)
-10. Rozdziel duże widgety (FE) - 🟠 DO ZROBIENIA (niski priorytet)
+10. ✅ Fix REST convention (BE) - UKOŃCZONE (2025-11-18)
 11. ✅ Usuń print statements (FE) - UKOŃCZONE (2025-11-17)
-12. ✅ Fix REST convention (BE) - UKOŃCZONE (2025-11-18)
-13. ✅ Dodaj testy dla serwisów (FE) - UKOŃCZONE (2025-11-18)
+12. ✅ Dodaj testy dla serwisów (FE) - UKOŃCZONE (2025-11-18)
+13. ✅ Rozdziel duże widgety (FE) - UKOŃCZONE (2025-11-18)
 
-Q1 2026 (Średnie + reszta) - Status: 9/15 ukończone
+Q1 2026 (Średnie + reszta) - Status: 10/15 ukończone
 
-12. ✅ Duplikacja SnackBar (FE) - UKOŃCZONE (2025-11-17)
-13. ✅ Duplikacja autoryzacji (FE) - UKOŃCZONE (2025-11-17)
-14. ✅ Duplikacja dialogów (FE) - UKOŃCZONE (2025-11-17)
-15. ✅ Duplikacja kodu update w EventService (BE) - UKOŃCZONE (2025-11-18)
+14. ✅ Duplikacja SnackBar (FE) - UKOŃCZONE (2025-11-17)
+15. ✅ Duplikacja autoryzacji (FE) - UKOŃCZONE (2025-11-17)
+16. ✅ Duplikacja dialogów (FE) - UKOŃCZONE (2025-11-17)
+17. ✅ Duplikacja kodu update w EventService (BE) - UKOŃCZONE (2025-11-18)
 19. ✅ Problem N+1 w EventService (BE) - UKOŃCZONE (2025-11-18)
 20. ✅ Nieefektywne zapytanie w PostService (BE) - UKOŃCZONE (2025-11-18)
 21. ✅ Brak rate limiting (BE) - UKOŃCZONE (2025-11-18)
 22. ✅ Permisywna konfiguracja CORS (BE) - UKOŃCZONE (2025-11-18)
 26. ✅ Niespójna obsługa błędów (FE) - UKOŃCZONE (2025-11-18)
-16-18, 27-50. Systematyczna refaktoryzacja według listy - DO ZROBIENIA
+27. ✅ Problemy z zarządzaniem stanem (FE) - UKOŃCZONE (2025-11-18)
+16-18, 28-50. Systematyczna refaktoryzacja według listy - DO ZROBIENIA
 
 ---
 📈 PROGRESS TRACKING
 
-Ukończone (21/50): #1, #2, #3, #5, #6, #7, #8, #9, #10, #11, #13, #14, #15, #19, #20, #21, #22, #23, #24, #25, #26
+Ukończone (23/50): #1, #2, #3, #5, #6, #7, #8, #9, #10, #11, #12, #13, #14, #15, #19, #20, #21, #22, #23, #24, #25, #26, #27
 Zaakceptowane (1/50): #4 (dev credentials OK)
 W trakcie (0/50): -
-Pozostałe (28/50): #12, #16-18, #27-50
+Pozostałe (26/50): #16-18, #28-50
 
-Następny priorytet: problemy ŚREDNIE (#16-18, #27), problemy NISKIE (#28-38)
+Następny priorytet: problemy ŚREDNIE (#16-18), problemy NISKIE (#28-38)
