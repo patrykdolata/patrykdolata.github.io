@@ -27,6 +27,24 @@ Naprawione problemy (FEATURE_03 Participant Management):
   - google_map.dart: 323→261 linii (-19%)
   - Utworzono ViewModels i helpery
 
+Dodatkowe naprawy (ogólne):
+- ✅ #20 - Nieefektywne zapytanie w PostService (Backend)
+  - Zastąpiono JPQL z LIMIT metodą pochodną: PostRepository.findTopByOrderByDateDesc()
+  - PostService.getLastPost() używa nowej metody repozytorium
+  - PostController.getLastPost() unika podwójnego wywołania serwisu (zwraca Optional.orElse(null))
+- ✅ #21 - Rate limiting (Backend)
+  - Istniejący RateLimitInterceptor został podpięty przez WebMvcConfigurer (WebMvcConfig)
+  - Zakres: /api/v1/auth/** (authenticate, register, refresh-token)
+- ✅ #30 - Hardcoded URL w AuthenticationService (Backend)
+  - facebookProfileUri wyniesione do konfiguracji: application.facebook.profile-uri (z fallbackiem ENV)
+  - Wstrzyknięte przez @Value i użyte w builderze UserEntity
+- ✅ #32 - Nieoptymalne wywołanie serwisu (Backend)
+  - PostController: pojedyncze wywołanie PostService.getLastPost()
+- ✅ #35 - Hardcoded rozmiary czcionek (Frontend)
+  - dev_settings_screen.dart: nagłówki i ostrzeżenie korzystają z Theme.of(context).textTheme
+- 🟡 #36 - Głębokie ścieżki importów (Frontend)
+  - Podmieniono import w dio_http_client.dart na package:app/config/config.dart (kolejne importy do ujednolicenia w osobnym PR)
+
 Status testów:
 - Backend: 141/141 testów ✅
 - Frontend: 104/104 testów Flutter ✅ (+6 nowych testów dla serwisów)
@@ -239,42 +257,6 @@ Zaakceptowane: 1 (#4 - dev credentials OK)
 Do naprawy: 26 (52%)
 
 Ostatnia aktualizacja metryk: 2025-11-18
-
----
-🎯 REKOMENDOWANY PLAN DZIAŁANIA
-
-Sprint 1 (Krytyczne) - Status: 5/5 ukończone ✅
-
-1. ✅ Usuń credentials z repozytorium (BE + FE) - UKOŃCZONE (2025-11-18)
-2. ✅ Dodaj walidację RegisterRequest (BE) - UKOŃCZONE (2025-11-18)
-3. ✅ Fix authorization bypass (BE) - UKOŃCZONE (2025-11-17)
-4. ✅ Dodaj i18n do wszystkich tekstów (FE) - UKOŃCZONE (2025-11-17)
-5. ✅ Zamień hardcoded colors na theme (FE) - UKOŃCZONE (2025-11-17)
-
-Sprint 2-3 (Wysokie) - Status: 8/8 ukończone ✅
-
-6. ✅ Dodaj @Transactional (BE) - UKOŃCZONE (2025-11-17)
-7. ✅ Fix entity mappings (BE) - UKOŃCZONE (2025-11-18)
-8. ✅ Zamień System.out na logger (BE) - UKOŃCZONE (2025-11-17)
-9. ✅ Użyj custom exceptions (BE) - UKOŃCZONE (2025-11-18)
-10. ✅ Fix REST convention (BE) - UKOŃCZONE (2025-11-18)
-11. ✅ Usuń print statements (FE) - UKOŃCZONE (2025-11-17)
-12. ✅ Dodaj testy dla serwisów (FE) - UKOŃCZONE (2025-11-18)
-13. ✅ Rozdziel duże widgety (FE) - UKOŃCZONE (2025-11-18)
-
-Q1 2026 (Średnie + reszta) - Status: 10/15 ukończone
-
-14. ✅ Duplikacja SnackBar (FE) - UKOŃCZONE (2025-11-17)
-15. ✅ Duplikacja autoryzacji (FE) - UKOŃCZONE (2025-11-17)
-16. ✅ Duplikacja dialogów (FE) - UKOŃCZONE (2025-11-17)
-17. ✅ Duplikacja kodu update w EventService (BE) - UKOŃCZONE (2025-11-18)
-19. ✅ Problem N+1 w EventService (BE) - UKOŃCZONE (2025-11-18)
-20. ✅ Nieefektywne zapytanie w PostService (BE) - UKOŃCZONE (2025-11-18)
-21. ✅ Brak rate limiting (BE) - UKOŃCZONE (2025-11-18)
-22. ✅ Permisywna konfiguracja CORS (BE) - UKOŃCZONE (2025-11-18)
-26. ✅ Niespójna obsługa błędów (FE) - UKOŃCZONE (2025-11-18)
-27. ✅ Problemy z zarządzaniem stanem (FE) - UKOŃCZONE (2025-11-18)
-16-18, 28-50. Systematyczna refaktoryzacja według listy - DO ZROBIENIA
 
 ---
 📈 PROGRESS TRACKING
