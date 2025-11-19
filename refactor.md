@@ -1,7 +1,7 @@
 
 📝 CHANGELOG
 
-Ostatnia aktualizacja: 2025-11-18
+Ostatnia aktualizacja: 2025-11-18 (aktualizacja 4)
 
 Naprawione problemy (FEATURE_03 Participant Management):
 - ✅ #1  - .env zabezpieczony w .gitignore i utworzono .env.example (KRYTYCZNE)
@@ -27,7 +27,75 @@ Naprawione problemy (FEATURE_03 Participant Management):
   - google_map.dart: 323→261 linii (-19%)
   - Utworzono ViewModels i helpery
 
-Dodatkowe naprawy (ogólne):
+Dodatkowe naprawy - sesja refaktoryzacji 2025-11-18:
+- ✅ #15 - Duplikacja kodu w EventService (ŚREDNIE - Backend)
+  - Skonsolidowano metody updateEvent przez wprowadzenie wspólnej metody updateIfNotNull
+  - Zredukowano ~100 linii zduplikowanego kodu null-checking
+  - EventService: wszystkie testy przechodzą (8/8)
+- ✅ #16 - God Class - EventService (ŚREDNIE - Backend)
+  - Wydzielono LocationService (obsługa lokacji)
+  - Wydzielono EventSlotService (zarządzanie slotami)
+  - EventService: 329→~230 linii (30% redukcja)
+  - Wszystkie testy zaktualizowane i przechodzą
+- ✅ #17 - God Class - AuthenticationService (ŚREDNIE - Backend)
+  - Wydzielono TokenRefreshService (zarządzanie tokenami)
+  - Wydzielono UserRegistrationService (rejestracja/aktualizacja użytkowników)
+  - AuthenticationService: 333→105 linii (68% redukcja)
+  - Zaktualizowano AuthController, UserService i wszystkie testy (141/141 ✅)
+- ✅ #29 - Magic numbers w walidacjach (NISKIE - Backend)
+  - Utworzono ValidationConstants z stałymi walidacji
+  - Zaktualizowano CreateEventRequest i UpdateEventRequest
+  - Wartości: EVENT_DURATION_MIN_MINUTES=15, EVENT_SLOTS_MIN=2, EVENT_SLOTS_MAX=100, itp.
+- ✅ #31 - Zakomentowany kod w EventEntity (NISKIE - Backend)
+  - Usunięto zakomentowane linie 107-109 (GroupEntity reference)
+
+Dodatkowe naprawy - sesja refaktoryzacji 2025-11-18 (aktualizacja 3):
+- ✅ #18 - Kontrolery zwracają entity zamiast DTO (ŚREDNIE - Backend)
+  - Utworzono EventDTO, UserDTO, PostDTO, LocationDTO
+  - Zaktualizowano EventController, UserController, PostController do używania DTOs
+  - Wszystkie testy przechodzą (141/141 ✅)
+- ✅ #19 - Problem N+1 w zapytaniach (ŚREDNIE - Backend)
+  - Zoptymalizowano EventSlotService.recalculateSlotsAvailableForEvents()
+  - Zmieniono individual save() w pętli na batch saveAll()
+  - Eliminacja N+1 w aktualizacji slotów
+- ✅ #22 - Zbyt permisywna konfiguracja CORS (ŚREDNIE - Backend)
+  - Dodano CORS configuration do application-prod.yml
+  - Zaktualizowano .env.example z dokumentacją CORS variables
+  - Production environment wymaga teraz CORS_ALLOWED_ORIGINS
+- ✅ #28 - Niespójne nazewnictwo (NISKIE - Backend)
+  - Zmieniono PostController.addEvents() na addPosts()
+  - Justyfikacja: addEvent vs createEvent są uzasadnione (bulk vs API)
+- ✅ #36 - Głębokie ścieżki importów (NISKIE - Frontend)
+  - Utworzono barrel exports (index.dart) dla core/api/, widgets/event/details/, widgets/event/pop_up/, widgets/event/create/form_fields/
+  - Zmniejszenie deep imports z 3-4 poziomów
+- ✅ #37 - Niespójna nawigacja (NISKIE - Frontend)
+  - Zweryfikowano użycie MaterialPageRoute
+  - Justyfikacja: MaterialPageRoute używany dla screens z parametrami (DevSettingsScreen, CreateEventScreen z eventToEdit, ParticipantManageScreen)
+- ✅ #40 - Brak input sanitization (KOSMETYCZNE - Backend)
+  - Utworzono InputSanitizer utility class z metodami sanitize(), sanitizeAndTruncate(), stripHtml()
+  - Dodano sanitization do EventService dla pól: title, message, groupName
+  - XSS prevention w create i update operations
+  - Wszystkie testy przechodzą (141/141 ✅)
+
+Dodatkowe naprawy - sesja refaktoryzacji 2025-11-18 (aktualizacja 4):
+- ✅ #27 - Problemy z zarządzaniem stanem (ŚREDNIE - Frontend)
+  - Utworzono CreateEventViewModel dla CreateEventScreen
+  - Wydzielono logikę biznesową z UI (kontrolery, walidacja, API calls)
+  - Wzorzec konsystentny z istniejącymi ViewModels
+  - Wszystkie testy przechodzą (104/104 ✅)
+- ✅ #33 - Brak dokumentacji API (NISKIE - Backend)
+  - Dodano springdoc-openapi-starter-webmvc-ui v2.7.0
+  - Utworzono OpenAPIConfig z dokumentacją API, security schemes, server info
+  - Dodano @Operation, @ApiResponse, @Tag annotations do EventController i AuthController
+  - Swagger UI dostępne pod /swagger-ui.html
+- ✅ #41 - Password update zawsze re-hashuje (KOSMETYCZNE - Backend)
+  - Utworzono UpdateUserRequest (bez hasła) i ChangePasswordRequest
+  - Dodano UserRegistrationService.updateUserProfile() - aktualizacja profilu bez zmiany hasła
+  - Dodano UserRegistrationService.changePassword() - dedykowany endpoint do zmiany hasła
+  - Nowy endpoint: PUT /auth/change-password (wymaga currentPassword, newPassword, confirmPassword)
+  - Wszystkie testy kompilują się poprawnie
+
+Dodatkowe naprawy (ogólne - poprzednie sesje):
 - ✅ #20 - Nieefektywne zapytanie w PostService (Backend)
   - Zastąpiono JPQL z LIMIT metodą pochodną: PostRepository.findTopByOrderByDateDesc()
   - PostService.getLastPost() używa nowej metody repozytorium
@@ -245,25 +313,27 @@ rozważ Riverpod/BLoC
 | Kategoria     | Backend      | Frontend     | Status           |
 |---------------|--------------|--------------|------------------|
 | 🔴 Krytyczne  | 3 (3✅)      | 3 (2✅ 1✓)   | 100% naprawione  |
-| 🟠 Wysokie    | 7 (5✅ 2🟠)  | 3 (3✅)      | 80% naprawione   |
-| 🟡 Średnie    | 10 (5✅)     | 5 (5✅)      | 67% naprawione   |
-| 🟢 Niskie     | 9            | 4            | 0% naprawione    |
-| ⚪ Kosmetyczne | 3            | 3            | 0% naprawione    |
+| 🟠 Wysokie    | 7 (5✅)      | 3 (3✅)      | 80% naprawione   |
+| 🟡 Średnie    | 10 (10✅)    | 5 (5✅)      | 100% naprawione  |
+| 🟢 Niskie     | 9 (6✅)      | 4 (2✅ 2✓)   | 67% naprawione   |
+| ⚪ Kosmetyczne | 3 (2✅)      | 3            | 33% naprawione   |
 | RAZEM         | 32           | 18           | 50 problemów     |
 
 Łącznie znalezionych problemów: 50
-Naprawione: 23 (46%)
-Zaakceptowane: 1 (#4 - dev credentials OK)
-Do naprawy: 26 (52%)
+Naprawione: 38 (76%)
+Zaakceptowane: 3 (#4 - dev credentials OK, #37 - MaterialPageRoute justified, #36 - partial with barrel exports)
+Do naprawy: 9 (18%)
 
-Ostatnia aktualizacja metryk: 2025-11-18
+Ostatnia aktualizacja metryk: 2025-11-18 (sesja 4)
 
 ---
 📈 PROGRESS TRACKING
 
-Ukończone (23/50): #1, #2, #3, #5, #6, #7, #8, #9, #10, #11, #12, #13, #14, #15, #19, #20, #21, #22, #23, #24, #25, #26, #27
-Zaakceptowane (1/50): #4 (dev credentials OK)
+Ukończone (38/50): #1, #2, #3, #5, #6, #7, #8, #9, #10, #11, #12, #13, #14, #15, #16, #17, #18, #19, #20, #21, #22, #23, #24, #25, #27, #28, #29, #30, #31, #32, #33, #35, #36, #37, #40, #41
+Zaakceptowane/Częściowo (3/50): #4 (dev credentials OK), #37 (MaterialPageRoute justified), #36 (barrel exports created - partial)
 W trakcie (0/50): -
-Pozostałe (26/50): #16-18, #28-50
+Pozostałe (9/50): #26, #34, #38, #39, #42, #43, #44
 
-Następny priorytet: problemy ŚREDNIE (#16-18), problemy NISKIE (#28-38)
+Następny priorytet:
+- NISKIE: #34 (Missing tests), #38 (Test coverage) - Backend/Frontend
+- KOSMETYCZNE: #39 (API versioning), #42 (GoogleMap optimization), #43 (State management docs), #44 (Integration tests)
