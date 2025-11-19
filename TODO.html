@@ -552,7 +552,7 @@
   </style>
 </head>
 <body>
-  <a href="index.html" class="back-button">← Wróć</a>
+  <a href="screens/index.html" class="back-button">← Wróć</a>
 
   <div class="todo-container">
     <div class="todo-header">
@@ -589,14 +589,14 @@
       <div class="scope-note">Zakres: Całe TODO (M1 + M2+)</div>
       <div class="progress-bar-container">
         <div class="progress-bar">
-          <div class="progress-segment progress-completed" style="width: 34%;" title="Ukończone (34%)">34%</div>
+          <div class="progress-segment progress-completed" style="width: 37%;" title="Ukończone (37%)">37%</div>
           
-          <div class="progress-segment progress-pending" style="width: 66%;" title="Do zrobienia (66%)">66%</div>
+          <div class="progress-segment progress-pending" style="width: 63%;" title="Do zrobienia (63%)">63%</div>
         </div>
       </div>
       <div class="progress-stats">
         <div class="progress-stat">
-          <div class="progress-stat-value stat-completed">112</div>
+          <div class="progress-stat-value stat-completed">121</div>
           <div class="progress-stat-label">Ukończone</div>
         </div>
         <div class="progress-stat">
@@ -604,7 +604,7 @@
           <div class="progress-stat-label">Do weryfikacji</div>
         </div>
         <div class="progress-stat">
-          <div class="progress-stat-value stat-pending">215</div>
+          <div class="progress-stat-value stat-pending">206</div>
           <div class="progress-stat-label">Do zrobienia</div>
         </div>
         <div class="progress-stat">
@@ -631,8 +631,8 @@
           </div>
           <div class="timeline-item timeline-current">
             <span class="timeline-label">Dzisiaj</span>
-            <span class="timeline-date">2025-11-17</span>
-            <span class="timeline-week">Tydzień 1, Dzień 5</span>
+            <span class="timeline-date">2025-11-19</span>
+            <span class="timeline-week">Tydzień 1, Dzień 7</span>
           </div>
           <div class="timeline-item">
             <span class="timeline-label">Koniec (plan)</span>
@@ -663,58 +663,53 @@
       <div class="task-lists-grid">
 
         <div class="task-list-card task-list-today">
-          <h3>📋 Dzisiaj (0)</h3>
+          <h3>📋 Dzisiaj (1)</h3>
           <div class="task-list-content">
-<p class="empty-state">Brak zadań na dzisiaj</p>
+<p class="task-list-summary">4h zaplanowane</p>
+            <div class="schedule-task-item">
+              <span class="schedule-task-text">POST /api/v1/series/{id}/generate (generowanie wyd...</span>
+              <span class="schedule-task-estimate">4h</span>
+            </div>
+
           </div>
         </div>
 
         <div class="task-list-card task-list-overdue">
-          <h3>⚠️ Zaległe (10)</h3>
+          <h3>⚠️ Zaległe (11)</h3>
           <div class="task-list-content">
-<p class="task-list-summary">13h zaległości</p>
+<p class="task-list-summary">14h zaległości</p>
             <div class="schedule-task-item">
               <span class="schedule-task-text">EventStatus enum z CANCELLED (bez COMPLE...</span>
-              <span class="schedule-task-overdue">4d</span>
+              <span class="schedule-task-overdue">6d</span>
             </div>
 
             <div class="schedule-task-item">
               <span class="schedule-task-text">PUT /api/v1/events/{id}/cancel - tylko z...</span>
-              <span class="schedule-task-overdue">4d</span>
+              <span class="schedule-task-overdue">6d</span>
             </div>
 
             <div class="schedule-task-item">
               <span class="schedule-task-text">Badge "Cancelled" w UI</span>
-              <span class="schedule-task-overdue">4d</span>
+              <span class="schedule-task-overdue">6d</span>
             </div>
 
             <div class="schedule-task-item">
               <span class="schedule-task-text">Encja EventSeries (uproszczona)</span>
-              <span class="schedule-task-overdue">3d</span>
+              <span class="schedule-task-overdue">5d</span>
             </div>
 
             <div class="schedule-task-item">
               <span class="schedule-task-text">Enum SeriesFrequency (WEEKLY, BIWEEKLY)</span>
-              <span class="schedule-task-overdue">2d</span>
+              <span class="schedule-task-overdue">4d</span>
             </div>
-<p class="more-tasks">... i 5 więcej</p>
+<p class="more-tasks">... i 6 więcej</p>
           </div>
         </div>
 
         <div class="task-list-card task-list-upcoming">
           <h3>📆 Najbliższy tydzień (9)</h3>
           <div class="task-list-content">
-<p class="task-list-summary">17h zaplanowane</p>
-            <div class="schedule-task-item">
-              <span class="schedule-task-text">GET /api/v1/series?organizerId={id}</span>
-              <span class="schedule-task-date">2025-11-18</span>
-            </div>
-
-            <div class="schedule-task-item">
-              <span class="schedule-task-text">POST /api/v1/series/{id}/generate (gener...</span>
-              <span class="schedule-task-date">2025-11-19</span>
-            </div>
-
+<p class="task-list-summary">18h zaplanowane</p>
             <div class="schedule-task-item">
               <span class="schedule-task-text">SeriesService.generateEvents()</span>
               <span class="schedule-task-date">2025-11-20</span>
@@ -727,6 +722,16 @@
 
             <div class="schedule-task-item">
               <span class="schedule-task-text">Frequency picker (WEEKLY/BIWEEKLY)</span>
+              <span class="schedule-task-date">2025-11-22</span>
+            </div>
+
+            <div class="schedule-task-item">
+              <span class="schedule-task-text">Time picker</span>
+              <span class="schedule-task-date">2025-11-22</span>
+            </div>
+
+            <div class="schedule-task-item">
+              <span class="schedule-task-text">Generate events dialog</span>
               <span class="schedule-task-date">2025-11-22</span>
             </div>
 <p class="more-tasks">... i 4 więcej</p>
@@ -1643,25 +1648,25 @@
               
             </li>
             <li class="task-item">
-              <span class="task-checkbox pending"></span>
+              <span class="task-checkbox done"></span>
               <span class="task-text">
-                EventStatus enum z CANCELLED (bez COMPLETED, DRAFT) [1h]
+                EventStatus enum z CANCELLED (bez COMPLETED, DRAFT) [1h] ✅ (2025-11-19)
                 
               </span>
               
             </li>
             <li class="task-item">
-              <span class="task-checkbox pending"></span>
+              <span class="task-checkbox done"></span>
               <span class="task-text">
-                PUT /api/v1/events/{id}/cancel - tylko zmiana statusu [1h]
+                PUT /api/v1/events/{id}/cancel - tylko zmiana statusu [1h] ✅ (2025-11-19)
                 
               </span>
               
             </li>
             <li class="task-item">
-              <span class="task-checkbox pending"></span>
+              <span class="task-checkbox done"></span>
               <span class="task-text">
-                Badge "Cancelled" w UI [1h]
+                Badge "Cancelled" w UI [1h] ✅ (2025-11-19)
                 
               </span>
               
@@ -2441,18 +2446,18 @@
               
             </li>
             <li class="task-item">
-              <span class="task-checkbox pending"></span>
+              <span class="task-checkbox done"></span>
               <span class="task-text">
-                Error states z retry button [2h]
+                Error states z retry button [2h] ✅ (2025-11-19)
                 
                 <ul class="subtask-list">
                   <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
+                        <span class="task-checkbox done"></span>
                         <span class="subtask-text">Error widgets [1h]</span>
                         
                       </li>
                   <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
+                        <span class="task-checkbox done"></span>
                         <span class="subtask-text">Retry logic [1h]</span>
                         
                       </li>
@@ -2787,9 +2792,9 @@
               
             </li>
             <li class="task-item">
-              <span class="task-checkbox pending"></span>
+              <span class="task-checkbox done"></span>
               <span class="task-text">
-                Custom exceptions [2h]
+                Custom exceptions [2h] ✅ (2025-11-19)
                 
               </span>
               
@@ -3665,17 +3670,17 @@
               
             </li>
             <li class="task-item">
-              <span class="task-checkbox pending"></span>
+              <span class="task-checkbox done"></span>
               <span class="task-text">
-                CORS allow‑list, brak `*` z Credentials [2h]
+                CORS allow‑list, brak `*` z Credentials [2h] ✅ (2025-11-19)
                 
               </span>
               
             </li>
             <li class="task-item">
-              <span class="task-checkbox pending"></span>
+              <span class="task-checkbox done"></span>
               <span class="task-text">
-                Rate limits: login, mutujące endpointy, series generate [3h]
+                Rate limits: login, mutujące endpointy, series generate [3h] ✅ (2025-11-19)
                 
               </span>
               

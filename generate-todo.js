@@ -1386,7 +1386,7 @@ function generateHtml(features, stats, mvpSummary, postMvpSummary, scheduleData 
   </style>
 </head>
 <body>
-  <a href="index.html" class="back-button">← Wróć</a>
+  <a href="screens/index.html" class="back-button">← Wróć</a>
 
   <div class="todo-container">
     <div class="todo-header">

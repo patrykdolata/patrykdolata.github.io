@@ -161,9 +161,9 @@
 
 #### Minimalny status i odwołanie (M1) - OPCJONALNE
 **Uwaga:** Pełna funkcjonalność cancel to M2 (FEATURE_07), w M1 wystarczy DELETE
-- [ ] EventStatus enum z CANCELLED (bez COMPLETED, DRAFT) [1h]
-- [ ] PUT /api/v1/events/{id}/cancel - tylko zmiana statusu [1h]
-- [ ] Badge "Cancelled" w UI [1h]
+- [x] EventStatus enum z CANCELLED (bez COMPLETED, DRAFT) [1h] ✅ (2025-11-19)
+- [x] PUT /api/v1/events/{id}/cancel - tylko zmiana statusu [1h] ✅ (2025-11-19)
+- [x] Badge "Cancelled" w UI [1h] ✅ (2025-11-19)
 **Total:** 3h (opcjonalne dla M1)
 
 ### Flutter - Wydarzenia CRUD [15h]
@@ -392,9 +392,9 @@
   - [ ] Skeleton widgets [1h]
   - [ ] Integration [1h]
 
-- [ ] Error states z retry button [2h]
-  - [ ] Error widgets [1h]
-  - [ ] Retry logic [1h]
+- [x] Error states z retry button [2h] ✅ (2025-11-19)
+  - [x] Error widgets [1h]
+  - [x] Retry logic [1h]
 
 - [ ] Network error handling [1h]
 
@@ -477,7 +477,7 @@ Do końca 2025 roku muszą działać:
 - [ ] Logika main list vs waitlist [7h]
 - [ ] Awans z waitlist po opuszczeniu [4h]
 - [ ] Renumbering positions [2h]
-- [ ] Custom exceptions [2h]
+- [x] Custom exceptions [2h] ✅ (2025-11-19)
 
 ### Flutter [20h]
 - [ ] Join button w EventDetailsScreen [4h]
@@ -623,7 +623,7 @@ Do końca 2025 roku muszą działać:
 - [ ] Payment flow UI [12h]
 
 ## Sprint: Testowanie [60h]
-- [ ] Testy jednostkowe [15h]
+- [x] Testy jednostkowe [15h] ✅ (2025-11-19) - częściowo
 - [ ] Testy integracyjne [15h]
 - [ ] Swagger/OpenAPI [10h]
 - [ ] Kolekcja Postman [10h]
@@ -646,8 +646,8 @@ Do końca 2025 roku muszą działać:
 
 ### Auth/JWT/CORS/Rate Limits [8h]
 - [ ] Rotacja refresh + reuse detection [3h]
-- [ ] CORS allow‑list, brak `*` z Credentials [2h]
-- [ ] Rate limits: login, mutujące endpointy, series generate [3h]
+- [x] CORS allow‑list, brak `*` z Credentials [2h] ✅ (2025-11-19)
+- [x] Rate limits: login, mutujące endpointy, series generate [3h] ✅ (2025-11-19)
 
 ### Headers/TLS/Nginx [6h]
 - [ ] Security headers (CSP – na przyszłość web, XFO, XCTO, RP, PP) [3h]
