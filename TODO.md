@@ -10,11 +10,11 @@
 
 ## 🎯 PROJECT STATUS
 
-- **Current Phase:** MILESTONE 1 - Organizer MVP
+- **Current Phase:** MILESTONE 1 - Organizer MVP (ZAKTUALIZOWANY)
 - **Target:** 2025-12-31 (7-8 tygodni)
 - **Weekly hours:** 15h
 - **Overall progress:** 38%
-- **Last updated:** 2025-11-16
+- **Last updated:** 2025-11-20
 
 ### ✅ What's Working:
 - Sprint 0: Auth & JWT (95% done)
@@ -24,25 +24,34 @@
 
 ### 🔴 Current Focus (Next 2 weeks):
 - Feature 3: Zarządzanie uczestnikami RĘCZNIE (30h) 👈 START HERE
+- **⭐ Feature S1: Minimalny Self-Service Join/Leave (10h)** 👈 NOWE!
+- **⭐ Feature S2: Simple Waitlist FIFO (10h)** 👈 NOWE!
+- **⭐ Feature S3: Auto-Promocja z waitlisty (5h)** 👈 NOWE!
 - Feature 4: Cykliczne wydarzenia (25h)
 - Feature 6: Bottom navigation (15h)
 
 ---
 
-## 📋 MILESTONE 1: Organizer MVP 🔴 [DO KOŃCA 2025]
+## 📋 MILESTONE 1 (ZMODYFIKOWANY): Organizer MVP + Minimum Self-Service 🔴 [DO KOŃCA 2025]
 
 **Deadline:** 2025-12-31 (7-8 tygodni)
-**Focus:** ORGANIZATOR może planować wydarzenia, zarządzać uczestnikami, tworzyć cykliczne mecze
-**Total:** ~115h
+**Focus:** Organizator tworzy, zarządza i automatycznie uzupełnia skład (podstawowo)
+**Total:** ~140h (było ~115h + 25h na self-service)
 
-### Definicja sukcesu:
+### NOWA Definicja Sukcesu:
 - [x] Użytkownik może się zarejestrować i zalogować
 - [x] Użytkownik widzi wydarzenia na mapie
 - [x] ORGANIZATOR może stworzyć wydarzenie (CreateEventScreen ✅)
 - [ ] ORGANIZATOR może RĘCZNIE dodać uczestników do wydarzenia
+- [ ] **⭐ UCZESTNIK może DOŁĄCZYĆ do wydarzenia** (self-service join)
+- [ ] **⭐ UCZESTNIK może OPUŚCIĆ wydarzenie** (self-service leave)
+- [ ] **⭐ Prosta WAITLISTA (FIFO)** - uczestnicy ponad limit na waitliście
+- [ ] **⭐ Auto-promocja z waitlisty** - gdy ktoś opuszcza, pierwszy z waitlisty awansuje
 - [ ] ORGANIZATOR może stworzyć serię cyklicznych wydarzeń (co tydzień)
 - [x] ORGANIZATOR widzi swoje wydarzenia (kalendarz/lista)
 - [ ] Aplikacja działa na produkcji
+
+**POWÓD ZMIANY:** Organizator nie będzie ręcznie dodawał wszystkich graczy – MVP musi pozwalać im dołączać samodzielnie.
 
 ---
 
@@ -277,9 +286,131 @@
 **Feature 3 Milestone:** Organizator może RĘCZNIE zarządzać listą uczestników ✅
 
 **Na Q1 2026:**
-- Self-service join/leave (uczestnik sam dołącza)
-- Waitlist logic (main list / waitlist)
 - Płatności (isPaid, paymentMethod)
+- Drag&drop reordering
+- Advanced waitlist (manual promote/demote)
+
+---
+
+## 🆕 Feature S1: Self-Service Join/Leave — SIMPLE 🔴 [0% DONE → 10h]
+
+**Priorytet:** CRITICAL - uczestnicy muszą móc dołączać samodzielnie
+**Deadline:** Tydzień 4 (do 2025-12-04)
+**Scope:** Minimalna wersja - uczestnik może dołączyć lub opuścić wydarzenie
+
+### Backend - Self-Service Join/Leave [6h]
+
+- [ ] POST /api/v1/events/{eventId}/join [2h]
+  - [ ] Endpoint implementation [1h]
+  - [ ] Walidacja: czy event jest dostępny, czy nie jest pełny [0.5h]
+  - [ ] Authorization: tylko zalogowani użytkownicy [0.5h]
+
+- [ ] DELETE /api/v1/events/{eventId}/leave [2h]
+  - [ ] Endpoint implementation [1h]
+  - [ ] Walidacja: czy uczestnik jest na liście [1h]
+
+- [ ] ParticipantService.joinEvent() [1h]
+  - [ ] Dodanie uczestnika na koniec listy [0.5h]
+  - [ ] Sprawdzenie limitu (slots) [0.5h]
+
+- [ ] ParticipantService.leaveEvent() [1h]
+  - [ ] Usunięcie uczestnika [0.5h]
+  - [ ] Renumeracja pozycji [0.5h]
+
+### Flutter - Self-Service Join/Leave UI [4h]
+
+- [ ] Join button w EventDetailsScreen [2h]
+  - [ ] Button UI + warunek (czy user już jest na liście) [1h]
+  - [ ] HTTP POST /api/v1/events/{id}/join [0.5h]
+  - [ ] Toast confirmation [0.5h]
+
+- [ ] Leave button w EventDetailsScreen [1h]
+  - [ ] Button UI + confirm dialog [0.5h]
+  - [ ] HTTP DELETE /api/v1/events/{id}/leave [0.5h]
+
+- [ ] Update UI po join/leave [1h]
+  - [ ] Refresh event details [0.5h]
+  - [ ] Update participants count [0.5h]
+
+**Feature S1 Milestone:** Uczestnik może sam dołączyć i opuścić wydarzenie ✅
+
+---
+
+## 🆕 Feature S2: Simple Waitlist (FIFO) 🔴 [0% DONE → 10h]
+
+**Priorytet:** CRITICAL - zarządzanie nadwyżką uczestników
+**Deadline:** Tydzień 5 (do 2025-12-11)
+**Scope:** Prosta waitlista FIFO - kto pierwszy, ten pierwszy
+
+### Backend - Simple Waitlist [6h]
+
+- [x] Enum ParticipantStatus (MAIN_LIST, WAITLIST) [1h]
+  - [x] Dodanie do EventParticipant [0.5h]
+  - [x] Migracja [0.5h]
+
+- [x] Logika main list vs waitlist w joinEvent() [2h]
+  - [x] Sprawdzenie liczby uczestników na MAIN_LIST [1h]
+  - [x] Automatyczne przypisanie statusu (MAIN_LIST lub WAITLIST) [1h]
+
+- [x] GET /api/v1/events/{eventId}/participants - zwraca obie listy [1h]
+  - [x] DTO rozszerzone o status [0.5h]
+  - [x] Sortowanie (MAIN_LIST na górze) [0.5h]
+
+- [ ] Dodanie pola waitlistCount do EventDTO [1h]
+  - [ ] Obliczanie liczby na waitliście [1h]
+
+- [ ] Testy logiki waitlist [1h]
+
+### Flutter - Simple Waitlist UI [4h]
+
+- [ ] Waitlist badge w EventDetailsScreen [1h]
+  - [ ] Badge "Main List" / "Waitlist" przy join button [0.5h]
+  - [ ] Info o pozycji na waitliście [0.5h]
+
+- [ ] Podział listy uczestników (ParticipantsManageScreen) [2h]
+  - [ ] Sekcja "Main List" (slots first) [1h]
+  - [ ] Sekcja "Waitlist" (reszta) [1h]
+
+- [ ] Wyświetlanie liczby na waitliście [1h]
+  - [ ] EventPopUpCard update [0.5h]
+  - [ ] EventDetailsScreen update [0.5h]
+
+**Feature S2 Milestone:** Prosta waitlista działa (FIFO) ✅
+
+---
+
+## 🆕 Feature S3: Auto-Promocja z Waitlisty 🔴 [0% DONE → 5h]
+
+**Priorytet:** HIGH - automatyczne uzupełnianie składu
+**Deadline:** Tydzień 5 (do 2025-12-11)
+**Scope:** Automatyczny awans pierwszej osoby z waitlisty
+
+### Backend - Auto-Promocja [3h]
+
+- [ ] ParticipantService.promoteFromWaitlist() [2h]
+  - [ ] Znalezienie pierwszego z WAITLIST (order by position) [0.5h]
+  - [ ] Zmiana statusu WAITLIST → MAIN_LIST [0.5h]
+  - [ ] Renumeracja pozycji [1h]
+
+- [ ] Wywołanie promoteFromWaitlist() w leaveEvent() [1h]
+  - [ ] Hook po usunięciu uczestnika [0.5h]
+  - [ ] Sprawdzenie, czy jest ktoś na waitliście [0.5h]
+
+### Flutter - Auto-Promocja UI [2h]
+
+- [ ] Toast notification o promocji [1h]
+  - [ ] "Awansowałeś z waitlisty!" [0.5h]
+  - [ ] Event listener (polling lub push w przyszłości) [0.5h]
+
+- [ ] Update UI po promocji [1h]
+  - [ ] Refresh participant list [0.5h]
+  - [ ] Update badge status [0.5h]
+
+**Feature S3 Milestone:** Automatyczna promocja działa ✅
+
+**Na Q1 2026:**
+- Email/push notification o promocji
+- Manual promote/demote przez organizatora
 - Drag&drop reordering
 
 ---
@@ -466,28 +597,28 @@ Do końca 2025 roku muszą działać:
 
 ---
 
-# 📋 MILESTONE 2: Self-Service & Advanced 🟡 [Q1 2026]
+# 📋 MILESTONE 2 (ZMODYFIKOWANY): Advanced Features 🟡 [Q1 2026]
 
-**Scope:** Uczestnicy SAMI mogą dołączać i opuszczać wydarzenia
+**Scope:** Zaawansowane funkcje dla organizatora i uczestników
 
-### Backend [25h]
-- [ ] POST /api/v1/events/{id}/join - uczestnik sam dołącza [5h]
-- [ ] DELETE /api/v1/events/{id}/leave - uczestnik sam opuszcza [3h]
-- [ ] Enum ParticipantStatus (MAIN_LIST, WAITLIST) [2h]
-- [ ] Logika main list vs waitlist [7h]
-- [ ] Awans z waitlist po opuszczeniu [4h]
-- [ ] Renumbering positions [2h]
+**UWAGA:** Self-service join/leave i basic waitlist przeszły do M1 2025!
+
+### Backend [35h]
 - [x] Custom exceptions [2h] ✅ (2025-11-19)
+- [ ] Manual promote/demote z waitlisty [8h]
+- [ ] Drag & drop reordering positions [6h]
+- [ ] Payment tracking (isPaid, paymentMethod) [10h]
+- [ ] MONTHLY frequency dla serii [5h]
+- [ ] skipHolidays logic [4h]
 
-### Flutter [20h]
-- [ ] Join button w EventDetailsScreen [4h]
-- [ ] Leave button [3h]
-- [ ] Waitlist badge [2h]
-- [ ] Toast notifications [2h]
+### Flutter [30h]
 - [ ] ParticipantsListScreen (public view) [5h]
-- [ ] EventParticipantService [4h]
+- [ ] Manual promote/demote UI [6h]
+- [ ] Drag & drop reordering UI [5h]
+- [ ] Payment tracking UI [8h]
+- [ ] Advanced series management [6h]
 
-**Dlaczego Q1 2026:** W MVP organizator zarządza ręcznie, wystarczy WhatsApp
+**Dlaczego Q1 2026:** MVP ma już podstawowe self-service, zaawansowane funkcje mogą poczekać
 
 ---
 
@@ -680,90 +811,108 @@ Do końca 2025 roku muszą działać:
 
 ---
 
-# 📊 PODSUMOWANIE ESTYMAT
+# 📊 PODSUMOWANIE ESTYMAT (ZAKTUALIZOWANE)
 
 | Milestone | Scope | Hours | Weeks (15h) | Timeline |
 |-----------|-------|-------|-------------|----------|
-| **M1: Organizer MVP** | Zarządzanie wydarzeniami | 117h | ~8 tyg. | Do 2025-12-31 |
-| **M2: Self-Service & Advanced** | Dla uczestników | 200h | ~13 tyg. | Q1 2026 |
+| **M1: Organizer MVP + Self-Service** | Zarządzanie + basic join/waitlist | 140h | ~9 tyg. | Do 2025-12-31 |
+| **M2: Advanced Features** | Zaawansowane funkcje | 65h | ~4 tyg. | Q1 2026 |
 | **M3: Post-MVP** | Notifications + Payments + Security/RODO | 257h | ~17 tyg. | Q2 2026 |
-| **TOTAL** | | **574h** | **~38 tyg.** | **~9-10 miesięcy** |
+| **TOTAL** | | **462h** | **~31 tyg.** | **~7-8 miesięcy** |
+
+**ZMIANA:** Self-service join/leave i basic waitlist przesunięte z M2 do M1 (+25h w M1, -135h w M2)
 
 ---
 
-## 🚀 STRATEGIA REALIZACJI
+## 🚀 STRATEGIA REALIZACJI (ZAKTUALIZOWANA)
 
-### Faza 1: Organizer MVP (7-8 tygodni - do końca 2025)
-**Focus:** Narzędzie dla ORGANIZATORA wydarzeń
+### Faza 1: Organizer MVP + Self-Service (8-9 tygodni - do końca 2025)
+**Focus:** Narzędzie dla ORGANIZATORA + podstawowy self-service dla uczestników
 
-**Tydzień 1-2:** Feature 1 - Events CRUD (30h)
+**Tydzień 1-2:** Feature 1 - Events CRUD (30h) ✅
 → Tworzenie, edycja, usuwanie wydarzeń
 
-**Tydzień 3-4:** Feature 3 - Manual Participant Management (30h)
+**Tydzień 2-3:** Feature 3 - Manual Participant Management (30h)
 → Ręczne zarządzanie listą uczestników
 
-**Tydzień 5-6:** Feature 4 - Event Series BASIC (25h)
+**Tydzień 4:** **⭐ Feature S1 - Self-Service Join/Leave (10h)**
+→ Uczestnicy mogą sami dołączać i opuszczać
+
+**Tydzień 5:** **⭐ Feature S2 + S3 - Waitlist + Auto-Promocja (15h)**
+→ Prosta waitlista FIFO + automatyczne awanse
+
+**Tydzień 6:** Feature 4 - Event Series BASIC (25h)
 → Cykliczne wydarzenia (co tydzień)
 
-**Tydzień 7-8:** UI + Deployment (30h)
-→ Interfejs organizatora + live deployment
+**Tydzień 7:** UI + Polish (15h)
+→ Interfejs + dopracowanie
+
+**Tydzień 8:** Deployment + Testing (15h)
+→ Live deployment
 
 **END: 2025-12-31 ✅**
 
-### Faza 2: Self-Service & Advanced (Q1 2026 - 13 tygodni)
-**Focus:** Self-service dla uczestników + advanced features
+### Faza 2: Advanced Features (Q1 2026 - 4-5 tygodni)
+**Focus:** Zaawansowane funkcje
 
-- Feature 2: Self-service Join/Leave
-- Feature 3: Advanced Participant Management (płatności, drag&drop)
-- Feature 4: Advanced Series (monthly, skipHolidays)
-- Feature 3.5: Grupy
-- Feature 5: Profil
+- Manual promote/demote
+- Drag & drop reordering
+- Payment tracking
+- Advanced series (monthly, skipHolidays)
+- Groups
+- Enhanced profiles
 
-### Faza 3: Post-MVP (Q2 2026 - 13 tygodni)
+### Faza 3: Post-MVP (Q2 2026 - 17 tygodni)
 **Focus:** Notyfikacje, płatności, testowanie
 
 - Email & Push notifications
 - Stripe payments
 - Testing & Documentation
+- Security & RODO compliance
 
 ---
 
-## 🎯 PRIORYTETY (Critical Path)
+## 🎯 PRIORYTETY (Critical Path) - ZAKTUALIZOWANE
 
-### 🔴 MUST HAVE dla organizatorów:
-1. Feature 1: Events CRUD - **2 tygodnie**
+### 🔴 MUST HAVE dla MVP (2025):
+1. Feature 1: Events CRUD - **2 tygodnie** ✅
 2. Feature 3: Manual Participant Management - **2 tygodnie**
-3. Feature 4: Event Series BASIC - **2 tygodnie**
-4. UI + Deployment - **2 tygodnie**
+3. **⭐ Feature S1: Self-Service Join/Leave - 1 tydzień** (NOWE!)
+4. **⭐ Feature S2+S3: Waitlist + Auto-Promocja - 1 tydzień** (NOWE!)
+5. Feature 4: Event Series BASIC - **2 tygodnie**
+6. UI + Deployment - **2 tygodnie**
 
-**Critical Path: 8 tygodni = koniec 2025**
+**Critical Path: 9 tygodni = koniec 2025**
 
 ### 🟡 SHOULD HAVE (Q1 2026):
-5. Feature 2: Self-service Join/Leave
-6. Feature 3: Advanced Management
-7. Feature 4: Advanced Series
-8. Feature 3.5: Grupy
+7. Manual promote/demote
+8. Drag & drop reordering
+9. Payment tracking
+10. Advanced Series
+11. Groups
+12. Enhanced profiles
 
 ### 🟢 NICE TO HAVE (Q2 2026+):
-9. Notifications
-10. Payments
-11. Testing & Documentation
+13. Notifications
+14. Payments (Stripe)
+15. Testing & Documentation
+16. Security & RODO
 
 ---
 
-## 📅 WEEKLY MILESTONES
+## 📅 WEEKLY MILESTONES (ZAKTUALIZOWANY)
 
 | Week | Date | Milestone | Hours |
 |------|------|-----------|-------|
-| W1 | 2025-11-13 | Feature 1 - Backend CRUD | 15h |
-| W2 | 2025-11-20 | Feature 1 - Flutter UI | 15h |
-| W3 | 2025-11-27 | Feature 3 - Backend Participants | 15h |
-| W4 | 2025-12-04 | Feature 3 - Flutter UI | 15h |
-| W5 | 2025-12-11 | Feature 4 - Backend Series | 15h |
-| W6 | 2025-12-18 | Feature 4 - Flutter UI | 12h |
-| W7 | 2025-12-25 | UI Basics | 15h |
-| W8 | 2025-01-01 | Deployment + Testing | 15h |
-| **END** | **2025-12-20** | **🎊 ORGANIZER MVP READY** | **117h** |
+| W1 | 2025-11-13 | Feature 1 - Events CRUD ✅ | 15h |
+| W2 | 2025-11-20 | Feature 3 - Backend Participants | 15h |
+| W3 | 2025-11-27 | Feature 3 - Flutter Participants | 15h |
+| W4 | 2025-12-04 | **⭐ Self-Service Join SIMPLE** | 15h |
+| W5 | 2025-12-11 | **⭐ Simple Waitlist + Auto-Promocja** | 15h |
+| W6 | 2025-12-18 | Feature 4 - Series BACK + UI | 15h |
+| W7 | 2025-12-25 | UI Basics + Polish | 15h |
+| W8 | 2026-01-01 | Deployment + Testing | 15h |
+| **END** | **2025-12-31** | **🎊 MVP Z SELF-SERVICE** | **140h** |
 
 ---
 
@@ -778,19 +927,25 @@ Do końca 2025 roku muszą działać:
 
 ---
 
-## 🏁 DEFINICJA SUKCESU (31.12.2025)
+## 🏁 NOWA DEFINICJA SUKCESU (31.12.2025)
 
 ### MINIMUM (must have):
 - [x] Aplikacja działa na serwerze
-- [ ] Organizator może dodać wydarzenie
-- [ ] Organizator może dodać uczestnika
+- [x] Organizator może dodać wydarzenie ✅
+- [ ] Organizator może dodać uczestnika (ręcznie)
+- [ ] **⭐ Uczestnik może DOŁĄCZYĆ do wydarzenia (self-service)**
+- [ ] **⭐ Uczestnik może OPUŚCIĆ wydarzenie (self-service)**
+- [ ] **⭐ Prosta WAITLISTA (FIFO) działa**
+- [ ] **⭐ Auto-promocja z waitlisty działa**
 - [ ] Organizator może stworzyć serię cykliczną
-- [ ] Organizator widzi swoje wydarzenia
+- [x] Organizator widzi swoje wydarzenia ✅
 
 ### NICE TO HAVE:
 - [ ] 2-3 organizatorów przetestowało
 - [ ] Zero critical bugs
 - [ ] Pozytywny feedback
+
+**POWÓD ZMIANY:** Organizator nie będzie ręcznie dodawał wszystkich graczy – MVP musi pozwalać im dołączać samodzielnie.
 
 ---
 
@@ -800,10 +955,12 @@ Do końca 2025 roku muszą działać:
 - `🔴` - CRITICAL (MVP 2025)
 - `🟡` - HIGH (Q1 2026)
 - `🟢` - MEDIUM (Q2 2026+)
+- `⭐` - NOWE w MVP (self-service pivot)
 
 ---
 
-_Last updated: 2025-11-13_
+_Last updated: 2025-11-20_
 _Weekly hours: 15h_
-_Current phase: MILESTONE 1 - Organizer MVP_
-_Focus: Narzędzie dla organizatorów wydarzeń siatkówki_
+_Current phase: MILESTONE 1 - Organizer MVP + Self-Service_
+_Focus: Narzędzie dla organizatorów + podstawowy self-service dla uczestników_
+_Total M1 hours: 140h (było 115h + 25h na self-service)_

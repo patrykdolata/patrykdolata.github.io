@@ -552,7 +552,7 @@
   </style>
 </head>
 <body>
-  <a href="index.html" class="back-button">← Wróć</a>
+  <a href="screens/index.html" class="back-button">← Wróć</a>
 
   <div class="todo-container">
     <div class="todo-header">
@@ -589,14 +589,14 @@
       <div class="scope-note">Zakres: Całe TODO (M1 + M2+)</div>
       <div class="progress-bar-container">
         <div class="progress-bar">
-          <div class="progress-segment progress-completed" style="width: 43%;" title="Ukończone (43%)">43%</div>
+          <div class="progress-segment progress-completed" style="width: 41%;" title="Ukończone (41%)">41%</div>
           
-          <div class="progress-segment progress-pending" style="width: 57%;" title="Do zrobienia (57%)">57%</div>
+          <div class="progress-segment progress-pending" style="width: 59%;" title="Do zrobienia (59%)">59%</div>
         </div>
       </div>
       <div class="progress-stats">
         <div class="progress-stat">
-          <div class="progress-stat-value stat-completed">141</div>
+          <div class="progress-stat-value stat-completed">158</div>
           <div class="progress-stat-label">Ukończone</div>
         </div>
         <div class="progress-stat">
@@ -604,11 +604,11 @@
           <div class="progress-stat-label">Do weryfikacji</div>
         </div>
         <div class="progress-stat">
-          <div class="progress-stat-value stat-pending">186</div>
+          <div class="progress-stat-value stat-pending">228</div>
           <div class="progress-stat-label">Do zrobienia</div>
         </div>
         <div class="progress-stat">
-          <div class="progress-stat-value stat-total">327</div>
+          <div class="progress-stat-value stat-total">386</div>
           <div class="progress-stat-label">Wszystkie zadania</div>
         </div>
       </div>
@@ -627,24 +627,24 @@
         <div class="timeline-header">
           <div class="timeline-item">
             <span class="timeline-label">Start</span>
-            <span class="timeline-date">2025-11-19</span>
+            <span class="timeline-date">2025-11-13</span>
           </div>
           <div class="timeline-item timeline-current">
             <span class="timeline-label">Dzisiaj</span>
-            <span class="timeline-date">2025-11-19</span>
-            <span class="timeline-week">Tydzień 1, Dzień 1</span>
+            <span class="timeline-date">2025-11-20</span>
+            <span class="timeline-week">Tydzień 2, Dzień 8</span>
           </div>
           <div class="timeline-item">
             <span class="timeline-label">Koniec (plan)</span>
-            <span class="timeline-date">2025-12-12</span>
+            <span class="timeline-date">2026-03-01</span>
           </div>
         </div>
 
         <!-- Progress Bar -->
         <div class="timeline-bar-container">
-          <div class="timeline-bar" style="width: 74.2%;"></div>
-          <div class="timeline-marker" style="left: 74.2%;">
-            74.2%
+          <div class="timeline-bar" style="width: 46.1%;"></div>
+          <div class="timeline-marker" style="left: 46.1%;">
+            46.1%
           </div>
         </div>
 
@@ -663,51 +663,81 @@
       <div class="task-lists-grid">
 
         <div class="task-list-card task-list-today">
-          <h3>📋 Dzisiaj (1)</h3>
+          <h3>📋 Dzisiaj (2)</h3>
           <div class="task-list-content">
 <p class="task-list-summary">3h zaplanowane</p>
             <div class="schedule-task-item">
-              <span class="schedule-task-text">Encja EventSeries (uproszczona)</span>
-              <span class="schedule-task-estimate">3h</span>
+              <span class="schedule-task-text">Podział listy uczestników (ParticipantsManageScree...</span>
+              <span class="schedule-task-estimate">2h</span>
+            </div>
+
+            <div class="schedule-task-item">
+              <span class="schedule-task-text">Wyświetlanie liczby na waitliście</span>
+              <span class="schedule-task-estimate">1h</span>
             </div>
 
           </div>
         </div>
 
         <div class="task-list-card task-list-overdue">
-          <h3>⚠️ Zaległe (0)</h3>
+          <h3>⚠️ Zaległe (10)</h3>
           <div class="task-list-content">
-<p class="empty-state">Brak zaległości ✓</p>
+<p class="task-list-summary">13h zaległości</p>
+            <div class="schedule-task-item">
+              <span class="schedule-task-text">POST /api/v1/events/{eventId}/join</span>
+              <span class="schedule-task-overdue">7d</span>
+            </div>
+
+            <div class="schedule-task-item">
+              <span class="schedule-task-text">DELETE /api/v1/events/{eventId}/leave</span>
+              <span class="schedule-task-overdue">6d</span>
+            </div>
+
+            <div class="schedule-task-item">
+              <span class="schedule-task-text">ParticipantService.joinEvent()</span>
+              <span class="schedule-task-overdue">5d</span>
+            </div>
+
+            <div class="schedule-task-item">
+              <span class="schedule-task-text">ParticipantService.leaveEvent()</span>
+              <span class="schedule-task-overdue">5d</span>
+            </div>
+
+            <div class="schedule-task-item">
+              <span class="schedule-task-text">Join button w EventDetailsScreen</span>
+              <span class="schedule-task-overdue">5d</span>
+            </div>
+<p class="more-tasks">... i 5 więcej</p>
           </div>
         </div>
 
         <div class="task-list-card task-list-upcoming">
           <h3>📆 Najbliższy tydzień (10)</h3>
           <div class="task-list-content">
-<p class="task-list-summary">17h zaplanowane</p>
+<p class="task-list-summary">14h zaplanowane</p>
             <div class="schedule-task-item">
-              <span class="schedule-task-text">Enum SeriesFrequency (WEEKLY, BIWEEKLY)</span>
-              <span class="schedule-task-date">2025-11-20</span>
-            </div>
-
-            <div class="schedule-task-item">
-              <span class="schedule-task-text">Migracja V1_3__Add_event_series_table.sq...</span>
-              <span class="schedule-task-date">2025-11-20</span>
-            </div>
-
-            <div class="schedule-task-item">
-              <span class="schedule-task-text">Link Event → Series (seriesId FK optiona...</span>
+              <span class="schedule-task-text">ParticipantService.promoteFromWaitlist()</span>
               <span class="schedule-task-date">2025-11-21</span>
             </div>
 
             <div class="schedule-task-item">
-              <span class="schedule-task-text">SeriesRepository</span>
-              <span class="schedule-task-date">2025-11-21</span>
-            </div>
-
-            <div class="schedule-task-item">
-              <span class="schedule-task-text">SeriesController</span>
+              <span class="schedule-task-text">Wywołanie promoteFromWaitlist() w leaveE...</span>
               <span class="schedule-task-date">2025-11-22</span>
+            </div>
+
+            <div class="schedule-task-item">
+              <span class="schedule-task-text">Toast notification o promocji</span>
+              <span class="schedule-task-date">2025-11-22</span>
+            </div>
+
+            <div class="schedule-task-item">
+              <span class="schedule-task-text">Update UI po promocji</span>
+              <span class="schedule-task-date">2025-11-22</span>
+            </div>
+
+            <div class="schedule-task-item">
+              <span class="schedule-task-text">Encja EventSeries (uproszczona)</span>
+              <span class="schedule-task-date">2025-11-23</span>
             </div>
 <p class="more-tasks">... i 5 więcej</p>
           </div>
@@ -718,11 +748,11 @@
       <div class="schedule-stats-row">
         <div class="schedule-stat">
           <div class="schedule-stat-label">Ukończone</div>
-          <div class="schedule-stat-value">89/120</div>
+          <div class="schedule-stat-value">95/206</div>
         </div>
         <div class="schedule-stat">
           <div class="schedule-stat-label">Pozostało godzin</div>
-          <div class="schedule-stat-value">55h</div>
+          <div class="schedule-stat-value">339h</div>
         </div>
         <div class="schedule-stat">
           <div class="schedule-stat-label">Velocity</div>
@@ -730,7 +760,7 @@
         </div>
         <div class="schedule-stat">
           <div class="schedule-stat-label">Target velocity</div>
-          <div class="schedule-stat-value">6.2h/day</div>
+          <div class="schedule-stat-value">4.2h/day</div>
         </div>
       </div>
     </div>
@@ -1005,8 +1035,8 @@
       </div>
 
       <div class="subsection">
-        <h3 class="collapsible">Konfiguracja Projektu</h3>
-        <div class="collapsible-content">
+        <h3 class="collapsible collapsed">Konfiguracja Projektu</h3>
+        <div class="collapsible-content collapsed">
           <ul class="task-list">
             <li class="task-item">
               <span class="task-checkbox done"></span>
@@ -1053,8 +1083,8 @@
       </div>
 
       <div class="subsection">
-        <h3 class="collapsible">Model Bazy Danych - Encje JPA (Podstawowe)</h3>
-        <div class="collapsible-content">
+        <h3 class="collapsible collapsed">Model Bazy Danych - Encje JPA (Podstawowe)</h3>
+        <div class="collapsible-content collapsed">
           <ul class="task-list">
             <li class="task-item">
               <span class="task-checkbox done"></span>
@@ -1109,8 +1139,8 @@
       </div>
 
       <div class="subsection">
-        <h3 class="collapsible">Migracje Bazy Danych (Flyway)</h3>
-        <div class="collapsible-content">
+        <h3 class="collapsible collapsed">Migracje Bazy Danych (Flyway)</h3>
+        <div class="collapsible-content collapsed">
           <ul class="task-list">
             <li class="task-item">
               <span class="task-checkbox done"></span>
@@ -1141,8 +1171,8 @@
       </div>
 
       <div class="subsection">
-        <h3 class="collapsible">Spring Security & JWT</h3>
-        <div class="collapsible-content">
+        <h3 class="collapsible collapsed">Spring Security & JWT</h3>
+        <div class="collapsible-content collapsed">
           <ul class="task-list">
             <li class="task-item">
               <span class="task-checkbox done"></span>
@@ -1197,8 +1227,8 @@
       </div>
 
       <div class="subsection">
-        <h3 class="collapsible">Auth Endpoints (Backend)</h3>
-        <div class="collapsible-content">
+        <h3 class="collapsible collapsed">Auth Endpoints (Backend)</h3>
+        <div class="collapsible-content collapsed">
           <ul class="task-list">
             <li class="task-item">
               <span class="task-checkbox done"></span>
@@ -1245,8 +1275,8 @@
       </div>
 
       <div class="subsection">
-        <h3 class="collapsible">Auth Implementation (Flutter)</h3>
-        <div class="collapsible-content">
+        <h3 class="collapsible collapsed">Auth Implementation (Flutter)</h3>
+        <div class="collapsible-content collapsed">
           <ul class="task-list">
             <li class="task-item">
               <span class="task-checkbox done"></span>
@@ -1306,8 +1336,8 @@
       </div>
 
       <div class="subsection">
-        <h3 class="collapsible">Backend - Mapa API</h3>
-        <div class="collapsible-content">
+        <h3 class="collapsible collapsed">Backend - Mapa API</h3>
+        <div class="collapsible-content collapsed">
           <ul class="task-list">
             <li class="task-item">
               <span class="task-checkbox done"></span>
@@ -1346,8 +1376,8 @@
       </div>
 
       <div class="subsection">
-        <h3 class="collapsible">Flutter - Mapa (Google Maps)</h3>
-        <div class="collapsible-content">
+        <h3 class="collapsible collapsed">Flutter - Mapa (Google Maps)</h3>
+        <div class="collapsible-content collapsed">
           <ul class="task-list">
             <li class="task-item">
               <span class="task-checkbox done"></span>
@@ -1463,8 +1493,8 @@
       </div>
 
       <div class="subsection">
-        <h3 class="collapsible">Backend - Wydarzenia CRUD (15h)</h3>
-        <div class="collapsible-content">
+        <h3 class="collapsible collapsed">Backend - Wydarzenia CRUD (15h)</h3>
+        <div class="collapsible-content collapsed">
           <ul class="task-list">
             <li class="task-item">
               <span class="task-checkbox done"></span>
@@ -1625,7 +1655,7 @@
             <li class="task-item">
               <span class="task-checkbox done"></span>
               <span class="task-text">
-                EventStatus enum z CANCELLED (bez COMPLETED, DRAFT) [1h]
+                EventStatus enum z CANCELLED (bez COMPLETED, DRAFT) [1h] ✅ (2025-11-19)
                 
               </span>
               
@@ -1633,7 +1663,7 @@
             <li class="task-item">
               <span class="task-checkbox done"></span>
               <span class="task-text">
-                PUT /api/v1/events/{id}/cancel - tylko zmiana statusu [1h]
+                PUT /api/v1/events/{id}/cancel - tylko zmiana statusu [1h] ✅ (2025-11-19)
                 
               </span>
               
@@ -1641,7 +1671,7 @@
             <li class="task-item">
               <span class="task-checkbox done"></span>
               <span class="task-text">
-                Badge "Cancelled" w UI [1h]
+                Badge "Cancelled" w UI [1h] ✅ (2025-11-19)
                 
               </span>
               
@@ -1651,8 +1681,8 @@
       </div>
 
       <div class="subsection">
-        <h3 class="collapsible">Flutter - Wydarzenia CRUD (15h)</h3>
-        <div class="collapsible-content">
+        <h3 class="collapsible collapsed">Flutter - Wydarzenia CRUD (15h)</h3>
+        <div class="collapsible-content collapsed">
           <ul class="task-list">
             <li class="task-item">
               <span class="task-checkbox done"></span>
@@ -1771,8 +1801,8 @@
       </div>
 
       <div class="subsection">
-        <h3 class="collapsible">Backend - Manual Participant Management (15h)</h3>
-        <div class="collapsible-content">
+        <h3 class="collapsible collapsed">Backend - Manual Participant Management (15h)</h3>
+        <div class="collapsible-content collapsed">
           <ul class="task-list">
             <li class="task-item">
               <span class="task-checkbox done"></span>
@@ -1936,8 +1966,8 @@
       </div>
 
       <div class="subsection">
-        <h3 class="collapsible">Flutter - Manual Participant Management UI (15h)</h3>
-        <div class="collapsible-content">
+        <h3 class="collapsible collapsed">Flutter - Manual Participant Management UI (15h)</h3>
+        <div class="collapsible-content collapsed">
           <ul class="task-list">
             <li class="task-item">
               <span class="task-checkbox done"></span>
@@ -2054,6 +2084,432 @@
                   <li class="subtask-item">
                         <span class="task-checkbox done"></span>
                         <span class="subtask-text">State management [1h]</span>
+                        
+                      </li>
+                </ul>
+              </span>
+              
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h3 class="collapsible">Backend - Self-Service Join/Leave (6h)</h3>
+        <div class="collapsible-content">
+          <ul class="task-list">
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                POST /api/v1/events/{eventId}/join [2h]
+                
+                <ul class="subtask-list">
+                  <li class="subtask-item">
+                        <span class="task-checkbox pending"></span>
+                        <span class="subtask-text">Endpoint implementation [1h]</span>
+                        
+                      </li>
+                  <li class="subtask-item">
+                        <span class="task-checkbox pending"></span>
+                        <span class="subtask-text">Walidacja: czy event jest dostępny, czy nie jest pełny [0.5h]</span>
+                        
+                      </li>
+                  <li class="subtask-item">
+                        <span class="task-checkbox pending"></span>
+                        <span class="subtask-text">Authorization: tylko zalogowani użytkownicy [0.5h]</span>
+                        
+                      </li>
+                </ul>
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                DELETE /api/v1/events/{eventId}/leave [2h]
+                
+                <ul class="subtask-list">
+                  <li class="subtask-item">
+                        <span class="task-checkbox pending"></span>
+                        <span class="subtask-text">Endpoint implementation [1h]</span>
+                        
+                      </li>
+                  <li class="subtask-item">
+                        <span class="task-checkbox pending"></span>
+                        <span class="subtask-text">Walidacja: czy uczestnik jest na liście [1h]</span>
+                        
+                      </li>
+                </ul>
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                ParticipantService.joinEvent() [1h]
+                
+                <ul class="subtask-list">
+                  <li class="subtask-item">
+                        <span class="task-checkbox pending"></span>
+                        <span class="subtask-text">Dodanie uczestnika na koniec listy [0.5h]</span>
+                        
+                      </li>
+                  <li class="subtask-item">
+                        <span class="task-checkbox pending"></span>
+                        <span class="subtask-text">Sprawdzenie limitu (slots) [0.5h]</span>
+                        
+                      </li>
+                </ul>
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                ParticipantService.leaveEvent() [1h]
+                
+                <ul class="subtask-list">
+                  <li class="subtask-item">
+                        <span class="task-checkbox pending"></span>
+                        <span class="subtask-text">Usunięcie uczestnika [0.5h]</span>
+                        
+                      </li>
+                  <li class="subtask-item">
+                        <span class="task-checkbox pending"></span>
+                        <span class="subtask-text">Renumeracja pozycji [0.5h]</span>
+                        
+                      </li>
+                </ul>
+              </span>
+              
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h3 class="collapsible">Flutter - Self-Service Join/Leave UI (4h)</h3>
+        <div class="collapsible-content">
+          <ul class="task-list">
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Join button w EventDetailsScreen [2h]
+                
+                <ul class="subtask-list">
+                  <li class="subtask-item">
+                        <span class="task-checkbox pending"></span>
+                        <span class="subtask-text">Button UI + warunek (czy user już jest na liście) [1h]</span>
+                        
+                      </li>
+                  <li class="subtask-item">
+                        <span class="task-checkbox pending"></span>
+                        <span class="subtask-text">HTTP POST /api/v1/events/{id}/join [0.5h]</span>
+                        
+                      </li>
+                  <li class="subtask-item">
+                        <span class="task-checkbox pending"></span>
+                        <span class="subtask-text">Toast confirmation [0.5h]</span>
+                        
+                      </li>
+                </ul>
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Leave button w EventDetailsScreen [1h]
+                
+                <ul class="subtask-list">
+                  <li class="subtask-item">
+                        <span class="task-checkbox pending"></span>
+                        <span class="subtask-text">Button UI + confirm dialog [0.5h]</span>
+                        
+                      </li>
+                  <li class="subtask-item">
+                        <span class="task-checkbox pending"></span>
+                        <span class="subtask-text">HTTP DELETE /api/v1/events/{id}/leave [0.5h]</span>
+                        
+                      </li>
+                </ul>
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Update UI po join/leave [1h]
+                
+                <ul class="subtask-list">
+                  <li class="subtask-item">
+                        <span class="task-checkbox pending"></span>
+                        <span class="subtask-text">Refresh event details [0.5h]</span>
+                        
+                      </li>
+                  <li class="subtask-item">
+                        <span class="task-checkbox pending"></span>
+                        <span class="subtask-text">Update participants count [0.5h]</span>
+                        
+                      </li>
+                </ul>
+              </span>
+              
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h3 class="collapsible">Backend - Simple Waitlist (6h)</h3>
+        <div class="collapsible-content">
+          <ul class="task-list">
+            <li class="task-item">
+              <span class="task-checkbox done"></span>
+              <span class="task-text">
+                Enum ParticipantStatus (MAIN_LIST, WAITLIST) [1h]
+                
+                <ul class="subtask-list">
+                  <li class="subtask-item">
+                        <span class="task-checkbox done"></span>
+                        <span class="subtask-text">Dodanie do EventParticipant [0.5h]</span>
+                        
+                      </li>
+                  <li class="subtask-item">
+                        <span class="task-checkbox done"></span>
+                        <span class="subtask-text">Migracja [0.5h]</span>
+                        
+                      </li>
+                </ul>
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox done"></span>
+              <span class="task-text">
+                Logika main list vs waitlist w joinEvent() [2h]
+                
+                <ul class="subtask-list">
+                  <li class="subtask-item">
+                        <span class="task-checkbox done"></span>
+                        <span class="subtask-text">Sprawdzenie liczby uczestników na MAIN_LIST [1h]</span>
+                        
+                      </li>
+                  <li class="subtask-item">
+                        <span class="task-checkbox done"></span>
+                        <span class="subtask-text">Automatyczne przypisanie statusu (MAIN_LIST lub WAITLIST) [1h]</span>
+                        
+                      </li>
+                </ul>
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox done"></span>
+              <span class="task-text">
+                GET /api/v1/events/{eventId}/participants - zwraca obie listy [1h]
+                
+                <ul class="subtask-list">
+                  <li class="subtask-item">
+                        <span class="task-checkbox done"></span>
+                        <span class="subtask-text">DTO rozszerzone o status [0.5h]</span>
+                        
+                      </li>
+                  <li class="subtask-item">
+                        <span class="task-checkbox done"></span>
+                        <span class="subtask-text">Sortowanie (MAIN_LIST na górze) [0.5h]</span>
+                        
+                      </li>
+                </ul>
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Dodanie pola waitlistCount do EventDTO [1h]
+                
+                <ul class="subtask-list">
+                  <li class="subtask-item">
+                        <span class="task-checkbox pending"></span>
+                        <span class="subtask-text">Obliczanie liczby na waitliście [1h]</span>
+                        
+                      </li>
+                </ul>
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Testy logiki waitlist [1h]
+                
+              </span>
+              
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h3 class="collapsible">Flutter - Simple Waitlist UI (4h)</h3>
+        <div class="collapsible-content">
+          <ul class="task-list">
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Waitlist badge w EventDetailsScreen [1h]
+                
+                <ul class="subtask-list">
+                  <li class="subtask-item">
+                        <span class="task-checkbox pending"></span>
+                        <span class="subtask-text">Badge "Main List" / "Waitlist" przy join button [0.5h]</span>
+                        
+                      </li>
+                  <li class="subtask-item">
+                        <span class="task-checkbox pending"></span>
+                        <span class="subtask-text">Info o pozycji na waitliście [0.5h]</span>
+                        
+                      </li>
+                </ul>
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Podział listy uczestników (ParticipantsManageScreen) [2h]
+                
+                <ul class="subtask-list">
+                  <li class="subtask-item">
+                        <span class="task-checkbox pending"></span>
+                        <span class="subtask-text">Sekcja "Main List" (slots first) [1h]</span>
+                        
+                      </li>
+                  <li class="subtask-item">
+                        <span class="task-checkbox pending"></span>
+                        <span class="subtask-text">Sekcja "Waitlist" (reszta) [1h]</span>
+                        
+                      </li>
+                </ul>
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Wyświetlanie liczby na waitliście [1h]
+                
+                <ul class="subtask-list">
+                  <li class="subtask-item">
+                        <span class="task-checkbox pending"></span>
+                        <span class="subtask-text">EventPopUpCard update [0.5h]</span>
+                        
+                      </li>
+                  <li class="subtask-item">
+                        <span class="task-checkbox pending"></span>
+                        <span class="subtask-text">EventDetailsScreen update [0.5h]</span>
+                        
+                      </li>
+                </ul>
+              </span>
+              
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h3 class="collapsible">Backend - Auto-Promocja (3h)</h3>
+        <div class="collapsible-content">
+          <ul class="task-list">
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                ParticipantService.promoteFromWaitlist() [2h]
+                
+                <ul class="subtask-list">
+                  <li class="subtask-item">
+                        <span class="task-checkbox pending"></span>
+                        <span class="subtask-text">Znalezienie pierwszego z WAITLIST (order by position) [0.5h]</span>
+                        
+                      </li>
+                  <li class="subtask-item">
+                        <span class="task-checkbox pending"></span>
+                        <span class="subtask-text">Zmiana statusu WAITLIST → MAIN_LIST [0.5h]</span>
+                        
+                      </li>
+                  <li class="subtask-item">
+                        <span class="task-checkbox pending"></span>
+                        <span class="subtask-text">Renumeracja pozycji [1h]</span>
+                        
+                      </li>
+                </ul>
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Wywołanie promoteFromWaitlist() w leaveEvent() [1h]
+                
+                <ul class="subtask-list">
+                  <li class="subtask-item">
+                        <span class="task-checkbox pending"></span>
+                        <span class="subtask-text">Hook po usunięciu uczestnika [0.5h]</span>
+                        
+                      </li>
+                  <li class="subtask-item">
+                        <span class="task-checkbox pending"></span>
+                        <span class="subtask-text">Sprawdzenie, czy jest ktoś na waitliście [0.5h]</span>
+                        
+                      </li>
+                </ul>
+              </span>
+              
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="subsection">
+        <h3 class="collapsible">Flutter - Auto-Promocja UI (2h)</h3>
+        <div class="collapsible-content">
+          <ul class="task-list">
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Toast notification o promocji [1h]
+                
+                <ul class="subtask-list">
+                  <li class="subtask-item">
+                        <span class="task-checkbox pending"></span>
+                        <span class="subtask-text">"Awansowałeś z waitlisty!" [0.5h]</span>
+                        
+                      </li>
+                  <li class="subtask-item">
+                        <span class="task-checkbox pending"></span>
+                        <span class="subtask-text">Event listener (polling lub push w przyszłości) [0.5h]</span>
+                        
+                      </li>
+                </ul>
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Update UI po promocji [1h]
+                
+                <ul class="subtask-list">
+                  <li class="subtask-item">
+                        <span class="task-checkbox pending"></span>
+                        <span class="subtask-text">Refresh participant list [0.5h]</span>
+                        
+                      </li>
+                  <li class="subtask-item">
+                        <span class="task-checkbox pending"></span>
+                        <span class="subtask-text">Update badge status [0.5h]</span>
                         
                       </li>
                 </ul>
@@ -2421,18 +2877,18 @@
               
             </li>
             <li class="task-item">
-              <span class="task-checkbox pending"></span>
+              <span class="task-checkbox done"></span>
               <span class="task-text">
-                Error states z retry button [2h]
+                Error states z retry button [2h] ✅ (2025-11-19)
                 
                 <ul class="subtask-list">
                   <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
+                        <span class="task-checkbox done"></span>
                         <span class="subtask-text">Error widgets [1h]</span>
                         
                       </li>
                   <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
+                        <span class="task-checkbox done"></span>
                         <span class="subtask-text">Retry logic [1h]</span>
                         
                       </li>
@@ -2715,13 +3171,13 @@
       </div>
 
       <div class="subsection">
-        <h3 class="collapsible">Backend (25h)</h3>
+        <h3 class="collapsible">Backend (35h)</h3>
         <div class="collapsible-content">
           <ul class="task-list">
             <li class="task-item">
-              <span class="task-checkbox pending"></span>
+              <span class="task-checkbox done"></span>
               <span class="task-text">
-                POST /api/v1/events/{id}/join - uczestnik sam dołącza [5h]
+                Custom exceptions [2h] ✅ (2025-11-19)
                 
               </span>
               
@@ -2729,7 +3185,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                DELETE /api/v1/events/{id}/leave - uczestnik sam opuszcza [3h]
+                Manual promote/demote z waitlisty [8h]
                 
               </span>
               
@@ -2737,7 +3193,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                Enum ParticipantStatus (MAIN_LIST, WAITLIST) [2h]
+                Drag & drop reordering positions [6h]
                 
               </span>
               
@@ -2745,7 +3201,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                Logika main list vs waitlist [7h]
+                Payment tracking (isPaid, paymentMethod) [10h]
                 
               </span>
               
@@ -2753,7 +3209,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                Awans z waitlist po opuszczeniu [4h]
+                MONTHLY frequency dla serii [5h]
                 
               </span>
               
@@ -2761,15 +3217,7 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                Renumbering positions [2h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Custom exceptions [2h]
+                skipHolidays logic [4h]
                 
               </span>
               
@@ -2779,41 +3227,9 @@
       </div>
 
       <div class="subsection">
-        <h3 class="collapsible">Flutter (20h)</h3>
+        <h3 class="collapsible">Flutter (30h)</h3>
         <div class="collapsible-content">
           <ul class="task-list">
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Join button w EventDetailsScreen [4h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Leave button [3h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Waitlist badge [2h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Toast notifications [2h]
-                
-              </span>
-              
-            </li>
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
@@ -2825,7 +3241,31 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                EventParticipantService [4h]
+                Manual promote/demote UI [6h]
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Drag & drop reordering UI [5h]
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Payment tracking UI [8h]
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                Advanced series management [6h]
                 
               </span>
               
@@ -3645,17 +4085,17 @@
               
             </li>
             <li class="task-item">
-              <span class="task-checkbox pending"></span>
+              <span class="task-checkbox done"></span>
               <span class="task-text">
-                CORS allow‑list, brak `*` z Credentials [2h]
+                CORS allow‑list, brak `*` z Credentials [2h] ✅ (2025-11-19)
                 
               </span>
               
             </li>
             <li class="task-item">
-              <span class="task-checkbox pending"></span>
+              <span class="task-checkbox done"></span>
               <span class="task-text">
-                Rate limits: login, mutujące endpointy, series generate [3h]
+                Rate limits: login, mutujące endpointy, series generate [3h] ✅ (2025-11-19)
                 
               </span>
               
@@ -3845,9 +4285,9 @@
               
             </li>
             <li class="task-item">
-              <span class="task-checkbox pending"></span>
+              <span class="task-checkbox done"></span>
               <span class="task-text">
-                Organizator może dodać wydarzenie
+                Organizator może dodać wydarzenie ✅
                 
               </span>
               
@@ -3855,7 +4295,39 @@
             <li class="task-item">
               <span class="task-checkbox pending"></span>
               <span class="task-text">
-                Organizator może dodać uczestnika
+                Organizator może dodać uczestnika (ręcznie)
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                **⭐ Uczestnik może DOŁĄCZYĆ do wydarzenia (self-service)**
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                **⭐ Uczestnik może OPUŚCIĆ wydarzenie (self-service)**
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                **⭐ Prosta WAITLISTA (FIFO) działa**
+                
+              </span>
+              
+            </li>
+            <li class="task-item">
+              <span class="task-checkbox pending"></span>
+              <span class="task-text">
+                **⭐ Auto-promocja z waitlisty działa**
                 
               </span>
               
@@ -3869,9 +4341,9 @@
               
             </li>
             <li class="task-item">
-              <span class="task-checkbox pending"></span>
+              <span class="task-checkbox done"></span>
               <span class="task-text">
-                Organizator widzi swoje wydarzenia
+                Organizator widzi swoje wydarzenia ✅
                 
               </span>
               
@@ -3920,7 +4392,7 @@
       <h2>📊 Podsumowanie</h2>
 
       <p style="margin-bottom: var(--space-sm); color: #2563eb; font-weight: 600; background: #dbeafe; padding: var(--space-md); border-radius: var(--radius-md); border-left: 4px solid #3b82f6;">
-        📌 Widok: <strong>Aktualny Harmonogram (Milestone 1)</strong> - Zadania zaplanowane do 2025-12-12
+        📌 Widok: <strong>Aktualny Harmonogram (Milestone 1)</strong> - Zadania zaplanowane do 2026-03-01
       </p>
       <p style="margin-bottom: var(--space-lg); color: var(--color-text-secondary);">
         Przy dostępności <strong>15h/tydzień</strong> w wolnym czasie (Solo Developer)
@@ -3929,29 +4401,29 @@
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-lg); margin-bottom: var(--space-xl);">
         <div style="background: white; padding: var(--space-lg); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); border-left: 4px solid #3b82f6;">
           <div style="font-size: 0.9rem; color: var(--color-text-secondary); margin-bottom: var(--space-xs);">Całkowite godziny</div>
-          <div style="font-size: 2rem; font-weight: bold; color: var(--color-primary);">174h</div>
+          <div style="font-size: 2rem; font-weight: bold; color: var(--color-primary);">467h</div>
         </div>
         <div style="background: white; padding: var(--space-lg); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); border-left: 4px solid #10b981;">
           <div style="font-size: 0.9rem; color: var(--color-text-secondary); margin-bottom: var(--space-xs);">Ukończone</div>
-          <div style="font-size: 2rem; font-weight: bold; color: #10b981;">119h</div>
+          <div style="font-size: 2rem; font-weight: bold; color: #10b981;">128h</div>
         </div>
         <div style="background: white; padding: var(--space-lg); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); border-left: 4px solid #f59e0b;">
           <div style="font-size: 0.9rem; color: var(--color-text-secondary); margin-bottom: var(--space-xs);">Pozostałe</div>
-          <div style="font-size: 2rem; font-weight: bold; color: #f59e0b;">55h</div>
+          <div style="font-size: 2rem; font-weight: bold; color: #f59e0b;">339h</div>
         </div>
         <div style="background: white; padding: var(--space-lg); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); border-left: 4px solid #8b5cf6;">
           <div style="font-size: 0.9rem; color: var(--color-text-secondary); margin-bottom: var(--space-xs);">Czas trwania</div>
-          <div style="font-size: 2rem; font-weight: bold; color: #8b5cf6;">4 tyg.</div>
+          <div style="font-size: 2rem; font-weight: bold; color: #8b5cf6;">16 tyg.</div>
         </div>
       </div>
 
       <div style="margin-top: var(--space-xl); padding: var(--space-xl); background: white; border-radius: var(--radius-md); border: 2px solid var(--color-primary);">
         <h3 style="color: var(--color-primary); margin-bottom: var(--space-md);">🎯 Milestone 1: Organizer MVP</h3>
         <div style="font-size: 1.1rem; line-height: 1.8;">
-          <p><strong>174h / 15h/tydzień = 4 tygodni</strong></p>
-          <p style="margin-top: var(--space-sm);"><strong>Deadline:</strong> 2025-12-12</p>
+          <p><strong>467h / 15h/tydzień = 16 tygodni</strong></p>
+          <p style="margin-top: var(--space-sm);"><strong>Deadline:</strong> 2026-03-01</p>
           <p style="margin-top: var(--space-md); font-size: 0.95rem; color: var(--color-text-secondary);">
-            Postęp: <strong>74.2%</strong> (119h / 174h)
+            Postęp: <strong>46.1%</strong> (128h / 467h)
           </p>
         </div>
       </div>
@@ -3981,7 +4453,7 @@
     <div class="summary-section" style="display: none;">
       <h2>📊 Podsumowanie Estymat</h2>
       <p style="margin-bottom: var(--space-sm); color: #2563eb; font-weight: 600; background: #dbeafe; padding: var(--space-md); border-radius: var(--radius-md); border-left: 4px solid #3b82f6;">
-        📌 Widok: <strong>Aktualny Harmonogram (Milestone 1)</strong> - Zadania zaplanowane do 2025-12-12
+        📌 Widok: <strong>Aktualny Harmonogram (Milestone 1)</strong> - Zadania zaplanowane do 2026-03-01
       </p>
       <p style="margin-bottom: var(--space-lg); color: var(--color-text-secondary);">
         Przy dostępności <strong>15h/tydzień</strong> w wolnym czasie (Solo Developer)

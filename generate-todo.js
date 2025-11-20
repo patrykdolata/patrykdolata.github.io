@@ -1481,9 +1481,20 @@ function generateHtml(features, stats, mvpSummary, postMvpSummary, scheduleData 
 
     // Only render subsections that have tasks
     subsectionsWithTasks.forEach(subsection => {
+      // Check if subsection is completed (all tasks are done)
+      const allTasksDone = subsection.tasks.every(task => {
+        // Check main task and all subtasks
+        const taskDone = task.status === 'done';
+        const subtasksDone = task.subtasks.length === 0 ||
+          task.subtasks.every(sub => typeof sub === 'object' ? sub.status === 'done' : true);
+        return taskDone && subtasksDone;
+      });
+
+      const collapsedClass = allTasksDone ? ' collapsed' : '';
+
       html += `      <div class="subsection">
-        <h3 class="collapsible">${subsection.title}${subsection.duration ? ` (${subsection.duration})` : ''}</h3>
-        <div class="collapsible-content">
+        <h3 class="collapsible${collapsedClass}">${subsection.title}${subsection.duration ? ` (${subsection.duration})` : ''}</h3>
+        <div class="collapsible-content${collapsedClass}">
           <ul class="task-list">
 `;
 
