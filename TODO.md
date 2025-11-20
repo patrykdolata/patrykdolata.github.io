@@ -1,32 +1,33 @@
 # Meet App - TODO Lista (Organizer-Focused MVP)
 
-> **Projekt:** Aplikacja do planowania wydarzeń siatkówki
-> **Stack:** Spring Boot (Backend) + Flutter (Mobile) + PostgreSQL
-> **Solo developer:** Wszystko robione samodzielnie
-> **Start:** 2025-11-13
-> **Cel:** Działający MVP dla ORGANIZATORA do końca 2025 roku
+> Projekt: Aplikacja do planowania wydarzeń siatkówki
+> Stack: Spring Boot (Backend) + Flutter (Mobile) + PostgreSQL
+> Solo developer: Wszystko robione samodzielnie
+> Start: 2025-11-13
+> Cel: Działający MVP dla ORGANIZATORA do końca 2025 roku
 
 ---
 
 ## 🎯 PROJECT STATUS
 
-- **Current Phase:** MILESTONE 1 - Organizer MVP (ZAKTUALIZOWANY)
-- **Target:** 2025-12-31 (7-8 tygodni)
-- **Weekly hours:** 15h
-- **Overall progress:** 38%
-- **Last updated:** 2025-11-20
+- Current Phase: MILESTONE 1 - Organizer MVP (ZAKTUALIZOWANY)
+- Target: 2025-12-31 (7-8 tygodni)
+- Weekly hours: 15h
+- Overall progress: 52% (+14% this week!)
+- Last updated: 2025-11-20
 
 ### ✅ What's Working:
-- Sprint 0: Auth & JWT (95% done)
-- Feature 0: Mapa z markerami (80% done)
-- Feature 5.5: Ulubione lokalizacje (90% done)
-- **Feature 1: Basic Events CRUD (93% done)** ✅ CREATE/EDIT/DELETE works!
+- Sprint 0: Auth & JWT (95% done) ✅
+- Feature 0: Mapa z markerami (80% done) ✅
+- Feature 5.5: Ulubione lokalizacje (90% done) ✅
+- Feature 1: Basic Events CRUD (100% done) ✅ CREATE/EDIT/DELETE/CANCEL works!
+- Feature 3: Manual Participants Management (100% done) ✅ ADD/REMOVE works!
+- Feature S2: Simple Waitlist (50% done) 🟡 Backend partially done
 
 ### 🔴 Current Focus (Next 2 weeks):
-- Feature 3: Zarządzanie uczestnikami RĘCZNIE (30h) 👈 START HERE
-- **⭐ Feature S1: Minimalny Self-Service Join/Leave (10h)** 👈 NOWE!
-- **⭐ Feature S2: Simple Waitlist FIFO (10h)** 👈 NOWE!
-- **⭐ Feature S3: Auto-Promocja z waitlisty (5h)** 👈 NOWE!
+- ⭐ Feature S1: Self-Service Join/Leave (10h) 👈 START HERE
+- ⭐ Feature S2: Complete Waitlist FIFO (5h remaining) 👈 50% done
+- ⭐ Feature S3: Auto-Promocja z waitlisty (5h)
 - Feature 4: Cykliczne wydarzenia (25h)
 - Feature 6: Bottom navigation (15h)
 
@@ -34,24 +35,25 @@
 
 ## 📋 MILESTONE 1 (ZMODYFIKOWANY): Organizer MVP + Minimum Self-Service 🔴 [DO KOŃCA 2025]
 
-**Deadline:** 2025-12-31 (7-8 tygodni)
-**Focus:** Organizator tworzy, zarządza i automatycznie uzupełnia skład (podstawowo)
-**Total:** ~140h (było ~115h + 25h na self-service)
+Deadline: 2025-12-31 (7-8 tygodni)
+Focus: Organizator tworzy, zarządza i automatycznie uzupełnia skład (podstawowo)
+Total: ~140h (było ~115h + 25h na self-service)
 
-### NOWA Definicja Sukcesu:
-- [x] Użytkownik może się zarejestrować i zalogować
-- [x] Użytkownik widzi wydarzenia na mapie
-- [x] ORGANIZATOR może stworzyć wydarzenie (CreateEventScreen ✅)
-- [ ] ORGANIZATOR może RĘCZNIE dodać uczestników do wydarzenia
-- [ ] **⭐ UCZESTNIK może DOŁĄCZYĆ do wydarzenia** (self-service join)
-- [ ] **⭐ UCZESTNIK może OPUŚCIĆ wydarzenie** (self-service leave)
-- [ ] **⭐ Prosta WAITLISTA (FIFO)** - uczestnicy ponad limit na waitliście
-- [ ] **⭐ Auto-promocja z waitlisty** - gdy ktoś opuszcza, pierwszy z waitlisty awansuje
-- [ ] ORGANIZATOR może stworzyć serię cyklicznych wydarzeń (co tydzień)
-- [x] ORGANIZATOR widzi swoje wydarzenia (kalendarz/lista)
-- [ ] Aplikacja działa na produkcji
+### Co Musi Działać (Definicja Sukcesu):
+- [x] Nowy użytkownik może się zarejestrować i zalogować ✅
+- [x] Użytkownik widzi wszystkie wydarzenia na mapie miasta ✅
+- [x] Organizator może utworzyć nowe wydarzenie ✅
+- [x] Organizator może dodać uczestników do wydarzenia (ręcznie) ✅
+- [x] Organizator może usunąć uczestnika z wydarzenia ✅
+- [ ] ⭐ Uczestnik może samodzielnie zapisać się na wydarzenie
+- [ ] ⭐ Uczestnik może samodzielnie zrezygnować z wydarzenia
+- [ ] ⭐ System automatycznie tworzy listę rezerwową gdy brakuje miejsc [50% gotowe]
+- [ ] ⭐ System automatycznie awansuje osoby z listy rezerwowej gdy ktoś rezygnuje
+- [ ] Organizator może utworzyć serię regularnych treningów (np. co wtorek przez 10 tygodni)
+- [x] Organizator widzi listę swoich wydarzeń ✅
+- [ ] Aplikacja działa online (dostępna przez internet)
 
-**POWÓD ZMIANY:** Organizator nie będzie ręcznie dodawał wszystkich graczy – MVP musi pozwalać im dołączać samodzielnie.
+POWÓD ZMIANY: Organizator nie będzie ręcznie dodawał wszystkich graczy – MVP musi pozwalać im dołączać samodzielnie.
 
 ---
 
@@ -99,7 +101,7 @@
 - [x] Login/Register forms
 - [x] Token validation i auto-refresh
 
-**Sprint 0 Status: ✅ DONE**
+Sprint 0 Status: ✅ DONE
 
 ---
 
@@ -125,83 +127,53 @@
 - [x] EventMarkerService - filtruje nieaktualne
 - [x] FavoriteLocationNotifier - centrowanie z ulubionych
 
-**Feature 0 Status: ✅ 80% DONE**
+Feature 0 Status: ✅ 80% DONE
 
 ---
 
-## Feature 1: Podstawowe operacje na Wydarzeniach ✅ [93% DONE → 2h opcjonalne]
+## Feature 1: Podstawowe operacje na Wydarzeniach ✅ [100% DONE]
 
-**Priorytet:** CRITICAL - organizator musi móc tworzyć wydarzenia
-**Deadline:** Tydzień 1-2 (do 2025-11-27)
-**Scope M1:** Basic CRUD (POST/GET/PUT/DELETE) + minimal cancel
-**Out of Scope M1:** SportType enum, zaawansowane filtry (minLevel, sportType, search) - to Post-MVP
+Priorytet: CRITICAL - organizator musi móc tworzyć wydarzenia
+Deadline: Tydzień 1-2 (do 2025-11-27) ✅ COMPLETED
+Scope M1: Basic CRUD (POST/GET/PUT/DELETE) + minimal cancel ✅
+Out of Scope M1: SportType enum, zaawansowane filtry (minLevel, sportType, search) - to Post-MVP
 
-### Backend - Wydarzenia CRUD [15h]
+### Backend - System Zarządzania Wydarzeniami [15h] ✅
 
-#### Obecny stan:
-- [x] EventController - podstawowa struktura
-- [x] GET /api/v1/events - lista wydarzeń
-- [x] GET /api/v1/events/{id} - szczegóły
-- [x] PUT /api/v1/events - bulk add/update
-- [x] PUT /api/v1/events/{id} - edycja
-- [x] DELETE /api/v1/events/{id} - usunięcie
-- [x] EventService podstawowy
+#### Ukończone funkcjonalności:
+- [x] System zwraca listę wszystkich wydarzeń ✅
+- [x] System zwraca szczegóły pojedynczego wydarzenia ✅
+- [x] Organizator może tworzyć nowe wydarzenie ✅
+- [x] Organizator może edytować swoje wydarzenie ✅
+- [x] Organizator może usunąć swoje wydarzenie ✅
+- [x] System waliduje poprawność danych wydarzenia (daty, liczba miejsc, poziom) ✅
+- [x] Organizator widzi tylko swoje wydarzenia ✅
+- [x] System sortuje wydarzenia według daty rozpoczęcia ✅
+- [x] Organizator może odwołać wydarzenie (status CANCELLED) ✅
+- [x] Użytkownicy widzą badge "Odwołane" przy odwołanych wydarzeniach ✅
+- [x] System zabezpiecza przed konfliktami podczas równoczesnej edycji (optimistic locking) ✅
 
-#### Do zrobienia:
-- [x] POST /events (single create) [3h]
-  - [x] Endpoint implementation + DTO mapping [2h]
-  - [x] Validation logic + error handling [1h]
+### Mobile - Interfejs Zarządzania Wydarzeniami [15h] ✅
 
-- [x] DTOs: CreateEventRequest, UpdateEventRequest (rozdzielenie) [3h]
-  - [x] CreateEventRequest DTO + validation [2h]
-  - [x] UpdateEventRequest DTO + partial update logic [1h]
+#### Ukończone funkcjonalności:
+- [x] Organizator widzi pełne szczegóły wydarzenia ✅
+- [x] Organizator może utworzyć nowe wydarzenie przez formularz ✅
+  - [x] Wypełnienie nazwy, opisu, daty i godziny
+  - [x] Wybór lokalizacji na mapie
+  - [x] Ustawienie liczby miejsc, ceny, poziomu trudności
+  - [x] Walidacja wprowadzonych danych
 
-- [x] Walidacje rozszerzone [3h]
-  - [x] DateTime & duration validations [2h]
-  - [x] Slots & level business logic validations [1h]
+- [x] Organizator może edytować istniejące wydarzenie ✅
+  - [x] Formularz wypełnia się aktualnymi danymi
+  - [x] Zapisanie zmian
 
-- [x] Query params: organizerId (moje wydarzenia) [3h] ✅ (2025-11-14)
-  - [x] GET /api/v1/events?organizerId={id} [2h]
-  - [x] EventRepository.findByUserIdWithLocation [1h]
+- [x] Organizator może usunąć wydarzenie ✅
+  - [x] Potwierdzenie usunięcia przez dialog
+  - [x] Odświeżenie listy po usunięciu
 
-- [x] EventRepository custom queries [3h] ✅ (2025-11-14)
-  - [x] Filter by organizerId with JOIN FETCH [2h]
-  - [x] Query optimization + ordering by startDateTime [1h]
+✅ Kamień Milowy M1: Organizator ma pełną kontrolę nad swoimi wydarzeniami (tworzenie, edycja, usuwanie)
 
-#### Minimalny status i odwołanie (M1) - OPCJONALNE
-**Uwaga:** Pełna funkcjonalność cancel to M2 (FEATURE_07), w M1 wystarczy DELETE
-- [x] EventStatus enum z CANCELLED (bez COMPLETED, DRAFT) [1h] ✅ (2025-11-19)
-- [x] PUT /api/v1/events/{id}/cancel - tylko zmiana statusu [1h] ✅ (2025-11-19)
-- [x] Badge "Cancelled" w UI [1h] ✅ (2025-11-19)
-**Total:** 3h (opcjonalne dla M1)
-
-### Flutter - Wydarzenia CRUD [15h]
-
-#### Obecny stan:
-- [x] EventDetailsWidget - pełny widok szczegółów
-- [x] EventDetailsScreen - routing + navigation
-
-#### Do zrobienia:
-- [x] CreateEventScreen + formularz [8h] ✅ (2025-11-14)
-  - [x] Screen structure + form builder [2h]
-  - [x] Basic fields (title, message, dateTime) [2h]
-  - [x] Location picker integration [1h]
-  - [x] Slots, price, level inputs [2h]
-  - [x] Form validation + submission [1h]
-
-- [x] HTTP POST /api/v1/events integration [2h]
-
-- [x] EditEventScreen (reuse CreateEvent logic) [3h]
-  - [x] Screen setup + pre-fill data [2h]
-  - [x] Update API integration [1h]
-
-- [x] Delete event + confirm dialog [2h]
-  - [x] Confirm dialog UI [1h]
-  - [x] Delete API call + UI update [1h]
-
-**Feature 1 Milestone M1:** Organizator może dodać, edytować i usunąć swoje wydarzenie ✅
-
-**Out of Scope M1** (Post-MVP w FEATURE_01.md):
+Out of Scope M1 (Post-MVP w FEATURE_01.md):
 - SportType enum (12 typów sportów)
 - Zaawansowane filtry (sportType, minLevel, maxLevel, search, availableOnly)
 - Group linking (to FEATURE_03.5)
@@ -210,398 +182,371 @@
 
 ---
 
-## Feature 3: Zarządzanie Uczestnikami - MANUAL 🔴 [0% DONE → 30h]
+## Feature 3: Zarządzanie Uczestnikami - MANUAL ✅ [100% DONE]
 
-**Priorytet:** CRITICAL - organizator musi móc zarządzać listą
-**Deadline:** Tydzień 3-4 (do 2025-12-11)
-**Scope:** Organizator RĘCZNIE dodaje/usuwa uczestników
+Priorytet: CRITICAL - organizator musi móc zarządzać listą
+Deadline: Tydzień 3-4 (do 2025-12-11) ✅ COMPLETED
+Scope: Organizator RĘCZNIE dodaje/usuwa uczestników ✅
 
-**UWAGA:** W tym MVP **BEZ self-service** (uczestnik NIE może sam dołączyć)
+UWAGA: W tym MVP BEZ self-service (uczestnik NIE może sam dołączyć)
 
-### Backend - Manual Participant Management [15h]
+### Backend - System Zarządzania Uczestnikami [15h] ✅
 
-- [x] Encja EventParticipant (uproszczona) [3h]
-  - [x] Podstawowa struktura encji [2h]
-    - event (ManyToOne → EventEntity)
-    - user (ManyToOne → UserEntity)
-    - position (Integer)
-    - addedAt (LocalDateTime)
-    - addedBy (ManyToOne → UserEntity) - kto dodał
-  - [x] Relacje + indeksy [1h]
-  - **BEZ:** status (MAIN_LIST/WAITLIST), isPaid, isConfirmed, paymentMethod
+#### Ukończone funkcjonalności:
+- [x] System przechowuje listę uczestników wydarzenia ✅
+  - [x] Informacje: uczestnik, pozycja na liście, data dołączenia, kto dodał
+  - [x] Każdy użytkownik może być uczestnikiem tylko raz na wydarzeniu
+  - [x] Baza danych przygotowana (migracja V1_6)
 
-- [x] Migracja V1_2__Add_event_participant_table.sql [2h]
+- [x] Organizator może dodać uczestnika do wydarzenia ✅
+  - [x] Dodawanie po ID użytkownika lub emailu
+  - [x] Tylko organizator może dodawać uczestników
+  - [x] Automatyczne przypisanie pozycji na liście
 
-- [x] EventParticipantRepository + query methods [1h]
-  - [x] Repository interface [1h]
-  - [x] findByEventIdOrderByPositionAsc [0.5h]
-  - [x] countByEventId [0.5h]
+- [x] Organizator może usunąć uczestnika z wydarzenia ✅
+  - [x] Tylko organizator może usuwać uczestników
+  - [x] Automatyczne przenumerowanie pozycji pozostałych uczestników
 
-- [x] POST /api/v1/events/{eventId}/participants (manual add) [3h]
-  - [x] Endpoint implementation [2h]
-  - [x] DTO: AddParticipantRequest (userId lub email) [0.5h]
-  - [x] Authorization: tylko organizator [0.5h]
+- [x] System zwraca listę uczestników wydarzenia ✅
+  - [x] Posortowana według pozycji
+  - [x] Podział na główną listę i listę rezerwową
+  - [x] Informacje o użytkowniku i jego pozycji
 
-- [x] DELETE /api/v1/events/{eventId}/participants/{userId} (remove) [2h]
-  - [x] Endpoint implementation [1h]
-  - [x] Authorization: tylko organizator [1h]
+### Mobile - Interfejs Zarządzania Uczestnikami [15h] ✅
 
-- [x] GET /api/v1/events/{eventId}/participants (lista) [1h]
-  - [x] Endpoint + DTO [1h]
-  - [x] ParticipantDTO (user info, position) [1h]
+#### Ukończone funkcjonalności:
+- [x] Organizator widzi ekran zarządzania uczestnikami ✅
+  - [x] Lista wszystkich uczestników z avatarami
+  - [x] Pozycja każdego uczestnika na liście
+  - [x] Dostęp tylko dla organizatora wydarzenia
 
-- [x] ParticipantService - manual management [2h]
-  - [x] addParticipant (manual by organizer) [1h]
-  - [x] removeParticipant [1h]
-  - [x] Renumber positions [1h]
+- [x] Organizator może dodać uczestnika ✅
+  - [x] Przycisk "Dodaj uczestnika"
+  - [x] Dialog wyszukiwania użytkownika po nicku/emailu
+  - [x] Potwierdzenie dodania
 
-- [x] Sprawdzanie uprawnień: tylko organizator wydarzenia [1h]
+- [x] Organizator może usunąć uczestnika ✅
+  - [x] Przycisk "Usuń" przy każdym uczestniku
+  - [x] Dialog potwierdzenia usunięcia
+  - [x] Automatyczne odświeżenie listy
 
-### Flutter - Manual Participant Management UI [15h]
+- [x] Aplikacja synchronizuje zmiany z serwerem ✅
+  - [x] Pobieranie aktualnej listy uczestników
+  - [x] Zapisywanie zmian w czasie rzeczywistym
 
-- [x] ParticipantsManageScreen (dla organizatora) [4h]
-  - [x] Screen structure + lista uczestników [2h]
-  - [x] Navigation z EventDetails [1h]
-  - [x] Warunek: tylko dla organizatora [1h]
+✅ Kamień Milowy M3: Organizator ma pełną kontrolę nad listą uczestników (ręczne zarządzanie)
 
-- [x] Lista uczestników - prosta [3h]
-  - [x] ParticipantListItem widget [2h]
-  - [x] Avatar + nickname + position display [1h]
-
-- [x] Dodaj uczestnika - manual [3h]
-  - [x] Add button [1h]
-  - [x] Search user dialog (po nicku/email) [2h]
-- [x] HTTP POST /api/v1/events/{id}/participants [1h]
-
-- [x] Usuń uczestnika [2h]
-  - [x] Remove button + confirm dialog [1h]
-  - [x] HTTP DELETE [1h]
-
-- [x] Update UI po dodaniu/usunięciu [1h]
-
-- [x] ParticipantManagementService + Notifier [2h]
-  - [x] Service structure [1h]
-  - [x] State management [1h]
-
-**Feature 3 Milestone:** Organizator może RĘCZNIE zarządzać listą uczestników ✅
-
-**Na Q1 2026:**
+Na Q1 2026:
 - Płatności (isPaid, paymentMethod)
 - Drag&drop reordering
 - Advanced waitlist (manual promote/demote)
 
 ---
 
-## 🆕 Feature S1: Self-Service Join/Leave — SIMPLE 🔴 [0% DONE → 10h]
+## 🆕 Feature S1: Samodzielne Zapisywanie się na Wydarzenie 🔴 [0% DONE → 10h]
 
-**Priorytet:** CRITICAL - uczestnicy muszą móc dołączać samodzielnie
-**Deadline:** Tydzień 4 (do 2025-12-04)
-**Scope:** Minimalna wersja - uczestnik może dołączyć lub opuścić wydarzenie
+Priorytet: KRYTYCZNY - uczestnicy muszą móc zapisywać się samodzielnie
+Deadline: Tydzień 4 (do 2025-12-04)
+Zakres: Uczestnik może samodzielnie dołączyć do wydarzenia lub z niego zrezygnować
 
-### Backend - Self-Service Join/Leave [6h]
+### Backend - Samodzielne Zapisywanie [6h]
 
-- [ ] POST /api/v1/events/{eventId}/join [2h]
-  - [ ] Endpoint implementation [1h]
-  - [ ] Walidacja: czy event jest dostępny, czy nie jest pełny [0.5h]
-  - [ ] Authorization: tylko zalogowani użytkownicy [0.5h]
+- [ ] Uczestnik może zapisać się na wydarzenie [2h]
+  - [ ] System sprawdza czy wydarzenie jest dostępne
+  - [ ] System sprawdza czy są wolne miejsca
+  - [ ] Tylko zalogowani użytkownicy mogą się zapisać
 
-- [ ] DELETE /api/v1/events/{eventId}/leave [2h]
-  - [ ] Endpoint implementation [1h]
-  - [ ] Walidacja: czy uczestnik jest na liście [1h]
+- [ ] Uczestnik może zrezygnować z uczestnictwa [2h]
+  - [ ] System sprawdza czy użytkownik jest uczestnikiem
+  - [ ] Usunięcie z listy uczestników
 
-- [ ] ParticipantService.joinEvent() [1h]
-  - [ ] Dodanie uczestnika na koniec listy [0.5h]
-  - [ ] Sprawdzenie limitu (slots) [0.5h]
+- [ ] System dodaje uczestnika na koniec listy [1h]
+  - [ ] Automatyczne przypisanie pozycji
+  - [ ] Sprawdzenie limitu miejsc
 
-- [ ] ParticipantService.leaveEvent() [1h]
-  - [ ] Usunięcie uczestnika [0.5h]
-  - [ ] Renumeracja pozycji [0.5h]
-
-### Flutter - Self-Service Join/Leave UI [4h]
-
-- [ ] Join button w EventDetailsScreen [2h]
-  - [ ] Button UI + warunek (czy user już jest na liście) [1h]
-  - [ ] HTTP POST /api/v1/events/{id}/join [0.5h]
-  - [ ] Toast confirmation [0.5h]
-
-- [ ] Leave button w EventDetailsScreen [1h]
-  - [ ] Button UI + confirm dialog [0.5h]
-  - [ ] HTTP DELETE /api/v1/events/{id}/leave [0.5h]
-
-- [ ] Update UI po join/leave [1h]
-  - [ ] Refresh event details [0.5h]
-  - [ ] Update participants count [0.5h]
-
-**Feature S1 Milestone:** Uczestnik może sam dołączyć i opuścić wydarzenie ✅
-
----
-
-## 🆕 Feature S2: Simple Waitlist (FIFO) 🔴 [0% DONE → 10h]
-
-**Priorytet:** CRITICAL - zarządzanie nadwyżką uczestników
-**Deadline:** Tydzień 5 (do 2025-12-11)
-**Scope:** Prosta waitlista FIFO - kto pierwszy, ten pierwszy
-
-### Backend - Simple Waitlist [6h]
-
-- [x] Enum ParticipantStatus (MAIN_LIST, WAITLIST) [1h]
-  - [x] Dodanie do EventParticipant [0.5h]
-  - [x] Migracja [0.5h]
-
-- [x] Logika main list vs waitlist w joinEvent() [2h]
-  - [x] Sprawdzenie liczby uczestników na MAIN_LIST [1h]
-  - [x] Automatyczne przypisanie statusu (MAIN_LIST lub WAITLIST) [1h]
-
-- [x] GET /api/v1/events/{eventId}/participants - zwraca obie listy [1h]
-  - [x] DTO rozszerzone o status [0.5h]
-  - [x] Sortowanie (MAIN_LIST na górze) [0.5h]
-
-- [ ] Dodanie pola waitlistCount do EventDTO [1h]
-  - [ ] Obliczanie liczby na waitliście [1h]
-
-- [ ] Testy logiki waitlist [1h]
-
-### Flutter - Simple Waitlist UI [4h]
-
-- [ ] Waitlist badge w EventDetailsScreen [1h]
-  - [ ] Badge "Main List" / "Waitlist" przy join button [0.5h]
-  - [ ] Info o pozycji na waitliście [0.5h]
-
-- [ ] Podział listy uczestników (ParticipantsManageScreen) [2h]
-  - [ ] Sekcja "Main List" (slots first) [1h]
-  - [ ] Sekcja "Waitlist" (reszta) [1h]
-
-- [ ] Wyświetlanie liczby na waitliście [1h]
-  - [ ] EventPopUpCard update [0.5h]
-  - [ ] EventDetailsScreen update [0.5h]
-
-**Feature S2 Milestone:** Prosta waitlista działa (FIFO) ✅
-
----
-
-## 🆕 Feature S3: Auto-Promocja z Waitlisty 🔴 [0% DONE → 5h]
-
-**Priorytet:** HIGH - automatyczne uzupełnianie składu
-**Deadline:** Tydzień 5 (do 2025-12-11)
-**Scope:** Automatyczny awans pierwszej osoby z waitlisty
-
-### Backend - Auto-Promocja [3h]
-
-- [ ] ParticipantService.promoteFromWaitlist() [2h]
-  - [ ] Znalezienie pierwszego z WAITLIST (order by position) [0.5h]
-  - [ ] Zmiana statusu WAITLIST → MAIN_LIST [0.5h]
-  - [ ] Renumeracja pozycji [1h]
-
-- [ ] Wywołanie promoteFromWaitlist() w leaveEvent() [1h]
-  - [ ] Hook po usunięciu uczestnika [0.5h]
-  - [ ] Sprawdzenie, czy jest ktoś na waitliście [0.5h]
-
-### Flutter - Auto-Promocja UI [2h]
-
-- [ ] Toast notification o promocji [1h]
-  - [ ] "Awansowałeś z waitlisty!" [0.5h]
-  - [ ] Event listener (polling lub push w przyszłości) [0.5h]
-
-- [ ] Update UI po promocji [1h]
-  - [ ] Refresh participant list [0.5h]
-  - [ ] Update badge status [0.5h]
-
-**Feature S3 Milestone:** Automatyczna promocja działa ✅
-
-**Na Q1 2026:**
-- Email/push notification o promocji
-- Manual promote/demote przez organizatora
-- Drag&drop reordering
-
----
-
-## Feature 4: Cykliczne Wydarzenia - BASIC 🔴 [0% DONE → 25h]
-
-**Priorytet:** HIGH - organizator potrzebuje cyklicznych meczów
-**Deadline:** Tydzień 5-6 (do 2025-12-25)
-**Scope:** Tworzenie serii cyklicznych wydarzeń (co tydzień/2 tygodnie)
-
-### Backend - Event Series BASIC [15h]
-
-- [ ] Encja EventSeries (uproszczona) [3h]
-  - [ ] Podstawowa struktura [2h]
-    - id, name, organizer (ManyToOne → User)
-    - location (ManyToOne → Location)
-    - frequency (enum: WEEKLY, BIWEEKLY)
-    - dayOfWeek (Integer: 1-7)
-    - time (LocalTime)
-    - defaultSlots, defaultPrice, defaultLevel
-  - [ ] Relacje [1h]
-  - **BEZ:** schedule string, skipHolidays, status, frequencyInterval
-
-- [ ] Enum SeriesFrequency (WEEKLY, BIWEEKLY) [1h]
-
-- [ ] Migracja V1_3__Add_event_series_table.sql [2h]
-
-- [ ] Link Event → Series (seriesId FK optional) [1h]
-
-- [ ] SeriesRepository [1h]
-
-- [ ] SeriesController [1h]
-- [ ] POST /api/v1/series (create series)
-- [ ] GET /api/v1/series?organizerId={id}
-
-- [ ] POST /api/v1/series/{id}/generate (generowanie wydarzeń) [4h]
-  - [ ] Endpoint + validation [1h]
-  - [ ] DTO: GenerateEventsRequest (startDate, count) [1h]
-  - [ ] Logika generowania [2h]
-    - Oblicz daty na podstawie frequency + dayOfWeek
-    - Utwórz wydarzenia (batch insert)
-    - Max 20 wydarzeń na raz
-
-- [ ] SeriesService.generateEvents() [2h]
-  - [ ] Date calculation logic (weekly/biweekly) [2h]
-  - [ ] Batch event creation [1h]
-
-**BEZ w MVP:**
-- Monthly frequency
-- skipHolidays logic
-- PAUSE/RESUME series
-- Edit series (można usunąć i stworzyć nową)
-
-### Flutter - Event Series BASIC UI [10h]
-
-- [ ] CreateSeriesScreen (basic) [3h]
-  - [ ] Screen structure + form [2h]
-  - [ ] Basic fields (name, location) [1h]
-  - [ ] Default values (slots, price, level) [1h]
-
-- [ ] Frequency picker (WEEKLY/BIWEEKLY) [2h]
-  - [ ] Dropdown picker [1h]
-  - [ ] Day of week picker (Poniedziałek-Niedziela) [1h]
-
-- [ ] Time picker [1h]
-
-- [ ] Generate events dialog [1h]
-  - [ ] Start date picker [1h]
-  - [ ] Count input (ile wydarzeń wygenerować) [1h]
-
-- [ ] HTTP POST /api/v1/series + /api/v1/series/{id}/generate [1h]
-
-- [ ] SeriesService + SeriesNotifier [2h]
-
-**Feature 4 Milestone:** Organizator może stworzyć serię cyklicznych wydarzeń ✅
-
-**Na Q1 2026:**
-- MONTHLY frequency
-- skipHolidays
-- Preview list przed generowaniem
-- PAUSE/RESUME logic
-- Edit series
-
----
-
-## Feature 6: UI Basics dla Organizatora 🔴 [15h]
-
-**Priorytet:** HIGH - organizator musi łatwo zarządzać
-**Deadline:** Tydzień 7 (do 2025-12-28)
-**Scope:** Podstawowy UI dla organizatora
-**Progress:** 6/15h – EventsListScreen + bottom nav gotowe
-
-### Flutter - Organizer UI [15h]
-
-- [ ] MyEventsScreen (organizator widzi swoje wydarzenia) [4h]
-  - [ ] Screen structure + ListView [2h]
-  - [ ] GET /api/v1/events?organizerId=me [1h]
-  - [ ] EventListItem widget [1h]
-
-- [x] Bottom Navigation Bar (Map, My Events, Profile) [3h]
-  - [x] Bottom nav bar UI + icons [1h]
-  - [x] Navigation state management [1h]
-  - [x] Integration [1h]
-
-- [x] EventsListScreen - lista wszystkich wydarzeń [3h]
-  - [x] Screen structure + ListView [2h]
-  - [x] Pull-to-refresh [1h]
-
-- [ ] Loading skeletons [2h]
-  - [ ] Skeleton widgets [1h]
-  - [ ] Integration [1h]
-
-- [x] Error states z retry button [2h] ✅ (2025-11-19)
-  - [x] Error widgets [1h]
-  - [x] Retry logic [1h]
-
-- [ ] Network error handling [1h]
-
-**Feature 6 Milestone:** Organizator ma wygodny interfejs do zarządzania ✅
-
----
-
-## Deployment + Testing 🔴 [15h]
-
-**Priorytet:** CRITICAL - musi działać live
-**Deadline:** Tydzień 7-8 (do 2025-12-31)
-**Scope:** Aplikacja dostępna online
-
-### Backend Deployment [10h]
-
-- [ ] Konfiguracja .env [1h]
-  - [ ] DB credentials
-  - [ ] JWT_SECRET
-  - [ ] Production settings
-
-- [ ] Test lokalny deployment (docker-compose) [2h]
-
-- [ ] Deployment na serwer produkcyjny [4h]
-  - [ ] PostgreSQL setup
-  - [ ] Java application (systemd service)
-  - [ ] Nginx reverse proxy
-  - [ ] SSL certificate (Let's Encrypt)
-
-- [ ] Seed danych testowych [2h]
-  - [ ] 5 użytkowników (w tym 2 organizatorów)
-  - [ ] 15 wydarzeń w Poznaniu
-  - [ ] 5 lokalizacji (hale sportowe)
-  - [ ] 2 serie cykliczne
-
-- [ ] Monitoring basic [1h]
-  - [ ] Uptime check
-  - [ ] Error logging
-
-### Testing & Bug Fixes [5h]
-
-- [ ] Smoke tests - główne flow [2h]
-  - [ ] Rejestracja → Login
-  - [ ] Dodanie wydarzenia (jako organizator)
-  - [ ] Dodanie uczestnika do wydarzenia
+- [ ] System aktualizuje listę po rezygnacji [1h]
   - [ ] Usunięcie uczestnika
-  - [ ] Utworzenie serii cyklicznej
-  - [ ] Wygenerowanie wydarzeń z serii
+  - [ ] Przenumerowanie pozostałych uczestników
 
-- [ ] Critical bug fixes [3h]
+### Mobile - Przyciski Zapisz/Zrezygnuj [4h]
 
-**Deployment Milestone:** Aplikacja live dla organizatorów! 🚀
+- [ ] Przycisk "Zapisz się" na szczegółach wydarzenia [2h]
+  - [ ] Widoczny tylko jeśli użytkownik nie jest zapisany
+  - [ ] Komunikat potwierdzenia po zapisaniu
+  - [ ] Ukryty jeśli brak miejsc
+
+- [ ] Przycisk "Zrezygnuj" na szczegółach wydarzenia [1h]
+  - [ ] Widoczny tylko jeśli użytkownik jest zapisany
+  - [ ] Dialog potwierdzenia rezygnacji
+
+- [ ] Automatyczne odświeżanie po zapisie/rezygnacji [1h]
+  - [ ] Aktualizacja szczegółów wydarzenia
+  - [ ] Aktualizacja liczby wolnych miejsc
+
+✅ Kamień Milowy S1: Użytkownicy mogą samodzielnie zarządzać swoim udziałem w wydarzeniu
 
 ---
 
-## 🎊 MILESTONE 1 SUCCESS CRITERIA
+## 🆕 Feature S2: Lista Rezerwowa dla Pełnych Wydarzeń 🟡 [50% DONE → 5h remaining]
 
-Do końca 2025 roku muszą działać:
-- [x] Rejestracja/logowanie
-- [x] Mapa z wydarzeniami
-- [x] Organizator może dodać wydarzenie (CreateEventScreen ✅)
-- [x] Organizator może edytować/usunąć wydarzenie (EditEventScreen ✅)
-- [ ] Organizator może RĘCZNIE dodać uczestnika do wydarzenia
-- [ ] Organizator może usunąć uczestnika
-- [ ] Organizator może stworzyć serię cyklicznych wydarzeń
-- [x] Organizator widzi swoje wydarzenia (lista)
-- [ ] Aplikacja działa na produkcji
+Priorytet: KRYTYCZNY - zarządzanie sytuacją gdy brakuje miejsc
+Deadline: Tydzień 5 (do 2025-12-11)
+Zakres: Automatyczna lista rezerwowa - kolejka FIFO (kto pierwszy, ten pierwszy)
 
-**Total Milestone 1: ~115h = 7-8 tygodni (15h/tydzień)**
+### Backend - System Listy Rezerwowej [6h] - 60% GOTOWE ✅
+
+- [x] System rozróżnia główną listę od listy rezerwowej [1h] ✅
+  - [x] Status uczestnika: główna lista lub lista rezerwowa
+  - [x] Baza danych zaktualizowana (migracja V1_6)
+
+- [ ] System automatycznie przypisuje uczestników do odpowiedniej listy [2h]
+  - [ ] Sprawdzenie liczby wolnych miejsc
+  - [ ] Dodanie na główną listę jeśli są miejsca
+  - [ ] Dodanie na listę rezerwową jeśli brak miejsc
+
+- [x] System zwraca oddzielnie główną listę i listę rezerwową [1h] ✅
+  - [x] Główna lista posortowana według pozycji
+  - [x] Lista rezerwowa posortowana według kolejności dołączenia
+
+- [ ] Wydarzenie pokazuje liczbę osób na liście rezerwowej [1h]
+  - [ ] Automatyczne liczenie osób na liście rezerwowej
+
+- [ ] Testy automatycznego przypisywania do list [1h]
+
+### Mobile - Wyświetlanie Listy Rezerwowej [4h]
+
+- [ ] Wyraźne oznaczenie statusu uczestnictwa [1h]
+  - [ ] Badge "Główna lista" lub "Lista rezerwowa"
+  - [ ] Informacja o pozycji na liście rezerwowej
+
+- [ ] Organizator widzi podzieloną listę uczestników [2h]
+  - [ ] Sekcja "Główna lista" (do limitu miejsc)
+  - [ ] Sekcja "Lista rezerwowa" (ponad limit)
+
+- [ ] Wyświetlanie liczby osób na liście rezerwowej [1h]
+  - [ ] Na karcie wydarzenia na mapie
+  - [ ] Na szczegółach wydarzenia
+
+✅ Kamień Milowy S2: Użytkownicy wiedzą czy mają pewne miejsce czy są na liście rezerwowej
+
+---
+
+## 🆕 Feature S3: Automatyczne Awansowanie z Listy Rezerwowej 🔴 [0% DONE → 5h]
+
+Priorytet: WYSOKI - automatyczne uzupełnianie wolnych miejsc
+Deadline: Tydzień 5 (do 2025-12-11)
+Zakres: Gdy ktoś rezygnuje, pierwsza osoba z listy rezerwowej automatycznie awansuje
+
+### Backend - Automatyczne Awansowanie [3h]
+
+- [ ] System automatycznie awansuje pierwszą osobę z listy rezerwowej [2h]
+  - [ ] Znajdowanie pierwszej osoby na liście rezerwowej (według kolejności)
+  - [ ] Przeniesienie z listy rezerwowej na główną listę
+  - [ ] Aktualizacja pozycji wszystkich uczestników
+
+- [ ] Awans następuje automatycznie gdy ktoś rezygnuje [1h]
+  - [ ] Sprawdzenie czy są osoby na liście rezerwowej
+  - [ ] Automatyczne wywołanie awansowania
+
+### Mobile - Powiadomienie o Awansie [2h]
+
+- [ ] Użytkownik widzi komunikat o awansie [1h]
+  - [ ] Wyskakujący komunikat "Awansowałeś z listy rezerwowej!"
+  - [ ] Automatyczne sprawdzanie statusu
+
+- [ ] Automatyczne odświeżenie po awansie [1h]
+  - [ ] Aktualizacja listy uczestników
+  - [ ] Zmiana wyświetlanego statusu (badge)
+
+✅ Kamień Milowy S3: Wolne miejsca wypełniają się automatycznie osobami z listy rezerwowej
+
+Zaplanowane na Q1 2026:
+- Powiadomienia email/push o awansie
+- Ręczne awansowanie/degradowanie przez organizatora
+- Przeciąganie uczestników do zmiany kolejności
+
+---
+
+## Feature 4: Powtarzające się Wydarzenia 🔴 [0% DONE → 25h]
+
+Priorytet: WYSOKI - organizator potrzebuje regularnych treningów/meczy
+Deadline: Tydzień 5-6 (do 2025-12-25)
+Zakres: Automatyczne tworzenie serii powtarzających się wydarzeń (np. co tydzień w ten sam dzień)
+
+### Backend - System Powtarzających się Wydarzeń [15h]
+
+- [ ] System przechowuje szablony powtarzających się wydarzeń [3h]
+  - [ ] Informacje: nazwa serii, organizator, lokalizacja
+  - [ ] Częstotliwość: co tydzień / co 2 tygodnie
+  - [ ] Dzień tygodnia (poniedziałek-niedziela)
+  - [ ] Godzina rozpoczęcia
+  - [ ] Domyślne ustawienia (liczba miejsc, cena, poziom)
+  - [ ] Baza danych przygotowana (migracja V1_3)
+
+- [ ] System automatycznie generuje wydarzenia według szablonu [6h]
+  - [ ] Organizator określa datę rozpoczęcia i liczbę wydarzeń
+  - [ ] System oblicza wszystkie daty (np. każdy wtorek przez 10 tygodni)
+  - [ ] Masowe tworzenie wydarzeń (maks. 20 na raz)
+  - [ ] Każde wydarzenie jest połączone z serią
+
+- [ ] Organizator może przeglądać swoje serie [2h]
+  - [ ] Lista wszystkich serii organizatora
+  - [ ] Szczegóły pojedynczej serii
+
+Nie w MVP (Q1 2026):
+- Co miesiąc (obecnie tylko: co tydzień, co 2 tygodnie)
+- Pomijanie świąt
+- Wstrzymywanie/wznawianie serii
+- Edycja istniejącej serii
+
+### Mobile - Tworzenie Powtarzających się Wydarzeń [10h]
+
+- [ ] Ekran tworzenia serii wydarzeń [3h]
+  - [ ] Formularz podobny do tworzenia wydarzenia
+  - [ ] Nazwa serii, lokalizacja
+  - [ ] Domyślne ustawienia (miejsca, cena, poziom)
+
+- [ ] Wybór częstotliwości [2h]
+  - [ ] Lista: "Co tydzień" / "Co 2 tygodnie"
+  - [ ] Wybór dnia tygodnia (Pn-Nd)
+
+- [ ] Wybór godziny [1h]
+
+- [ ] Dialog generowania wydarzeń [2h]
+  - [ ] Wybór daty rozpoczęcia
+  - [ ] Liczba wydarzeń do wygenerowania (np. 10 treningów)
+
+- [ ] Połączenie z backendem [2h]
+  - [ ] Tworzenie serii
+  - [ ] Generowanie wydarzeń
+
+✅ Kamień Milowy F4: Organizator może w minutę stworzyć 10 regularnych treningów na najbliższe tygodnie
+
+Zaplanowane na Q1 2026:
+- Wydarzenia co miesiąc
+- Automatyczne pomijanie świąt
+- Podgląd przed generowaniem
+- Wstrzymanie/wznowienie serii
+- Edycja serii
+
+---
+
+## Feature 6: Podstawowy Interfejs dla Organizatora 🔴 [15h → 9h remaining]
+
+Priorytet: WYSOKI - organizator potrzebuje wygodnej obsługi
+Deadline: Tydzień 7 (do 2025-12-28)
+Zakres: Intuicyjny interfejs mobilny z łatwą nawigacją
+Postęp: 40% GOTOWE ✅ - Nawigacja i lista wydarzeń działają
+
+### Mobile - Interfejs Użytkownika [15h]
+
+- [ ] Ekran "Moje Wydarzenia" dla organizatora [4h]
+  - [ ] Lista wydarzeń zorganizowanych przez użytkownika
+  - [ ] Skrócona karta wydarzenia (data, miejsce, liczba uczestników)
+  - [ ] Dotknięcie otwiera szczegóły
+
+- [x] Dolna nawigacja (3 zakładki) [3h] ✅
+  - [x] Mapa z wydarzeniami
+  - [x] Moje Wydarzenia
+  - [x] Profil użytkownika
+
+- [x] Lista wszystkich wydarzeń [3h] ✅
+  - [x] Przewijalna lista wszystkich wydarzeń
+  - [x] Odświeżanie przez pociągnięcie w dół
+
+- [ ] Przyjazne wskaźniki ładowania [2h]
+  - [ ] Szkieletowe ekrany podczas ładowania danych
+  - [ ] Płynne animacje
+
+- [x] Obsługa błędów [2h] ✅
+  - [x] Komunikaty o błędach połączenia
+  - [x] Przycisk "Spróbuj ponownie"
+
+- [ ] Podstawowa obsługa problemów z siecią [1h]
+
+✅ Kamień Milowy F6: Organizator ma wygodną, intuicyjną aplikację mobilną
+
+---
+
+## Uruchomienie Produkcyjne + Testy 🔴 [15h]
+
+Priorytet: KRYTYCZNY - aplikacja musi działać online
+Deadline: Tydzień 7-8 (do 2025-12-31)
+Zakres: Aplikacja dostępna przez internet dla pierwszych użytkowników
+
+### Uruchomienie na Serwerze [10h]
+
+- [ ] Przygotowanie środowiska produkcyjnego [3h]
+  - [ ] Konfiguracja bazy danych PostgreSQL
+  - [ ] Zabezpieczenie hasła do bazy i klucza JWT
+  - [ ] Ustawienia produkcyjne (logi, limity)
+
+- [ ] Test uruchomienia lokalnego [2h]
+  - [ ] Sprawdzenie czy wszystko działa lokalnie
+  - [ ] Test wszystkich funkcji
+
+- [ ] Uruchomienie na serwerze internetowym [4h]
+  - [ ] Zainstalowanie bazy danych
+  - [ ] Uruchomienie aplikacji backend
+  - [ ] Konfiguracja Nginx (przekierowania)
+  - [ ] Certyfikat SSL (bezpieczne połączenie HTTPS)
+
+- [ ] Przygotowanie przykładowych danych [2h]
+  - [ ] 5 testowych użytkowników (w tym 2 organizatorów)
+  - [ ] 15 przykładowych wydarzeń w Poznaniu
+  - [ ] 5 przykładowych lokalizacji (hale sportowe)
+  - [ ] 2 przykładowe serie treningów
+
+- [ ] Podstawowe monitorowanie [1h]
+  - [ ] Sprawdzanie czy serwer działa
+  - [ ] Zapisywanie błędów do logów
+
+### Testy Akceptacyjne + Naprawy [5h]
+
+- [ ] Test głównych scenariuszy użycia [2h]
+  - [ ] Nowy użytkownik: rejestracja → logowanie
+  - [ ] Organizator: utworzenie wydarzenia
+  - [ ] Organizator: dodanie uczestnika do wydarzenia
+  - [ ] Organizator: usunięcie uczestnika
+  - [ ] Organizator: utworzenie serii treningów
+  - [ ] Organizator: wygenerowanie 10 wydarzeń z serii
+
+- [ ] Naprawa krytycznych błędów [3h]
+  - [ ] Naprawienie problemów znalezionych w testach
+  - [ ] Weryfikacja napraw
+
+✅ Kamień Milowy Deployment: Aplikacja działa online i jest gotowa dla pierwszych użytkowników! 🚀
+
+---
+
+## 🎊 MILESTONE 1 - CO MUSI DZIAŁAĆ DO KOŃCA 2025
+
+Funkcje gotowe do użycia:
+- [x] Rejestracja i logowanie użytkowników ✅
+- [x] Mapa z wszystkimi wydarzeniami ✅
+- [x] Tworzenie wydarzenia przez organizatora ✅
+- [x] Edycja i usuwanie wydarzenia ✅
+- [x] Ręczne zarządzanie uczestnikami przez organizatora ✅
+  - [x] Dodawanie uczestników ✅
+  - [x] Usuwanie uczestników ✅
+- [x] Lista moich wydarzeń dla organizatora ✅
+
+Do ukończenia (pozostało 45h):
+- [ ] Samodzielne zapisywanie się uczestników (10h)
+- [ ] System listy rezerwowej (5h remaining - 50% gotowe)
+- [ ] Automatyczne awansowanie z listy rezerwowej (5h)
+- [ ] Tworzenie serii regularnych treningów (25h)
+- [ ] Uruchomienie online na serwerze produkcyjnym (15h)
+
+Total Milestone 1: ~115h = 7-8 tygodni (15h/tydzień)
 
 ---
 
 # 📋 MILESTONE 2 (ZMODYFIKOWANY): Advanced Features 🟡 [Q1 2026]
 
-**Scope:** Zaawansowane funkcje dla organizatora i uczestników
+Scope: Zaawansowane funkcje dla organizatora i uczestników
 
-**UWAGA:** Self-service join/leave i basic waitlist przeszły do M1 2025!
+UWAGA: Self-service join/leave i basic waitlist przeszły do M1 2025!
 
 ### Backend [35h]
 - [x] Custom exceptions [2h] ✅ (2025-11-19)
@@ -618,13 +563,13 @@ Do końca 2025 roku muszą działać:
 - [ ] Payment tracking UI [8h]
 - [ ] Advanced series management [6h]
 
-**Dlaczego Q1 2026:** MVP ma już podstawowe self-service, zaawansowane funkcje mogą poczekać
+Dlaczego Q1 2026: MVP ma już podstawowe self-service, zaawansowane funkcje mogą poczekać
 
 ---
 
 ## Feature 3: Zarządzanie Uczestnikami - ADVANCED [45h]
 
-**Scope:** Zaawansowane zarządzanie dla organizatora
+Scope: Zaawansowane zarządzanie dla organizatora
 
 ### Backend [25h]
 - [ ] Pola w EventParticipant: isPaid, isConfirmed, paymentMethod [4h]
@@ -648,7 +593,7 @@ Do końca 2025 roku muszą działać:
 
 ## Feature 4: Event Series - ADVANCED [30h]
 
-**Scope:** Zaawansowane funkcje serii
+Scope: Zaawansowane funkcje serii
 
 ### Backend [20h]
 - [ ] MONTHLY frequency [5h]
@@ -670,7 +615,7 @@ Do końca 2025 roku muszą działać:
 
 ## Feature 3.5: Grupy Siatkówki [60h]
 
-**Scope:** Społeczności/grupy organizujące wydarzenia
+Scope: Społeczności/grupy organizujące wydarzenia
 
 ### Backend [30h]
 - [ ] Encja Group (name, description, imageUrl) [4h]
@@ -692,7 +637,7 @@ Do końca 2025 roku muszą działać:
 
 ## Feature 5: Profil Użytkownika [45h]
 
-**Scope:** Rozszerzony profil, historia
+Scope: Rozszerzony profil, historia
 
 ### Backend [22h]
 - [x] GET /api/v1/users/me [3h]
@@ -728,9 +673,9 @@ Do końca 2025 roku muszą działać:
 
 # 📋 MILESTONE 3: Post-MVP 🟢 [Q2 2026]
 
-**Timeline:** Q2 2026 (Kwiecień - Czerwiec)
-**Scope:** Notyfikacje, płatności, testowanie
-**Total:** ~195h (~13 tygodni)
+Timeline: Q2 2026 (Kwiecień - Czerwiec)
+Scope: Notyfikacje, płatności, testowanie
+Total: ~195h (~13 tygodni)
 
 ## Email Notifications [30h]
 - [ ] Spring Mail + SMTP [6h]
@@ -807,7 +752,7 @@ Do końca 2025 roku muszą działać:
 ### Performance Baseline [4h]
 - [ ] k6: GET /api/v1/events (mapa), /api/v1/events?organizerId=me, POST /api/v1/series/{id}/generate [4h]
 
-**Release Gate:** 0 High/Critical otwartych; raporty SAST/DAST/Deps; test restore OK; polityki RODO gotowe.
+Release Gate: 0 High/Critical otwartych; raporty SAST/DAST/Deps; test restore OK; polityki RODO gotowe.
 
 ---
 
@@ -815,45 +760,45 @@ Do końca 2025 roku muszą działać:
 
 | Milestone | Scope | Hours | Weeks (15h) | Timeline |
 |-----------|-------|-------|-------------|----------|
-| **M1: Organizer MVP + Self-Service** | Zarządzanie + basic join/waitlist | 140h | ~9 tyg. | Do 2025-12-31 |
-| **M2: Advanced Features** | Zaawansowane funkcje | 65h | ~4 tyg. | Q1 2026 |
-| **M3: Post-MVP** | Notifications + Payments + Security/RODO | 257h | ~17 tyg. | Q2 2026 |
-| **TOTAL** | | **462h** | **~31 tyg.** | **~7-8 miesięcy** |
+| M1: Organizer MVP + Self-Service | Zarządzanie + basic join/waitlist | 140h | ~9 tyg. | Do 2025-12-31 |
+| M2: Advanced Features | Zaawansowane funkcje | 65h | ~4 tyg. | Q1 2026 |
+| M3: Post-MVP | Notifications + Payments + Security/RODO | 257h | ~17 tyg. | Q2 2026 |
+| TOTAL | | 462h | ~31 tyg. | ~7-8 miesięcy |
 
-**ZMIANA:** Self-service join/leave i basic waitlist przesunięte z M2 do M1 (+25h w M1, -135h w M2)
+ZMIANA: Self-service join/leave i basic waitlist przesunięte z M2 do M1 (+25h w M1, -135h w M2)
 
 ---
 
 ## 🚀 STRATEGIA REALIZACJI (ZAKTUALIZOWANA)
 
 ### Faza 1: Organizer MVP + Self-Service (8-9 tygodni - do końca 2025)
-**Focus:** Narzędzie dla ORGANIZATORA + podstawowy self-service dla uczestników
+Focus: Narzędzie dla ORGANIZATORA + podstawowy self-service dla uczestników
 
-**Tydzień 1-2:** Feature 1 - Events CRUD (30h) ✅
+Tydzień 1-2: Feature 1 - Events CRUD (30h) ✅
 → Tworzenie, edycja, usuwanie wydarzeń
 
-**Tydzień 2-3:** Feature 3 - Manual Participant Management (30h)
+Tydzień 2-3: Feature 3 - Manual Participant Management (30h)
 → Ręczne zarządzanie listą uczestników
 
-**Tydzień 4:** **⭐ Feature S1 - Self-Service Join/Leave (10h)**
+Tydzień 4: ⭐ Feature S1 - Self-Service Join/Leave (10h)
 → Uczestnicy mogą sami dołączać i opuszczać
 
-**Tydzień 5:** **⭐ Feature S2 + S3 - Waitlist + Auto-Promocja (15h)**
+Tydzień 5: ⭐ Feature S2 + S3 - Waitlist + Auto-Promocja (15h)
 → Prosta waitlista FIFO + automatyczne awanse
 
-**Tydzień 6:** Feature 4 - Event Series BASIC (25h)
+Tydzień 6: Feature 4 - Event Series BASIC (25h)
 → Cykliczne wydarzenia (co tydzień)
 
-**Tydzień 7:** UI + Polish (15h)
+Tydzień 7: UI + Polish (15h)
 → Interfejs + dopracowanie
 
-**Tydzień 8:** Deployment + Testing (15h)
+Tydzień 8: Deployment + Testing (15h)
 → Live deployment
 
-**END: 2025-12-31 ✅**
+END: 2025-12-31 ✅
 
 ### Faza 2: Advanced Features (Q1 2026 - 4-5 tygodni)
-**Focus:** Zaawansowane funkcje
+Focus: Zaawansowane funkcje
 
 - Manual promote/demote
 - Drag & drop reordering
@@ -863,7 +808,7 @@ Do końca 2025 roku muszą działać:
 - Enhanced profiles
 
 ### Faza 3: Post-MVP (Q2 2026 - 17 tygodni)
-**Focus:** Notyfikacje, płatności, testowanie
+Focus: Notyfikacje, płatności, testowanie
 
 - Email & Push notifications
 - Stripe payments
@@ -875,14 +820,14 @@ Do końca 2025 roku muszą działać:
 ## 🎯 PRIORYTETY (Critical Path) - ZAKTUALIZOWANE
 
 ### 🔴 MUST HAVE dla MVP (2025):
-1. Feature 1: Events CRUD - **2 tygodnie** ✅
-2. Feature 3: Manual Participant Management - **2 tygodnie**
-3. **⭐ Feature S1: Self-Service Join/Leave - 1 tydzień** (NOWE!)
-4. **⭐ Feature S2+S3: Waitlist + Auto-Promocja - 1 tydzień** (NOWE!)
-5. Feature 4: Event Series BASIC - **2 tygodnie**
-6. UI + Deployment - **2 tygodnie**
+1. Feature 1: Events CRUD - 2 tygodnie ✅
+2. Feature 3: Manual Participant Management - 2 tygodnie
+3. ⭐ Feature S1: Self-Service Join/Leave - 1 tydzień (NOWE!)
+4. ⭐ Feature S2+S3: Waitlist + Auto-Promocja - 1 tydzień (NOWE!)
+5. Feature 4: Event Series BASIC - 2 tygodnie
+6. UI + Deployment - 2 tygodnie
 
-**Critical Path: 9 tygodni = koniec 2025**
+Critical Path: 9 tygodni = koniec 2025
 
 ### 🟡 SHOULD HAVE (Q1 2026):
 7. Manual promote/demote
@@ -907,49 +852,51 @@ Do końca 2025 roku muszą działać:
 | W1 | 2025-11-13 | Feature 1 - Events CRUD ✅ | 15h |
 | W2 | 2025-11-20 | Feature 3 - Backend Participants | 15h |
 | W3 | 2025-11-27 | Feature 3 - Flutter Participants | 15h |
-| W4 | 2025-12-04 | **⭐ Self-Service Join SIMPLE** | 15h |
-| W5 | 2025-12-11 | **⭐ Simple Waitlist + Auto-Promocja** | 15h |
+| W4 | 2025-12-04 | ⭐ Self-Service Join SIMPLE | 15h |
+| W5 | 2025-12-11 | ⭐ Simple Waitlist + Auto-Promocja | 15h |
 | W6 | 2025-12-18 | Feature 4 - Series BACK + UI | 15h |
 | W7 | 2025-12-25 | UI Basics + Polish | 15h |
 | W8 | 2026-01-01 | Deployment + Testing | 15h |
-| **END** | **2025-12-31** | **🎊 MVP Z SELF-SERVICE** | **140h** |
+| END | 2025-12-31 | 🎊 MVP Z SELF-SERVICE | 140h |
 
 ---
 
 ## 💡 ZASADY PRACY
 
-1. **Focus na organizatora** - każdy feature musi pomagać organizatorowi
-2. **Jeden feature na raz** - dokończ zanim zaczniesz następny
-3. **Backend + Flutter razem** - nie rób wszystkiego na backu, potem froncie
-4. **Testuj z prawdziwymi użytkownikami** - znajdź organizatora do testów
-5. **Upraszczaj** - jeśli coś nie działa, zrób prościej
-6. **Git daily** - codzienne commity
+1. Focus na organizatora - każdy feature musi pomagać organizatorowi
+2. Jeden feature na raz - dokończ zanim zaczniesz następny
+3. Backend + Flutter razem - nie rób wszystkiego na backu, potem froncie
+4. Testuj z prawdziwymi użytkownikami - znajdź organizatora do testów
+5. Upraszczaj - jeśli coś nie działa, zrób prościej
+6. Git daily - codzienne commity
 
 ---
 
-## 🏁 NOWA DEFINICJA SUKCESU (31.12.2025)
+## 🏁 CO MUSI DZIAŁAĆ 31 GRUDNIA 2025
 
-### MINIMUM (must have):
-- [x] Aplikacja działa na serwerze
-- [x] Organizator może dodać wydarzenie ✅
-- [ ] Organizator może dodać uczestnika (ręcznie)
-- [ ] **⭐ Uczestnik może DOŁĄCZYĆ do wydarzenia (self-service)**
-- [ ] **⭐ Uczestnik może OPUŚCIĆ wydarzenie (self-service)**
-- [ ] **⭐ Prosta WAITLISTA (FIFO) działa**
-- [ ] **⭐ Auto-promocja z waitlisty działa**
-- [ ] Organizator może stworzyć serię cykliczną
-- [x] Organizator widzi swoje wydarzenia ✅
+### ABSOLUTNE MINIMUM (Must Have):
+- [x] Aplikacja działa na serwerze (środowisko testowe) ✅
+- [x] Organizator może utworzyć wydarzenie ✅
+- [x] Organizator może zarządzać uczestnikami (ręcznie) ✅
+  - [x] Dodawanie uczestników ✅
+  - [x] Usuwanie uczestników ✅
+- [ ] ⭐ Uczestnicy mogą się samodzielnie zapisywać (kluczowe!)
+- [ ] ⭐ Uczestnicy mogą rezygnować z uczestnictwa (kluczowe!)
+- [ ] ⭐ System automatycznie tworzy listę rezerwową [50% gotowe]
+- [ ] ⭐ System automatycznie awansuje osoby z listy rezerwowej
+- [ ] Organizator może tworzyć serie regularnych treningów
+- [x] Organizator widzi listę swoich wydarzeń ✅
 
-### NICE TO HAVE:
-- [ ] 2-3 organizatorów przetestowało
-- [ ] Zero critical bugs
-- [ ] Pozytywny feedback
+### MILE WIDZIANE (Nice to Have):
+- [ ] 2-3 organizatorów przetestowało aplikację
+- [ ] Brak krytycznych błędów
+- [ ] Pozytywny feedback od testujących
 
-**POWÓD ZMIANY:** Organizator nie będzie ręcznie dodawał wszystkich graczy – MVP musi pozwalać im dołączać samodzielnie.
+DLACZEGO TA ZMIANA: Organizatorzy nie będą ręcznie dodawać każdego gracza - aplikacja musi pozwalać użytkownikom samodzielnie się zapisywać!
 
 ---
 
-**Legend:**
+Legend:
 - `[ ]` - Do zrobienia
 - `[x]` - Ukończone
 - `🔴` - CRITICAL (MVP 2025)
