@@ -1,0 +1,2223 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <title>TODO Dashboard (plan-2)</title>
+  <style>
+    :root {
+      --bg: linear-gradient(135deg, #0f172a 0%, #111827 100%);
+      --panel: #0b1220;
+      --card: #0f172a;
+      --card-2: #111d37;
+      --fg: #e2e8f0;
+      --muted: #94a3b8;
+      --fg-strong: #f8fafc;
+      --border: #1f2937;
+      --accent: #30bced;
+      --accent-2: #7c3aed;
+      --done: #22c55e;
+      --pending: #f87171;
+      --maybe: #f59e0b;
+      --shadow: 0 12px 30px rgba(0,0,0,0.25);
+      --radius: 14px;
+      --font: 'Space Grotesk', 'Inter', system-ui, -apple-system, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: var(--font); background: var(--bg); color: var(--fg); }
+    .page { max-width: 1200px; margin: 40px auto; padding: 0 22px 40px; }
+    h1 { margin: 0; font-size: 32px; letter-spacing: -0.02em; }
+    h2 { margin: 0 0 6px 0; font-size: 20px; letter-spacing: -0.01em; color: var(--fg-strong); }
+    h3 { margin: 0 0 6px 0; font-size: 14px; font-weight: 600; color: var(--muted); }
+
+    .topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
+    .meta { color: var(--muted); font-size: 13px; }
+
+    .summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin: 20px 0 18px; }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; box-shadow: var(--shadow); }
+    .card-ghost { background: transparent; border: 1px dashed var(--border); color: var(--muted); }
+    .stat-value { font-size: 30px; font-weight: 700; color: var(--fg-strong); }
+    .stat-label { color: var(--muted); font-size: 13px; }
+
+    .progress-wrap { background: var(--card-2); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; box-shadow: var(--shadow); margin-bottom: 20px; }
+    .progress-bar { position: relative; width: 100%; height: 12px; background: #0b1220; border-radius: 999px; overflow: hidden; border: 1px solid var(--border); }
+    .progress-fill { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 999px; background: linear-gradient(90deg, var(--accent), var(--accent-2)); }
+
+    .feature { margin-bottom: 18px; }
+    .feature-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+    .feature-chip { display: inline-flex; gap: 8px; align-items: center; font-size: 12px; color: var(--muted); }
+    .pill { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; padding: 4px 10px; border-radius: 999px; border: 1px solid var(--border); color: var(--muted); }
+    .pill.done { color: var(--done); border-color: rgba(34,197,94,0.35); background: rgba(34,197,94,0.08); }
+    .pill.pending { color: var(--pending); border-color: rgba(248,113,113,0.35); background: rgba(248,113,113,0.08); }
+    .pill.maybe { color: var(--maybe); border-color: rgba(245,158,11,0.35); background: rgba(245,158,11,0.08); }
+
+    .subsection { margin: 10px 0 6px; }
+    .task-list { display: grid; gap: 6px; }
+    .task { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--border); background: var(--panel); }
+    .task.done { border-color: rgba(34,197,94,0.35); background: rgba(34,197,94,0.08); }
+    .task.pending { border-color: rgba(248,113,113,0.25); background: rgba(248,113,113,0.06); }
+    .task.maybe { border-color: rgba(245,158,11,0.25); background: rgba(245,158,11,0.06); }
+    .task .title { flex: 1; }
+    .task .meta { font-size: 12px; }
+
+    details { border: 1px solid var(--border); border-radius: var(--radius); background: var(--panel); box-shadow: var(--shadow); }
+    details summary { cursor: pointer; padding: 12px 14px; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+    details summary::-webkit-details-marker { display: none; }
+    details .body { padding: 0 14px 12px; }
+
+    .badge-dot { width: 10px; height: 10px; border-radius: 999px; display: inline-block; }
+    .dot-done { background: var(--done); }
+    .dot-pending { background: var(--pending); }
+    .dot-maybe { background: var(--maybe); }
+
+    .timestamp { color: var(--muted); font-size: 12px; text-align: right; margin-top: 8px; }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="topbar">
+      <div>
+        <h1>TODO Dashboard (plan-2)</h1>
+        <div class="meta">Źródło: plan-2/TODO.md · Zaktualizowano: 2025-11-21 20:58</div>
+      </div>
+      <div class="pill">Postęp: 45.8%</div>
+    </div>
+
+    <div class="summary">
+      <div class="card">
+        <div class="stat-value">103/225</div>
+        <div class="stat-label">Ukończone</div>
+      </div>
+      <div class="card">
+        <div class="stat-value">122</div>
+        <div class="stat-label">Do zrobienia</div>
+      </div>
+      <div class="card">
+        <div class="stat-value">0</div>
+        <div class="stat-label">Do weryfikacji</div>
+      </div>
+      <div class="card">
+        <div class="stat-value">45.8%</div>
+        <div class="stat-label">Postęp całkowity</div>
+      </div>
+    </div>
+
+    <div class="progress-wrap">
+      <div class="feature-header">
+        <h3>Postęp ogólny</h3>
+        <span class="meta">103 / 225 zadań</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" style="width:45.8%;"></div>
+      </div>
+    </div>
+
+    
+        <details class="feature" open>
+          <summary>
+            <div class="feature-header">
+              <h2>📋 MILESTONE 1 (ZMODYFIKOWANY): Organizer MVP + Minimum Self-Service 🔴 [DO KOŃCA 2025]</h2>
+              <div class="feature-chip">
+                <span class="pill">6/12</span>
+                <span class="pill ">50%</span>
+              </div>
+            </div>
+          </summary>
+          <div class="body">
+          
+              <details class="subsection" open>
+                <summary>
+                  <span class="pill">Co Musi Działać (Definicja Sukcesu):</span>
+                  <span class="pill ">6/12 · 50%</span>
+                </summary>
+                <div class="body task-list">
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">Nowy użytkownik może się zarejestrować i zalogować ✅</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">Użytkownik widzi wszystkie wydarzenia na mapie miasta ✅</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">Organizator może utworzyć nowe wydarzenie ✅</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">Organizator może dodać uczestników do wydarzenia (ręcznie) ✅</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">Organizator może usunąć uczestnika z wydarzenia ✅</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">⭐ Uczestnik może samodzielnie zapisać się na wydarzenie</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">⭐ Uczestnik może samodzielnie zrezygnować z wydarzenia</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">⭐ System automatycznie tworzy listę rezerwową gdy brakuje miejsc [50% gotowe]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">⭐ System automatycznie awansuje osoby z listy rezerwowej gdy ktoś rezygnuje</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">Organizator może utworzyć serię regularnych treningów (np. co wtorek przez 10 tygodni)</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">Organizator widzi listę swoich wydarzeń ✅</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">Aplikacja działa online (dostępna przez internet)</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                </div>
+              </details>
+            
+          </div>
+        </details>
+      
+        <details class="feature" >
+          <summary>
+            <div class="feature-header">
+              <h2>Sprint 0: Konfiguracja Backend & Autoryzacja ✅ [95% DONE]</h2>
+              <div class="feature-chip">
+                <span class="pill">30/30</span>
+                <span class="pill done">100%</span>
+              </div>
+            </div>
+          </summary>
+          <div class="body">
+          
+              <details class="subsection" >
+                <summary>
+                  <span class="pill">Konfiguracja Projektu</span>
+                  <span class="pill done">5/5 · 100%</span>
+                </summary>
+                <div class="body task-list">
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">Utworzenie projektu Spring Boot</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">Konfiguracja PostgreSQL</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">Setup application.yml</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">Struktura pakietów</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">Konfiguracja Lombok, Validation</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                </div>
+              </details>
+            
+              <details class="subsection" >
+                <summary>
+                  <span class="pill">Model Bazy Danych - Encje JPA (Podstawowe)</span>
+                  <span class="pill done">6/6 · 100%</span>
+                </summary>
+                <div class="body task-list">
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">Encja UserEntity</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">Encja LocationEntity</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">Encja EventEntity (podstawowa)</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">Encja FavoritePlaceEntity</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">Encja PostEntity</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">Encja TokenEntity</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                </div>
+              </details>
+            
+              <details class="subsection" >
+                <summary>
+                  <span class="pill">Migracje Bazy Danych (Flyway)</span>
+                  <span class="pill done">3/3 · 100%</span>
+                </summary>
+                <div class="body task-list">
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">Setup Flyway w projekcie</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">V1_0__Initial_schema.sql</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">V1_1__Fix_null_user_roles.sql</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                </div>
+              </details>
+            
+              <details class="subsection" >
+                <summary>
+                  <span class="pill">Spring Security & JWT</span>
+                  <span class="pill done">6/6 · 100%</span>
+                </summary>
+                <div class="body task-list">
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">JwtService (generateToken, validateToken)</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">JwtAuthenticationFilter</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">UserDetailsService implementation</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">SecurityConfiguration (CORS, CSRF)</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">LogoutService</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">TokenEntity & TokenRepository</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                </div>
+              </details>
+            
+              <details class="subsection" >
+                <summary>
+                  <span class="pill">Auth Endpoints (Backend)</span>
+                  <span class="pill done">5/5 · 100%</span>
+                </summary>
+                <div class="body task-list">
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">POST /api/v1/auth/register</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">POST /api/v1/auth/authenticate</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">POST /api/v1/auth/refresh-token</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">GET /api/v1/auth/validate-token</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">POST /api/v1/auth/logout</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                </div>
+              </details>
+            
+              <details class="subsection" >
+                <summary>
+                  <span class="pill">Auth Implementation (Flutter)</span>
+                  <span class="pill done">5/5 · 100%</span>
+                </summary>
+                <div class="body task-list">
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">JWT storage w Flutter (SecureStorage)</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">HTTP client setup (dio) z Authorization header</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">UserService (login/logout state)</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">Login/Register forms</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">Token validation i auto-refresh</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                </div>
+              </details>
+            
+          </div>
+        </details>
+      
+        <details class="feature" >
+          <summary>
+            <div class="feature-header">
+              <h2>Feature 0: Mapa z Wydarzeniami ✅ [80% DONE]</h2>
+              <div class="feature-chip">
+                <span class="pill">16/16</span>
+                <span class="pill done">100%</span>
+              </div>
+            </div>
+          </summary>
+          <div class="body">
+          
+              <details class="subsection" >
+                <summary>
+                  <span class="pill">Backend - Mapa API</span>
+                  <span class="pill done">4/4 · 100%</span>
+                </summary>
+                <div class="body task-list">
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">GET /api/v1/events - zwraca wydarzenia z lokalizacjami</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">EventEntity ma relację do LocationEntity</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">LocationEntity ma latitude i longitude</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">EventRepository.findAllWithLocation() - JOIN FETCH</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                </div>
+              </details>
+            
+              <details class="subsection" >
+                <summary>
+                  <span class="pill">Flutter - Mapa (Google Maps)</span>
+                  <span class="pill done">12/12 · 100%</span>
+                </summary>
+                <div class="body task-list">
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">GoogleMapWidget z google_maps_flutter</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">Centrowanie na Poznań</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">Markery wydarzeń z custom ikoną</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">Grupowanie wydarzeń w tej samej lokalizacji</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">Pop-up z kartą wydarzenia (EventPopUpCard)</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">PageView dla wielu wydarzeń w jednym miejscu</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">Dots indicator dla paginacji</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">Tap na marker → zoom + centrowanie + pop-up</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">Tap na mapie → ukrywa pop-up</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">FloatingActionButton refresh</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">EventMarkerService - filtruje nieaktualne</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">FavoriteLocationNotifier - centrowanie z ulubionych</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                </div>
+              </details>
+            
+          </div>
+        </details>
+      
+        <details class="feature" >
+          <summary>
+            <div class="feature-header">
+              <h2>Feature 1: Podstawowe operacje na Wydarzeniach ✅ [100% DONE]</h2>
+              <div class="feature-chip">
+                <span class="pill">15/15</span>
+                <span class="pill done">100%</span>
+              </div>
+            </div>
+          </summary>
+          <div class="body">
+          
+              <details class="subsection" >
+                <summary>
+                  <span class="pill">Backend - System Zarządzania Wydarzeniami [15h] ✅</span>
+                  <span class="pill done">11/11 · 100%</span>
+                </summary>
+                <div class="body task-list">
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">System zwraca listę wszystkich wydarzeń ✅</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">System zwraca szczegóły pojedynczego wydarzenia ✅</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">Organizator może tworzyć nowe wydarzenie ✅</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">Organizator może edytować swoje wydarzenie ✅</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">Organizator może usunąć swoje wydarzenie ✅</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">System waliduje poprawność danych wydarzenia (daty, liczba miejsc, poziom) ✅</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">Organizator widzi tylko swoje wydarzenia ✅</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">System sortuje wydarzenia według daty rozpoczęcia ✅</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">Organizator może odwołać wydarzenie (status CANCELLED) ✅</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">Użytkownicy widzą badge "Odwołane" przy odwołanych wydarzeniach ✅</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">System zabezpiecza przed konfliktami podczas równoczesnej edycji (optimistic locking) ✅</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                </div>
+              </details>
+            
+              <details class="subsection" >
+                <summary>
+                  <span class="pill">Mobile - Interfejs Zarządzania Wydarzeniami [15h] ✅</span>
+                  <span class="pill done">4/4 · 100%</span>
+                </summary>
+                <div class="body task-list">
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">Organizator widzi pełne szczegóły wydarzenia ✅</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">Organizator może utworzyć nowe wydarzenie przez formularz ✅</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">Organizator może edytować istniejące wydarzenie ✅</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">Organizator może usunąć wydarzenie ✅</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                </div>
+              </details>
+            
+          </div>
+        </details>
+      
+        <details class="feature" >
+          <summary>
+            <div class="feature-header">
+              <h2>Feature 3: Zarządzanie Uczestnikami - MANUAL ✅ [100% DONE]</h2>
+              <div class="feature-chip">
+                <span class="pill">8/8</span>
+                <span class="pill done">100%</span>
+              </div>
+            </div>
+          </summary>
+          <div class="body">
+          
+              <details class="subsection" >
+                <summary>
+                  <span class="pill">Backend - System Zarządzania Uczestnikami [15h] ✅</span>
+                  <span class="pill done">4/4 · 100%</span>
+                </summary>
+                <div class="body task-list">
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">System przechowuje listę uczestników wydarzenia ✅</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">Organizator może dodać uczestnika do wydarzenia ✅</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">Organizator może usunąć uczestnika z wydarzenia ✅</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">System zwraca listę uczestników wydarzenia ✅</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                </div>
+              </details>
+            
+              <details class="subsection" >
+                <summary>
+                  <span class="pill">Mobile - Interfejs Zarządzania Uczestnikami [15h] ✅</span>
+                  <span class="pill done">4/4 · 100%</span>
+                </summary>
+                <div class="body task-list">
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">Organizator widzi ekran zarządzania uczestnikami ✅</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">Organizator może dodać uczestnika ✅</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">Organizator może usunąć uczestnika ✅</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">Aplikacja synchronizuje zmiany z serwerem ✅</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                </div>
+              </details>
+            
+          </div>
+        </details>
+      
+        <details class="feature" >
+          <summary>
+            <div class="feature-header">
+              <h2>🆕 Feature S1: Samodzielne Zapisywanie się na Wydarzenie 🟡 [80% DONE → 2h remaining]</h2>
+              <div class="feature-chip">
+                <span class="pill">7/7</span>
+                <span class="pill done">100%</span>
+              </div>
+            </div>
+          </summary>
+          <div class="body">
+          
+              <details class="subsection" >
+                <summary>
+                  <span class="pill">Backend - Samodzielne Zapisywanie [6h]</span>
+                  <span class="pill done">4/4 · 100%</span>
+                </summary>
+                <div class="body task-list">
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">Uczestnik może zapisać się na wydarzenie [2h]</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">Uczestnik może zrezygnować z uczestnictwa [2h]</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">System dodaje uczestnika na koniec listy [1h]</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">System aktualizuje listę po rezygnacji [1h]</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                </div>
+              </details>
+            
+              <details class="subsection" >
+                <summary>
+                  <span class="pill">Mobile - Przyciski Zapisz/Zrezygnuj [4h]</span>
+                  <span class="pill done">3/3 · 100%</span>
+                </summary>
+                <div class="body task-list">
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">Przycisk "Zapisz się" na szczegółach wydarzenia [2h]</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">Przycisk "Zrezygnuj" na szczegółach wydarzenia [1h]</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">Automatyczne odświeżanie po zapisie/rezygnacji [1h]</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                </div>
+              </details>
+            
+          </div>
+        </details>
+      
+        <details class="feature" >
+          <summary>
+            <div class="feature-header">
+              <h2>🆕 Feature S2: Lista Rezerwowa dla Pełnych Wydarzeń 🟡 [90% DONE → 1h remaining]</h2>
+              <div class="feature-chip">
+                <span class="pill">8/8</span>
+                <span class="pill done">100%</span>
+              </div>
+            </div>
+          </summary>
+          <div class="body">
+          
+              <details class="subsection" >
+                <summary>
+                  <span class="pill">Backend - System Listy Rezerwowej [6h] - 60% GOTOWE ✅</span>
+                  <span class="pill done">5/5 · 100%</span>
+                </summary>
+                <div class="body task-list">
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">System rozróżnia główną listę od listy rezerwowej [1h] ✅</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">System automatycznie przypisuje uczestników do odpowiedniej listy [2h]</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">System zwraca oddzielnie główną listę i listę rezerwową [1h] ✅</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">Wydarzenie pokazuje liczbę osób na liście rezerwowej [1h]</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">Testy automatycznego przypisywania do list [1h]</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                </div>
+              </details>
+            
+              <details class="subsection" >
+                <summary>
+                  <span class="pill">Mobile - Wyświetlanie Listy Rezerwowej [4h]</span>
+                  <span class="pill done">3/3 · 100%</span>
+                </summary>
+                <div class="body task-list">
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">Wyraźne oznaczenie statusu uczestnictwa [1h]</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">Organizator widzi podzieloną listę uczestników [2h]</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">Wyświetlanie liczby osób na liście rezerwowej [1h]</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                </div>
+              </details>
+            
+          </div>
+        </details>
+      
+        <details class="feature" open>
+          <summary>
+            <div class="feature-header">
+              <h2>🆕 Feature S3: Automatyczne Awansowanie z Listy Rezerwowej 🟡 [60% DONE → 2h remaining]</h2>
+              <div class="feature-chip">
+                <span class="pill">2/4</span>
+                <span class="pill ">50%</span>
+              </div>
+            </div>
+          </summary>
+          <div class="body">
+          
+              <details class="subsection" >
+                <summary>
+                  <span class="pill">Backend - Automatyczne Awansowanie [3h]</span>
+                  <span class="pill done">2/2 · 100%</span>
+                </summary>
+                <div class="body task-list">
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">System automatycznie awansuje pierwszą osobę z listy rezerwowej [2h]</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">Awans następuje automatycznie gdy ktoś rezygnuje [1h]</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                </div>
+              </details>
+            
+              <details class="subsection" open>
+                <summary>
+                  <span class="pill">Mobile - Powiadomienie o Awansie [2h]</span>
+                  <span class="pill pending">0/2 · 0%</span>
+                </summary>
+                <div class="body task-list">
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">Użytkownik widzi komunikat o awansie [1h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">Automatyczne odświeżenie po awansie [1h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                </div>
+              </details>
+            
+          </div>
+        </details>
+      
+        <details class="feature" open>
+          <summary>
+            <div class="feature-header">
+              <h2>Feature 4: Powtarzające się Wydarzenia 🔴 [0% DONE → 25h]</h2>
+              <div class="feature-chip">
+                <span class="pill">0/8</span>
+                <span class="pill pending">0%</span>
+              </div>
+            </div>
+          </summary>
+          <div class="body">
+          
+              <details class="subsection" open>
+                <summary>
+                  <span class="pill">Backend - System Powtarzających się Wydarzeń [15h]</span>
+                  <span class="pill pending">0/3 · 0%</span>
+                </summary>
+                <div class="body task-list">
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">System przechowuje szablony powtarzających się wydarzeń [3h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">System automatycznie generuje wydarzenia według szablonu [6h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">Organizator może przeglądać swoje serie [2h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                </div>
+              </details>
+            
+              <details class="subsection" open>
+                <summary>
+                  <span class="pill">Mobile - Tworzenie Powtarzających się Wydarzeń [10h]</span>
+                  <span class="pill pending">0/5 · 0%</span>
+                </summary>
+                <div class="body task-list">
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">Ekran tworzenia serii wydarzeń [3h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">Wybór częstotliwości [2h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">Wybór godziny [1h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">Dialog generowania wydarzeń [2h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">Połączenie z backendem [2h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                </div>
+              </details>
+            
+          </div>
+        </details>
+      
+        <details class="feature" open>
+          <summary>
+            <div class="feature-header">
+              <h2>Feature 6: Podstawowy Interfejs dla Organizatora 🔴 [15h → 9h remaining]</h2>
+              <div class="feature-chip">
+                <span class="pill">3/6</span>
+                <span class="pill ">50%</span>
+              </div>
+            </div>
+          </summary>
+          <div class="body">
+          
+              <details class="subsection" open>
+                <summary>
+                  <span class="pill">Mobile - Interfejs Użytkownika [15h]</span>
+                  <span class="pill ">3/6 · 50%</span>
+                </summary>
+                <div class="body task-list">
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">Ekran "Moje Wydarzenia" dla organizatora [4h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">Dolna nawigacja (3 zakładki) [3h] ✅</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">Lista wszystkich wydarzeń [3h] ✅</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">Przyjazne wskaźniki ładowania [2h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">Obsługa błędów [2h] ✅</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">Podstawowa obsługa problemów z siecią [1h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                </div>
+              </details>
+            
+          </div>
+        </details>
+      
+        <details class="feature" open>
+          <summary>
+            <div class="feature-header">
+              <h2>Uruchomienie Produkcyjne + Testy 🔴 [15h]</h2>
+              <div class="feature-chip">
+                <span class="pill">0/7</span>
+                <span class="pill pending">0%</span>
+              </div>
+            </div>
+          </summary>
+          <div class="body">
+          
+              <details class="subsection" open>
+                <summary>
+                  <span class="pill">Uruchomienie na Serwerze [10h]</span>
+                  <span class="pill pending">0/5 · 0%</span>
+                </summary>
+                <div class="body task-list">
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">Przygotowanie środowiska produkcyjnego [3h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">Test uruchomienia lokalnego [2h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">Uruchomienie na serwerze internetowym [4h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">Przygotowanie przykładowych danych [2h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">Podstawowe monitorowanie [1h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                </div>
+              </details>
+            
+              <details class="subsection" open>
+                <summary>
+                  <span class="pill">Testy Akceptacyjne + Naprawy [5h]</span>
+                  <span class="pill pending">0/2 · 0%</span>
+                </summary>
+                <div class="body task-list">
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">Test głównych scenariuszy użycia [2h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">Naprawa krytycznych błędów [3h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                </div>
+              </details>
+            
+          </div>
+        </details>
+      
+        <details class="feature" open>
+          <summary>
+            <div class="feature-header">
+              <h2>🎊 MILESTONE 1 - CO MUSI DZIAŁAĆ DO KOŃCA 2025</h2>
+              <div class="feature-chip">
+                <span class="pill">1/11</span>
+                <span class="pill ">9%</span>
+              </div>
+            </div>
+          </summary>
+          <div class="body">
+          
+              <details class="subsection" open>
+                <summary>
+                  <span class="pill">Backend [35h]</span>
+                  <span class="pill ">1/6 · 17%</span>
+                </summary>
+                <div class="body task-list">
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">Custom exceptions [2h] ✅ (2025-11-19)</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">Manual promote/demote z waitlisty [8h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">Drag & drop reordering positions [6h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">Payment tracking (isPaid, paymentMethod) [10h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">MONTHLY frequency dla serii [5h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">skipHolidays logic [4h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                </div>
+              </details>
+            
+              <details class="subsection" open>
+                <summary>
+                  <span class="pill">Flutter [30h]</span>
+                  <span class="pill pending">0/5 · 0%</span>
+                </summary>
+                <div class="body task-list">
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">ParticipantsListScreen (public view) [5h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">Manual promote/demote UI [6h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">Drag & drop reordering UI [5h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">Payment tracking UI [8h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">Advanced series management [6h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                </div>
+              </details>
+            
+          </div>
+        </details>
+      
+        <details class="feature" open>
+          <summary>
+            <div class="feature-header">
+              <h2>Feature 3: Zarządzanie Uczestnikami - ADVANCED [45h]</h2>
+              <div class="feature-chip">
+                <span class="pill">0/14</span>
+                <span class="pill pending">0%</span>
+              </div>
+            </div>
+          </summary>
+          <div class="body">
+          
+              <details class="subsection" open>
+                <summary>
+                  <span class="pill">Backend [25h]</span>
+                  <span class="pill pending">0/7 · 0%</span>
+                </summary>
+                <div class="body task-list">
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">Pola w EventParticipant: isPaid, isConfirmed, paymentMethod [4h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">PUT /api/v1/events/{eventId}/participants/{userId}/confirm (toggle) [3h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">PUT /api/v1/events/{eventId}/participants/{userId}/payment (toggle) [3h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">PUT /api/v1/events/{eventId}/participants/{userId}/payment-method [2h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">PUT /api/v1/events/{eventId}/participants/{userId}/position (zmiana) [4h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">POST /api/v1/events/{eventId}/participants/{userId}/promote (z waitlist) [4h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">POST /api/v1/events/{eventId}/participants/{userId}/demote (do waitlist) [5h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                </div>
+              </details>
+            
+              <details class="subsection" open>
+                <summary>
+                  <span class="pill">Flutter [20h]</span>
+                  <span class="pill pending">0/7 · 0%</span>
+                </summary>
+                <div class="body task-list">
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">PaymentsManageScreen [6h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">Confirm checkbox toggle [2h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">Payment checkbox toggle [2h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">Payment method selector (BLIK/CASH/TRANSFER/CARD) [4h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">Payment summary (total, paid, unpaid) [3h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">Drag & drop reordering (ReorderableListView) [2h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">Promote/demote buttons [1h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                </div>
+              </details>
+            
+          </div>
+        </details>
+      
+        <details class="feature" open>
+          <summary>
+            <div class="feature-header">
+              <h2>Feature 4: Event Series - ADVANCED [30h]</h2>
+              <div class="feature-chip">
+                <span class="pill">0/12</span>
+                <span class="pill pending">0%</span>
+              </div>
+            </div>
+          </summary>
+          <div class="body">
+          
+              <details class="subsection" open>
+                <summary>
+                  <span class="pill">Backend [20h]</span>
+                  <span class="pill pending">0/7 · 0%</span>
+                </summary>
+                <div class="body task-list">
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">MONTHLY frequency [5h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">skipHolidays logic (API świąt) [5h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">SeriesStatus enum (ACTIVE, PAUSED) [1h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">PUT /api/v1/series/{id}/pause [2h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">PUT /api/v1/series/{id}/resume [2h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">PUT /api/v1/series/{id} (edit series) [3h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">DELETE /api/v1/series/{id} [2h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                </div>
+              </details>
+            
+              <details class="subsection" open>
+                <summary>
+                  <span class="pill">Flutter [10h]</span>
+                  <span class="pill pending">0/5 · 0%</span>
+                </summary>
+                <div class="body task-list">
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">SeriesListScreen [3h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">SeriesDetailsScreen [3h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">Preview list przed generowaniem [2h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">Edit series [1h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">Pause/Resume toggle [1h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                </div>
+              </details>
+            
+          </div>
+        </details>
+      
+        <details class="feature" open>
+          <summary>
+            <div class="feature-header">
+              <h2>Feature 3.5: Grupy Siatkówki [60h]</h2>
+              <div class="feature-chip">
+                <span class="pill">0/12</span>
+                <span class="pill pending">0%</span>
+              </div>
+            </div>
+          </summary>
+          <div class="body">
+          
+              <details class="subsection" open>
+                <summary>
+                  <span class="pill">Backend [30h]</span>
+                  <span class="pill pending">0/8 · 0%</span>
+                </summary>
+                <div class="body task-list">
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">Encja Group (name, description, imageUrl) [4h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">Encja UserGroup (membership) [3h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">GroupController [3h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">GET /api/v1/groups [3h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">POST /api/v1/groups/{id}/join [3h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">DELETE /api/v1/groups/{id}/leave [3h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">Link Event → Group [5h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">Filtrowanie wydarzeń po grupie [6h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                </div>
+              </details>
+            
+              <details class="subsection" open>
+                <summary>
+                  <span class="pill">Flutter [30h]</span>
+                  <span class="pill pending">0/4 · 0%</span>
+                </summary>
+                <div class="body task-list">
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">GroupListScreen [8h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">GroupDetailsScreen [8h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">Join/Leave group [6h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">Group selector w EventsListScreen [8h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                </div>
+              </details>
+            
+          </div>
+        </details>
+      
+        <details class="feature" open>
+          <summary>
+            <div class="feature-header">
+              <h2>Feature 5: Profil Użytkownika [45h]</h2>
+              <div class="feature-chip">
+                <span class="pill">1/11</span>
+                <span class="pill ">9%</span>
+              </div>
+            </div>
+          </summary>
+          <div class="body">
+          
+              <details class="subsection" open>
+                <summary>
+                  <span class="pill">Backend [22h]</span>
+                  <span class="pill ">1/6 · 17%</span>
+                </summary>
+                <div class="body task-list">
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">GET /api/v1/users/me [3h]</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">PUT /api/v1/users/me [4h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">GET /api/v1/users/me/events [4h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">GET /api/v1/users/me/organized [4h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">GET /api/v1/users/me/history [4h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">POST /api/v1/users/{id}/thumb [3h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                </div>
+              </details>
+            
+              <details class="subsection" open>
+                <summary>
+                  <span class="pill">Flutter [23h]</span>
+                  <span class="pill pending">0/5 · 0%</span>
+                </summary>
+                <div class="body task-list">
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">Enhanced UserProfileScreen [6h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">EditProfileScreen [6h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">My Events tab [4h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">My Organized tab [3h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">History tab [4h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                </div>
+              </details>
+            
+          </div>
+        </details>
+      
+        <details class="feature" open>
+          <summary>
+            <div class="feature-header">
+              <h2>Feature 7: EventStatus & Cancellation [25h]</h2>
+              <div class="feature-chip">
+                <span class="pill">0/7</span>
+                <span class="pill pending">0%</span>
+              </div>
+            </div>
+          </summary>
+          <div class="body">
+          
+              <details class="subsection" open>
+                <summary>
+                  <span class="pill">Backend [15h]</span>
+                  <span class="pill pending">0/4 · 0%</span>
+                </summary>
+                <div class="body task-list">
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">Enum EventStatus (ACTIVE, CANCELLED, COMPLETED) [2h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">PUT /api/v1/events/{id}/cancel [4h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">PUT /api/v1/events/{id}/complete [3h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">Powiadomienia o odwołaniu [6h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                </div>
+              </details>
+            
+              <details class="subsection" open>
+                <summary>
+                  <span class="pill">Flutter [10h]</span>
+                  <span class="pill pending">0/3 · 0%</span>
+                </summary>
+                <div class="body task-list">
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">EventStatus badges [3h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">Cancel event button [3h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">Cancel confirmation [4h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                </div>
+              </details>
+            
+          </div>
+        </details>
+      
+        <details class="feature" open>
+          <summary>
+            <div class="feature-header">
+              <h2>Security & Privacy Audit [~62h]</h2>
+              <div class="feature-chip">
+                <span class="pill">2/25</span>
+                <span class="pill ">8%</span>
+              </div>
+            </div>
+          </summary>
+          <div class="body">
+          
+              <details class="subsection" open>
+                <summary>
+                  <span class="pill">SAST/Dependency/Secrets Scanning [8h]</span>
+                  <span class="pill pending">0/4 · 0%</span>
+                </summary>
+                <div class="body task-list">
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">Konfiguracja FindSecBugs/SpotBugs (BE) [2h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">Semgrep rules (Java Spring + Dart) [2h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">Dependency scan (OWASP DC lub Snyk) [2h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">Gitleaks (sekrety) + cleanup historii jeśli potrzeba [2h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                </div>
+              </details>
+            
+              <details class="subsection" open>
+                <summary>
+                  <span class="pill">DAST/API Fuzz + Business Logic [10h]</span>
+                  <span class="pill pending">0/3 · 0%</span>
+                </summary>
+                <div class="body task-list">
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">ZAP baseline + full scan z JWT [3h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">Schemathesis fuzz (jeśli OpenAPI) lub ręczne negatywne [3h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">Testy organizer‑only (IDOR) – add/remove participants, cancel, series generate [4h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                </div>
+              </details>
+            
+              <details class="subsection" open>
+                <summary>
+                  <span class="pill">Auth/JWT/CORS/Rate Limits [8h]</span>
+                  <span class="pill ">2/3 · 67%</span>
+                </summary>
+                <div class="body task-list">
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">Rotacja refresh + reuse detection [3h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">CORS allow‑list, brak `*` z Credentials [2h] ✅ (2025-11-19)</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">Rate limits: login, mutujące endpointy, series generate [3h] ✅ (2025-11-19)</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                </div>
+              </details>
+            
+              <details class="subsection" open>
+                <summary>
+                  <span class="pill">Headers/TLS/Nginx [6h]</span>
+                  <span class="pill pending">0/2 · 0%</span>
+                </summary>
+                <div class="body task-list">
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">Security headers (CSP – na przyszłość web, XFO, XCTO, RP, PP) [3h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">TLS hardening + HSTS, SSL Labs A [3h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                </div>
+              </details>
+            
+              <details class="subsection" open>
+                <summary>
+                  <span class="pill">Logging/Audyt/Monitoring [6h]</span>
+                  <span class="pill pending">0/3 · 0%</span>
+                </summary>
+                <div class="body task-list">
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">Maskowanie PII/JWT w logach [2h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">Audit trail dla create/edit/delete/cancel [2h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">Alerting: 4xx/5xx spikes, auth failures [2h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                </div>
+              </details>
+            
+              <details class="subsection" open>
+                <summary>
+                  <span class="pill">Infra/Secrets Hardening [6h]</span>
+                  <span class="pill pending">0/2 · 0%</span>
+                </summary>
+                <div class="body task-list">
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">ufw/fail2ban, systemd ograniczenia, non‑root service [3h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">Sekrety poza repo, rotacja, inwentaryzacja [3h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                </div>
+              </details>
+            
+              <details class="subsection" open>
+                <summary>
+                  <span class="pill">Backup & Disaster Recovery [10h]</span>
+                  <span class="pill pending">0/3 · 0%</span>
+                </summary>
+                <div class="body task-list">
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">Nightly full + WAL archiving (PITR) [3h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">Retencja/rotacja + offsite, szyfrowanie [3h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">Procedury odtworzenia + test restore (runbook) [4h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                </div>
+              </details>
+            
+              <details class="subsection" open>
+                <summary>
+                  <span class="pill">GDPR/RODO [10h]</span>
+                  <span class="pill pending">0/4 · 0%</span>
+                </summary>
+                <div class="body task-list">
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">Privacy Policy + Terms (akceptacja przy rejestracji) [2h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">Eksport/usunięcie/przenoszalność danych (e‑mail, nick, avatar, lokalizacje, telefon) [3h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">Retencja (logi, backupy) + realizacja w systemie [3h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">DPA z dostawcami (hosting PL, e‑mail) [2h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                </div>
+              </details>
+            
+              <details class="subsection" open>
+                <summary>
+                  <span class="pill">Performance Baseline [4h]</span>
+                  <span class="pill pending">0/1 · 0%</span>
+                </summary>
+                <div class="body task-list">
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">k6: GET /api/v1/events (mapa), /api/v1/events?organizerId=me, POST /api/v1/series/{id}/generate [4h]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                </div>
+              </details>
+            
+          </div>
+        </details>
+      
+        <details class="feature" open>
+          <summary>
+            <div class="feature-header">
+              <h2>🏁 CO MUSI DZIAŁAĆ 31 GRUDNIA 2025</h2>
+              <div class="feature-chip">
+                <span class="pill">4/12</span>
+                <span class="pill ">33%</span>
+              </div>
+            </div>
+          </summary>
+          <div class="body">
+          
+              <details class="subsection" open>
+                <summary>
+                  <span class="pill">ABSOLUTNE MINIMUM (Must Have):</span>
+                  <span class="pill ">4/9 · 44%</span>
+                </summary>
+                <div class="body task-list">
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">Aplikacja działa na serwerze (środowisko testowe) ✅</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">Organizator może utworzyć wydarzenie ✅</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">Organizator może zarządzać uczestnikami (ręcznie) ✅</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">⭐ Uczestnicy mogą się samodzielnie zapisywać (kluczowe!)</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">⭐ Uczestnicy mogą rezygnować z uczestnictwa (kluczowe!)</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">⭐ System automatycznie tworzy listę rezerwową [50% gotowe]</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">⭐ System automatycznie awansuje osoby z listy rezerwowej</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">Organizator może tworzyć serie regularnych treningów</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task done">
+                      <span class="badge-dot dot-done"></span>
+                      <span class="title">Organizator widzi listę swoich wydarzeń ✅</span>
+                      <span class="meta">Zrobione</span>
+                    </div>
+                  
+                </div>
+              </details>
+            
+              <details class="subsection" open>
+                <summary>
+                  <span class="pill">MILE WIDZIANE (Nice to Have):</span>
+                  <span class="pill pending">0/3 · 0%</span>
+                </summary>
+                <div class="body task-list">
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">2-3 organizatorów przetestowało aplikację</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">Brak krytycznych błędów</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                    <div class="task pending">
+                      <span class="badge-dot dot-pending"></span>
+                      <span class="title">Pozytywny feedback od testujących</span>
+                      <span class="meta">Do zrobienia</span>
+                    </div>
+                  
+                </div>
+              </details>
+            
+          </div>
+        </details>
+      
+    <div class="timestamp">plan-2 · generated at 2025-11-21 20:58</div>
+  </div>
+</body>
+</html>

@@ -40,17 +40,17 @@ Focus: Organizator tworzy, zarządza i automatycznie uzupełnia skład (podstawo
 Total: ~140h (było ~115h + 25h na self-service)
 
 ### Co Musi Działać (Definicja Sukcesu):
-- [x] Nowy użytkownik może się zarejestrować i zalogować
-- [x] Użytkownik widzi wszystkie wydarzenia na mapie miasta
-- [x] Organizator może utworzyć nowe wydarzenie
-- [x] Organizator może dodać uczestników do wydarzenia (ręcznie)
-- [x] Organizator może usunąć uczestnika z wydarzenia
+- [x] Nowy użytkownik może się zarejestrować i zalogować ✅
+- [x] Użytkownik widzi wszystkie wydarzenia na mapie miasta ✅
+- [x] Organizator może utworzyć nowe wydarzenie ✅
+- [x] Organizator może dodać uczestników do wydarzenia (ręcznie) ✅
+- [x] Organizator może usunąć uczestnika z wydarzenia ✅
 - [ ] ⭐ Uczestnik może samodzielnie zapisać się na wydarzenie
 - [ ] ⭐ Uczestnik może samodzielnie zrezygnować z wydarzenia
 - [ ] ⭐ System automatycznie tworzy listę rezerwową gdy brakuje miejsc [50% gotowe]
 - [ ] ⭐ System automatycznie awansuje osoby z listy rezerwowej gdy ktoś rezygnuje
 - [ ] Organizator może utworzyć serię regularnych treningów (np. co wtorek przez 10 tygodni)
-- [x] Organizator widzi listę swoich wydarzeń
+- [x] Organizator widzi listę swoich wydarzeń ✅
 - [ ] Aplikacja działa online (dostępna przez internet)
 
 POWÓD ZMIANY: Organizator nie będzie ręcznie dodawał wszystkich graczy – MVP musi pozwalać im dołączać samodzielnie.
@@ -141,33 +141,33 @@ Out of Scope M1: SportType enum, zaawansowane filtry (minLevel, sportType, searc
 ### Backend - System Zarządzania Wydarzeniami [15h] ✅
 
 #### Ukończone funkcjonalności:
-- [x] System zwraca listę wszystkich wydarzeń
-- [x] System zwraca szczegóły pojedynczego wydarzenia
-- [x] Organizator może tworzyć nowe wydarzenie
-- [x] Organizator może edytować swoje wydarzenie
-- [x] Organizator może usunąć swoje wydarzenie
-- [x] System waliduje poprawność danych wydarzenia (daty, liczba miejsc, poziom)
-- [x] Organizator widzi tylko swoje wydarzenia
-- [x] System sortuje wydarzenia według daty rozpoczęcia
-- [x] Organizator może odwołać wydarzenie (status CANCELLED)
-- [x] Użytkownicy widzą badge "Odwołane" przy odwołanych wydarzeniach
-- [x] System zabezpiecza przed konfliktami podczas równoczesnej edycji (optimistic locking)
+- [x] System zwraca listę wszystkich wydarzeń ✅
+- [x] System zwraca szczegóły pojedynczego wydarzenia ✅
+- [x] Organizator może tworzyć nowe wydarzenie ✅
+- [x] Organizator może edytować swoje wydarzenie ✅
+- [x] Organizator może usunąć swoje wydarzenie ✅
+- [x] System waliduje poprawność danych wydarzenia (daty, liczba miejsc, poziom) ✅
+- [x] Organizator widzi tylko swoje wydarzenia ✅
+- [x] System sortuje wydarzenia według daty rozpoczęcia ✅
+- [x] Organizator może odwołać wydarzenie (status CANCELLED) ✅
+- [x] Użytkownicy widzą badge "Odwołane" przy odwołanych wydarzeniach ✅
+- [x] System zabezpiecza przed konfliktami podczas równoczesnej edycji (optimistic locking) ✅
 
 ### Mobile - Interfejs Zarządzania Wydarzeniami [15h] ✅
 
 #### Ukończone funkcjonalności:
-- [x] Organizator widzi pełne szczegóły wydarzenia
-- [x] Organizator może utworzyć nowe wydarzenie przez formularz
+- [x] Organizator widzi pełne szczegóły wydarzenia ✅
+- [x] Organizator może utworzyć nowe wydarzenie przez formularz ✅
   - [x] Wypełnienie nazwy, opisu, daty i godziny
   - [x] Wybór lokalizacji na mapie
   - [x] Ustawienie liczby miejsc, ceny, poziomu trudności
   - [x] Walidacja wprowadzonych danych
 
-- [x] Organizator może edytować istniejące wydarzenie
+- [x] Organizator może edytować istniejące wydarzenie ✅
   - [x] Formularz wypełnia się aktualnymi danymi
   - [x] Zapisanie zmian
 
-- [x] Organizator może usunąć wydarzenie
+- [x] Organizator może usunąć wydarzenie ✅
   - [x] Potwierdzenie usunięcia przez dialog
   - [x] Odświeżenie listy po usunięciu
 
@@ -193,21 +193,21 @@ UWAGA: W tym MVP BEZ self-service (uczestnik NIE może sam dołączyć)
 ### Backend - System Zarządzania Uczestnikami [15h] ✅
 
 #### Ukończone funkcjonalności:
-- [x] System przechowuje listę uczestników wydarzenia
+- [x] System przechowuje listę uczestników wydarzenia ✅
   - [x] Informacje: uczestnik, pozycja na liście, data dołączenia, kto dodał
   - [x] Każdy użytkownik może być uczestnikiem tylko raz na wydarzeniu
   - [x] Baza danych przygotowana (migracja V1_6)
 
-- [x] Organizator może dodać uczestnika do wydarzenia
+- [x] Organizator może dodać uczestnika do wydarzenia ✅
   - [x] Dodawanie po ID użytkownika lub emailu
   - [x] Tylko organizator może dodawać uczestników
   - [x] Automatyczne przypisanie pozycji na liście
 
-- [x] Organizator może usunąć uczestnika z wydarzenia
+- [x] Organizator może usunąć uczestnika z wydarzenia ✅
   - [x] Tylko organizator może usuwać uczestników
   - [x] Automatyczne przenumerowanie pozycji pozostałych uczestników
 
-- [x] System zwraca listę uczestników wydarzenia
+- [x] System zwraca listę uczestników wydarzenia ✅
   - [x] Posortowana według pozycji
   - [x] Podział na główną listę i listę rezerwową
   - [x] Informacje o użytkowniku i jego pozycji
@@ -215,22 +215,22 @@ UWAGA: W tym MVP BEZ self-service (uczestnik NIE może sam dołączyć)
 ### Mobile - Interfejs Zarządzania Uczestnikami [15h] ✅
 
 #### Ukończone funkcjonalności:
-- [x] Organizator widzi ekran zarządzania uczestnikami
+- [x] Organizator widzi ekran zarządzania uczestnikami ✅
   - [x] Lista wszystkich uczestników z avatarami
   - [x] Pozycja każdego uczestnika na liście
   - [x] Dostęp tylko dla organizatora wydarzenia
 
-- [x] Organizator może dodać uczestnika
+- [x] Organizator może dodać uczestnika ✅
   - [x] Przycisk "Dodaj uczestnika"
   - [x] Dialog wyszukiwania użytkownika po nicku/emailu
   - [x] Potwierdzenie dodania
 
-- [x] Organizator może usunąć uczestnika
+- [x] Organizator może usunąć uczestnika ✅
   - [x] Przycisk "Usuń" przy każdym uczestniku
   - [x] Dialog potwierdzenia usunięcia
   - [x] Automatyczne odświeżenie listy
 
-- [x] Aplikacja synchronizuje zmiany z serwerem
+- [x] Aplikacja synchronizuje zmiany z serwerem ✅
   - [x] Pobieranie aktualnej listy uczestników
   - [x] Zapisywanie zmian w czasie rzeczywistym
 
@@ -295,7 +295,7 @@ Zakres: Automatyczna lista rezerwowa - kolejka FIFO (kto pierwszy, ten pierwszy)
 
 ### Backend - System Listy Rezerwowej [6h] - 60% GOTOWE ✅
 
-- [x] System rozróżnia główną listę od listy rezerwowej [1h]
+- [x] System rozróżnia główną listę od listy rezerwowej [1h] ✅
   - [x] Status uczestnika: główna lista lub lista rezerwowa
   - [x] Baza danych zaktualizowana (migracja V1_6)
 
@@ -304,7 +304,7 @@ Zakres: Automatyczna lista rezerwowa - kolejka FIFO (kto pierwszy, ten pierwszy)
   - [x] Dodanie na główną listę jeśli są miejsca
   - [x] Dodanie na listę rezerwową jeśli brak miejsc
 
-- [x] System zwraca oddzielnie główną listę i listę rezerwową [1h]
+- [x] System zwraca oddzielnie główną listę i listę rezerwową [1h] ✅
   - [x] Główna lista posortowana według pozycji
   - [x] Lista rezerwowa posortowana według kolejności dołączenia
 
@@ -445,12 +445,12 @@ Postęp: 40% GOTOWE ✅ - Nawigacja i lista wydarzeń działają
   - [ ] Skrócona karta wydarzenia (data, miejsce, liczba uczestników)
   - [ ] Dotknięcie otwiera szczegóły
 
-- [x] Dolna nawigacja (3 zakładki) [3h]
+- [x] Dolna nawigacja (3 zakładki) [3h] ✅
   - [x] Mapa z wydarzeniami
   - [x] Moje Wydarzenia
   - [x] Profil użytkownika
 
-- [x] Lista wszystkich wydarzeń [3h]
+- [x] Lista wszystkich wydarzeń [3h] ✅
   - [x] Przewijalna lista wszystkich wydarzeń
   - [x] Odświeżanie przez pociągnięcie w dół
 
@@ -458,7 +458,7 @@ Postęp: 40% GOTOWE ✅ - Nawigacja i lista wydarzeń działają
   - [ ] Szkieletowe ekrany podczas ładowania danych
   - [ ] Płynne animacje
 
-- [x] Obsługa błędów [2h]
+- [x] Obsługa błędów [2h] ✅
   - [x] Komunikaty o błędach połączenia
   - [x] Przycisk "Spróbuj ponownie"
 
@@ -522,14 +522,14 @@ Zakres: Aplikacja dostępna przez internet dla pierwszych użytkowników
 ## 🎊 MILESTONE 1 - CO MUSI DZIAŁAĆ DO KOŃCA 2025
 
 Funkcje gotowe do użycia:
-- [x] Rejestracja i logowanie użytkowników
-- [x] Mapa z wszystkimi wydarzeniami
-- [x] Tworzenie wydarzenia przez organizatora
-- [x] Edycja i usuwanie wydarzenia
-- [x] Ręczne zarządzanie uczestnikami przez organizatora
-  - [x] Dodawanie uczestników
-  - [x] Usuwanie uczestników
-- [x] Lista moich wydarzeń dla organizatora
+- [x] Rejestracja i logowanie użytkowników ✅
+- [x] Mapa z wszystkimi wydarzeniami ✅
+- [x] Tworzenie wydarzenia przez organizatora ✅
+- [x] Edycja i usuwanie wydarzenia ✅
+- [x] Ręczne zarządzanie uczestnikami przez organizatora ✅
+  - [x] Dodawanie uczestników ✅
+  - [x] Usuwanie uczestników ✅
+- [x] Lista moich wydarzeń dla organizatora ✅
 
 Do ukończenia (pozostało 45h):
 - [ ] Samodzielne zapisywanie się uczestników (10h)
@@ -549,7 +549,7 @@ Scope: Zaawansowane funkcje dla organizatora i uczestników
 UWAGA: Self-service join/leave i basic waitlist przeszły do M1 2025!
 
 ### Backend [35h]
-- [x] Custom exceptions [2h]  (2025-11-19)
+- [x] Custom exceptions [2h] ✅ (2025-11-19)
 - [ ] Manual promote/demote z waitlisty [8h]
 - [ ] Drag & drop reordering positions [6h]
 - [ ] Payment tracking (isPaid, paymentMethod) [10h]
@@ -699,7 +699,7 @@ Total: ~195h (~13 tygodni)
 - [ ] Payment flow UI [12h]
 
 ## Sprint: Testowanie [60h]
-- [x] Testy jednostkowe [15h]  (2025-11-19) - częściowo
+- [x] Testy jednostkowe [15h] ✅ (2025-11-19) - częściowo
 - [ ] Testy integracyjne [15h]
 - [ ] Swagger/OpenAPI [10h]
 - [ ] Kolekcja Postman [10h]
@@ -722,8 +722,8 @@ Total: ~195h (~13 tygodni)
 
 ### Auth/JWT/CORS/Rate Limits [8h]
 - [ ] Rotacja refresh + reuse detection [3h]
-- [x] CORS allow‑list, brak `*` z Credentials [2h]  (2025-11-19)
-- [x] Rate limits: login, mutujące endpointy, series generate [3h]  (2025-11-19)
+- [x] CORS allow‑list, brak `*` z Credentials [2h] ✅ (2025-11-19)
+- [x] Rate limits: login, mutujące endpointy, series generate [3h] ✅ (2025-11-19)
 
 ### Headers/TLS/Nginx [6h]
 - [ ] Security headers (CSP – na przyszłość web, XFO, XCTO, RP, PP) [3h]
@@ -875,17 +875,17 @@ Critical Path: 9 tygodni = koniec 2025
 ## 🏁 CO MUSI DZIAŁAĆ 31 GRUDNIA 2025
 
 ### ABSOLUTNE MINIMUM (Must Have):
-- [x] Aplikacja działa na serwerze (środowisko testowe)
-- [x] Organizator może utworzyć wydarzenie
-- [x] Organizator może zarządzać uczestnikami (ręcznie)
-  - [x] Dodawanie uczestników
-  - [x] Usuwanie uczestników
+- [x] Aplikacja działa na serwerze (środowisko testowe) ✅
+- [x] Organizator może utworzyć wydarzenie ✅
+- [x] Organizator może zarządzać uczestnikami (ręcznie) ✅
+  - [x] Dodawanie uczestników ✅
+  - [x] Usuwanie uczestników ✅
 - [ ] ⭐ Uczestnicy mogą się samodzielnie zapisywać (kluczowe!)
 - [ ] ⭐ Uczestnicy mogą rezygnować z uczestnictwa (kluczowe!)
 - [ ] ⭐ System automatycznie tworzy listę rezerwową [50% gotowe]
 - [ ] ⭐ System automatycznie awansuje osoby z listy rezerwowej
 - [ ] Organizator może tworzyć serie regularnych treningów
-- [x] Organizator widzi listę swoich wydarzeń
+- [x] Organizator widzi listę swoich wydarzeń ✅
 
 ### MILE WIDZIANE (Nice to Have):
 - [ ] 2-3 organizatorów przetestowało aplikację

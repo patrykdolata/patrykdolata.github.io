@@ -1,0 +1,39 @@
+{
+  "taskFile": "./TODO.md",
+  "stateFile": "./state.json",
+  "schedule": {
+    "startDate": "2025-11-13",
+    "weeklyHours": 15,
+    "todayHours": 2,
+    "workingHours": {
+      "Monday": 0,
+      "Tuesday": 1,
+      "Wednesday": 2,
+      "Thursday": 3,
+      "Friday": 2,
+      "Saturday": 4,
+      "Sunday": 3
+    }
+  },
+  "repositories": [
+    {
+      "name": "patrykdolata.github.io",
+      "path": "/home/dolti/dev/workspace/git/patrykdolata.github.io",
+      "enabled": true
+    },
+    {
+      "name": "meet-app-be",
+      "path": "/home/dolti/dev/workspace/git/meet-app-be",
+      "enabled": true
+    },
+    {
+      "name": "meet-app-fe",
+      "path": "/home/dolti/dev/workspace/git/meet-app-fe",
+      "enabled": true
+    }
+  ],
+  "matching": {
+    "minScore": 0.15,
+    "keywordBoost": 1.5
+  }
+}
