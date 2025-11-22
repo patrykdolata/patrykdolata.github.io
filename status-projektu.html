@@ -1,0 +1,551 @@
+
+    <!DOCTYPE html>
+    <html lang="pl">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Cele Projektu i Mapa Drogowa  Meet App</title>
+        <style>
+    :root {
+        --bg-main: #f8f9fa;
+        --text-main: #2d3436;
+        --card-bg: #ffffff;
+        --border: #dfe6e9;
+        --accent: #0984e3;
+        --success: #00b894;
+        --milestone-header: #2d3436;
+        --feature-bg: #f1f2f6;
+        --shadow: 0 4px 6px rgba(0,0,0,0.05);
+    }
+
+    [data-theme="dark"] {
+        --bg-main: #1e1e2e;
+        --text-main: #cdd6f4;
+        --card-bg: #313244;
+        --border: #45475a;
+        --accent: #89b4fa;
+        --success: #a6e3a1;
+        --milestone-header: #cdd6f4;
+        --feature-bg: #45475a;
+        --shadow: 0 4px 6px rgba(0,0,0,0.3);
+    }
+
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: var(--bg-main); color: var(--text-main); margin: 0; padding: 20px; line-height: 1.6; transition: background 0.3s, color 0.3s; }
+    .container { max-width: 1000px; margin: 0 auto; }
+
+    /* Header & Toggle */
+    header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; padding-bottom: 20px; border-bottom: 2px solid var(--border); }
+    h1 { margin: 0; font-size: 2em; color: var(--accent); }
+    .theme-toggle { background: none; border: 2px solid var(--text-main); color: var(--text-main); padding: 8px 16px; border-radius: 20px; cursor: pointer; font-weight: bold; transition: 0.2s; }
+    .theme-toggle:hover { background: var(--text-main); color: var(--bg-main); }
+
+    /* Summary Grid */
+    .summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 50px; }
+    .metric-card { background: var(--card-bg); padding: 20px; border-radius: 12px; box-shadow: var(--shadow); border: 1px solid var(--border); text-align: center; }
+    .metric-label { font-size: 0.85em; text-transform: uppercase; letter-spacing: 1px; opacity: 0.7; margin-bottom: 10px; }
+    .metric-value { font-size: 1.4em; font-weight: bold; color: var(--accent); }
+    .progress-track { height: 10px; background: var(--border); border-radius: 5px; margin-top: 10px; overflow: hidden; }
+    .progress-fill { height: 100%; background: var(--success); transition: width 0.5s ease; }
+
+    /* Milestone Sections */
+    .milestone-card { background: var(--card-bg); border-radius: 16px; padding: 30px; margin-bottom: 40px; box-shadow: var(--shadow); border-top: 6px solid var(--accent); }
+    .milestone-title { font-size: 1.8em; margin: 0 0 10px 0; color: var(--milestone-header); }
+    .milestone-meta { font-size: 0.95em; opacity: 0.8; margin-bottom: 25px; font-style: italic; }
+
+    /* Features (Collapsible) */
+    details { margin-bottom: 15px; background: var(--bg-main); border-radius: 8px; overflow: hidden; border: 1px solid var(--border); }
+    summary { padding: 15px; cursor: pointer; font-weight: bold; list-style: none; display: flex; align-items: center; justify-content: space-between; user-select: none; transition: background 0.2s; }
+    summary:hover { background: var(--feature-bg); }
+    summary::after { content: '+'; font-size: 1.5em; font-weight: normal; }
+    details[open] summary { border-bottom: 1px solid var(--border); background: var(--feature-bg); }
+    details[open] summary::after { content: '−'; }
+    .feature-content { padding: 15px 20px; background: var(--card-bg); }
+    
+    /* Tasks */
+    .task-list { list-style: none; padding: 0; margin: 0; }
+    .task-item { display: flex; align-items: flex-start; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--border); }
+    .task-item:last-child { border-bottom: none; }
+    .checkbox { min-width: 18px; height: 18px; border: 2px solid var(--text-main); border-radius: 4px; display: flex; align-items: center; justify-content: center; margin-top: 4px; opacity: 0.5; }
+    .checkbox.done { background: var(--success); border-color: var(--success); opacity: 1; color: #fff; }
+    .checkbox.done::before { content: '✓'; font-size: 12px; font-weight: bold; }
+    .task-text { flex: 1; }
+
+    /* Legend */
+    .legend { margin-top: 60px; padding: 20px; border-top: 2px solid var(--border); font-size: 0.9em; opacity: 0.8; }
+    .legend ul { list-style: none; padding: 0; display: flex; gap: 20px; flex-wrap: wrap; }
+    .legend li { display: flex; align-items: center; gap: 8px; }
+
+    /* Status Tags (Done, In Progress) in summary */
+    .status-tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.8em; font-weight: bold; }
+    .tag-done { background: rgba(0, 184, 148, 0.15); color: var(--success); }
+    .tag-todo { background: rgba(9, 132, 227, 0.15); color: var(--accent); }
+</style>
+    </head>
+    <body>
+        <div class="container">
+            <header>
+                <div>
+                    <h1>Cele Projektu i Mapa Drogowa  Meet App</h1>
+                    <p style="opacity:0.7; margin:5px 0;"><strong>Wizja:</strong> Aplikacja uwalniająca organizatorów siatkówki od ręcznego zarządzania listami w Excelu/Messengerze, zapewniając pełną automatyzację zapisów.</p><p style="opacity:0.7; margin:5px 0;"><strong>Cel Główny:</strong> Działający MVP (Organizator + Samoobsługa gracza) gotowy do wdrożenia do 31 grudnia 2025.</p><p style="opacity:0.7; margin:5px 0;"><em>Wartość biznesowa:</em> Zamiast budować system powiadomień w MVP, organizator wrzuca link na istniejącą grupę. Kliknięcie otwiera aplikację na konkretnym meczu.</p>
+                </div>
+                <button id="theme-toggle" class="theme-toggle">🌙 Tryb Ciemny</button>
+            </header>
+
+            <!-- SUMMARY DASHBOARD -->
+            <section class="summary-grid">
+                
+                    <div class="metric-card">
+                        <div class="metric-label"><strong>Całkowity Postęp</strong></div>
+                        <div class="metric-value">55%</div>
+                        
+                        <div class="progress-track">
+                            <div class="progress-fill" style="width: 55%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="metric-card">
+                        <div class="metric-label"><strong>Aktualna Faza</strong></div>
+                        <div class="metric-value"><strong>M1: MVP Organizatora + Samoobsługa</strong></div>
+                        
+                    </div>
+                    
+                    <div class="metric-card">
+                        <div class="metric-label"><strong>Najbliższy Termin</strong></div>
+                        <div class="metric-value"><strong>31.12.2025</strong> (Wdrożenie na koniec roku)</div>
+                        
+                    </div>
+                    
+                    <div class="metric-card">
+                        <div class="metric-label"><strong>Główny Fokus</strong></div>
+                        <div class="metric-value">Automatyzacja zapisów, Deep Links, Wydarzenia Cykliczne</div>
+                        
+                    </div>
+                    
+            </section>
+
+            <!-- MILESTONES -->
+            <main>
+                
+                    <div class="milestone-card">
+                        <h2 class="milestone-title">Podsumowanie Zarządcze</h2>
+                        
+                        
+                        <!-- FEATURES -->
+                        
+                    </div>
+                
+                    <div class="milestone-card">
+                        <h2 class="milestone-title">M1  MVP Organizatora i Samoobsługa</h2>
+                        <div class="milestone-meta"><strong>Termin:</strong> Q4 2025 (Deadline: 31.12.2025) | <strong>Cel:</strong> Organizator tworzy wydarzenie, wysyła link na grupę, a lista "robi się sama".</div>
+                        
+                        <!-- FEATURES -->
+                        
+                            <details >
+                                <summary>
+                                    <span>
+                                        Fundamenty Systemu 
+                                        <span class="status-tag tag-done">Ukończone</span>
+                                    </span>
+                                </summary>
+                                <div class="feature-content">
+                                    <p style="margin-top:0; color:var(--text-main); opacity:0.7; font-size:0.9em;"><em>Baza bezpieczeństwa i dostępności.</em></p>
+                                    <ul class="task-list">
+                                        
+                                            <li class="task-item">
+                                                <div class="checkbox done"></div>
+                                                <div class="task-text" style="opacity: 0.6; text-decoration: line-through;"><strong>Bezpieczne Logowanie</strong> `` ``  Rejestracja i autoryzacja (JWT) dla organizatorów oraz graczy.</div>
+                                            </li>
+                                        
+                                            <li class="task-item">
+                                                <div class="checkbox done"></div>
+                                                <div class="task-text" style="opacity: 0.6; text-decoration: line-through;"><strong>Zarządzanie Profilem</strong> ``  Podstawowe dane użytkownika i awatar.</div>
+                                            </li>
+                                        
+                                            <li class="task-item">
+                                                <div class="checkbox done"></div>
+                                                <div class="task-text" style="opacity: 0.6; text-decoration: line-through;"><strong>Środowisko Produkcyjne</strong> `` ``  Serwer i baza danych gotowe do działania online.</div>
+                                            </li>
+                                        
+                                    </ul>
+                                </div>
+                            </details>
+                        
+                            <details >
+                                <summary>
+                                    <span>
+                                        Tworzenie i Odkrywanie 
+                                        <span class="status-tag tag-done">Ukończone</span>
+                                    </span>
+                                </summary>
+                                <div class="feature-content">
+                                    <p style="margin-top:0; color:var(--text-main); opacity:0.7; font-size:0.9em;"><em>Narzędzia do zarządzania ofertą wydarzeń.</em></p>
+                                    <ul class="task-list">
+                                        
+                                            <li class="task-item">
+                                                <div class="checkbox done"></div>
+                                                <div class="task-text" style="opacity: 0.6; text-decoration: line-through;"><strong>Kreator Wydarzeń</strong> `` ``  Szybkie tworzenie gier (czas, miejsce, limity miejsc).</div>
+                                            </li>
+                                        
+                                            <li class="task-item">
+                                                <div class="checkbox done"></div>
+                                                <div class="task-text" style="opacity: 0.6; text-decoration: line-through;"><strong>Interaktywna Mapa</strong> `` ``  Wizualizacja wydarzeń w mieście z filtrowaniem.</div>
+                                            </li>
+                                        
+                                            <li class="task-item">
+                                                <div class="checkbox done"></div>
+                                                <div class="task-text" style="opacity: 0.6; text-decoration: line-through;"><strong>Cykl Życia Wydarzenia</strong> `` ``  Edycja, odwoływanie i usuwanie przez organizatora.</div>
+                                            </li>
+                                        
+                                            <li class="task-item">
+                                                <div class="checkbox done"></div>
+                                                <div class="task-text" style="opacity: 0.6; text-decoration: line-through;"><strong>Ulubione Lokalizacje</strong> ``  Szybki wybór sprawdzonych boisk/hal.</div>
+                                            </li>
+                                        
+                                    </ul>
+                                </div>
+                            </details>
+                        
+                            <details open>
+                                <summary>
+                                    <span>
+                                        Automatyzacja Listy Obecności 
+                                        <span class="status-tag tag-todo">1/4</span>
+                                    </span>
+                                </summary>
+                                <div class="feature-content">
+                                    <p style="margin-top:0; color:var(--text-main); opacity:0.7; font-size:0.9em;"><em>Serce systemu  koniec z ręcznym przepisywaniem list.</em></p>
+                                    <ul class="task-list">
+                                        
+                                            <li class="task-item">
+                                                <div class="checkbox done"></div>
+                                                <div class="task-text" style="opacity: 0.6; text-decoration: line-through;"><strong>Ręczna Kontrola</strong> ``  Organizator może ręcznie dodać/usunąć każdego (np. osoby spoza apki).</div>
+                                            </li>
+                                        
+                                            <li class="task-item">
+                                                <div class="checkbox "></div>
+                                                <div class="task-text" style=""><strong>Samoobsługa Gracza</strong> `` ``  Użytkownik sam klika "Dołącz" lub "Zrezygnuj".</div>
+                                            </li>
+                                        
+                                            <li class="task-item">
+                                                <div class="checkbox "></div>
+                                                <div class="task-text" style=""><strong>Inteligentna Lista Rezerwowa</strong> `` ``  Kolejka FIFO (kto pierwszy, ten lepszy) po wyczerpaniu miejsc.</div>
+                                            </li>
+                                        
+                                            <li class="task-item">
+                                                <div class="checkbox "></div>
+                                                <div class="task-text" style=""><strong>Auto-Uzupełnianie</strong> `` ``  System automatycznie wskazuje pierwszego z rezerwy, gdy zwolni się miejsce.</div>
+                                            </li>
+                                        
+                                    </ul>
+                                </div>
+                            </details>
+                        
+                            <details open>
+                                <summary>
+                                    <span>
+                                        Dystrybucja i Komunikacja 
+                                        <span class="status-tag tag-todo">0/2</span>
+                                    </span>
+                                </summary>
+                                <div class="feature-content">
+                                    <p style="margin-top:0; color:var(--text-main); opacity:0.7; font-size:0.9em;"><em>Wykorzystanie zewnętrznych kanałów jako systemu powiadomień.</em></p>
+                                    <ul class="task-list">
+                                        
+                                            <li class="task-item">
+                                                <div class="checkbox "></div>
+                                                <div class="task-text" style=""><strong>Udostępnianie (Deep Links)</strong> ``  Przycisk "Udostępnij", generujący bezpośredni link do wydarzenia (`meetapp://event/{id}`).</div>
+                                            </li>
+                                        
+                                            <li class="task-item">
+                                                <div class="checkbox "></div>
+                                                <div class="task-text" style=""><strong>Integracja Społecznościowa</strong> ``  Łatwe wysyłanie linku na Messenger/WhatsApp/SMS.</div>
+                                            </li>
+                                        
+                                    </ul>
+                                </div>
+                            </details>
+                        
+                            <details open>
+                                <summary>
+                                    <span>
+                                        Operacje Cykliczne 
+                                        <span class="status-tag tag-todo">0/2</span>
+                                    </span>
+                                </summary>
+                                <div class="feature-content">
+                                    <p style="margin-top:0; color:var(--text-main); opacity:0.7; font-size:0.9em;"><em>Oszczędność czasu przy stałych terminach.</em></p>
+                                    <ul class="task-list">
+                                        
+                                            <li class="task-item">
+                                                <div class="checkbox "></div>
+                                                <div class="task-text" style=""><strong>Serie Treningowe</strong> `` ``  Generowanie 10 treningów w przód (np. "każdy wtorek") jednym kliknięciem.</div>
+                                            </li>
+                                        
+                                            <li class="task-item">
+                                                <div class="checkbox "></div>
+                                                <div class="task-text" style=""><strong>Pulpit Organizatora</strong> `` ``  Widok "Moje Wydarzenia" do szybkiego zarządzania nadchodzącymi grami.</div>
+                                            </li>
+                                        
+                                    </ul>
+                                </div>
+                            </details>
+                        
+                    </div>
+                
+                    <div class="milestone-card">
+                        <h2 class="milestone-title">M2  Zaangażowanie, Powiadomienia i Narzędzia Zaawansowane</h2>
+                        <div class="milestone-meta"><strong>Termin:</strong> Q1 2026 | <strong>Cel:</strong> Budowanie zaufania, komunikacja w czasie rzeczywistym i precyzyjna kontrola.</div>
+                        
+                        <!-- FEATURES -->
+                        
+                            <details open>
+                                <summary>
+                                    <span>
+                                        Natywne Powiadomienia (System Push) 
+                                        <span class="status-tag tag-todo">0/3</span>
+                                    </span>
+                                </summary>
+                                <div class="feature-content">
+                                    <p style="margin-top:0; color:var(--text-main); opacity:0.7; font-size:0.9em;"><em>Kluczowe dla utrzymania tempa zapisów i informacji o zmianach.</em></p>
+                                    <ul class="task-list">
+                                        
+                                            <li class="task-item">
+                                                <div class="checkbox "></div>
+                                                <div class="task-text" style=""><strong>Statusy Listy</strong> `` ``  "Zwolniło się miejsce!", "Awansowałeś na listę główną!".</div>
+                                            </li>
+                                        
+                                            <li class="task-item">
+                                                <div class="checkbox "></div>
+                                                <div class="task-text" style=""><strong>Przypomnienia</strong> ``  Automatyczny alert 24h przed meczem dla zapisanych graczy.</div>
+                                            </li>
+                                        
+                                            <li class="task-item">
+                                                <div class="checkbox "></div>
+                                                <div class="task-text" style=""><strong>Alerty Zmian</strong> ``  Natychmiastowe info o zmianie godziny, lokalizacji lub odwołaniu meczu.</div>
+                                            </li>
+                                        
+                                    </ul>
+                                </div>
+                            </details>
+                        
+                            <details open>
+                                <summary>
+                                    <span>
+                                        ⭐ System Reputacji (R-Score) 
+                                        <span class="status-tag tag-todo">0/3</span>
+                                    </span>
+                                </summary>
+                                <div class="feature-content">
+                                    <p style="margin-top:0; color:var(--text-main); opacity:0.7; font-size:0.9em;"><em>Budowanie zaufania i eliminacja "no-show".</em></p>
+                                    <ul class="task-list">
+                                        
+                                            <li class="task-item">
+                                                <div class="checkbox "></div>
+                                                <div class="task-text" style=""><strong>Śledzenie Obecności (No-Show)</strong> ``  Organizator oznacza, czy zapisany gracz faktycznie się pojawił.</div>
+                                            </li>
+                                        
+                                            <li class="task-item">
+                                                <div class="checkbox "></div>
+                                                <div class="task-text" style=""><strong>Ocena Wiarygodności</strong> ``  Wskaźnik R-Score widoczny przy profilu gracza (np. % obecności).</div>
+                                            </li>
+                                        
+                                            <li class="task-item">
+                                                <div class="checkbox "></div>
+                                                <div class="task-text" style=""><strong>Kary za Nieobecność</strong> ``  Automatyczna blokada zapisów lub niższy priorytet dla notorycznych "wagarowiczów".</div>
+                                            </li>
+                                        
+                                    </ul>
+                                </div>
+                            </details>
+                        
+                            <details open>
+                                <summary>
+                                    <span>
+                                        Zaawansowane Zarządzanie Listą 
+                                        <span class="status-tag tag-todo">0/3</span>
+                                    </span>
+                                </summary>
+                                <div class="feature-content">
+                                    
+                                    <ul class="task-list">
+                                        
+                                            <li class="task-item">
+                                                <div class="checkbox "></div>
+                                                <div class="task-text" style=""><strong>Priorytetyzacja</strong> ``  Ręczne przesuwanie graczy (Awans/Degradacja) przez organizatora.</div>
+                                            </li>
+                                        
+                                            <li class="task-item">
+                                                <div class="checkbox "></div>
+                                                <div class="task-text" style=""><strong>Drag & Drop</strong> ``  Łatwa zmiana kolejności na liście metodą przeciągnij i upuść.</div>
+                                            </li>
+                                        
+                                            <li class="task-item">
+                                                <div class="checkbox "></div>
+                                                <div class="task-text" style=""><strong>Historia Gier</strong> ``  Wgląd w historię aktywności gracza i organizatora.</div>
+                                            </li>
+                                        
+                                    </ul>
+                                </div>
+                            </details>
+                        
+                            <details open>
+                                <summary>
+                                    <span>
+                                        Grupy i Społeczności 
+                                        <span class="status-tag tag-todo">0/3</span>
+                                    </span>
+                                </summary>
+                                <div class="feature-content">
+                                    
+                                    <ul class="task-list">
+                                        
+                                            <li class="task-item">
+                                                <div class="checkbox "></div>
+                                                <div class="task-text" style=""><strong>Stałe Grupy</strong> ``  Tworzenie zamkniętych społeczności (np. "Wtorkowa Ekipa").</div>
+                                            </li>
+                                        
+                                            <li class="task-item">
+                                                <div class="checkbox "></div>
+                                                <div class="task-text" style=""><strong>Stała Lista Graczy</strong> ``  Baza graczy przypisana do grupy dla szybkiego dodawania.</div>
+                                            </li>
+                                        
+                                            <li class="task-item">
+                                                <div class="checkbox "></div>
+                                                <div class="task-text" style=""><strong>Prywatność</strong> ``  Wydarzenia widoczne tylko dla członków danej grupy.</div>
+                                            </li>
+                                        
+                                    </ul>
+                                </div>
+                            </details>
+                        
+                            <details open>
+                                <summary>
+                                    <span>
+                                        Inteligentny Kalendarz 
+                                        <span class="status-tag tag-todo">0/2</span>
+                                    </span>
+                                </summary>
+                                <div class="feature-content">
+                                    
+                                    <ul class="task-list">
+                                        
+                                            <li class="task-item">
+                                                <div class="checkbox "></div>
+                                                <div class="task-text" style=""><strong>Zaawansowane Serie</strong> ``  Pomijanie świąt, cykle miesięczne.</div>
+                                            </li>
+                                        
+                                            <li class="task-item">
+                                                <div class="checkbox "></div>
+                                                <div class="task-text" style=""><strong>Widok Kalendarza</strong> ``  Graficzne przedstawienie nadchodzących gier w miesiącu.</div>
+                                            </li>
+                                        
+                                    </ul>
+                                </div>
+                            </details>
+                        
+                    </div>
+                
+                    <div class="milestone-card">
+                        <h2 class="milestone-title">M3  Skalowanie i Komercjalizacja</h2>
+                        <div class="milestone-meta"><strong>Termin:</strong> Q2 2026 | <strong>Cel:</strong> Płatności, analityka i pełna zgodność prawna.</div>
+                        
+                        <!-- FEATURES -->
+                        
+                            <details open>
+                                <summary>
+                                    <span>
+                                        Finanse 
+                                        <span class="status-tag tag-todo">0/3</span>
+                                    </span>
+                                </summary>
+                                <div class="feature-content">
+                                    
+                                    <ul class="task-list">
+                                        
+                                            <li class="task-item">
+                                                <div class="checkbox "></div>
+                                                <div class="task-text" style=""><strong>Statusy Płatności</strong> ``  Oznaczanie przez organizatora kto zapłacił (gotówka/przelew).</div>
+                                            </li>
+                                        
+                                            <li class="task-item">
+                                                <div class="checkbox "></div>
+                                                <div class="task-text" style=""><strong>Płatności Online</strong> ``  Integracja z bramką płatniczą (BLIK/Karta) wewnątrz aplikacji.</div>
+                                            </li>
+                                        
+                                            <li class="task-item">
+                                                <div class="checkbox "></div>
+                                                <div class="task-text" style=""><strong>Polityka Zwrotów</strong> ``  Automatyzacja zwrotów przy rezygnacji w terminie.</div>
+                                            </li>
+                                        
+                                    </ul>
+                                </div>
+                            </details>
+                        
+                            <details open>
+                                <summary>
+                                    <span>
+                                        Dane i Bezpieczeństwo 
+                                        <span class="status-tag tag-todo">0/3</span>
+                                    </span>
+                                </summary>
+                                <div class="feature-content">
+                                    
+                                    <ul class="task-list">
+                                        
+                                            <li class="task-item">
+                                                <div class="checkbox "></div>
+                                                <div class="task-text" style=""><strong>Analityka</strong> ``  Raporty obłożenia, frekwencji i trendów.</div>
+                                            </li>
+                                        
+                                            <li class="task-item">
+                                                <div class="checkbox "></div>
+                                                <div class="task-text" style=""><strong>Zgodność RODO</strong> ``  Eksport i anonimizacja danych użytkowników.</div>
+                                            </li>
+                                        
+                                            <li class="task-item">
+                                                <div class="checkbox "></div>
+                                                <div class="task-text" style=""><strong>Audyt Bezpieczeństwa</strong> ``  Testy penetracyjne przed szeroką publikacją.</div>
+                                            </li>
+                                        
+                                    </ul>
+                                </div>
+                            </details>
+                        
+                    </div>
+                
+            </main>
+
+            <!-- LEGEND -->
+            
+            <footer class="legend">
+                <h3>Legenda</h3>
+                <ul>
+                    <li>• `[MA-xxx]`  Numer zadania w Jira (gotowe do realizacji lub w trakcie).</li><li>• ``  Funkcja zaplanowana, wymagająca utworzenia zadań w Jira.</li><li>• <strong>Zakończone</strong>  Funkcja wdrożona.</li><li>• <strong>W Trakcie</strong>  Prace trwają.</li><li>• <strong>Do Zrobienia</strong>  Najbliższy priorytet.</li>
+                </ul>
+            </footer>
+            
+
+        </div>
+        <script>
+    const btn = document.getElementById('theme-toggle');
+    const html = document.documentElement;
+    
+    // Check local storage or system preference
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+        html.setAttribute('data-theme', savedTheme);
+        btn.innerText = savedTheme === 'dark' ? '☀️ Tryb Jasny' : '🌙 Tryb Ciemny';
+    }
+
+    btn.addEventListener('click', () => {
+        const current = html.getAttribute('data-theme');
+        const newTheme = current === 'dark' ? 'light' : 'dark';
+        
+        html.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        btn.innerText = newTheme === 'dark' ? '☀️ Tryb Jasny' : '🌙 Tryb Ciemny';
+    });
+</script>
+    </body>
+    </html>
+    

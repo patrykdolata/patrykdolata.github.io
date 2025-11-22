@@ -1,4393 +1,859 @@
+
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TODO - Meet App Implementation Plan</title>
-  <link rel="stylesheet" href="css/design-system.css">
-  <link rel="stylesheet" href="css/components.css">
-  <style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meet App Dashboard</title>
+    <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+    :root {
+        /* Light Theme */
+        --primary: #4f46e5;       /* Indigo 600 */
+        --primary-light: #e0e7ff; /* Indigo 100 */
+        --success: #10b981;       /* Emerald 500 */
+        --warning: #f59e0b;       /* Amber 500 */
+        --danger: #ef4444;        /* Red 500 */
+        
+        --bg-body: #f3f4f6;       /* Gray 100 */
+        --bg-card: #ffffff;
+        --bg-header: rgba(255, 255, 255, 0.8);
+        
+        --text-main: #111827;     /* Gray 900 */
+        --text-muted: #6b7280;    /* Gray 500 */
+        
+        --border: #e5e7eb;        /* Gray 200 */
+        --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+        --radius: 12px;
+    }
+
+    [data-theme="dark"] {
+        /* Dark Theme */
+        --primary: #818cf8;       /* Indigo 400 */
+        --primary-light: rgba(79, 70, 229, 0.2);
+        
+        --bg-body: #0f172a;       /* Slate 900 */
+        --bg-card: #1e293b;       /* Slate 800 */
+        --bg-header: rgba(15, 23, 42, 0.8);
+        
+        --text-main: #f3f4f6;     /* Gray 100 */
+        --text-muted: #94a3b8;    /* Slate 400 */
+        
+        --border: #334155;        /* Slate 700 */
+        --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+    }
+
+    * { box-sizing: border-box; }
+
     body {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      min-height: 100vh;
-      padding: var(--space-2xl) var(--space-md);
+        font-family: 'Inter', sans-serif;
+        background-color: var(--bg-body);
+        color: var(--text-main);
+        margin: 0;
+        padding-top: 80px; /* Space for fixed header */
+        line-height: 1.5;
+        transition: background-color 0.3s ease, color 0.3s ease;
     }
 
-    .todo-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      background: white;
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-2xl);
-      padding: var(--space-2xl);
+    .container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 0 20px 40px 20px;
     }
 
-    .todo-header {
-      text-align: center;
-      margin-bottom: var(--space-2xl);
-      padding-bottom: var(--space-xl);
-      border-bottom: 2px solid var(--color-border);
+    /* --- HEADER --- */
+    header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 70px;
+        background: var(--bg-header);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+        transition: border-color 0.3s ease;
     }
 
-    .todo-header h1 {
-      font-size: 2.5rem;
-      color: var(--color-primary);
-      margin-bottom: var(--space-md);
+    .header-content {
+        width: 100%;
+        max-width: 900px;
+        padding: 0 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .header-actions {
+        display: flex;
+        gap: 12px;
+        align-items: center;
     }
 
-    .todo-header .subtitle {
-      font-size: 1.1rem;
-      color: var(--color-text-secondary);
-      margin-bottom: var(--space-sm);
+    h1 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        letter-spacing: -0.025em;
+        margin: 0;
+        background: linear-gradient(135deg, var(--primary) 0%, var(--success) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
     }
 
-    /* Scope Switch */
-    .scope-switch {
-      display: flex;
-      justify-content: center;
-      gap: var(--space-sm);
-      margin-top: var(--space-lg);
-      flex-wrap: wrap;
+    /* Shared style for buttons and links in header */
+    .nav-btn {
+        background: transparent;
+        border: 1px solid var(--border);
+        color: var(--text-main);
+        padding: 6px 14px;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+        line-height: 1.2;
+    }
+    
+    .nav-btn:hover {
+        background: var(--border);
     }
 
-    .scope-btn {
-      border: 1px solid var(--color-border);
-      background: white;
-      color: var(--color-text);
-      padding: 6px 12px;
-      border-radius: var(--radius-full);
-      cursor: pointer;
-      font-weight: 600;
+    /* --- SUMMARY CARDS --- */
+    .summary-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 16px;
+        margin-bottom: 40px;
     }
 
-    .scope-btn.active {
-      background: #dbeafe;
-      color: #1e40af;
-      border-color: #93c5fd;
+    .metric-card {
+        background: var(--bg-card);
+        padding: 20px;
+        border-radius: var(--radius);
+        border: 1px solid var(--border);
+        box-shadow: var(--shadow);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
     }
 
-    /* Progress Bar */
-    .progress-section {
-      margin: var(--space-2xl) 0;
-      padding: var(--space-xl);
-      background: var(--color-background);
-      border-radius: var(--radius-lg);
+    .metric-label {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        font-weight: 600;
+        color: var(--text-muted);
+        letter-spacing: 0.05em;
+        margin-bottom: 8px;
     }
 
-    .progress-section h2 {
-      color: var(--color-primary);
-      margin-bottom: var(--space-md);
-      text-align: center;
-    }
-
-    .scope-note {
-      text-align: center;
-      font-size: 0.9rem;
-      color: var(--color-text-secondary);
-      margin-bottom: var(--space-md);
-    }
-
-    .progress-bar-container {
-      background: #e5e7eb;
-      border-radius: var(--radius-full);
-      height: 40px;
-      overflow: hidden;
-      position: relative;
-      box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+    .metric-value {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--text-main);
     }
 
     .progress-bar {
-      display: flex;
-      height: 100%;
-      transition: all 0.3s ease;
+        width: 100%;
+        height: 8px;
+        background-color: var(--border);
+        border-radius: 4px;
+        margin-top: 12px;
+        overflow: hidden;
     }
 
-    .progress-segment {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-weight: 600;
-      font-size: 0.9rem;
-      transition: all 0.3s ease;
+    .progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--success), var(--primary));
+        border-radius: 4px;
+        transition: width 1s ease-in-out;
     }
 
-    .progress-completed {
-      background: linear-gradient(90deg, #10b981, #059669);
+    /* --- MILESTONES --- */
+    .milestone-card {
+        margin-bottom: 40px;
     }
 
-    .progress-verified {
-      background: linear-gradient(90deg, #f59e0b, #d97706);
+    .milestone-header {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 20px;
+        border-left: 4px solid var(--primary);
+        padding-left: 16px;
     }
 
-    .progress-pending {
-      background: #9ca3af;
+    .milestone-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin: 0;
+        color: var(--text-main);
     }
 
-    .progress-stats {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: var(--space-md);
-      margin-top: var(--space-lg);
+    .milestone-meta {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        margin-top: 4px;
     }
 
-    .progress-stat {
-      text-align: center;
-      padding: var(--space-md);
-      background: white;
-      border-radius: var(--radius-md);
-      box-shadow: var(--shadow-sm);
+    /* --- FEATURES (ACCORDION) --- */
+    details {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        margin-bottom: 12px;
+        overflow: hidden;
+        transition: box-shadow 0.2s;
     }
 
-    .progress-stat-value {
-      font-size: 2rem;
-      font-weight: bold;
-      margin-bottom: var(--space-xs);
+    details:hover {
+        box-shadow: var(--shadow);
     }
 
-    .progress-stat-label {
-      font-size: 0.9rem;
-      color: var(--color-text-secondary);
+    summary {
+        padding: 16px 20px;
+        cursor: pointer;
+        list-style: none;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: 600;
+        font-size: 1rem;
+        user-select: none;
+        transition: background-color 0.2s;
     }
 
-    .stat-completed { color: #10b981; }
-    .stat-verified { color: #f59e0b; }
-    .stat-pending { color: #6b7280; }
-    .stat-total { color: var(--color-primary); }
+    summary::-webkit-details-marker { display: none; }
 
-    .legend {
-      display: flex;
-      gap: var(--space-lg);
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-top: var(--space-lg);
-      padding: var(--space-md);
-      background: var(--color-background);
-      border-radius: var(--radius-md);
+    summary:hover {
+        background-color: var(--bg-body);
     }
 
-    .legend-item {
-      display: flex;
-      align-items: center;
-      gap: var(--space-xs);
-      font-size: 0.9rem;
+    /* Status Pills in Header */
+    .status-pill {
+        font-size: 0.75rem;
+        padding: 4px 10px;
+        border-radius: 20px;
+        font-weight: 600;
+    }
+    .pill-done {
+        background-color: rgba(16, 185, 129, 0.1);
+        color: var(--success);
+    }
+    .pill-todo {
+        background-color: rgba(79, 70, 229, 0.1);
+        color: var(--primary);
     }
 
-    .legend-checkbox {
-      width: 20px;
-      height: 20px;
-      border: 2px solid var(--color-border);
-      border-radius: var(--radius-xs);
-      display: inline-block;
-      pointer-events: none;
+    /* Open State */
+    details[open] summary {
+        border-bottom: 1px solid var(--border);
+        background-color: rgba(0,0,0,0.01);
     }
 
-    .legend-checkbox.done {
-      background: var(--color-success);
-      border-color: var(--color-success);
-      position: relative;
+    .feature-body {
+        padding: 20px;
+        animation: slideDown 0.2s ease-out;
     }
 
-    .legend-checkbox.done::after {
-      content: '✓';
-      position: absolute;
-      color: white;
-      font-weight: bold;
-      left: 3px;
-      top: -2px;
+    .feature-desc {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        margin-bottom: 16px;
+        margin-top: 0;
+        line-height: 1.6;
     }
 
-    .legend-checkbox.maybe {
-      background: var(--color-warning);
-      border-color: var(--color-warning);
-      position: relative;
-    }
-
-    .legend-checkbox.maybe::after {
-      content: '?';
-      position: absolute;
-      color: white;
-      font-weight: bold;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-    }
-
-    .feature-section {
-      margin-bottom: var(--space-2xl);
-    }
-
-    .feature-header {
-      background: linear-gradient(135deg, var(--color-primary), #5a67d8);
-      color: white;
-      padding: var(--space-lg);
-      border-radius: var(--radius-md);
-      margin-bottom: var(--space-lg);
-      cursor: pointer;
-      user-select: none;
-      transition: all 0.2s;
-    }
-
-    .feature-header:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-lg);
-    }
-
-    .feature-header.priority-critical {
-      background: linear-gradient(135deg, #dc2626, #b91c1c);
-    }
-
-    .feature-header.priority-high {
-      background: linear-gradient(135deg, #f59e0b, #d97706);
-    }
-
-    .feature-header h2 {
-      margin: 0;
-      font-size: 1.5rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: var(--space-sm);
-    }
-
-    .feature-badge {
-      background: rgba(255, 255, 255, 0.2);
-      padding: var(--space-xs) var(--space-md);
-      border-radius: var(--radius-full);
-      font-size: 0.9rem;
-    }
-
-    .feature-milestone-badge {
-      background: rgba(255,255,255,0.25);
-      padding: 2px 10px;
-      border-radius: 999px;
-      font-size: 0.8rem;
-      margin-left: 8px;
-      border: 1px solid rgba(255,255,255,0.35);
-    }
-
-    .feature-description {
-      margin-top: var(--space-sm);
-      font-size: 0.95rem;
-      opacity: 0.95;
-    }
-
-    .subsection {
-      margin-bottom: var(--space-xl);
-      padding-left: var(--space-lg);
-      border-left: 3px solid var(--color-primary);
-    }
-
-    .subsection h3 {
-      color: var(--color-primary);
-      margin-bottom: var(--space-md);
-      font-size: 1.2rem;
-      cursor: pointer;
-      user-select: none;
-    }
-
+    /* --- TASKS --- */
     .task-list {
-      list-style: none;
-      padding: 0;
+        list-style: none;
+        padding: 0;
+        margin: 0;
     }
 
     .task-item {
-      display: flex;
-      align-items: flex-start;
-      gap: var(--space-md);
-      padding: var(--space-sm) 0;
-      border-bottom: 1px solid var(--color-border-light);
+        display: flex;
+        align-items: flex-start;
+        padding: 8px 0;
+        gap: 12px;
+        border-bottom: 1px solid var(--border);
+    }
+    .task-item:last-child { border-bottom: none; }
+
+    .checkbox {
+        width: 20px;
+        height: 20px;
+        border-radius: 6px;
+        border: 2px solid var(--border);
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 2px;
+        transition: all 0.2s;
     }
 
-    .task-item:last-child {
-      border-bottom: none;
+    .checkbox.checked {
+        background-color: var(--success);
+        border-color: var(--success);
+        color: white;
     }
 
-    .task-checkbox {
-      width: 20px;
-      height: 20px;
-      border: 2px solid var(--color-border);
-      border-radius: var(--radius-xs);
-      flex-shrink: 0;
-      margin-top: 2px;
-      pointer-events: none;
-    }
-
-    .task-checkbox.done {
-      background: var(--color-success);
-      border-color: var(--color-success);
-      position: relative;
-    }
-
-    .task-checkbox.done::after {
-      content: '✓';
-      position: absolute;
-      color: white;
-      font-weight: bold;
-      left: 3px;
-      top: -2px;
-      font-size: 14px;
-    }
-
-    .task-checkbox.maybe {
-      background: var(--color-warning);
-      border-color: var(--color-warning);
-      position: relative;
-    }
-
-    .task-checkbox.maybe::after {
-      content: '?';
-      position: absolute;
-      color: white;
-      font-weight: bold;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 14px;
+    .checkbox svg {
+        width: 14px;
+        height: 14px;
+        stroke-width: 3;
     }
 
     .task-text {
-      flex: 1;
-      color: var(--color-text);
-      line-height: 1.6;
+        font-size: 0.95rem;
+        color: var(--text-main);
+    }
+    
+    .task-text.dimmed {
+        color: var(--text-muted);
+        text-decoration: line-through;
+        opacity: 0.7;
+    }
+    
+    strong {
+        font-weight: 600;
+        color: var(--primary);
     }
 
-    .subtask-list {
-      margin-top: var(--space-xs);
-      margin-left: var(--space-lg);
-      padding-left: var(--space-md);
-      list-style: none;
-      font-size: 0.9rem;
-      color: var(--color-text-secondary);
+    @keyframes slideDown {
+        from { opacity: 0; transform: translateY(-5px); }
+        to { opacity: 1; transform: translateY(0); }
     }
-
-    .subtask-list li {
-      padding: 2px 0;
-      line-height: 1.5;
-    }
-
-    .subtask-item {
-      display: flex;
-      align-items: flex-start;
-      gap: var(--space-sm);
-      padding: var(--space-xs) 0;
-      list-style: none;
-    }
-
-    .subtask-text {
-      flex: 1;
-      color: var(--color-text-secondary);
-    }
-
-    .task-estimate {
-      color: var(--color-text-secondary);
-      font-size: 0.85rem;
-      font-weight: 600;
-      background: var(--color-background);
-      padding: 2px 8px;
-      border-radius: var(--radius-sm);
-      flex-shrink: 0;
-    }
-
-    .back-button {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      background: white;
-      color: var(--color-primary);
-      padding: var(--space-sm) var(--space-lg);
-      border-radius: var(--radius-full);
-      text-decoration: none;
-      box-shadow: var(--shadow-lg);
-      font-weight: 600;
-      transition: all 0.2s;
-      z-index: 100;
-    }
-
-    .back-button:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-xl);
-    }
-
-    .collapsible::before {
-      content: '▼';
-      display: inline-block;
-      margin-right: var(--space-xs);
-      transition: transform 0.2s;
-      font-size: 0.8em;
-    }
-
-    .collapsible.collapsed::before {
-      transform: rotate(-90deg);
-    }
-
-    .collapsible-content {
-      max-height: 10000px;
-      overflow: hidden;
-      transition: max-height 0.3s ease-out;
-    }
-
-    .collapsible-content.collapsed {
-      max-height: 0;
-    }
-
-    /* Summary Section */
-    .summary-section {
-      margin-top: var(--space-2xl);
-      padding: var(--space-2xl);
-      background: white;
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-md);
-    }
-
-    .summary-section h2 {
-      color: var(--color-primary);
-      margin-bottom: var(--space-md);
-      text-align: center;
-      font-size: 2rem;
-    }
-
-    .summary-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: var(--space-xl) 0;
-      background: white;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-      border-radius: var(--radius-md);
-      overflow: hidden;
-    }
-
-    .summary-table thead {
-      background: linear-gradient(135deg, #1e40af, #3b82f6);
-    }
-
-    .summary-table th {
-      padding: var(--space-md) var(--space-lg);
-      text-align: left;
-      font-weight: 600;
-      color: white;
-      font-size: 0.9rem;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      border-bottom: 2px solid #1e3a8a;
-    }
-
-    .summary-table tbody tr {
-      border-bottom: 1px solid #e5e7eb;
-      transition: all 0.2s ease;
-    }
-
-    .summary-table tbody tr:hover {
-      background-color: #f0f9ff;
-      transform: scale(1.001);
-    }
-
-    .summary-table tbody tr:nth-child(even) {
-      background-color: #f9fafb;
-    }
-
-    .summary-table tbody tr:nth-child(even):hover {
-      background-color: #f0f9ff;
-    }
-
-    .summary-table td {
-      padding: var(--space-md) var(--space-lg);
-      font-size: 0.95rem;
-      color: var(--color-text);
-    }
-
-    .summary-table .summary-total {
-      background: linear-gradient(135deg, #eff6ff, #dbeafe) !important;
-      font-weight: 700;
-      border-top: 3px solid var(--color-primary);
-    }
-
-    .summary-table .summary-total td {
-      color: var(--color-primary);
-      padding: var(--space-lg);
-      font-size: 1.05rem;
-    }
-
-    .status-badge {
-      display: inline-block;
-      padding: 6px 14px;
-      border-radius: var(--radius-full);
-      font-size: 0.85rem;
-      font-weight: 600;
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-    }
-
-    .status-done {
-      background: linear-gradient(135deg, #d1fae5, #a7f3d0);
-      color: #065f46;
-      border: 1px solid #6ee7b7;
-    }
-
-    .status-progress {
-      background: linear-gradient(135deg, #fef3c7, #fde68a);
-      color: #92400e;
-      border: 1px solid #fcd34d;
-    }
-
-    .status-todo {
-      background: linear-gradient(135deg, #fee2e2, #fecaca);
-      color: #991b1b;
-      border: 1px solid #fca5a5;
-    }
-
-    @media (max-width: 768px) {
-      .todo-container {
-        padding: var(--space-lg);
-      }
-
-      .todo-header h1 {
-        font-size: 1.8rem;
-      }
-
-      .progress-stats {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
+</style>
 </head>
 <body>
-  <a href="screens/index.html" class="back-button">← Wróć</a>
-
-  <div class="todo-container">
-    <div class="todo-header">
-      <h1>✅ Meet App - TODO Implementation Plan</h1>
-      <p class="subtitle"><strong>Strategia:</strong> Feature-based development (Backend + Flutter razem)</p>
-      <p class="subtitle" style="font-size: 0.95rem; color: var(--color-text);">
-        <strong>Backend:</strong> meet-app-be (Spring Boot) • <strong>Frontend:</strong> meet-app-fe (Flutter)
-      </p>
-
-      <div class="legend">
-        <div class="legend-item">
-          <span class="legend-checkbox"></span>
-          <span>Do zrobienia</span>
-        </div>
-        <div class="legend-item">
-          <span class="legend-checkbox maybe"></span>
-          <span>Do weryfikacji</span>
-        </div>
-        <div class="legend-item">
-          <span class="legend-checkbox done"></span>
-          <span>Potwierdzone ukończone</span>
-        </div>
-      </div>
-      <div class="scope-switch" id="scopeSwitch">
-        <button class="scope-btn" data-scope="m1">Milestone 1</button>
-        <button class="scope-btn" data-scope="m2plus">Milestone 2+</button>
-        <button class="scope-btn" data-scope="all">Wszystko</button>
-      </div>
-    </div>
-
-    <!-- Progress Bar -->
-    <div class="progress-section">
-      <h2>📊 Postęp Implementacji</h2>
-      <div class="scope-note">Zakres: Całe TODO (M1 + M2+)</div>
-      <div class="progress-bar-container">
-        <div class="progress-bar">
-          <div class="progress-segment progress-completed" style="width: 48%;" title="Ukończone (48%)">48%</div>
-          
-          <div class="progress-segment progress-pending" style="width: 52%;" title="Do zrobienia (52%)">52%</div>
-        </div>
-      </div>
-      <div class="progress-stats">
-        <div class="progress-stat">
-          <div class="progress-stat-value stat-completed">178</div>
-          <div class="progress-stat-label">Ukończone</div>
-        </div>
-        <div class="progress-stat">
-          <div class="progress-stat-value stat-verified">0</div>
-          <div class="progress-stat-label">Do weryfikacji</div>
-        </div>
-        <div class="progress-stat">
-          <div class="progress-stat-value stat-pending">190</div>
-          <div class="progress-stat-label">Do zrobienia</div>
-        </div>
-        <div class="progress-stat">
-          <div class="progress-stat-value stat-total">368</div>
-          <div class="progress-stat-label">Wszystkie zadania</div>
-        </div>
-      </div>
-    </div>
-
-
-    <!-- Schedule Section -->
-    <div class="schedule-section">
-      <h2 style="color: var(--color-primary); text-align: center; margin-bottom: var(--space-lg);">
-        📅 Harmonogram Projektu
-      </h2>
-      <div class="scope-note">Zakres: Milestone 1 (Harmonogram MVP)</div>
-
-      <!-- Timeline Visualization -->
-      <div class="timeline-container">
-        <div class="timeline-header">
-          <div class="timeline-item">
-            <span class="timeline-label">Start</span>
-            <span class="timeline-date">2025-11-13</span>
-          </div>
-          <div class="timeline-item timeline-current">
-            <span class="timeline-label">Dzisiaj</span>
-            <span class="timeline-date">2025-11-21</span>
-            <span class="timeline-week">Tydzień 2, Dzień 9</span>
-          </div>
-          <div class="timeline-item">
-            <span class="timeline-label">Koniec (plan)</span>
-            <span class="timeline-date">2026-02-15</span>
-          </div>
-        </div>
-
-        <!-- Progress Bar -->
-        <div class="timeline-bar-container">
-          <div class="timeline-bar" style="width: 51.9%;"></div>
-          <div class="timeline-marker" style="left: 51.9%;">
-            51.9%
-          </div>
-        </div>
-
-        <!-- Status Indicators -->
-        <div class="timeline-status">
-
-          <div class="status-indicator status-on-track">
-            <span class="status-icon">✓</span>
-            <span class="status-text">Zgodnie z planem</span>
-          </div>
-
-        </div>
-      </div>
-
-      <!-- Task Lists Grid -->
-      <div class="task-lists-grid">
-
-        <div class="task-list-card task-list-today">
-          <h3>📋 Dzisiaj (1)</h3>
-          <div class="task-list-content">
-<p class="task-list-summary">2h zaplanowane</p>
-            <div class="schedule-task-item">
-              <span class="schedule-task-text">Połączenie z backendem</span>
-              <span class="schedule-task-estimate">2h</span>
+    
+    <header>
+        <div class="header-content">
+            <h1>Meet App</h1>
+            
+            <div class="header-actions">
+                <a href="screens/index.html" class="nav-btn">🎨 Makiety</a>
+                <button id="theme-toggle" class="nav-btn">🌙 Ciemny</button>
             </div>
+        </div>
+    </header>
 
-          </div>
+    <div class="container">
+        
+        <!-- DASHBOARD SUMMARY -->
+        <div class="summary-grid">
+            
+                <div class="metric-card">
+                    <div class="metric-label"><strong>Całkowity Postęp</strong></div>
+                    <div class="metric-value">
+                        55%
+                    </div>
+                    
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 55%"></div>
+                        </div>
+                    
+                </div>
+            
+                <div class="metric-card">
+                    <div class="metric-label"><strong>Aktualna Faza</strong></div>
+                    <div class="metric-value">
+                        <strong>M1: MVP Organizatora + Samoobsługa</strong>
+                    </div>
+                    
+                </div>
+            
+                <div class="metric-card">
+                    <div class="metric-label"><strong>Najbliższy Termin</strong></div>
+                    <div class="metric-value">
+                        <strong>31.12.2025</strong>
+                    </div>
+                    
+                </div>
+            
+                <div class="metric-card">
+                    <div class="metric-label"><strong>Główny Fokus</strong></div>
+                    <div class="metric-value">
+                        Automatyzacja zapisów
+                    </div>
+                    
+                </div>
+            
         </div>
 
-        <div class="task-list-card task-list-overdue">
-          <h3>⚠️ Zaległe (9)</h3>
-          <div class="task-list-content">
-<p class="task-list-summary">21h zaległości</p>
-            <div class="schedule-task-item">
-              <span class="schedule-task-text">Użytkownik widzi komunikat o awansie</span>
-              <span class="schedule-task-overdue">8d</span>
+        <!-- MILESTONES -->
+        
+            <div class="milestone-card">
+                <div class="milestone-header">
+                    <h2 class="milestone-title">M1 MVP Organizatora i Samoobsługa</h2>
+                    <div class="milestone-meta"><strong>Termin:</strong> - Q4 2025 &nbsp;•&nbsp; <strong>Cel:</strong> - Organizator tworzy wydarzenie, wysyła link na grupę, a lista "robi się sama".</div>
+                </div>
+
+                <!-- FEATURES -->
+                
+                    <details >
+                        <summary>
+                            <span>Fundamenty Systemu</span>
+                            <span class="status-pill pill-done">Wykonane</span>
+                        </summary>
+                        <div class="feature-body">
+                            <p class="feature-desc">Baza bezpieczeństwa i dostępności.</p>
+                            <ul class="task-list">
+                                
+                                    <li class="task-item">
+                                        <div class="checkbox checked">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                        </div>
+                                        <div class="task-text dimmed"><strong>Bezpieczne Logowanie</strong> - Rejestracja i autoryzacja (JWT) dla organizatorów oraz graczy.</div>
+                                    </li>
+                                
+                                    <li class="task-item">
+                                        <div class="checkbox checked">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                        </div>
+                                        <div class="task-text dimmed"><strong>Zarządzanie Profilem</strong> - Podstawowe dane użytkownika i awatar.</div>
+                                    </li>
+                                
+                                    <li class="task-item">
+                                        <div class="checkbox checked">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                        </div>
+                                        <div class="task-text dimmed"><strong>Środowisko Produkcyjne</strong> - Serwer i baza danych gotowe do działania online.</div>
+                                    </li>
+                                
+                            </ul>
+                        </div>
+                    </details>
+                
+                    <details >
+                        <summary>
+                            <span>Tworzenie i Odkrywanie</span>
+                            <span class="status-pill pill-done">Wykonane</span>
+                        </summary>
+                        <div class="feature-body">
+                            <p class="feature-desc">Narzędzia do zarządzania ofertą wydarzeń.</p>
+                            <ul class="task-list">
+                                
+                                    <li class="task-item">
+                                        <div class="checkbox checked">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                        </div>
+                                        <div class="task-text dimmed"><strong>Kreator Wydarzeń</strong> - Szybkie tworzenie gier (czas, miejsce, limity miejsc).</div>
+                                    </li>
+                                
+                                    <li class="task-item">
+                                        <div class="checkbox checked">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                        </div>
+                                        <div class="task-text dimmed"><strong>Interaktywna Mapa</strong> - Wizualizacja wydarzeń w mieście z filtrowaniem.</div>
+                                    </li>
+                                
+                                    <li class="task-item">
+                                        <div class="checkbox checked">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                        </div>
+                                        <div class="task-text dimmed"><strong>Cykl Życia Wydarzenia</strong> - Edycja, odwoływanie i usuwanie przez organizatora.</div>
+                                    </li>
+                                
+                                    <li class="task-item">
+                                        <div class="checkbox checked">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                        </div>
+                                        <div class="task-text dimmed"><strong>Ulubione Lokalizacje</strong> - Szybki wybór sprawdzonych boisk/hal.</div>
+                                    </li>
+                                
+                            </ul>
+                        </div>
+                    </details>
+                
+                    <details open>
+                        <summary>
+                            <span>Automatyzacja Listy Obecności</span>
+                            <span class="status-pill pill-todo">1 / 4</span>
+                        </summary>
+                        <div class="feature-body">
+                            <p class="feature-desc">Serce systemu koniec z ręcznym przepisywaniem list.</p>
+                            <ul class="task-list">
+                                
+                                    <li class="task-item">
+                                        <div class="checkbox checked">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                        </div>
+                                        <div class="task-text dimmed"><strong>Ręczna Kontrola</strong> - Organizator może ręcznie dodać/usunąć każdego (np. osoby spoza apki).</div>
+                                    </li>
+                                
+                                    <li class="task-item">
+                                        <div class="checkbox ">
+                                            
+                                        </div>
+                                        <div class="task-text "><strong>Samoobsługa Gracza</strong> - Użytkownik sam klika "Dołącz" lub "Zrezygnuj".</div>
+                                    </li>
+                                
+                                    <li class="task-item">
+                                        <div class="checkbox ">
+                                            
+                                        </div>
+                                        <div class="task-text "><strong>Inteligentna Lista Rezerwowa</strong> - Kolejka FIFO (kto pierwszy, ten lepszy) po wyczerpaniu miejsc.</div>
+                                    </li>
+                                
+                                    <li class="task-item">
+                                        <div class="checkbox ">
+                                            
+                                        </div>
+                                        <div class="task-text "><strong>Auto-Uzupełnianie</strong> - System automatycznie wskazuje pierwszego z rezerwy, gdy zwolni się miejsce.</div>
+                                    </li>
+                                
+                            </ul>
+                        </div>
+                    </details>
+                
+                    <details open>
+                        <summary>
+                            <span>Dystrybucja i Komunikacja</span>
+                            <span class="status-pill pill-todo">0 / 2</span>
+                        </summary>
+                        <div class="feature-body">
+                            <p class="feature-desc">Wykorzystanie zewnętrznych kanałów jako systemu powiadomień.</p>
+                            <ul class="task-list">
+                                
+                                    <li class="task-item">
+                                        <div class="checkbox ">
+                                            
+                                        </div>
+                                        <div class="task-text "><strong>Udostępnianie (Deep Links)</strong> - Przycisk "Udostępnij", generujący bezpośredni link do wydarzenia (<code style="font-family:monospace; background:var(--border); padding:2px 4px; border-radius:4px; font-size:0.9em;">meetapp://event/{id}</code>).</div>
+                                    </li>
+                                
+                                    <li class="task-item">
+                                        <div class="checkbox ">
+                                            
+                                        </div>
+                                        <div class="task-text "><strong>Integracja Społecznościowa</strong> - Łatwe wysyłanie linku na Messenger/WhatsApp/SMS.</div>
+                                    </li>
+                                
+                            </ul>
+                        </div>
+                    </details>
+                
+                    <details open>
+                        <summary>
+                            <span>Operacje Cykliczne</span>
+                            <span class="status-pill pill-todo">0 / 3</span>
+                        </summary>
+                        <div class="feature-body">
+                            <p class="feature-desc">Oszczędność czasu przy stałych terminach.</p>
+                            <ul class="task-list">
+                                
+                                    <li class="task-item">
+                                        <div class="checkbox ">
+                                            
+                                        </div>
+                                        <div class="task-text "><strong>Serie Treningowe</strong> - Generowanie 10 treningów w przód (np. "każdy wtorek") jednym kliknięciem.</div>
+                                    </li>
+                                
+                                    <li class="task-item">
+                                        <div class="checkbox ">
+                                            
+                                        </div>
+                                        <div class="task-text "><strong>Pulpit Organizatora</strong> - Widok "Moje Wydarzenia" do szybkiego zarządzania nadchodzącymi grami.</div>
+                                    </li>
+                                
+                                    <li class="task-item">
+                                        <div class="checkbox ">
+                                            
+                                        </div>
+                                        <div class="task-text "><strong>Stali gracze</strong></div>
+                                    </li>
+                                
+                            </ul>
+                        </div>
+                    </details>
+                
             </div>
+        
+            <div class="milestone-card">
+                <div class="milestone-header">
+                    <h2 class="milestone-title">M2 Zaangażowanie, Powiadomienia i Narzędzia Zaawansowane</h2>
+                    <div class="milestone-meta"><strong>Termin:</strong> - Q1 2026 &nbsp;•&nbsp; <strong>Cel:</strong> - Budowanie zaufania, komunikacja w czasie rzeczywistym i precyzyjna kontrola.</div>
+                </div>
 
-            <div class="schedule-task-item">
-              <span class="schedule-task-text">Automatyczne odświeżenie po awansie</span>
-              <span class="schedule-task-overdue">8d</span>
+                <!-- FEATURES -->
+                
+                    <details open>
+                        <summary>
+                            <span>Natywne Powiadomienia (System Push)</span>
+                            <span class="status-pill pill-todo">0 / 3</span>
+                        </summary>
+                        <div class="feature-body">
+                            <p class="feature-desc">Kluczowe dla utrzymania tempa zapisów i informacji o zmianach.</p>
+                            <ul class="task-list">
+                                
+                                    <li class="task-item">
+                                        <div class="checkbox ">
+                                            
+                                        </div>
+                                        <div class="task-text "><strong>Statusy Listy</strong> - "Zwolniło się miejsce!", "Awansowałeś na listę główną!".</div>
+                                    </li>
+                                
+                                    <li class="task-item">
+                                        <div class="checkbox ">
+                                            
+                                        </div>
+                                        <div class="task-text "><strong>Przypomnienia</strong> - Automatyczny alert 24h przed meczem dla zapisanych graczy.</div>
+                                    </li>
+                                
+                                    <li class="task-item">
+                                        <div class="checkbox ">
+                                            
+                                        </div>
+                                        <div class="task-text "><strong>Alerty Zmian</strong> - Natychmiastowe info o zmianie godziny, lokalizacji lub odwołaniu meczu.</div>
+                                    </li>
+                                
+                            </ul>
+                        </div>
+                    </details>
+                
+                    <details open>
+                        <summary>
+                            <span>⭐ System Reputacji (R-Score)</span>
+                            <span class="status-pill pill-todo">0 / 3</span>
+                        </summary>
+                        <div class="feature-body">
+                            <p class="feature-desc">Budowanie zaufania i eliminacja "no-show".</p>
+                            <ul class="task-list">
+                                
+                                    <li class="task-item">
+                                        <div class="checkbox ">
+                                            
+                                        </div>
+                                        <div class="task-text "><strong>Śledzenie Obecności (No-Show)</strong> - Organizator oznacza, czy zapisany gracz faktycznie się pojawił.</div>
+                                    </li>
+                                
+                                    <li class="task-item">
+                                        <div class="checkbox ">
+                                            
+                                        </div>
+                                        <div class="task-text "><strong>Ocena Wiarygodności</strong> - Wskaźnik R-Score widoczny przy profilu gracza (np. % obecności).</div>
+                                    </li>
+                                
+                                    <li class="task-item">
+                                        <div class="checkbox ">
+                                            
+                                        </div>
+                                        <div class="task-text "><strong>Kary za Nieobecność</strong> - Automatyczna blokada zapisów lub niższy priorytet dla notorycznych "wagarowiczów".</div>
+                                    </li>
+                                
+                            </ul>
+                        </div>
+                    </details>
+                
+                    <details open>
+                        <summary>
+                            <span>Zaawansowane Zarządzanie Listą</span>
+                            <span class="status-pill pill-todo">0 / 3</span>
+                        </summary>
+                        <div class="feature-body">
+                            
+                            <ul class="task-list">
+                                
+                                    <li class="task-item">
+                                        <div class="checkbox ">
+                                            
+                                        </div>
+                                        <div class="task-text "><strong>Priorytetyzacja</strong> - Ręczne przesuwanie graczy (Awans/Degradacja) przez organizatora.</div>
+                                    </li>
+                                
+                                    <li class="task-item">
+                                        <div class="checkbox ">
+                                            
+                                        </div>
+                                        <div class="task-text "><strong>Drag & Drop</strong> - Łatwa zmiana kolejności na liście metodą przeciągnij i upuść.</div>
+                                    </li>
+                                
+                                    <li class="task-item">
+                                        <div class="checkbox ">
+                                            
+                                        </div>
+                                        <div class="task-text "><strong>Historia Gier</strong> - Wgląd w historię aktywności gracza i organizatora.</div>
+                                    </li>
+                                
+                            </ul>
+                        </div>
+                    </details>
+                
+                    <details open>
+                        <summary>
+                            <span>Grupy i Społeczności</span>
+                            <span class="status-pill pill-todo">0 / 3</span>
+                        </summary>
+                        <div class="feature-body">
+                            
+                            <ul class="task-list">
+                                
+                                    <li class="task-item">
+                                        <div class="checkbox ">
+                                            
+                                        </div>
+                                        <div class="task-text "><strong>Stałe Grupy</strong> - Tworzenie zamkniętych społeczności (np. "Wtorkowa Ekipa").</div>
+                                    </li>
+                                
+                                    <li class="task-item">
+                                        <div class="checkbox ">
+                                            
+                                        </div>
+                                        <div class="task-text "><strong>Stała Lista Graczy</strong> - Baza graczy przypisana do grupy dla szybkiego dodawania.</div>
+                                    </li>
+                                
+                                    <li class="task-item">
+                                        <div class="checkbox ">
+                                            
+                                        </div>
+                                        <div class="task-text "><strong>Prywatność</strong> - Wydarzenia widoczne tylko dla członków danej grupy.</div>
+                                    </li>
+                                
+                            </ul>
+                        </div>
+                    </details>
+                
+                    <details open>
+                        <summary>
+                            <span>Inteligentny Kalendarz</span>
+                            <span class="status-pill pill-todo">0 / 2</span>
+                        </summary>
+                        <div class="feature-body">
+                            
+                            <ul class="task-list">
+                                
+                                    <li class="task-item">
+                                        <div class="checkbox ">
+                                            
+                                        </div>
+                                        <div class="task-text "><strong>Zaawansowane Serie</strong> - Pomijanie świąt, cykle miesięczne.</div>
+                                    </li>
+                                
+                                    <li class="task-item">
+                                        <div class="checkbox ">
+                                            
+                                        </div>
+                                        <div class="task-text "><strong>Widok Kalendarza</strong> - Graficzne przedstawienie nadchodzących gier w miesiącu.</div>
+                                    </li>
+                                
+                            </ul>
+                        </div>
+                    </details>
+                
             </div>
+        
+            <div class="milestone-card">
+                <div class="milestone-header">
+                    <h2 class="milestone-title">M3 Skalowanie i Komercjalizacja</h2>
+                    <div class="milestone-meta"><strong>Termin:</strong> - Q2 2026 &nbsp;•&nbsp; <strong>Cel:</strong> - Płatności, analityka i pełna zgodność prawna.</div>
+                </div>
 
-            <div class="schedule-task-item">
-              <span class="schedule-task-text">System przechowuje szablony powtarzający...</span>
-              <span class="schedule-task-overdue">7d</span>
+                <!-- FEATURES -->
+                
+                    <details open>
+                        <summary>
+                            <span>Finanse</span>
+                            <span class="status-pill pill-todo">0 / 3</span>
+                        </summary>
+                        <div class="feature-body">
+                            
+                            <ul class="task-list">
+                                
+                                    <li class="task-item">
+                                        <div class="checkbox ">
+                                            
+                                        </div>
+                                        <div class="task-text "><strong>Statusy Płatności</strong> - Oznaczanie przez organizatora kto zapłacił (gotówka/przelew).</div>
+                                    </li>
+                                
+                                    <li class="task-item">
+                                        <div class="checkbox ">
+                                            
+                                        </div>
+                                        <div class="task-text "><strong>Płatności Online</strong> - Integracja z bramką płatniczą (BLIK/Karta) wewnątrz aplikacji.</div>
+                                    </li>
+                                
+                                    <li class="task-item">
+                                        <div class="checkbox ">
+                                            
+                                        </div>
+                                        <div class="task-text "><strong>Polityka Zwrotów</strong> - Automatyzacja zwrotów przy rezygnacji w terminie.</div>
+                                    </li>
+                                
+                            </ul>
+                        </div>
+                    </details>
+                
+                    <details open>
+                        <summary>
+                            <span>Dane i Bezpieczeństwo</span>
+                            <span class="status-pill pill-todo">0 / 3</span>
+                        </summary>
+                        <div class="feature-body">
+                            
+                            <ul class="task-list">
+                                
+                                    <li class="task-item">
+                                        <div class="checkbox ">
+                                            
+                                        </div>
+                                        <div class="task-text "><strong>Analityka</strong> - Raporty obłożenia, frekwencji i trendów.</div>
+                                    </li>
+                                
+                                    <li class="task-item">
+                                        <div class="checkbox ">
+                                            
+                                        </div>
+                                        <div class="task-text "><strong>Zgodność RODO</strong> - Eksport i anonimizacja danych użytkowników.</div>
+                                    </li>
+                                
+                                    <li class="task-item">
+                                        <div class="checkbox ">
+                                            
+                                        </div>
+                                        <div class="task-text "><strong>Audyt Bezpieczeństwa</strong> - Testy penetracyjne przed szeroką publikacją.</div>
+                                    </li>
+                                
+                            </ul>
+                        </div>
+                    </details>
+                
             </div>
-
-            <div class="schedule-task-item">
-              <span class="schedule-task-text">System automatycznie generuje wydarzenia...</span>
-              <span class="schedule-task-overdue">6d</span>
-            </div>
-
-            <div class="schedule-task-item">
-              <span class="schedule-task-text">Organizator może przeglądać swoje serie</span>
-              <span class="schedule-task-overdue">5d</span>
-            </div>
-<p class="more-tasks">... i 4 więcej</p>
-          </div>
-        </div>
-
-        <div class="task-list-card task-list-upcoming">
-          <h3>📆 Najbliższy tydzień (7)</h3>
-          <div class="task-list-content">
-<p class="task-list-summary">18h zaplanowane</p>
-            <div class="schedule-task-item">
-              <span class="schedule-task-text">Ekran "Moje Wydarzenia" dla organizatora</span>
-              <span class="schedule-task-date">2025-11-22</span>
-            </div>
-
-            <div class="schedule-task-item">
-              <span class="schedule-task-text">Przyjazne wskaźniki ładowania</span>
-              <span class="schedule-task-date">2025-11-23</span>
-            </div>
-
-            <div class="schedule-task-item">
-              <span class="schedule-task-text">Podstawowa obsługa problemów z siecią</span>
-              <span class="schedule-task-date">2025-11-23</span>
-            </div>
-
-            <div class="schedule-task-item">
-              <span class="schedule-task-text">Przygotowanie środowiska produkcyjnego</span>
-              <span class="schedule-task-date">2025-11-25</span>
-            </div>
-
-            <div class="schedule-task-item">
-              <span class="schedule-task-text">Test uruchomienia lokalnego</span>
-              <span class="schedule-task-date">2025-11-26</span>
-            </div>
-<p class="more-tasks">... i 2 więcej</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Statistics Row -->
-      <div class="schedule-stats-row">
-        <div class="schedule-stat">
-          <div class="schedule-stat-label">Ukończone</div>
-          <div class="schedule-stat-value">97/187</div>
-        </div>
-        <div class="schedule-stat">
-          <div class="schedule-stat-label">Pozostało godzin</div>
-          <div class="schedule-stat-value">317h</div>
-        </div>
-        <div class="schedule-stat">
-          <div class="schedule-stat-label">Velocity</div>
-          <div class="schedule-stat-value">N/A</div>
-        </div>
-        <div class="schedule-stat">
-          <div class="schedule-stat-label">Target velocity</div>
-          <div class="schedule-stat-value">4.3h/day</div>
-        </div>
-      </div>
-    </div>
-
-    <style>
-      .schedule-section {
-        margin: var(--space-2xl) 0;
-        padding: var(--space-2xl);
-        background: white;
-        border-radius: var(--radius-lg);
-        box-shadow: var(--shadow-md);
-      }
-
-      .timeline-container {
-        background: var(--color-background);
-        border-radius: var(--radius-md);
-        padding: var(--space-xl);
-        margin-bottom: var(--space-xl);
-      }
-
-      .timeline-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        margin-bottom: var(--space-lg);
-        flex-wrap: wrap;
-        gap: var(--space-md);
-      }
-
-      .timeline-item {
-        text-align: center;
-        flex: 1;
-        min-width: 120px;
-      }
-
-      .timeline-current {
-        background: linear-gradient(135deg, #667eea, #764ba2);
-        color: white;
-        padding: var(--space-md);
-        border-radius: var(--radius-md);
-      }
-
-      .timeline-label {
-        display: block;
-        font-size: 0.85rem;
-        font-weight: 600;
-        margin-bottom: var(--space-xs);
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-      }
-
-      .timeline-date {
-        display: block;
-        font-size: 1.1rem;
-        font-weight: bold;
-      }
-
-      .timeline-week {
-        display: block;
-        font-size: 0.85rem;
-        margin-top: var(--space-xs);
-        opacity: 0.9;
-      }
-
-      .timeline-bar-container {
-        background: #e5e7eb;
-        height: 30px;
-        border-radius: var(--radius-full);
-        position: relative;
-        overflow: visible;
-        margin: var(--space-lg) 0;
-      }
-
-      .timeline-bar {
-        height: 100%;
-        background: linear-gradient(90deg, #10b981, #059669);
-        border-radius: var(--radius-full);
-        transition: width 0.5s ease;
-      }
-
-      .timeline-marker {
-        position: absolute;
-        top: -5px;
-        transform: translateX(-50%);
-        background: white;
-        border: 3px solid #10b981;
-        padding: 4px 12px;
-        border-radius: var(--radius-full);
-        font-weight: bold;
-        font-size: 0.9rem;
-        color: #059669;
-        box-shadow: var(--shadow-md);
-      }
-
-      .timeline-status {
-        display: flex;
-        justify-content: center;
-        margin-top: var(--space-lg);
-      }
-
-      .status-indicator {
-        display: flex;
-        align-items: center;
-        gap: var(--space-sm);
-        padding: var(--space-md) var(--space-lg);
-        border-radius: var(--radius-md);
-        font-weight: 600;
-      }
-
-      .status-on-track {
-        background: #d1fae5;
-        color: #065f46;
-      }
-
-      .status-ahead {
-        background: #dbeafe;
-        color: #1e40af;
-      }
-
-      .status-behind {
-        background: #fee2e2;
-        color: #991b1b;
-      }
-
-      .status-icon {
-        font-size: 1.2rem;
-      }
-
-      .task-lists-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: var(--space-lg);
-        margin-bottom: var(--space-xl);
-      }
-
-      .task-list-card {
-        background: white;
-        border-radius: var(--radius-md);
-        padding: var(--space-lg);
-        box-shadow: var(--shadow-sm);
-        border-left: 4px solid;
-      }
-
-      .task-list-today {
-        border-left-color: #3b82f6;
-      }
-
-      .task-list-overdue {
-        border-left-color: #ef4444;
-      }
-
-      .task-list-upcoming {
-        border-left-color: #10b981;
-      }
-
-      .task-list-card h3 {
-        margin: 0 0 var(--space-md) 0;
-        font-size: 1.1rem;
-      }
-
-      .task-list-content {
-        max-height: 300px;
-        overflow-y: auto;
-      }
-
-      .task-list-summary {
-        font-size: 0.9rem;
-        color: var(--color-text-secondary);
-        margin-bottom: var(--space-md);
-      }
-
-      .schedule-task-item {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: var(--space-sm);
-        border-bottom: 1px solid var(--color-border-light);
-        gap: var(--space-sm);
-      }
-
-      .schedule-task-text {
-        flex: 1;
-        font-size: 0.9rem;
-        line-height: 1.4;
-      }
-
-      .schedule-task-estimate {
-        font-size: 0.85rem;
-        font-weight: 600;
-        color: #3b82f6;
-        background: #dbeafe;
-        padding: 2px 8px;
-        border-radius: var(--radius-sm);
-        flex-shrink: 0;
-      }
-
-      .schedule-task-overdue {
-        font-size: 0.85rem;
-        font-weight: 600;
-        color: #dc2626;
-        background: #fee2e2;
-        padding: 2px 8px;
-        border-radius: var(--radius-sm);
-        flex-shrink: 0;
-      }
-
-      .schedule-task-date {
-        font-size: 0.8rem;
-        color: var(--color-text-secondary);
-        flex-shrink: 0;
-      }
-
-      .empty-state {
-        text-align: center;
-        color: var(--color-text-secondary);
-        padding: var(--space-lg);
-        font-style: italic;
-      }
-
-      .more-tasks {
-        text-align: center;
-        color: var(--color-text-secondary);
-        font-size: 0.85rem;
-        margin-top: var(--space-sm);
-      }
-
-      .schedule-stats-row {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-        gap: var(--space-md);
-        margin-top: var(--space-xl);
-      }
-
-      .schedule-stat {
-        text-align: center;
-        padding: var(--space-md);
-        background: var(--color-background);
-        border-radius: var(--radius-md);
-      }
-
-      .schedule-stat-label {
-        font-size: 0.85rem;
-        color: var(--color-text-secondary);
-        margin-bottom: var(--space-xs);
-      }
-
-      .schedule-stat-value {
-        font-size: 1.5rem;
-        font-weight: bold;
-        color: var(--color-primary);
-      }
-
-      @media (max-width: 768px) {
-        .timeline-header {
-          flex-direction: column;
-        }
-
-        .task-lists-grid {
-          grid-template-columns: 1fr;
-        }
-      }
-    </style>
-    <!-- Sprint 0: Konfiguracja Backend & Autoryzacja -->
-    <div class="feature-section" data-milestone="1">
-      <div class="feature-header priority-critical">
-        <h2>
-          <span>Sprint 0: Konfiguracja Backend & Autoryzacja</span>
-          
-          <span class="feature-milestone-badge">M1</span>
-        </h2>
         
-      </div>
-
-      <div class="subsection">
-        <h3 class="collapsible collapsed">Konfiguracja Projektu</h3>
-        <div class="collapsible-content collapsed">
-          <ul class="task-list">
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                Utworzenie projektu Spring Boot
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                Konfiguracja PostgreSQL
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                Setup application.yml
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                Struktura pakietów
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                Konfiguracja Lombok, Validation
-                
-              </span>
-              
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="subsection">
-        <h3 class="collapsible collapsed">Model Bazy Danych - Encje JPA (Podstawowe)</h3>
-        <div class="collapsible-content collapsed">
-          <ul class="task-list">
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                Encja UserEntity
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                Encja LocationEntity
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                Encja EventEntity (podstawowa)
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                Encja FavoritePlaceEntity
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                Encja PostEntity
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                Encja TokenEntity
-                
-              </span>
-              
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="subsection">
-        <h3 class="collapsible collapsed">Migracje Bazy Danych (Flyway)</h3>
-        <div class="collapsible-content collapsed">
-          <ul class="task-list">
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                Setup Flyway w projekcie
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                V1_0__Initial_schema.sql
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                V1_1__Fix_null_user_roles.sql
-                
-              </span>
-              
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="subsection">
-        <h3 class="collapsible collapsed">Spring Security & JWT</h3>
-        <div class="collapsible-content collapsed">
-          <ul class="task-list">
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                JwtService (generateToken, validateToken)
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                JwtAuthenticationFilter
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                UserDetailsService implementation
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                SecurityConfiguration (CORS, CSRF)
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                LogoutService
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                TokenEntity & TokenRepository
-                
-              </span>
-              
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="subsection">
-        <h3 class="collapsible collapsed">Auth Endpoints (Backend)</h3>
-        <div class="collapsible-content collapsed">
-          <ul class="task-list">
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                POST /api/v1/auth/register
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                POST /api/v1/auth/authenticate
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                POST /api/v1/auth/refresh-token
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                GET /api/v1/auth/validate-token
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                POST /api/v1/auth/logout
-                
-              </span>
-              
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="subsection">
-        <h3 class="collapsible collapsed">Auth Implementation (Flutter)</h3>
-        <div class="collapsible-content collapsed">
-          <ul class="task-list">
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                JWT storage w Flutter (SecureStorage)
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                HTTP client setup (dio) z Authorization header
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                UserService (login/logout state)
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                Login/Register forms
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                Token validation i auto-refresh
-                
-              </span>
-              
-            </li>
-          </ul>
-        </div>
-      </div>
 
     </div>
-
-    <!-- Feature 0: Mapa z Wydarzeniami -->
-    <div class="feature-section" data-milestone="1">
-      <div class="feature-header ">
-        <h2>
-          <span>Feature 0: Mapa z Wydarzeniami</span>
-          
-          <span class="feature-milestone-badge">M1</span>
-        </h2>
-        
-      </div>
-
-      <div class="subsection">
-        <h3 class="collapsible collapsed">Backend - Mapa API</h3>
-        <div class="collapsible-content collapsed">
-          <ul class="task-list">
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                GET /api/v1/events - zwraca wydarzenia z lokalizacjami
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                EventEntity ma relację do LocationEntity
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                LocationEntity ma latitude i longitude
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                EventRepository.findAllWithLocation() - JOIN FETCH
-                
-              </span>
-              
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="subsection">
-        <h3 class="collapsible collapsed">Flutter - Mapa (Google Maps)</h3>
-        <div class="collapsible-content collapsed">
-          <ul class="task-list">
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                GoogleMapWidget z google_maps_flutter
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                Centrowanie na Poznań
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                Markery wydarzeń z custom ikoną
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                Grupowanie wydarzeń w tej samej lokalizacji
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                Pop-up z kartą wydarzenia (EventPopUpCard)
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                PageView dla wielu wydarzeń w jednym miejscu
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                Dots indicator dla paginacji
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                Tap na marker → zoom + centrowanie + pop-up
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                Tap na mapie → ukrywa pop-up
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                FloatingActionButton refresh
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                EventMarkerService - filtruje nieaktualne
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                FavoriteLocationNotifier - centrowanie z ulubionych
-                
-              </span>
-              
-            </li>
-          </ul>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- Feature 1: Podstawowe operacje na Wydarzeniach -->
-    <div class="feature-section" data-milestone="1">
-      <div class="feature-header priority-critical">
-        <h2>
-          <span>Feature 1: Podstawowe operacje na Wydarzeniach</span>
-          
-          <span class="feature-milestone-badge">M1</span>
-        </h2>
-        
-      </div>
-
-      <div class="subsection">
-        <h3 class="collapsible collapsed">Backend - System Zarządzania Wydarzeniami [15h] ✅</h3>
-        <div class="collapsible-content collapsed">
-          <ul class="task-list">
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                System zwraca listę wszystkich wydarzeń ✅
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                System zwraca szczegóły pojedynczego wydarzenia ✅
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                Organizator może tworzyć nowe wydarzenie ✅
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                Organizator może edytować swoje wydarzenie ✅
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                Organizator może usunąć swoje wydarzenie ✅
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                System waliduje poprawność danych wydarzenia (daty, liczba miejsc, poziom) ✅
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                Organizator widzi tylko swoje wydarzenia ✅
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                System sortuje wydarzenia według daty rozpoczęcia ✅
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                Organizator może odwołać wydarzenie (status CANCELLED) ✅
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                Użytkownicy widzą badge "Odwołane" przy odwołanych wydarzeniach ✅
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                System zabezpiecza przed konfliktami podczas równoczesnej edycji (optimistic locking) ✅
-                
-              </span>
-              
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="subsection">
-        <h3 class="collapsible collapsed">Mobile - Interfejs Zarządzania Wydarzeniami [15h] ✅</h3>
-        <div class="collapsible-content collapsed">
-          <ul class="task-list">
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                Organizator widzi pełne szczegóły wydarzenia ✅
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                Organizator może utworzyć nowe wydarzenie przez formularz ✅
-                
-                <ul class="subtask-list">
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">Wypełnienie nazwy, opisu, daty i godziny</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">Wybór lokalizacji na mapie</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">Ustawienie liczby miejsc, ceny, poziomu trudności</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">Walidacja wprowadzonych danych</span>
-                        
-                      </li>
-                </ul>
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                Organizator może edytować istniejące wydarzenie ✅
-                
-                <ul class="subtask-list">
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">Formularz wypełnia się aktualnymi danymi</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">Zapisanie zmian</span>
-                        
-                      </li>
-                </ul>
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                Organizator może usunąć wydarzenie ✅
-                
-                <ul class="subtask-list">
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">Potwierdzenie usunięcia przez dialog</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">Odświeżenie listy po usunięciu</span>
-                        
-                      </li>
-                </ul>
-              </span>
-              
-            </li>
-          </ul>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- Feature 3: Zarządzanie Uczestnikami - MANUAL -->
-    <div class="feature-section" data-milestone="1">
-      <div class="feature-header priority-critical">
-        <h2>
-          <span>Feature 3: Zarządzanie Uczestnikami - MANUAL</span>
-          
-          <span class="feature-milestone-badge">M1</span>
-        </h2>
-        
-      </div>
-
-      <div class="subsection">
-        <h3 class="collapsible collapsed">Backend - System Zarządzania Uczestnikami [15h] ✅</h3>
-        <div class="collapsible-content collapsed">
-          <ul class="task-list">
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                System przechowuje listę uczestników wydarzenia ✅
-                
-                <ul class="subtask-list">
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">Informacje: uczestnik, pozycja na liście, data dołączenia, kto dodał</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">Każdy użytkownik może być uczestnikiem tylko raz na wydarzeniu</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">Baza danych przygotowana (migracja V1_6)</span>
-                        
-                      </li>
-                </ul>
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                Organizator może dodać uczestnika do wydarzenia ✅
-                
-                <ul class="subtask-list">
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">Dodawanie po ID użytkownika lub emailu</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">Tylko organizator może dodawać uczestników</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">Automatyczne przypisanie pozycji na liście</span>
-                        
-                      </li>
-                </ul>
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                Organizator może usunąć uczestnika z wydarzenia ✅
-                
-                <ul class="subtask-list">
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">Tylko organizator może usuwać uczestników</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">Automatyczne przenumerowanie pozycji pozostałych uczestników</span>
-                        
-                      </li>
-                </ul>
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                System zwraca listę uczestników wydarzenia ✅
-                
-                <ul class="subtask-list">
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">Posortowana według pozycji</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">Podział na główną listę i listę rezerwową</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">Informacje o użytkowniku i jego pozycji</span>
-                        
-                      </li>
-                </ul>
-              </span>
-              
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="subsection">
-        <h3 class="collapsible collapsed">Mobile - Interfejs Zarządzania Uczestnikami [15h] ✅</h3>
-        <div class="collapsible-content collapsed">
-          <ul class="task-list">
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                Organizator widzi ekran zarządzania uczestnikami ✅
-                
-                <ul class="subtask-list">
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">Lista wszystkich uczestników z avatarami</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">Pozycja każdego uczestnika na liście</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">Dostęp tylko dla organizatora wydarzenia</span>
-                        
-                      </li>
-                </ul>
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                Organizator może dodać uczestnika ✅
-                
-                <ul class="subtask-list">
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">Przycisk "Dodaj uczestnika"</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">Dialog wyszukiwania użytkownika po nicku/emailu</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">Potwierdzenie dodania</span>
-                        
-                      </li>
-                </ul>
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                Organizator może usunąć uczestnika ✅
-                
-                <ul class="subtask-list">
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">Przycisk "Usuń" przy każdym uczestniku</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">Dialog potwierdzenia usunięcia</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">Automatyczne odświeżenie listy</span>
-                        
-                      </li>
-                </ul>
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                Aplikacja synchronizuje zmiany z serwerem ✅
-                
-                <ul class="subtask-list">
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">Pobieranie aktualnej listy uczestników</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">Zapisywanie zmian w czasie rzeczywistym</span>
-                        
-                      </li>
-                </ul>
-              </span>
-              
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="subsection">
-        <h3 class="collapsible collapsed">Backend - Samodzielne Zapisywanie (6h)</h3>
-        <div class="collapsible-content collapsed">
-          <ul class="task-list">
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                Uczestnik może zapisać się na wydarzenie [2h]
-                
-                <ul class="subtask-list">
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">System sprawdza czy wydarzenie jest dostępne</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">System sprawdza czy są wolne miejsca (pessimistic lock + slotsAvailable)</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">Tylko zalogowani użytkownicy mogą się zapisać</span>
-                        
-                      </li>
-                </ul>
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                Uczestnik może zrezygnować z uczestnictwa [2h]
-                
-                <ul class="subtask-list">
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">System sprawdza czy użytkownik jest uczestnikiem</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">Usunięcie z listy uczestników</span>
-                        
-                      </li>
-                </ul>
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                System dodaje uczestnika na koniec listy [1h]
-                
-                <ul class="subtask-list">
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">Automatyczne przypisanie pozycji</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">Sprawdzenie limitu miejsc</span>
-                        
-                      </li>
-                </ul>
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                System aktualizuje listę po rezygnacji [1h]
-                
-                <ul class="subtask-list">
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">Usunięcie uczestnika</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">Przenumerowanie pozostałych uczestników (promocja z waitlisty jeśli włączona)</span>
-                        
-                      </li>
-                </ul>
-              </span>
-              
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="subsection">
-        <h3 class="collapsible collapsed">Mobile - Przyciski Zapisz/Zrezygnuj (4h)</h3>
-        <div class="collapsible-content collapsed">
-          <ul class="task-list">
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                Przycisk "Zapisz się" na szczegółach wydarzenia [2h]
-                
-                <ul class="subtask-list">
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">Widoczny tylko jeśli użytkownik nie jest zapisany</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">Komunikat potwierdzenia po zapisaniu (listy główna/waitlist z pozycją)</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">Obsługa pełnego wydarzenia: zapis na listę rezerwową, bez ukrywania przycisku</span>
-                        
-                      </li>
-                </ul>
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                Przycisk "Zrezygnuj" na szczegółach wydarzenia [1h]
-                
-                <ul class="subtask-list">
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">Widoczny tylko jeśli użytkownik jest zapisany</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">Dialog potwierdzenia rezygnacji</span>
-                        
-                      </li>
-                </ul>
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                Automatyczne odświeżanie po zapisie/rezygnacji [1h]
-                
-                <ul class="subtask-list">
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">Aktualizacja szczegółów wydarzenia</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">Aktualizacja liczby wolnych miejsc/listy rezerwowej</span>
-                        
-                      </li>
-                </ul>
-              </span>
-              
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="subsection">
-        <h3 class="collapsible collapsed">Backend - System Listy Rezerwowej [6h] - 60% GOTOWE ✅</h3>
-        <div class="collapsible-content collapsed">
-          <ul class="task-list">
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                System rozróżnia główną listę od listy rezerwowej [1h] ✅
-                
-                <ul class="subtask-list">
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">Status uczestnika: główna lista lub lista rezerwowa</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">Baza danych zaktualizowana (migracja V1_6)</span>
-                        
-                      </li>
-                </ul>
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                System automatycznie przypisuje uczestników do odpowiedniej listy [2h]
-                
-                <ul class="subtask-list">
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">Sprawdzenie liczby wolnych miejsc</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">Dodanie na główną listę jeśli są miejsca</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">Dodanie na listę rezerwową jeśli brak miejsc</span>
-                        
-                      </li>
-                </ul>
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                System zwraca oddzielnie główną listę i listę rezerwową [1h] ✅
-                
-                <ul class="subtask-list">
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">Główna lista posortowana według pozycji</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">Lista rezerwowa posortowana według kolejności dołączenia</span>
-                        
-                      </li>
-                </ul>
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                Wydarzenie pokazuje liczbę osób na liście rezerwowej [1h]
-                
-                <ul class="subtask-list">
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">Automatyczne liczenie osób na liście rezerwowej</span>
-                        
-                      </li>
-                </ul>
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                Testy automatycznego przypisywania do list [1h]
-                
-              </span>
-              
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="subsection">
-        <h3 class="collapsible">Mobile - Wyświetlanie Listy Rezerwowej (4h)</h3>
-        <div class="collapsible-content">
-          <ul class="task-list">
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                Wyraźne oznaczenie statusu uczestnictwa [1h]
-                
-                <ul class="subtask-list">
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">Badge "Główna lista" lub "Lista rezerwowa"</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">Informacja o pozycji na liście rezerwowej</span>
-                        
-                      </li>
-                </ul>
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                Organizator widzi podzieloną listę uczestników [2h]
-                
-                <ul class="subtask-list">
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">Sekcja "Główna lista" (do limitu miejsc)</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">Sekcja "Lista rezerwowa" (ponad limit)</span>
-                        
-                      </li>
-                </ul>
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                Wyświetlanie liczby osób na liście rezerwowej [1h]
-                
-                <ul class="subtask-list">
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">Na karcie wydarzenia na mapie</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">Na szczegółach wydarzenia</span>
-                        
-                      </li>
-                </ul>
-              </span>
-              
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="subsection">
-        <h3 class="collapsible collapsed">Backend - Automatyczne Awansowanie (3h)</h3>
-        <div class="collapsible-content collapsed">
-          <ul class="task-list">
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                System automatycznie awansuje pierwszą osobę z listy rezerwowej [2h]
-                
-                <ul class="subtask-list">
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">Znajdowanie pierwszej osoby na liście rezerwowej (według kolejności)</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">Przeniesienie z listy rezerwowej na główną listę</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">Aktualizacja pozycji wszystkich uczestników</span>
-                        
-                      </li>
-                </ul>
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                Awans następuje automatycznie gdy ktoś rezygnuje [1h]
-                
-                <ul class="subtask-list">
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">Sprawdzenie czy są osoby na liście rezerwowej</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">Automatyczne wywołanie awansowania</span>
-                        
-                      </li>
-                </ul>
-              </span>
-              
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="subsection">
-        <h3 class="collapsible">Mobile - Powiadomienie o Awansie (2h)</h3>
-        <div class="collapsible-content">
-          <ul class="task-list">
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Użytkownik widzi komunikat o awansie [1h]
-                
-                <ul class="subtask-list">
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">Wyskakujący komunikat "Awansowałeś z listy rezerwowej!"</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">Automatyczne sprawdzanie statusu</span>
-                        
-                      </li>
-                </ul>
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Automatyczne odświeżenie po awansie [1h]
-                
-                <ul class="subtask-list">
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">Aktualizacja listy uczestników</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">Zmiana wyświetlanego statusu (badge)</span>
-                        
-                      </li>
-                </ul>
-              </span>
-              
-            </li>
-          </ul>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- Feature 4: Powtarzające się Wydarzenia -->
-    <div class="feature-section" data-milestone="1">
-      <div class="feature-header priority-high">
-        <h2>
-          <span>Feature 4: Powtarzające się Wydarzenia</span>
-          
-          <span class="feature-milestone-badge">M1</span>
-        </h2>
-        
-      </div>
-
-      <div class="subsection">
-        <h3 class="collapsible">Backend - System Powtarzających się Wydarzeń (15h)</h3>
-        <div class="collapsible-content">
-          <ul class="task-list">
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                System przechowuje szablony powtarzających się wydarzeń [3h]
-                
-                <ul class="subtask-list">
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">Informacje: nazwa serii, organizator, lokalizacja</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">Częstotliwość: co tydzień / co 2 tygodnie</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">Dzień tygodnia (poniedziałek-niedziela)</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">Godzina rozpoczęcia</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">Domyślne ustawienia (liczba miejsc, cena, poziom)</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">Baza danych przygotowana (migracja V1_3)</span>
-                        
-                      </li>
-                </ul>
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                System automatycznie generuje wydarzenia według szablonu [6h]
-                
-                <ul class="subtask-list">
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">Organizator określa datę rozpoczęcia i liczbę wydarzeń</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">System oblicza wszystkie daty (np. każdy wtorek przez 10 tygodni)</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">Masowe tworzenie wydarzeń (maks. 20 na raz)</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">Każde wydarzenie jest połączone z serią</span>
-                        
-                      </li>
-                </ul>
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Organizator może przeglądać swoje serie [2h]
-                
-                <ul class="subtask-list">
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">Lista wszystkich serii organizatora</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">Szczegóły pojedynczej serii</span>
-                        
-                      </li>
-                </ul>
-              </span>
-              
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="subsection">
-        <h3 class="collapsible">Mobile - Tworzenie Powtarzających się Wydarzeń (10h)</h3>
-        <div class="collapsible-content">
-          <ul class="task-list">
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Ekran tworzenia serii wydarzeń [3h]
-                
-                <ul class="subtask-list">
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">Formularz podobny do tworzenia wydarzenia</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">Nazwa serii, lokalizacja</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">Domyślne ustawienia (miejsca, cena, poziom)</span>
-                        
-                      </li>
-                </ul>
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Wybór częstotliwości [2h]
-                
-                <ul class="subtask-list">
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">Lista: "Co tydzień" / "Co 2 tygodnie"</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">Wybór dnia tygodnia (Pn-Nd)</span>
-                        
-                      </li>
-                </ul>
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Wybór godziny [1h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Dialog generowania wydarzeń [2h]
-                
-                <ul class="subtask-list">
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">Wybór daty rozpoczęcia</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">Liczba wydarzeń do wygenerowania (np. 10 treningów)</span>
-                        
-                      </li>
-                </ul>
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Połączenie z backendem [2h]
-                
-                <ul class="subtask-list">
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">Tworzenie serii</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">Generowanie wydarzeń</span>
-                        
-                      </li>
-                </ul>
-              </span>
-              
-            </li>
-          </ul>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- Feature 6: Podstawowy Interfejs dla Organizatora -->
-    <div class="feature-section" data-milestone="1">
-      <div class="feature-header ">
-        <h2>
-          <span>Feature 6: Podstawowy Interfejs dla Organizatora</span>
-          
-          <span class="feature-milestone-badge">M1</span>
-        </h2>
-        
-      </div>
-
-      <div class="subsection">
-        <h3 class="collapsible">Mobile - Interfejs Użytkownika (15h)</h3>
-        <div class="collapsible-content">
-          <ul class="task-list">
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Ekran "Moje Wydarzenia" dla organizatora [4h]
-                
-                <ul class="subtask-list">
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">Lista wydarzeń zorganizowanych przez użytkownika</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">Skrócona karta wydarzenia (data, miejsce, liczba uczestników)</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">Dotknięcie otwiera szczegóły</span>
-                        
-                      </li>
-                </ul>
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                Dolna nawigacja (3 zakładki) [3h] ✅
-                
-                <ul class="subtask-list">
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">Mapa z wydarzeniami</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">Moje Wydarzenia</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">Profil użytkownika</span>
-                        
-                      </li>
-                </ul>
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                Lista wszystkich wydarzeń [3h] ✅
-                
-                <ul class="subtask-list">
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">Przewijalna lista wszystkich wydarzeń</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">Odświeżanie przez pociągnięcie w dół</span>
-                        
-                      </li>
-                </ul>
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Przyjazne wskaźniki ładowania [2h]
-                
-                <ul class="subtask-list">
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">Szkieletowe ekrany podczas ładowania danych</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">Płynne animacje</span>
-                        
-                      </li>
-                </ul>
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                Obsługa błędów [2h] ✅
-                
-                <ul class="subtask-list">
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">Komunikaty o błędach połączenia</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">Przycisk "Spróbuj ponownie"</span>
-                        
-                      </li>
-                </ul>
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Podstawowa obsługa problemów z siecią [1h]
-                
-              </span>
-              
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="subsection">
-        <h3 class="collapsible">Uruchomienie na Serwerze (10h)</h3>
-        <div class="collapsible-content">
-          <ul class="task-list">
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Przygotowanie środowiska produkcyjnego [3h]
-                
-                <ul class="subtask-list">
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">Konfiguracja bazy danych PostgreSQL</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">Zabezpieczenie hasła do bazy i klucza JWT</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">Ustawienia produkcyjne (logi, limity)</span>
-                        
-                      </li>
-                </ul>
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Test uruchomienia lokalnego [2h]
-                
-                <ul class="subtask-list">
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">Sprawdzenie czy wszystko działa lokalnie</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">Test wszystkich funkcji</span>
-                        
-                      </li>
-                </ul>
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Uruchomienie na serwerze internetowym [4h]
-                
-                <ul class="subtask-list">
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">Zainstalowanie bazy danych</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">Uruchomienie aplikacji backend</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">Konfiguracja Nginx (przekierowania)</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">Certyfikat SSL (bezpieczne połączenie HTTPS)</span>
-                        
-                      </li>
-                </ul>
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Przygotowanie przykładowych danych [2h]
-                
-                <ul class="subtask-list">
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">5 testowych użytkowników (w tym 2 organizatorów)</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">15 przykładowych wydarzeń w Poznaniu</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">5 przykładowych lokalizacji (hale sportowe)</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">2 przykładowe serie treningów</span>
-                        
-                      </li>
-                </ul>
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Podstawowe monitorowanie [1h]
-                
-                <ul class="subtask-list">
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">Sprawdzanie czy serwer działa</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">Zapisywanie błędów do logów</span>
-                        
-                      </li>
-                </ul>
-              </span>
-              
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="subsection">
-        <h3 class="collapsible">Testy Akceptacyjne + Naprawy (5h)</h3>
-        <div class="collapsible-content">
-          <ul class="task-list">
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Test głównych scenariuszy użycia [2h]
-                
-                <ul class="subtask-list">
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">Nowy użytkownik: rejestracja → logowanie</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">Organizator: utworzenie wydarzenia</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">Organizator: dodanie uczestnika do wydarzenia</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">Organizator: usunięcie uczestnika</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">Organizator: utworzenie serii treningów</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">Organizator: wygenerowanie 10 wydarzeń z serii</span>
-                        
-                      </li>
-                </ul>
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Naprawa krytycznych błędów [3h]
-                
-                <ul class="subtask-list">
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">Naprawienie problemów znalezionych w testach</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox pending"></span>
-                        <span class="subtask-text">Weryfikacja napraw</span>
-                        
-                      </li>
-                </ul>
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                Rejestracja i logowanie użytkowników ✅
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                Mapa z wszystkimi wydarzeniami ✅
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                Tworzenie wydarzenia przez organizatora ✅
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                Edycja i usuwanie wydarzenia ✅
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                Ręczne zarządzanie uczestnikami przez organizatora ✅
-                
-                <ul class="subtask-list">
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">Dodawanie uczestników ✅</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">Usuwanie uczestników ✅</span>
-                        
-                      </li>
-                </ul>
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                Lista moich wydarzeń dla organizatora ✅
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Samodzielne zapisywanie się uczestników (10h)
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                System listy rezerwowej (5h remaining - 50% gotowe)
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Automatyczne awansowanie z listy rezerwowej (5h)
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Tworzenie serii regularnych treningów (25h)
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Uruchomienie online na serwerze produkcyjnym (15h)
-                
-              </span>
-              
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="subsection">
-        <h3 class="collapsible">Backend (35h)</h3>
-        <div class="collapsible-content">
-          <ul class="task-list">
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                Custom exceptions [2h] ✅ (2025-11-19)
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Manual promote/demote z waitlisty [8h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Drag & drop reordering positions [6h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Payment tracking (isPaid, paymentMethod) [10h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                MONTHLY frequency dla serii [5h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                skipHolidays logic [4h]
-                
-              </span>
-              
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="subsection">
-        <h3 class="collapsible">Flutter (30h)</h3>
-        <div class="collapsible-content">
-          <ul class="task-list">
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                ParticipantsListScreen (public view) [5h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Manual promote/demote UI [6h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Drag & drop reordering UI [5h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Payment tracking UI [8h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Advanced series management [6h]
-                
-              </span>
-              
-            </li>
-          </ul>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- Feature 3: Zarządzanie Uczestnikami - ADVANCED -->
-    <div class="feature-section" data-milestone="2">
-      <div class="feature-header priority-critical">
-        <h2>
-          <span>Feature 3: Zarządzanie Uczestnikami - ADVANCED</span>
-          
-          <span class="feature-milestone-badge">M2</span>
-        </h2>
-        
-      </div>
-
-      <div class="subsection">
-        <h3 class="collapsible">Backend (25h)</h3>
-        <div class="collapsible-content">
-          <ul class="task-list">
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Pola w EventParticipant: isPaid, isConfirmed, paymentMethod [4h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                PUT /api/v1/events/{eventId}/participants/{userId}/confirm (toggle) [3h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                PUT /api/v1/events/{eventId}/participants/{userId}/payment (toggle) [3h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                PUT /api/v1/events/{eventId}/participants/{userId}/payment-method [2h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                PUT /api/v1/events/{eventId}/participants/{userId}/position (zmiana) [4h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                POST /api/v1/events/{eventId}/participants/{userId}/promote (z waitlist) [4h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                POST /api/v1/events/{eventId}/participants/{userId}/demote (do waitlist) [5h]
-                
-              </span>
-              
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="subsection">
-        <h3 class="collapsible">Flutter (20h)</h3>
-        <div class="collapsible-content">
-          <ul class="task-list">
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                PaymentsManageScreen [6h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Confirm checkbox toggle [2h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Payment checkbox toggle [2h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Payment method selector (BLIK/CASH/TRANSFER/CARD) [4h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Payment summary (total, paid, unpaid) [3h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Drag & drop reordering (ReorderableListView) [2h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Promote/demote buttons [1h]
-                
-              </span>
-              
-            </li>
-          </ul>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- Feature 4: Event Series - ADVANCED -->
-    <div class="feature-section" data-milestone="2">
-      <div class="feature-header priority-high">
-        <h2>
-          <span>Feature 4: Event Series - ADVANCED</span>
-          
-          <span class="feature-milestone-badge">M2</span>
-        </h2>
-        
-      </div>
-
-      <div class="subsection">
-        <h3 class="collapsible">Backend (20h)</h3>
-        <div class="collapsible-content">
-          <ul class="task-list">
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                MONTHLY frequency [5h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                skipHolidays logic (API świąt) [5h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                SeriesStatus enum (ACTIVE, PAUSED) [1h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                PUT /api/v1/series/{id}/pause [2h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                PUT /api/v1/series/{id}/resume [2h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                PUT /api/v1/series/{id} (edit series) [3h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                DELETE /api/v1/series/{id} [2h]
-                
-              </span>
-              
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="subsection">
-        <h3 class="collapsible">Flutter (10h)</h3>
-        <div class="collapsible-content">
-          <ul class="task-list">
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                SeriesListScreen [3h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                SeriesDetailsScreen [3h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Preview list przed generowaniem [2h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Edit series [1h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Pause/Resume toggle [1h]
-                
-              </span>
-              
-            </li>
-          </ul>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- Feature 3.5: Grupy Siatkówki -->
-    <div class="feature-section" data-milestone="2">
-      <div class="feature-header priority-critical">
-        <h2>
-          <span>Feature 3.5: Grupy Siatkówki</span>
-          
-          <span class="feature-milestone-badge">M2</span>
-        </h2>
-        
-      </div>
-
-      <div class="subsection">
-        <h3 class="collapsible">Backend (30h)</h3>
-        <div class="collapsible-content">
-          <ul class="task-list">
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Encja Group (name, description, imageUrl) [4h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Encja UserGroup (membership) [3h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                GroupController [3h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                GET /api/v1/groups [3h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                POST /api/v1/groups/{id}/join [3h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                DELETE /api/v1/groups/{id}/leave [3h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Link Event → Group [5h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Filtrowanie wydarzeń po grupie [6h]
-                
-              </span>
-              
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="subsection">
-        <h3 class="collapsible">Flutter (30h)</h3>
-        <div class="collapsible-content">
-          <ul class="task-list">
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                GroupListScreen [8h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                GroupDetailsScreen [8h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Join/Leave group [6h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Group selector w EventsListScreen [8h]
-                
-              </span>
-              
-            </li>
-          </ul>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- Feature 5: Profil Użytkownika -->
-    <div class="feature-section" data-milestone="2">
-      <div class="feature-header priority-high">
-        <h2>
-          <span>Feature 5: Profil Użytkownika</span>
-          
-          <span class="feature-milestone-badge">M2</span>
-        </h2>
-        
-      </div>
-
-      <div class="subsection">
-        <h3 class="collapsible">Backend (22h)</h3>
-        <div class="collapsible-content">
-          <ul class="task-list">
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                GET /api/v1/users/me [3h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                PUT /api/v1/users/me [4h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                GET /api/v1/users/me/events [4h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                GET /api/v1/users/me/organized [4h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                GET /api/v1/users/me/history [4h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                POST /api/v1/users/{id}/thumb [3h]
-                
-              </span>
-              
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="subsection">
-        <h3 class="collapsible">Flutter (23h)</h3>
-        <div class="collapsible-content">
-          <ul class="task-list">
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Enhanced UserProfileScreen [6h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                EditProfileScreen [6h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                My Events tab [4h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                My Organized tab [3h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                History tab [4h]
-                
-              </span>
-              
-            </li>
-          </ul>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- Feature 7: EventStatus & Cancellation -->
-    <div class="feature-section" data-milestone="2">
-      <div class="feature-header ">
-        <h2>
-          <span>Feature 7: EventStatus & Cancellation</span>
-          
-          <span class="feature-milestone-badge">M2</span>
-        </h2>
-        
-      </div>
-
-      <div class="subsection">
-        <h3 class="collapsible">Backend (15h)</h3>
-        <div class="collapsible-content">
-          <ul class="task-list">
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Enum EventStatus (ACTIVE, CANCELLED, COMPLETED) [2h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                PUT /api/v1/events/{id}/cancel [4h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                PUT /api/v1/events/{id}/complete [3h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Powiadomienia o odwołaniu [6h]
-                
-              </span>
-              
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="subsection">
-        <h3 class="collapsible">Flutter (10h)</h3>
-        <div class="collapsible-content">
-          <ul class="task-list">
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                EventStatus badges [3h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Cancel event button [3h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Cancel confirmation [4h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Spring Mail + SMTP [6h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Thymeleaf templates [6h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Przypomnienie 24h przed [6h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Awans z waitlist [6h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Event cancelled [6h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Firebase FCM setup [9h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Push: Przypomnienie [9h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Push: Awans z waitlist [9h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Push: Zmiana eventu [9h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Flutter FCM integration [9h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Stripe API integration [12h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Payment initiate endpoint [12h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Stripe webhook [12h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Flutter Stripe integration [12h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Payment flow UI [12h]
-                
-              </span>
-              
-            </li>
-          </ul>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- Sprint: Testowanie -->
-    <div class="feature-section" data-milestone="3">
-      <div class="feature-header ">
-        <h2>
-          <span>Sprint: Testowanie</span>
-          
-          <span class="feature-milestone-badge">M3</span>
-        </h2>
-        
-      </div>
-
-      <div class="subsection">
-        <h3 class="collapsible">SAST/Dependency/Secrets Scanning (8h)</h3>
-        <div class="collapsible-content">
-          <ul class="task-list">
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Konfiguracja FindSecBugs/SpotBugs (BE) [2h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Semgrep rules (Java Spring + Dart) [2h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Dependency scan (OWASP DC lub Snyk) [2h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Gitleaks (sekrety) + cleanup historii jeśli potrzeba [2h]
-                
-              </span>
-              
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="subsection">
-        <h3 class="collapsible">DAST/API Fuzz + Business Logic (10h)</h3>
-        <div class="collapsible-content">
-          <ul class="task-list">
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                ZAP baseline + full scan z JWT [3h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Schemathesis fuzz (jeśli OpenAPI) lub ręczne negatywne [3h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Testy organizer‑only (IDOR) – add/remove participants, cancel, series generate [4h]
-                
-              </span>
-              
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="subsection">
-        <h3 class="collapsible">Auth/JWT/CORS/Rate Limits (8h)</h3>
-        <div class="collapsible-content">
-          <ul class="task-list">
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Rotacja refresh + reuse detection [3h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                CORS allow‑list, brak `*` z Credentials [2h] ✅ (2025-11-19)
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                Rate limits: login, mutujące endpointy, series generate [3h] ✅ (2025-11-19)
-                
-              </span>
-              
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="subsection">
-        <h3 class="collapsible">Headers/TLS/Nginx (6h)</h3>
-        <div class="collapsible-content">
-          <ul class="task-list">
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Security headers (CSP – na przyszłość web, XFO, XCTO, RP, PP) [3h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                TLS hardening + HSTS, SSL Labs A [3h]
-                
-              </span>
-              
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="subsection">
-        <h3 class="collapsible">Logging/Audyt/Monitoring (6h)</h3>
-        <div class="collapsible-content">
-          <ul class="task-list">
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Maskowanie PII/JWT w logach [2h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Audit trail dla create/edit/delete/cancel [2h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Alerting: 4xx/5xx spikes, auth failures [2h]
-                
-              </span>
-              
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="subsection">
-        <h3 class="collapsible">Infra/Secrets Hardening (6h)</h3>
-        <div class="collapsible-content">
-          <ul class="task-list">
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                ufw/fail2ban, systemd ograniczenia, non‑root service [3h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Sekrety poza repo, rotacja, inwentaryzacja [3h]
-                
-              </span>
-              
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="subsection">
-        <h3 class="collapsible">Backup & Disaster Recovery (10h)</h3>
-        <div class="collapsible-content">
-          <ul class="task-list">
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Nightly full + WAL archiving (PITR) [3h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Retencja/rotacja + offsite, szyfrowanie [3h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Procedury odtworzenia + test restore (runbook) [4h]
-                
-              </span>
-              
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="subsection">
-        <h3 class="collapsible">GDPR/RODO (10h)</h3>
-        <div class="collapsible-content">
-          <ul class="task-list">
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Privacy Policy + Terms (akceptacja przy rejestracji) [2h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Eksport/usunięcie/przenoszalność danych (e‑mail, nick, avatar, lokalizacje, telefon) [3h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Retencja (logi, backupy) + realizacja w systemie [3h]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                DPA z dostawcami (hosting PL, e‑mail) [2h]
-                
-              </span>
-              
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="subsection">
-        <h3 class="collapsible">Performance Baseline (4h)</h3>
-        <div class="collapsible-content">
-          <ul class="task-list">
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                k6: GET /api/v1/events (mapa), /api/v1/events?organizerId=me, POST /api/v1/series/{id}/generate [4h]
-                
-              </span>
-              
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="subsection">
-        <h3 class="collapsible">ABSOLUTNE MINIMUM (Must Have):</h3>
-        <div class="collapsible-content">
-          <ul class="task-list">
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                Aplikacja działa na serwerze (środowisko testowe) ✅
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                Organizator może utworzyć wydarzenie ✅
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                Organizator może zarządzać uczestnikami (ręcznie) ✅
-                
-                <ul class="subtask-list">
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">Dodawanie uczestników ✅</span>
-                        
-                      </li>
-                  <li class="subtask-item">
-                        <span class="task-checkbox done"></span>
-                        <span class="subtask-text">Usuwanie uczestników ✅</span>
-                        
-                      </li>
-                </ul>
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                ⭐ Uczestnicy mogą się samodzielnie zapisywać (kluczowe!)
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                ⭐ Uczestnicy mogą rezygnować z uczestnictwa (kluczowe!)
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                ⭐ System automatycznie tworzy listę rezerwową [50% gotowe]
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                ⭐ System automatycznie awansuje osoby z listy rezerwowej
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Organizator może tworzyć serie regularnych treningów
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox done"></span>
-              <span class="task-text">
-                Organizator widzi listę swoich wydarzeń ✅
-                
-              </span>
-              
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="subsection">
-        <h3 class="collapsible">MILE WIDZIANE (Nice to Have):</h3>
-        <div class="collapsible-content">
-          <ul class="task-list">
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                2-3 organizatorów przetestowało aplikację
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Brak krytycznych błędów
-                
-              </span>
-              
-            </li>
-            <li class="task-item">
-              <span class="task-checkbox pending"></span>
-              <span class="task-text">
-                Pozytywny feedback od testujących
-                
-              </span>
-              
-            </li>
-          </ul>
-        </div>
-      </div>
-
-    </div>
-
-
-    <!-- Summary Section -->
-    <div class="summary-section">
-      <h2>📊 Podsumowanie</h2>
-
-      <p style="margin-bottom: var(--space-sm); color: #2563eb; font-weight: 600; background: #dbeafe; padding: var(--space-md); border-radius: var(--radius-md); border-left: 4px solid #3b82f6;">
-        📌 Widok: <strong>Aktualny Harmonogram (Milestone 1)</strong> - Zadania zaplanowane do 2026-02-15
-      </p>
-      <p style="margin-bottom: var(--space-lg); color: var(--color-text-secondary);">
-        Przy dostępności <strong>15h/tydzień</strong> w wolnym czasie (Solo Developer)
-      </p>
-
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-lg); margin-bottom: var(--space-xl);">
-        <div style="background: white; padding: var(--space-lg); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); border-left: 4px solid #3b82f6;">
-          <div style="font-size: 0.9rem; color: var(--color-text-secondary); margin-bottom: var(--space-xs);">Całkowite godziny</div>
-          <div style="font-size: 2rem; font-weight: bold; color: var(--color-primary);">422h</div>
-        </div>
-        <div style="background: white; padding: var(--space-lg); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); border-left: 4px solid #10b981;">
-          <div style="font-size: 0.9rem; color: var(--color-text-secondary); margin-bottom: var(--space-xs);">Ukończone</div>
-          <div style="font-size: 2rem; font-weight: bold; color: #10b981;">105h</div>
-        </div>
-        <div style="background: white; padding: var(--space-lg); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); border-left: 4px solid #f59e0b;">
-          <div style="font-size: 0.9rem; color: var(--color-text-secondary); margin-bottom: var(--space-xs);">Pozostałe</div>
-          <div style="font-size: 2rem; font-weight: bold; color: #f59e0b;">317h</div>
-        </div>
-        <div style="background: white; padding: var(--space-lg); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); border-left: 4px solid #8b5cf6;">
-          <div style="font-size: 0.9rem; color: var(--color-text-secondary); margin-bottom: var(--space-xs);">Czas trwania</div>
-          <div style="font-size: 2rem; font-weight: bold; color: #8b5cf6;">14 tyg.</div>
-        </div>
-      </div>
-
-      <div style="margin-top: var(--space-xl); padding: var(--space-xl); background: white; border-radius: var(--radius-md); border: 2px solid var(--color-primary);">
-        <h3 style="color: var(--color-primary); margin-bottom: var(--space-md);">🎯 Milestone 1: Organizer MVP</h3>
-        <div style="font-size: 1.1rem; line-height: 1.8;">
-          <p><strong>422h / 15h/tydzień = 14 tygodni</strong></p>
-          <p style="margin-top: var(--space-sm);"><strong>Deadline:</strong> 2026-02-15</p>
-          <p style="margin-top: var(--space-md); font-size: 0.95rem; color: var(--color-text-secondary);">
-            Postęp: <strong>51.9%</strong> (105h / 422h)
-          </p>
-        </div>
-      </div>
-
-      <div style="margin-top: var(--space-xl); padding: var(--space-lg); background: #dcfce7; border-radius: var(--radius-md); border-left: 4px solid #16a34a;">
-        <h3 style="color: #16a34a; margin-bottom: var(--space-sm);">✅ Zakres Milestone 1</h3>
-        <ul style="margin: 0; padding-left: var(--space-xl); line-height: 1.8;">
-          <li>Feature 1: Podstawowe operacje na Wydarzeniach (CRUD)</li>
-          <li>Feature 3: Zarządzanie Uczestnikami - MANUAL</li>
-          <li>Feature 4: Cykliczne Wydarzenia - BASIC</li>
-          <li>Feature 6: UI Basics dla Organizatora</li>
-          <li>Deployment + Testing</li>
-        </ul>
-      </div>
-
-      <div style="margin-top: var(--space-lg); padding: var(--space-lg); background: #fef3c7; border-radius: var(--radius-md); border-left: 4px solid #f59e0b;">
-        <h3 style="color: #92400e; margin-bottom: var(--space-sm);">📅 Kolejne Milestones</h3>
-        <ul style="margin: 0; padding-left: var(--space-xl); line-height: 1.8; font-size: 0.95rem;">
-          <li><strong>M2: Self-Service & Advanced</strong> - Q1 2026 (~200h, 13 tyg.)</li>
-          <li><strong>M3: Post-MVP</strong> - Q2 2026 (~195h, 13 tyg.)</li>
-          <li><strong>TOTAL</strong>: ~510h = ~33 tygodnie = ~8 miesięcy</li>
-        </ul>
-      </div>
-    </div>
-  
-    <!-- Summary Section -->
-    <div class="summary-section" style="display: none;">
-      <h2>📊 Podsumowanie Estymat</h2>
-      <p style="margin-bottom: var(--space-sm); color: #2563eb; font-weight: 600; background: #dbeafe; padding: var(--space-md); border-radius: var(--radius-md); border-left: 4px solid #3b82f6;">
-        📌 Widok: <strong>Aktualny Harmonogram (Milestone 1)</strong> - Zadania zaplanowane do 2026-02-15
-      </p>
-      <p style="margin-bottom: var(--space-lg); color: var(--color-text-secondary);">
-        Przy dostępności <strong>15h/tydzień</strong> w wolnym czasie (Solo Developer)
-      </p>
-
-      <table class="summary-table" style="display: none;">
-        <thead>
-          <tr>
-            <th>Feature</th>
-            <th>Backend</th>
-            <th>Flutter</th>
-            <th>Total</th>
-            <th>Tygodnie</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-        </tbody>
-      </table>
-
-      <div style="margin-top: var(--space-2xl); padding: var(--space-xl); background: white; border-radius: var(--radius-md); border: 2px solid var(--color-primary); display: none;">
-        <h3 style="color: var(--color-primary); margin-bottom: var(--space-md);">🎯 Realistyczny Timeline</h3>
-        <div style="font-size: 1.1rem; line-height: 1.8;">
-          <p><strong>~621h / 15h/tydzień = 41.5 tygodnie = ~10.5 miesiąca</strong></p>
-          <p style="margin-top: var(--space-md); font-size: 0.95rem; color: var(--color-text-secondary);">
-            Postęp aktualny: <strong>~25%</strong> (głównie Sprint 0, Mapa, Ulubione Lokalizacje)
-          </p>
-        </div>
-      </div>
-
-      <div style="margin-top: var(--space-xl); padding: var(--space-lg); background: #fee2e2; border-radius: var(--radius-md); border-left: 4px solid #dc2626; display: none;">
-        <h3 style="color: #dc2626; margin-bottom: var(--space-sm);">🔴 Critical Path (minimum do pokazania użytkownikom)</h3>
-        <p style="font-size: 1.1rem; margin: 0;"><strong>~20.5 tygodni = 5 miesięcy</strong></p>
-        <p style="margin-top: var(--space-sm); font-size: 0.9rem; color: var(--color-text-secondary);">
-          Feature 1: Events CRUD (4 tyg.) + Feature 2: Join/Leave (5 tyg.) + Feature 3: Participant Mgmt (6 tyg.) + Feature 6: UI Polish (3 tyg.) + Deploy (2.5 tyg.)
-        </p>
-      </div>
-
-      <div style="margin-top: var(--space-lg); padding: var(--space-lg); background: #dcfce7; border-radius: var(--radius-md); border-left: 4px solid #16a34a; display: none;">
-        <h3 style="color: #16a34a; margin-bottom: var(--space-sm);">✅ Realistyczne Cele</h3>
-        <ul style="margin: 0; padding-left: var(--space-xl); line-height: 1.8;">
-          <li>Podstawowe MVP (Critical Path) gotowe za <strong>~5-6 miesięcy</strong></li>
-          <li>Pełne MVP (wszystkie features) gotowe za <strong>~10.5 miesiąca</strong></li>
-          <li>Pokazanie pierwszym użytkownikom za <strong>~11-12 miesięcy</strong> 🚀</li>
-        </ul>
-      </div>
-
-      <div style="margin-top: var(--space-2xl); padding: var(--space-xl); background: var(--color-background); border-radius: var(--radius-md); display: none;">
-        <h3 style="color: var(--color-primary); margin-bottom: var(--space-md);">📈 Post-MVP Features</h3>
-        <table class="summary-table">
-          <thead>
-            <tr>
-              <th>Feature</th>
-              <th>Godziny</th>
-              <th>Tygodnie</th>
-            </tr>
-          </thead>
-          <tbody>
-          </tbody>
-        </table>
-        <p style="margin-top: var(--space-md); text-align: center; font-size: 1.1rem;">
-          <strong>GRAND TOTAL: ~756h = ~50 tygodni = ~12.5 miesiąca</strong>
-        </p>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    // Scope filtering
-    (function() {
-      const switcher = document.getElementById('scopeSwitch');
-      if (switcher) {
-        const btns = switcher.querySelectorAll('.scope-btn');
-        const sections = document.querySelectorAll('.feature-section');
-
-        function applyScope(scope) {
-          sections.forEach(sec => {
-            const m = parseInt(sec.getAttribute('data-milestone')) || 1;
-            let show = true;
-            if (scope === 'm1') show = (m === 1);
-            else if (scope === 'm2plus') show = (m >= 2);
-            sec.style.display = show ? '' : 'none';
-          });
-
-          btns.forEach(b => b.classList.toggle('active', b.dataset.scope === scope));
-          localStorage.setItem('todoScope', scope);
-        }
-
-        btns.forEach(b => b.addEventListener('click', () => applyScope(b.dataset.scope)));
-
-        const defaultScope = 'm1';
-        const saved = localStorage.getItem('todoScope');
-        applyScope(saved || defaultScope);
-      }
-    })();
-
-    // Collapsible sections
-    document.querySelectorAll('.collapsible').forEach(header => {
-      header.addEventListener('click', () => {
-        header.classList.toggle('collapsed');
-        const content = header.nextElementSibling;
-        content.classList.toggle('collapsed');
-      });
+    <script>
+    const btn = document.getElementById('theme-toggle');
+    const html = document.documentElement;
+    
+    const saved = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    
+    if (saved === 'dark' || (!saved && prefersDark)) {
+        html.setAttribute('data-theme', 'dark');
+        btn.innerText = '☀ Jasny';
+    } else {
+        html.setAttribute('data-theme', 'light');
+        btn.innerText = '🌙 Ciemny';
+    }
+
+    btn.addEventListener('click', () => {
+        const current = html.getAttribute('data-theme');
+        const next = current === 'dark' ? 'light' : 'dark';
+        html.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+        btn.innerText = next === 'dark' ? '☀ Jasny' : '🌙 Ciemny';
     });
-
-    // Feature header click to toggle entire section
-    document.querySelectorAll('.feature-header').forEach(header => {
-      header.addEventListener('click', () => {
-        const section = header.parentElement;
-        const subsections = section.querySelectorAll('.subsection');
-
-        subsections.forEach(sub => {
-          const subHeader = sub.querySelector('.collapsible');
-          const subContent = sub.querySelector('.collapsible-content');
-          if (subHeader && subContent) {
-            subHeader.classList.toggle('collapsed');
-            subContent.classList.toggle('collapsed');
-          }
-        });
-      });
-    });
-  </script>
+</script>
 </body>
 </html>

@@ -1,0 +1,111 @@
+# 🎯 Cele Projektu i Mapa Drogowa — Meet App
+
+> **Wizja:** Aplikacja uwalniająca organizatorów siatkówki od ręcznego zarządzania listami w Excelu/Messengerze, zapewniając pełną automatyzację zapisów.
+> **Cel Główny:** Działający MVP (Organizator + Samoobsługa gracza) gotowy do wdrożenia do 31 grudnia 2025.
+
+---
+
+# 📊 Podsumowanie Zarządcze
+
+| Metryka | Status |
+| :--- | :--- |
+| **Całkowity Postęp** | ![Postęp](https://progress-bar.dev/55/?scale=100&title=Zrobione&width=120&color=2ecc71) **55%** |
+| **Aktualna Faza** | **M1: MVP Organizatora + Samoobsługa** |
+| **Najbliższy Termin** | **31.12.2025**  |
+| **Główny Fokus** | Automatyzacja zapisów|
+
+---
+
+## 🚀 M1 — MVP Organizatora i Samoobsługa
+**Termin:** Q4 2025
+**Cel:** Organizator tworzy wydarzenie, wysyła link na grupę, a lista "robi się sama".
+
+### ✅ Fundamenty Systemu
+*Baza bezpieczeństwa i dostępności.*
+- [x] **Bezpieczne Logowanie** `[MA-231]` `[MA-420]` – Rejestracja i autoryzacja (JWT) dla organizatorów oraz graczy.
+- [x] **Zarządzanie Profilem** `[MA-212]` – Podstawowe dane użytkownika i awatar.
+- [x] **Środowisko Produkcyjne** `[MA-447]` `[MA-480]` – Serwer i baza danych gotowe do działania online.
+
+### ✅ Tworzenie i Odkrywanie
+*Narzędzia do zarządzania ofertą wydarzeń.*
+- [x] **Kreator Wydarzeń** `[MA-385]` `[MA-427]` – Szybkie tworzenie gier (czas, miejsce, limity miejsc).
+- [x] **Interaktywna Mapa** `[MA-29]` `[MA-475]` – Wizualizacja wydarzeń w mieście z filtrowaniem.
+- [x] **Cykl Życia Wydarzenia** `[MA-427]` `[MA-405]` – Edycja, odwoływanie i usuwanie przez organizatora.
+- [x] **Ulubione Lokalizacje** `[MA-263]` – Szybki wybór sprawdzonych boisk/hal.
+
+### 🟡 Automatyzacja Listy Obecności
+*Serce systemu – koniec z ręcznym przepisywaniem list.*
+- [x] **Ręczna Kontrola** `[MA-441]` – Organizator może ręcznie dodać/usunąć każdego (np. osoby spoza apki).
+- [ ] **Samoobsługa Gracza** `[MA-442]` `[MA-451]` – Użytkownik sam klika "Dołącz" lub "Zrezygnuj".
+- [ ] **Inteligentna Lista Rezerwowa** `[MA-443]` `[MA-494]` – Kolejka FIFO (kto pierwszy, ten lepszy) po wyczerpaniu miejsc.
+- [ ] **Auto-Uzupełnianie** `[MA-444]` `[MA-495]` – System automatycznie wskazuje pierwszego z rezerwy, gdy zwolni się miejsce.
+
+### 🔴 Dystrybucja i Komunikacja
+*Wykorzystanie zewnętrznych kanałów jako systemu powiadomień.*
+- [ ] **Udostępnianie (Deep Links)** `[MA-501]` – Przycisk "Udostępnij", generujący bezpośredni link do wydarzenia (`meetapp://event/{id}`).
+- [ ] **Integracja Społecznościowa** `[MA-501]` – Łatwe wysyłanie linku na Messenger/WhatsApp/SMS.
+    > *Wartość biznesowa:* Zamiast budować system powiadomień w MVP, organizator wrzuca link na istniejącą grupę. Kliknięcie otwiera aplikację na konkretnym meczu.
+
+### 🔴 Operacje Cykliczne
+*Oszczędność czasu przy stałych terminach.*
+- [ ] **Serie Treningowe** `[MA-445]` `[MA-497]` – Generowanie 10 treningów w przód (np. "każdy wtorek") jednym kliknięciem.
+- [ ] **Pulpit Organizatora** `[MA-407]` `[MA-414]` – Widok "Moje Wydarzenia" do szybkiego zarządzania nadchodzącymi grami.
+- [ ] **Stali gracze** `[MA-502]`
+
+---
+
+## 🟡 M2 — Zaangażowanie, Powiadomienia i Narzędzia Zaawansowane
+**Termin:** Q1 2026
+**Cel:** Budowanie zaufania, komunikacja w czasie rzeczywistym i precyzyjna kontrola.
+
+### 🔔 Natywne Powiadomienia (System Push)
+*Kluczowe dla utrzymania tempa zapisów i informacji o zmianach.*
+- [ ] **Statusy Listy** `[MA-422]` `[MA-496]` – "Zwolniło się miejsce!", "Awansowałeś na listę główną!".
+- [ ] **Przypomnienia** `[MA-422]` – Automatyczny alert 24h przed meczem dla zapisanych graczy.
+- [ ] **Alerty Zmian** `[MA-422]` – Natychmiastowe info o zmianie godziny, lokalizacji lub odwołaniu meczu.
+
+### ⭐ System Reputacji (R-Score)
+*Budowanie zaufania i eliminacja "no-show".*
+- [ ] **Śledzenie Obecności (No-Show)** `[BACKLOG]` – Organizator oznacza, czy zapisany gracz faktycznie się pojawił.
+- [ ] **Ocena Wiarygodności** `[BACKLOG]` – Wskaźnik R-Score widoczny przy profilu gracza (np. % obecności).
+- [ ] **Kary za Nieobecność** `[BACKLOG]` – Automatyczna blokada zapisów lub niższy priorytet dla notorycznych "wagarowiczów".
+
+### 🔒 Zaawansowane Zarządzanie Listą
+- [ ] **Priorytetyzacja** `[BACKLOG]` – Ręczne przesuwanie graczy (Awans/Degradacja) przez organizatora.
+- [ ] **Drag & Drop** `[BACKLOG]` – Łatwa zmiana kolejności na liście metodą przeciągnij i upuść.
+- [ ] **Historia Gier** `[MA-410]` – Wgląd w historię aktywności gracza i organizatora.
+
+### 👥 Grupy i Społeczności
+- [ ] **Stałe Grupy** `[MA-421]` – Tworzenie zamkniętych społeczności (np. "Wtorkowa Ekipa").
+- [ ] **Stała Lista Graczy** `[MA-502]` – Baza graczy przypisana do grupy dla szybkiego dodawania.
+- [ ] **Prywatność** `[MA-421]` – Wydarzenia widoczne tylko dla członków danej grupy.
+
+### 📅 Inteligentny Kalendarz
+- [ ] **Zaawansowane Serie** `[MA-445]` – Pomijanie świąt, cykle miesięczne.
+- [ ] **Widok Kalendarza** `[BACKLOG]` – Graficzne przedstawienie nadchodzących gier w miesiącu.
+
+---
+
+## 🟢 M3 — Skalowanie i Komercjalizacja
+**Termin:** Q2 2026
+**Cel:** Płatności, analityka i pełna zgodność prawna.
+
+### 💸 Finanse
+- [ ] **Statusy Płatności** `[MA-197]` – Oznaczanie przez organizatora kto zapłacił (gotówka/przelew).
+- [ ] **Płatności Online** `[BACKLOG]` – Integracja z bramką płatniczą (BLIK/Karta) wewnątrz aplikacji.
+- [ ] **Polityka Zwrotów** `[BACKLOG]` – Automatyzacja zwrotów przy rezygnacji w terminie.
+
+### 📈 Dane i Bezpieczeństwo
+- [ ] **Analityka** `[MA-423]` – Raporty obłożenia, frekwencji i trendów.
+- [ ] **Zgodność RODO** `[BACKLOG]` – Eksport i anonimizacja danych użytkowników.
+- [ ] **Audyt Bezpieczeństwa** `[BACKLOG]` – Testy penetracyjne przed szeroką publikacją.
+
+---
+
+## 🏷️ Legenda
+
+*   `[MA-xxx]` – Numer zadania w Jira (gotowe do realizacji lub w trakcie).
+*   `[BACKLOG]` – Funkcja zaplanowana, wymagająca utworzenia zadań w Jira.
+*   ✅ **Zakończone** – Funkcja wdrożona.
+*   🟡 **W Trakcie** – Prace trwają.
+*   🔴 **Do Zrobienia** – Najbliższy priorytet.
