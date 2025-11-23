@@ -209,11 +209,9 @@ const STYLES = `
 
     .progress-fill {
         height: 100%;
-        background: linear-gradient(90deg, var(--success), var(--primary), var(--success));
-        background-size: 200% 100%;
+        background: linear-gradient(90deg, var(--success), var(--primary));
         border-radius: 4px;
         transition: width 1s ease-in-out;
-        animation: gradientShift 2s ease infinite, progressFill 1.5s ease-out;
         position: relative;
         overflow: hidden;
     }
@@ -228,10 +226,10 @@ const STYLES = `
         background: linear-gradient(
             90deg,
             transparent,
-            rgba(255, 255, 255, 0.3),
+            rgba(255, 255, 255, 0.2),
             transparent
         );
-        animation: shimmer 2s infinite;
+        animation: shimmer 3s ease-in-out infinite;
     }
 
     /* --- MILESTONES --- */
@@ -588,6 +586,22 @@ function extractProgress(val) {
 
 // --- PARSER ---
 
+function calculateOverallProgress(milestones) {
+    let totalTasks = 0;
+    let completedTasks = 0;
+
+    milestones.forEach(milestone => {
+        milestone.features.forEach(feature => {
+            feature.tasks.forEach(task => {
+                totalTasks++;
+                if (task.done) completedTasks++;
+            });
+        });
+    });
+
+    return totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
+}
+
 function parseMarkdown(content) {
     const lines = content.split('\n');
     const data = {
@@ -609,8 +623,9 @@ function parseMarkdown(content) {
                 let val = cols[1];
                 let isProgress = false;
                 if (val.includes('![')) {
-                    val = extractProgress(val);
                     isProgress = true;
+                    // Don't extract progress here - we'll calculate it later
+                    val = '0';
                 }
                 data.summary.push({
                     label: cleanText(cols[0]),
@@ -665,6 +680,14 @@ function parseMarkdown(content) {
                 currentFeature.tasks.push({ done: isDone, text: cleanText(text) });
                 if (!isDone) currentFeature.allDone = false;
             }
+        }
+    });
+
+    // Calculate actual progress and update summary
+    const actualProgress = calculateOverallProgress(data.milestones);
+    data.summary.forEach(item => {
+        if (item.isProgress) {
+            item.value = actualProgress.toString();
         }
     });
 
@@ -757,6 +780,17 @@ function generateHTML(data) {
 </html>`;
 }
 
+// --- UPDATE GOALS.MD ---
+
+function updateGoalsProgress(content, actualProgress) {
+    // Update the progress bar line
+    const progressRegex = /(\| \*\*Całkowity Postęp\*\* \| !\[Postęp\]\(https:\/\/progress-bar\.dev\/)(\d+)(\/\?scale=100&title=Zrobione&width=120&color=2ecc71\) \*\*)(\d+)(\%\*\* \|)/;
+
+    const updated = content.replace(progressRegex, `$1${actualProgress}$3${actualProgress}$5`);
+
+    return updated;
+}
+
 // --- MAIN ---
 
 try {
@@ -764,8 +798,19 @@ try {
         console.error(`Błąd: Nie znaleziono pliku ${INPUT_FILE}`);
         process.exit(1);
     }
-    const raw = fs.readFileSync(INPUT_FILE, 'utf8');
+    let raw = fs.readFileSync(INPUT_FILE, 'utf8');
     const data = parseMarkdown(raw);
+
+    // Get the calculated progress
+    const actualProgress = data.summary.find(item => item.isProgress)?.value || '0';
+
+    // Update goals.md with actual progress
+    const updatedGoals = updateGoalsProgress(raw, actualProgress);
+    if (updatedGoals !== raw) {
+        fs.writeFileSync(INPUT_FILE, updatedGoals);
+        console.log(`📊 Zaktualizowano postęp w ${INPUT_FILE}: ${actualProgress}%`);
+    }
+
     const html = generateHTML(data);
     fs.writeFileSync(OUTPUT_FILE, html);
     console.log(`✅ Wygenerowano dashboard: ${OUTPUT_FILE}`);
