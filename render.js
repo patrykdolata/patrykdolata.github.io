@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-const INPUT_FILE = 'GOALS.md';
+const INPUT_FILE = 'goals.md';
 const OUTPUT_FILE = 'TODO.html';
 
 // --- CSS / STYLES (MODERN UI) ---
@@ -45,6 +45,10 @@ const STYLES = `
 
     * { box-sizing: border-box; }
 
+    html {
+        scroll-behavior: smooth;
+    }
+
     body {
         font-family: 'Inter', sans-serif;
         background-color: var(--bg-body);
@@ -59,6 +63,7 @@ const STYLES = `
         max-width: 900px;
         margin: 0 auto;
         padding: 0 20px 40px 20px;
+        animation: fadeIn 0.6s ease-out;
     }
 
     /* --- HEADER --- */
@@ -76,7 +81,12 @@ const STYLES = `
         align-items: center;
         justify-content: center;
         z-index: 1000;
-        transition: border-color 0.3s ease;
+        transition: all 0.3s ease;
+        animation: fadeIn 0.5s ease-out;
+    }
+
+    header:hover {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
 
     .header-content {
@@ -99,9 +109,11 @@ const STYLES = `
         font-weight: 700;
         letter-spacing: -0.025em;
         margin: 0;
-        background: linear-gradient(135deg, var(--primary) 0%, var(--success) 100%);
+        background: linear-gradient(135deg, var(--primary) 0%, var(--success) 100%, var(--primary) 200%);
+        background-size: 200% 200%;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
+        animation: gradientShift 3s ease infinite;
     }
 
     /* Shared style for buttons and links in header */
@@ -118,12 +130,20 @@ const STYLES = `
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        transition: all 0.2s;
+        transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
         line-height: 1.2;
+        position: relative;
+        overflow: hidden;
     }
-    
+
     .nav-btn:hover {
         background: var(--border);
+        transform: translateY(-2px) scale(1.05);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-btn:active {
+        transform: translateY(0) scale(0.98);
     }
 
     /* --- SUMMARY CARDS --- */
@@ -143,7 +163,19 @@ const STYLES = `
         display: flex;
         flex-direction: column;
         justify-content: center;
+        animation: fadeInUp 0.6s ease-out backwards;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
+
+    .metric-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.15);
+    }
+
+    .metric-card:nth-child(1) { animation-delay: 0.1s; }
+    .metric-card:nth-child(2) { animation-delay: 0.2s; }
+    .metric-card:nth-child(3) { animation-delay: 0.3s; }
+    .metric-card:nth-child(4) { animation-delay: 0.4s; }
 
     .metric-label {
         font-size: 0.75rem;
@@ -158,6 +190,12 @@ const STYLES = `
         font-size: 1.25rem;
         font-weight: 700;
         color: var(--text-main);
+        animation: fadeInUp 0.8s ease-out backwards;
+        transition: transform 0.3s ease;
+    }
+
+    .metric-card:hover .metric-value {
+        transform: scale(1.1);
     }
 
     .progress-bar {
@@ -171,15 +209,41 @@ const STYLES = `
 
     .progress-fill {
         height: 100%;
-        background: linear-gradient(90deg, var(--success), var(--primary));
+        background: linear-gradient(90deg, var(--success), var(--primary), var(--success));
+        background-size: 200% 100%;
         border-radius: 4px;
         transition: width 1s ease-in-out;
+        animation: gradientShift 2s ease infinite, progressFill 1.5s ease-out;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .progress-fill::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background: linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 255, 255, 0.3),
+            transparent
+        );
+        animation: shimmer 2s infinite;
     }
 
     /* --- MILESTONES --- */
     .milestone-card {
         margin-bottom: 40px;
+        animation: scaleIn 0.5s ease-out backwards;
     }
+
+    .milestone-card:nth-child(1) { animation-delay: 0.5s; }
+    .milestone-card:nth-child(2) { animation-delay: 0.6s; }
+    .milestone-card:nth-child(3) { animation-delay: 0.7s; }
+    .milestone-card:nth-child(4) { animation-delay: 0.8s; }
 
     .milestone-header {
         display: flex;
@@ -194,6 +258,11 @@ const STYLES = `
         font-weight: 700;
         margin: 0;
         color: var(--text-main);
+        transition: transform 0.3s ease;
+    }
+
+    .milestone-title:hover {
+        transform: translateX(5px);
     }
 
     .milestone-meta {
@@ -209,12 +278,21 @@ const STYLES = `
         border-radius: var(--radius);
         margin-bottom: 12px;
         overflow: hidden;
-        transition: box-shadow 0.2s;
+        transition: box-shadow 0.3s ease, transform 0.3s ease;
+        animation: slideInLeft 0.5s ease-out backwards;
     }
 
     details:hover {
         box-shadow: var(--shadow);
+        transform: translateX(5px);
     }
+
+    details:nth-child(1) { animation-delay: 0.1s; }
+    details:nth-child(2) { animation-delay: 0.15s; }
+    details:nth-child(3) { animation-delay: 0.2s; }
+    details:nth-child(4) { animation-delay: 0.25s; }
+    details:nth-child(5) { animation-delay: 0.3s; }
+    details:nth-child(6) { animation-delay: 0.35s; }
 
     summary {
         padding: 16px 20px;
@@ -226,7 +304,24 @@ const STYLES = `
         font-weight: 600;
         font-size: 1rem;
         user-select: none;
-        transition: background-color 0.2s;
+        transition: all 0.3s ease;
+        position: relative;
+    }
+
+    summary::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 3px;
+        background: var(--primary);
+        transform: scaleY(0);
+        transition: transform 0.3s ease;
+    }
+
+    summary:hover::before {
+        transform: scaleY(1);
     }
 
     summary::-webkit-details-marker { display: none; }
@@ -241,14 +336,25 @@ const STYLES = `
         padding: 4px 10px;
         border-radius: 20px;
         font-weight: 600;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        animation: fadeIn 0.4s ease-out;
     }
     .pill-done {
         background-color: rgba(16, 185, 129, 0.1);
         color: var(--success);
     }
+    .pill-done:hover {
+        transform: scale(1.1);
+        box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+    }
     .pill-todo {
         background-color: rgba(79, 70, 229, 0.1);
         color: var(--primary);
+        animation: pulse 2s ease-in-out infinite;
+    }
+    .pill-todo:hover {
+        transform: scale(1.1);
+        box-shadow: 0 2px 8px rgba(79, 70, 229, 0.3);
     }
 
     /* Open State */
@@ -268,6 +374,7 @@ const STYLES = `
         margin-bottom: 16px;
         margin-top: 0;
         line-height: 1.6;
+        animation: fadeIn 0.3s ease-out 0.1s backwards;
     }
 
     /* --- TASKS --- */
@@ -283,8 +390,13 @@ const STYLES = `
         padding: 8px 0;
         gap: 12px;
         border-bottom: 1px solid var(--border);
+        transition: transform 0.2s ease, padding-left 0.2s ease;
     }
     .task-item:last-child { border-bottom: none; }
+    .task-item:hover {
+        padding-left: 8px;
+        background: linear-gradient(90deg, var(--primary-light) 0%, transparent 100%);
+    }
 
     .checkbox {
         width: 20px;
@@ -296,13 +408,19 @@ const STYLES = `
         align-items: center;
         justify-content: center;
         margin-top: 2px;
-        transition: all 0.2s;
+        transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
     }
 
     .checkbox.checked {
         background-color: var(--success);
         border-color: var(--success);
         color: white;
+        animation: bounce 0.5s ease;
+    }
+
+    .checkbox:hover {
+        transform: scale(1.1);
+        border-color: var(--primary);
     }
 
     .checkbox svg {
@@ -325,11 +443,84 @@ const STYLES = `
     strong {
         font-weight: 600;
         color: var(--primary);
+        transition: color 0.3s ease;
+    }
+
+    strong:hover {
+        color: var(--success);
     }
 
     @keyframes slideDown {
         from { opacity: 0; transform: translateY(-5px); }
         to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    @keyframes scaleIn {
+        from {
+            opacity: 0;
+            transform: scale(0.95);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    @keyframes slideInLeft {
+        from {
+            opacity: 0;
+            transform: translateX(-30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.8; }
+    }
+
+    @keyframes shimmer {
+        0% { background-position: -1000px 0; }
+        100% { background-position: 1000px 0; }
+    }
+
+    @keyframes bounce {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.1); }
+    }
+
+    @keyframes gradientShift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
+    @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-5px); }
+    }
+
+    @keyframes progressFill {
+        from { width: 0; }
     }
 `;
 
