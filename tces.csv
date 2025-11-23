@@ -1,0 +1,59 @@
+Summary,Description,Issue Type,Priority,Labels
+"TC-01 Successful Login (Happy Path)","*Steps:* User enters valid email and password.
+*Expected Result:* User receives JWT token and is redirected to the Dashboard.","Test","High","Auth,MVP"
+"TC-02 Invalid Credentials","*Steps:* User enters incorrect password.
+*Expected Result:* System displays ""Invalid credentials"" error message, access is denied.","Test","High","Auth"
+"TC-03 Token Expiration (Refresh Token)","*Steps:* Access token expires; app performs a background request.
+*Expected Result:* Token is refreshed automatically without logging the user out.","Test","Medium","Auth"
+"TC-04 Logout","*Steps:* User clicks ""Logout"" button.
+*Expected Result:* Token is removed from secure storage, user redirected to login screen.","Test","Medium","Auth"
+"TC-05 Unauthorized Access","*Steps:* Attempt to access /api/v1/events without a token.
+*Expected Result:* Backend returns 401 Unauthorized, app redirects to login.","Test","Medium","Auth"
+"TC-06 Create Event (Valid)","*Steps:* Fill all required fields (name, future date, slots > 0).
+*Expected Result:* Event is created successfully and appears in ""My Events"" list.","Test","High","Organizer,MVP"
+"TC-07 Past Date Validation","*Steps:* Attempt to create an event with yesterday's date.
+*Expected Result:* Creation is blocked, validation error is displayed.","Test","Medium","Organizer"
+"TC-08 Edit Location","*Steps:* Change the address of an existing event.
+*Expected Result:* Address updates on the list AND the map pin moves to the new location.","Test","Medium","Organizer"
+"TC-09 Manual Player Add","*Steps:* Organizer manually adds a player (e.g., ""John Doe"").
+*Expected Result:* Available slot count decreases by 1.","Test","Medium","Organizer"
+"TC-10 Delete Event","*Steps:* Organizer deletes an event.
+*Expected Result:* Event is removed from all player lists and the map.","Test","High","Organizer"
+"TC-11 Join Event (Free Spots)","*Steps:* Click ""Join"" on an event with available spots (e.g., 5/10).
+*Expected Result:* Status changes to ""JOINED"", slot count updates (e.g., 6/10).","Test","High","Self-Service,MVP"
+"TC-12 Leave Event","*Steps:* Click ""Leave"" or ""Resign"".
+*Expected Result:* Status changes to ""NOT JOINED"", spot becomes free for others.","Test","High","Self-Service,MVP"
+"TC-13 Rapid Join Prevention (Double-Click)","*Steps:* Rapidly click ""Join"" button multiple times.
+*Expected Result:* System prevents duplicate requests; user is added only once.","Test","Medium","Self-Service"
+"TC-14 Join Full Event (Waitlist Trigger)","*Steps:* Attempt to join an event where 10/10 slots are taken.
+*Expected Result:* User is added to the WAITLIST, not the main list.","Test","High","Waitlist,MVP"
+"TC-15 FIFO Queueing","*Steps:* Event is full. User A joins, followed by User B.
+*Expected Result:* User A is assigned ""Waitlist #1"", User B is assigned ""Waitlist #2"".","Test","High","Waitlist"
+"TC-16 Auto-Promotion (Happy Path)","*Steps:* A participant from the main list leaves a full event.
+*Expected Result:* User A (Waitlist #1) is automatically promoted to the Main List.","Test","High","Waitlist,Critical"
+"TC-17 Waitlist Renumbering","*Steps:* User A is promoted from Waitlist #1 to Main List.
+*Expected Result:* User B moves from ""Waitlist #2"" to ""Waitlist #1"".","Test","High","Waitlist"
+"TC-18 Leave Waitlist","*Steps:* User A (Waitlist #1) leaves the waitlist.
+*Expected Result:* User B (Waitlist #2) moves up to become ""Waitlist #1"".","Test","Medium","Waitlist"
+"TC-19 Race Condition Handling","*Steps:* Last spot available. Two users click ""Join"" at the exact same millisecond.
+*Expected Result:* Backend atomicity ensures only one user joins Main List, the other goes to Waitlist.","Test","High","Waitlist,Backend"
+"TC-20 Create Series","*Steps:* Create a series (e.g., ""Tuesdays"", ""Weekly"", ""4 occurrences"").
+*Expected Result:* System generates 4 independent events with identical parameters.","Test","Medium","Series"
+"TC-21 Edit Single Occurrence","*Steps:* Change time/details for the 3rd event in a series only.
+*Expected Result:* Events 1, 2, and 4 remain unchanged. Only the 3rd event is updated.","Test","Medium","Series"
+"TC-22 Cancel Series","*Steps:* Click ""Cancel Series"".
+*Expected Result:* Future events are not generated (or removed, depending on spec).","Test","Medium","Series"
+"TC-23 Display Map Pins","*Steps:* Open the map view.
+*Expected Result:* Event markers are visible in the user's vicinity.","Test","High","Map"
+"TC-24 Refresh Map after Action","*Steps:* User joins an event via list view, then returns to map.
+*Expected Result:* The slot count in the map popup is updated reflecting the change.","Test","Medium","Map"
+"TC-25 Event Clustering","*Steps:* View map area with multiple events at the same location.
+*Expected Result:* Multiple markers are handled via clustering or a list popup.","Test","Low","Map"
+"TC-26 Filter Past Events","*Steps:* Load map view.
+*Expected Result:* Finished or past events are not visible on the map.","Test","Medium","Map"
+"TC-27 HTTPS Enforcement","*Steps:* Access application via http:// protocol.
+*Expected Result:* Automatic redirect to https://.","Test","High","Infra"
+"TC-28 API Healthcheck","*Steps:* Send request to /health endpoint.
+*Expected Result:* Response status 200 OK (Liveness/Readiness confirmed).","Test","High","Infra"
+"TC-29 API Error Handling","*Steps:* Force backend to return 500 Error.
+*Expected Result:* Mobile app handles error gracefully (no crash), displays generic error message.","Test","Medium","Infra"
