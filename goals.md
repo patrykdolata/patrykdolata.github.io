@@ -9,7 +9,7 @@
 
 | Metryka | Status |
 | :--- | :--- |
-| **Całkowity Postęp** | ![Postęp](https://progress-bar.dev/55/?scale=100&title=Zrobione&width=120&color=2ecc71) **55%** |
+| **Całkowity Postęp** | ![Postęp](https://progress-bar.dev/36/?scale=100&title=Zrobione&width=120&color=2ecc71) **36%** |
 | **Aktualna Faza** | **M1: MVP Organizatora + Samoobsługa** |
 | **Najbliższy Termin** | **31.12.2025**  |
 | **Główny Fokus** | Automatyzacja zapisów|
@@ -22,23 +22,23 @@
 
 ### ✅ Fundamenty Systemu
 *Baza bezpieczeństwa i dostępności.*
-- [x] **Bezpieczne Logowanie** `[MA-231]` `[MA-420]` – Rejestracja i autoryzacja (JWT) dla organizatorów oraz graczy.
+- [x] **Bezpieczne Logowanie** `[MA-231]` – Rejestracja i autoryzacja (JWT) dla organizatorów oraz graczy.
 - [x] **Zarządzanie Profilem** `[MA-212]` – Podstawowe dane użytkownika i awatar.
-- [x] **Środowisko Produkcyjne** `[MA-447]` `[MA-480]` – Serwer i baza danych gotowe do działania online.
+- [x] **Środowisko testowe `[MA-480]` – Serwer i baza danych gotowe do działania online.
 
 ### ✅ Tworzenie i Odkrywanie
 *Narzędzia do zarządzania ofertą wydarzeń.*
 - [x] **Kreator Wydarzeń** `[MA-385]` `[MA-427]` – Szybkie tworzenie gier (czas, miejsce, limity miejsc).
-- [x] **Interaktywna Mapa** `[MA-29]` `[MA-475]` – Wizualizacja wydarzeń w mieście z filtrowaniem.
+- [x] **Interaktywna Mapa** `[MA-29]` `[MA-475]` – Wizualizacja wydarzeń w mieście.
 - [x] **Cykl Życia Wydarzenia** `[MA-427]` `[MA-405]` – Edycja, odwoływanie i usuwanie przez organizatora.
 - [x] **Ulubione Lokalizacje** `[MA-263]` – Szybki wybór sprawdzonych boisk/hal.
 
 ### 🟡 Automatyzacja Listy Obecności
 *Serce systemu – koniec z ręcznym przepisywaniem list.*
 - [x] **Ręczna Kontrola** `[MA-441]` – Organizator może ręcznie dodać/usunąć każdego (np. osoby spoza apki).
-- [ ] **Samoobsługa Gracza** `[MA-442]` `[MA-451]` – Użytkownik sam klika "Dołącz" lub "Zrezygnuj".
-- [ ] **Inteligentna Lista Rezerwowa** `[MA-443]` `[MA-494]` – Kolejka FIFO (kto pierwszy, ten lepszy) po wyczerpaniu miejsc.
-- [ ] **Auto-Uzupełnianie** `[MA-444]` `[MA-495]` – System automatycznie wskazuje pierwszego z rezerwy, gdy zwolni się miejsce.
+- [x] **Samoobsługa Gracza**  `[MA-451]` – Użytkownik sam klika "Dołącz" lub "Zrezygnuj".
+- [x] **Inteligentna Lista Rezerwowa** `[MA-443]` `[MA-494]` – Kolejka FIFO (kto pierwszy, ten lepszy) po wyczerpaniu miejsc.
+- [x] **Auto-Uzupełnianie**  `[MA-495]` – System automatycznie wskazuje pierwszego z rezerwy, gdy zwolni się miejsce.
 
 ### 🔴 Dystrybucja i Komunikacja
 *Wykorzystanie zewnętrznych kanałów jako systemu powiadomień.*
@@ -48,8 +48,8 @@
 
 ### 🔴 Operacje Cykliczne
 *Oszczędność czasu przy stałych terminach.*
-- [ ] **Serie Treningowe** `[MA-445]` `[MA-497]` – Generowanie 10 treningów w przód (np. "każdy wtorek") jednym kliknięciem.
-- [ ] **Pulpit Organizatora** `[MA-407]` `[MA-414]` – Widok "Moje Wydarzenia" do szybkiego zarządzania nadchodzącymi grami.
+- [ ] **Serie Treningowe**  `[MA-497]` – Generowanie 10 treningów w przód (np. "każdy wtorek") jednym kliknięciem.
+- [x] **Pulpit Organizatora** `[MA-407]` `[MA-414]` – Widok "Moje Wydarzenia" do szybkiego zarządzania nadchodzącymi grami.
 - [ ] **Stali gracze** `[MA-502]`
 
 ---
@@ -73,7 +73,7 @@
 ### 🔒 Zaawansowane Zarządzanie Listą
 - [ ] **Priorytetyzacja** `[BACKLOG]` – Ręczne przesuwanie graczy (Awans/Degradacja) przez organizatora.
 - [ ] **Drag & Drop** `[BACKLOG]` – Łatwa zmiana kolejności na liście metodą przeciągnij i upuść.
-- [ ] **Historia Gier** `[MA-410]` – Wgląd w historię aktywności gracza i organizatora.
+- [x] **Historia Gier** `[MA-410]` – Wgląd w historię aktywności gracza i organizatora.
 
 ### 👥 Grupy i Społeczności
 - [ ] **Stałe Grupy** `[MA-421]` – Tworzenie zamkniętych społeczności (np. "Wtorkowa Ekipa").

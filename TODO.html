@@ -210,29 +210,9 @@
 
     .progress-fill {
         height: 100%;
-        background: linear-gradient(90deg, var(--success), var(--primary), var(--success));
-        background-size: 200% 100%;
+        background: linear-gradient(90deg, var(--success), var(--primary));
         border-radius: 4px;
         transition: width 1s ease-in-out;
-        animation: gradientShift 2s ease infinite, progressFill 1.5s ease-out;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .progress-fill::after {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        right: 0;
-        background: linear-gradient(
-            90deg,
-            transparent,
-            rgba(255, 255, 255, 0.3),
-            transparent
-        );
-        animation: shimmer 2s infinite;
     }
 
     /* --- MILESTONES --- */
@@ -499,11 +479,6 @@
         50% { opacity: 0.8; }
     }
 
-    @keyframes shimmer {
-        0% { background-position: -1000px 0; }
-        100% { background-position: 1000px 0; }
-    }
-
     @keyframes bounce {
         0%, 100% { transform: scale(1); }
         50% { transform: scale(1.1); }
@@ -546,11 +521,11 @@
                 <div class="metric-card">
                     <div class="metric-label"><strong>Całkowity Postęp</strong></div>
                     <div class="metric-value">
-                        55%
+                        36%
                     </div>
                     
                         <div class="progress-bar">
-                            <div class="progress-fill" style="width: 55%"></div>
+                            <div class="progress-fill" style="width: 36%"></div>
                         </div>
                     
                 </div>
@@ -618,7 +593,7 @@
                                         <div class="checkbox checked">
                                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
                                         </div>
-                                        <div class="task-text dimmed"><strong>Środowisko Produkcyjne</strong> - Serwer i baza danych gotowe do działania online.</div>
+                                        <div class="task-text dimmed"><em></em>Środowisko testowe Serwer i baza danych gotowe do działania online.</div>
                                     </li>
                                 
                             </ul>
@@ -645,7 +620,7 @@
                                         <div class="checkbox checked">
                                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
                                         </div>
-                                        <div class="task-text dimmed"><strong>Interaktywna Mapa</strong> - Wizualizacja wydarzeń w mieście z filtrowaniem.</div>
+                                        <div class="task-text dimmed"><strong>Interaktywna Mapa</strong> - Wizualizacja wydarzeń w mieście.</div>
                                     </li>
                                 
                                     <li class="task-item">
@@ -666,10 +641,10 @@
                         </div>
                     </details>
                 
-                    <details open>
+                    <details >
                         <summary>
                             <span>Automatyzacja Listy Obecności</span>
-                            <span class="status-pill pill-todo">1 / 4</span>
+                            <span class="status-pill pill-done">Wykonane</span>
                         </summary>
                         <div class="feature-body">
                             <p class="feature-desc">Serce systemu koniec z ręcznym przepisywaniem list.</p>
@@ -683,24 +658,24 @@
                                     </li>
                                 
                                     <li class="task-item">
-                                        <div class="checkbox ">
-                                            
+                                        <div class="checkbox checked">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
                                         </div>
-                                        <div class="task-text "><strong>Samoobsługa Gracza</strong> - Użytkownik sam klika "Dołącz" lub "Zrezygnuj".</div>
+                                        <div class="task-text dimmed"><strong>Samoobsługa Gracza</strong> - Użytkownik sam klika "Dołącz" lub "Zrezygnuj".</div>
                                     </li>
                                 
                                     <li class="task-item">
-                                        <div class="checkbox ">
-                                            
+                                        <div class="checkbox checked">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
                                         </div>
-                                        <div class="task-text "><strong>Inteligentna Lista Rezerwowa</strong> - Kolejka FIFO (kto pierwszy, ten lepszy) po wyczerpaniu miejsc.</div>
+                                        <div class="task-text dimmed"><strong>Inteligentna Lista Rezerwowa</strong> - Kolejka FIFO (kto pierwszy, ten lepszy) po wyczerpaniu miejsc.</div>
                                     </li>
                                 
                                     <li class="task-item">
-                                        <div class="checkbox ">
-                                            
+                                        <div class="checkbox checked">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
                                         </div>
-                                        <div class="task-text "><strong>Auto-Uzupełnianie</strong> - System automatycznie wskazuje pierwszego z rezerwy, gdy zwolni się miejsce.</div>
+                                        <div class="task-text dimmed"><strong>Auto-Uzupełnianie</strong> - System automatycznie wskazuje pierwszego z rezerwy, gdy zwolni się miejsce.</div>
                                     </li>
                                 
                             </ul>
@@ -737,7 +712,7 @@
                     <details open>
                         <summary>
                             <span>Operacje Cykliczne</span>
-                            <span class="status-pill pill-todo">0 / 3</span>
+                            <span class="status-pill pill-todo">1 / 3</span>
                         </summary>
                         <div class="feature-body">
                             <p class="feature-desc">Oszczędność czasu przy stałych terminach.</p>
@@ -751,10 +726,10 @@
                                     </li>
                                 
                                     <li class="task-item">
-                                        <div class="checkbox ">
-                                            
+                                        <div class="checkbox checked">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
                                         </div>
-                                        <div class="task-text "><strong>Pulpit Organizatora</strong> - Widok "Moje Wydarzenia" do szybkiego zarządzania nadchodzącymi grami.</div>
+                                        <div class="task-text dimmed"><strong>Pulpit Organizatora</strong> - Widok "Moje Wydarzenia" do szybkiego zarządzania nadchodzącymi grami.</div>
                                     </li>
                                 
                                     <li class="task-item">
@@ -849,7 +824,7 @@
                     <details open>
                         <summary>
                             <span>Zaawansowane Zarządzanie Listą</span>
-                            <span class="status-pill pill-todo">0 / 3</span>
+                            <span class="status-pill pill-todo">1 / 3</span>
                         </summary>
                         <div class="feature-body">
                             
@@ -870,10 +845,10 @@
                                     </li>
                                 
                                     <li class="task-item">
-                                        <div class="checkbox ">
-                                            
+                                        <div class="checkbox checked">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
                                         </div>
-                                        <div class="task-text "><strong>Historia Gier</strong> - Wgląd w historię aktywności gracza i organizatora.</div>
+                                        <div class="task-text dimmed"><strong>Historia Gier</strong> - Wgląd w historię aktywności gracza i organizatora.</div>
                                     </li>
                                 
                             </ul>
