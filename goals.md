@@ -48,7 +48,7 @@
 
 ### 🔴 Operacje Cykliczne
 *Oszczędność czasu przy stałych terminach.*
-- [ ] **Serie Treningowe**  `[MA-497]` – Generowanie 10 treningów w przód (np. "każdy wtorek") jednym kliknięciem.
+- [x] **Serie Treningowe**  `[MA-497]` – Generowanie 10 treningów w przód (np. "każdy wtorek") jednym kliknięciem.
 - [x] **Pulpit Organizatora** `[MA-407]` `[MA-414]` – Widok "Moje Wydarzenia" do szybkiego zarządzania nadchodzącymi grami.
 - [ ] **Stali gracze** `[MA-502]`
 
