@@ -567,14 +567,16 @@ function calculateOverallProgress(milestones) {
     let totalTasks = 0;
     let completedTasks = 0;
 
-    milestones.forEach(milestone => {
-        milestone.features.forEach(feature => {
+    // Only calculate progress for M1 (first milestone - current phase)
+    if (milestones.length > 0) {
+        const m1 = milestones[0];
+        m1.features.forEach(feature => {
             feature.tasks.forEach(task => {
                 totalTasks++;
                 if (task.done) completedTasks++;
             });
         });
-    });
+    }
 
     return totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
 }

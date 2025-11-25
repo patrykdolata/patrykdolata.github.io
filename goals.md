@@ -9,7 +9,7 @@
 
 | Metryka | Status |
 | :--- | :--- |
-| **Całkowity Postęp** | ![Postęp](https://progress-bar.dev/36/?scale=100&title=Zrobione&width=120&color=2ecc71) **36%** |
+| **Postęp M1 (MVP)** | ![Postęp](https://progress-bar.dev/81/?scale=100&title=Zrobione&width=120&color=2ecc71) **81%** |
 | **Aktualna Faza** | **M1: MVP Organizatora + Samoobsługa** |
 | **Najbliższy Termin** | **31.12.2025**  |
 | **Główny Fokus** | Automatyzacja zapisów|
@@ -24,7 +24,7 @@
 *Baza bezpieczeństwa i dostępności.*
 - [x] **Bezpieczne Logowanie** `[MA-231]` – Rejestracja i autoryzacja (JWT) dla organizatorów oraz graczy.
 - [x] **Zarządzanie Profilem** `[MA-212]` – Podstawowe dane użytkownika i awatar.
-- [x] **Środowisko testowe `[MA-480]` – Serwer i baza danych gotowe do działania online.
+- [ ] **Środowisko testowe `[MA-480]` – Serwer i baza danych gotowe do działania online.
 
 ### ✅ Tworzenie i Odkrywanie
 *Narzędzia do zarządzania ofertą wydarzeń.*
@@ -42,8 +42,8 @@
 
 ### 🔴 Dystrybucja i Komunikacja
 *Wykorzystanie zewnętrznych kanałów jako systemu powiadomień.*
-- [ ] **Udostępnianie (Deep Links)** `[MA-501]` – Przycisk "Udostępnij", generujący bezpośredni link do wydarzenia (`meetapp://event/{id}`).
-- [ ] **Integracja Społecznościowa** `[MA-501]` – Łatwe wysyłanie linku na Messenger/WhatsApp/SMS.
+- [x] **Udostępnianie (Deep Links)** `[MA-501]` – Przycisk "Udostępnij", generujący bezpośredni link do wydarzenia (`meetapp://event/{id}`).
+- [x] **Integracja Społecznościowa** `[MA-501]` – Łatwe wysyłanie linku na Messenger/WhatsApp/SMS.
     > *Wartość biznesowa:* Zamiast budować system powiadomień w MVP, organizator wrzuca link na istniejącą grupę. Kliknięcie otwiera aplikację na konkretnym meczu.
 
 ### 🔴 Operacje Cykliczne
@@ -73,7 +73,7 @@
 ### 🔒 Zaawansowane Zarządzanie Listą
 - [ ] **Priorytetyzacja** `[BACKLOG]` – Ręczne przesuwanie graczy (Awans/Degradacja) przez organizatora.
 - [ ] **Drag & Drop** `[BACKLOG]` – Łatwa zmiana kolejności na liście metodą przeciągnij i upuść.
-- [x] **Historia Gier** `[MA-410]` – Wgląd w historię aktywności gracza i organizatora.
+- [ ] **Historia Gier** `[BACKLOG]` – Wgląd w historię aktywności gracza i organizatora.
 
 ### 👥 Grupy i Społeczności
 - [ ] **Stałe Grupy** `[MA-421]` – Tworzenie zamkniętych społeczności (np. "Wtorkowa Ekipa").

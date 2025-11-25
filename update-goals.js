@@ -9,6 +9,8 @@ function parseJiraCsv() {
   const lines = csv.split('\n');
 
   const tasks = {};
+  const epics = new Set();
+
   for (let i = 1; i < lines.length; i++) {
     const line = lines[i];
     if (!line.trim()) continue;
@@ -16,19 +18,25 @@ function parseJiraCsv() {
     const parts = line.split(',');
     if (parts.length < 10) continue;
 
+    const type = parts[0];
     const key = parts[1];
     const status = parts[9];
 
     if (key && key.startsWith('MA-')) {
       tasks[key] = status;
+
+      // Track Epics separately
+      if (type === 'Epik') {
+        epics.add(key);
+      }
     }
   }
 
-  return tasks;
+  return { tasks, epics };
 }
 
 // Update goals.md based on Jira statuses
-function updateGoalsMd(tasks) {
+function updateGoalsMd(tasks, epics) {
   let content = fs.readFileSync(GOALS_MD, 'utf8');
   const lines = content.split('\n');
   const updatedLines = [];
@@ -44,7 +52,19 @@ function updateGoalsMd(tasks) {
       const maMatches = trimmed.match(/\[MA-\d+\]/g);
 
       if (maMatches && maMatches.length > 0) {
-        // Check status of all referenced tasks
+        // Check if any of the tasks are Epics - if so, skip auto-completion
+        const hasEpic = maMatches.some(match => {
+          const key = match.replace(/[\[\]]/g, '');
+          return epics.has(key);
+        });
+
+        if (hasEpic) {
+          // Skip Epic tasks - they should be manually managed
+          updatedLines.push(line);
+          continue;
+        }
+
+        // Check status of all referenced tasks (non-Epic only)
         let allDone = true;
         let anyDone = false;
 
@@ -95,8 +115,8 @@ function updateGoalsMd(tasks) {
 // Main
 try {
   console.log('📊 Parsing Jira CSV...');
-  const tasks = parseJiraCsv();
-  console.log(`   Found ${Object.keys(tasks).length} tasks`);
+  const { tasks, epics } = parseJiraCsv();
+  console.log(`   Found ${Object.keys(tasks).length} tasks (${epics.size} epics)`);
 
   // Count by status
   const statusCounts = {};
@@ -112,7 +132,8 @@ try {
   console.log(`   ⏸  On hold: ${statusCounts['On hold'] || 0}`);
 
   console.log('\n🔄 Updating goals.md...');
-  const changes = updateGoalsMd(tasks);
+  console.log(`   ⚠️  Skipping ${epics.size} Epic tasks (manual management)`);
+  const changes = updateGoalsMd(tasks, epics);
 
   if (changes > 0) {
     console.log('\n💡 Run "node render.js" to regenerate TODO.html');
