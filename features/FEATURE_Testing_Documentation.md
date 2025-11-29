@@ -1,13 +1,34 @@
-# Testing & Documentation Sprint
+# Feature: Testing & Documentation
 
 ## Standardized Spec
 
-- Milestone: M3 (Post‑MVP)
-- Goal: Kompletny zestaw testów i dokumentacji API przed produkcją.
-- In Scope: unit/integration/e2e smoke, OpenAPI/Swagger, kolekcja Postman, coverage 80%+.
-- Out of Scope: performance (w osobnym zadaniu Performance Baseline) – tu tylko bazowe scenariusze.
-- Acceptance Criteria: pipeline testów green; dokumentacja aktualna; coverage osiągnięty.
-- Security Tests: SAST/DAST/Deps w ramach Security & Privacy Audit.
+| Pole | Wartość |
+|------|---------|
+| **Milestone** | M1 (MVP) - smoke, M3 - full coverage |
+| **Priority** | HIGH |
+| **Status** | ⏳ M1 Partial, ❌ M3 Not Started |
+| **Goal** | Kompletny zestaw testów i dokumentacji API |
+| **Target Coverage** | BE: 80%+, FE: 70%+ |
+
+---
+
+## Status Implementacji
+
+| Obszar | Status | Uwagi |
+|--------|--------|-------|
+| **Backend Tests** |
+| Unit tests | ⏳ | Częściowo (services) |
+| Integration tests | ⏳ | TestContainers setup |
+| Smoke tests | ✅ | Podstawowe |
+| **Frontend Tests** |
+| Widget tests | ⏳ | Częściowo |
+| Unit tests (services) | ⏳ | Podstawowe |
+| Integration tests | ❌ | Nie zaimplementowane |
+| **Documentation** |
+| OpenAPI/Swagger | ⏳ | Podstawowe |
+| Postman collection | ❌ | Do utworzenia |
+| README | ✅ | Kompletne |
+| API docs | ⏳ | W docs/ |
 
 ## Overview
 Comprehensive testing strategy and API documentation to ensure quality, maintainability, and ease of development.

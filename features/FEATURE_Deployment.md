@@ -1,14 +1,28 @@
-# Deployment Sprint
+# Feature: Deployment
 
 ## Standardized Spec
 
-- Milestone: M1 (MVP)
-- Goal: Produkcyjny deployment (PL) z TLS, reverse proxy, monitoringiem i backup/DR.
-- In Scope: Nginx + SSL, systemd, PostgreSQL, docker-compose lokalnie, monitoring basic, seed danych.
-- Out of Scope: zaawansowany monitoring/observability.
-- Acceptance Criteria: app online (HTTPS), health OK, smoke na prod przechodzi, backup/restore przetestowane.
-- Security: hardening Nginx/TLS, ufw/fail2ban, non‑root, sekrety poza repo.
-- Backup/DR: nightly full + WAL, retencja, offsite, test restore, runbook.
+| Pole | Wartość |
+|------|---------|
+| **Milestone** | M1 (MVP) |
+| **Priority** | CRITICAL |
+| **Status** | ✅ Complete |
+| **Goal** | Produkcyjny deployment (PL) z TLS, reverse proxy, monitoringiem i backup/DR |
+| **Target** | Raspberry Pi 4B, Ubuntu 22.04 |
+
+---
+
+## Status Implementacji
+
+| Komponent | Status | Uwagi |
+|-----------|--------|-------|
+| PostgreSQL 15 | ✅ | Skonfigurowane |
+| Java 21 + Spring Boot | ✅ | Systemd service |
+| Nginx reverse proxy | ✅ | Skonfigurowane |
+| SSL (Let's Encrypt) | ✅ | Auto-renewal |
+| UFW firewall | ✅ | 22, 80, 443 |
+| Backup scripts | ✅ | Nightly cron |
+| Monitoring (basic) | ⏳ | Prometheus/Grafana opcjonalnie |
 
 ## Overview
 Deploy the Meet App to Raspberry Pi 4B with PostgreSQL, Nginx reverse proxy, SSL certificates, monitoring, and automated backups.

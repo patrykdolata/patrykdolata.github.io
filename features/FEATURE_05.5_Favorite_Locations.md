@@ -1,209 +1,140 @@
-# Feature 5.5: Favorite Locations
+# Feature 05.5: Favorite Locations
 
 ## Standardized Spec
 
-- Milestone: Pre‑M1 (zrealizowane wstępnie)
-- Goal: Ulubione lokalizacje do szybkiego filtrowania i centrowania mapy.
-- In Scope: CRUD ulubionych miejsc; integracja z mapą (centrowanie/filtr); UI polish i błędy.
-- Out of Scope: zaawansowane rekomendacje.
-- Acceptance Criteria: dodawanie/usuwanie działa; mapa centrowana do ulubionych; stany ładowania/błędów w UI.
-- Frontend UX: `FavoriteLocationNotifier`, serwis + ekran ulubionych.
-- Tests: smoke flows; brak regresji mapy.
+| Pole | Wartość |
+|------|---------|
+| **Milestone** | M1 (MVP) |
+| **Priority** | MEDIUM |
+| **Status** | ✅ Complete |
+| **Goal** | Ulubione lokalizacje do szybkiego filtrowania i centrowania mapy |
+| **Jira** | MA-263 |
+
+---
 
 ## Overview
-Finish the favorite locations feature by adding edge cases, error handling, and UI polish.
 
-**Priority**: LOW
-**Milestone**: Pre-M1 (already implemented)
-**Implementation Status**: 90% complete - polish and error handling remaining
+System ulubionych lokalizacji umożliwia użytkownikom zapisywanie często odwiedzanych miejsc. Ulubione lokalizacje mogą być używane do szybkiego tworzenia wydarzeń i filtrowania widoku mapy.
 
-## Current Implementation (90% Done)
+**Wizja z goals.md:**
+- Ulubione Lokalizacje - zapisywanie często używanych miejsc
 
-✅ Database table and entity exist
-✅ Backend CRUD endpoints working
-✅ Frontend service and widgets created
-✅ Heart button on event cards functional
-✅ Basic list of favorites
+### Business Value
+
+- **Szybkość**: Organizator nie musi wyszukiwać tej samej lokalizacji wielokrotnie
+- **Personalizacja**: Każdy użytkownik ma własną listę ulubionych
+- **Notatki**: Możliwość dodania uwag do lokalizacji (np. "parking płatny")
 
 ---
 
-## Remaining Tasks (10%)
+## Status Implementacji
 
-### 1. Add Loading States (2h)
-
-**Backend**: Already complete
-
-**Frontend**: Add loading indicators
-- `/app/lib/widgets/event/pop_up/favourite.dart` - Show spinner while toggling
-- Add debouncing to prevent rapid clicks
-- Optimistic UI updates with rollback on error
-
-### 2. Error Handling (2h)
-
-**Add to FavoriteService:**
-```dart
-Future<bool> toggleFavorite(int locationId) async {
-  try {
-    final isFavorite = await isFavoriteLocation(locationId);
-    
-    if (isFavorite) {
-      return await removeFavorite(locationId);
-    } else {
-      return await addFavorite(locationId);
-    }
-  } on DioException catch (e) {
-    if (e.response?.statusCode == 401) {
-      throw UnauthorizedException('Please login to add favorites');
-    }
-    rethrow;
-  } catch (e) {
-    print('Error toggling favorite: $e');
-    return false;
-  }
-}
-```
-
-**Show user-friendly errors:**
-- Network errors
-- Unauthorized (redirect to login)
-- Server errors
-
-### 3. Favorites Screen Improvements (3h)
-
-**File**: Create/enhance `/app/lib/widgets/favorite/favorites_screen.dart`
-
-Features:
-- Empty state with icon and message
-- Pull to refresh
-- Swipe to delete
-- Loading skeleton
-- Search/filter favorites
-- Sort by distance (if location permission granted)
-- Show event count per location
-
-### 4. Map Integration (2h)
-
-**Add to GoogleMapWidget:**
-- Show all favorite locations as different colored markers
-- Tap favorite marker to show events at that location
-- "Favorites Only" toggle filter
-
-### 5. Notes Functionality (2h)
-
-**Enhance favorite details:**
-- Edit notes inline or in dialog
-- Character limit (500 chars)
-- Save notes automatically on blur
-- Show notes in favorites list
+| Funkcjonalność | Backend | Frontend | Uwagi |
+|----------------|---------|----------|-------|
+| **CRUD** |
+| GET /favorites | ✅ | ✅ | Lista ulubionych |
+| GET /favorites/{id} | ✅ | ⏳ | Szczegóły |
+| POST /favorites | ✅ | ✅ | Dodawanie |
+| PUT /favorites/{id} | ✅ | ⏳ | Edycja notatek |
+| DELETE /favorites/{id} | ✅ | ✅ | Usuwanie po ID |
+| DELETE /location/{id} | ✅ | ✅ | Usuwanie po locationId |
+| GET /location/{id}/status | ✅ | ✅ | Sprawdzenie statusu |
+| **UI** |
+| Przycisk serca na mapie | - | ✅ | favourite.dart |
+| Lista ulubionych | - | ⏳ | Podstawowa |
+| Empty state | - | ⏳ | Do poprawy |
+| Swipe to delete | - | ❌ | Nie zaimplementowane |
+| **Integracja z mapą** |
+| Marker ulubionych | - | ⏳ | Częściowo |
+| Filtr "tylko ulubione" | - | ❌ | Nie zaimplementowane |
 
 ---
 
-## Implementation Steps
+## User Stories
 
-1. **Add Loading States**
-   - Update FavoriteWidget with loading indicator
-   - Add debounce to heart button (300ms)
-   - Implement optimistic UI updates
+### US-01: Dodawanie do ulubionych
+**Jako** użytkownik
+**Chcę** dodać lokalizację do ulubionych
+**Aby** szybko do niej wracać
 
-2. **Improve Error Handling**
-   - Add try-catch blocks in all service methods
-   - Show SnackBar for errors
-   - Handle 401 Unauthorized gracefully
+**Kryteria akceptacji:**
+- [x] Przycisk serca przy lokalizacji na mapie
+- [x] Zmiana stanu (wypełnione/puste serce)
+- [x] Możliwość dodania notatki
+- [x] Zapisanie w bazie danych
 
-3. **Polish Favorites Screen**
-   - Add empty state illustration
-   - Implement pull-to-refresh
-   - Add swipe-to-delete gesture
-   - Add search bar at top
+### US-02: Przeglądanie ulubionych
+**Jako** użytkownik
+**Chcę** zobaczyć listę moich ulubionych lokalizacji
+**Aby** wybrać miejsce do wydarzenia
 
-4. **Map Favorites**
-   - Add favorite markers to map (star icon)
-   - Toggle filter for favorites only
-   - Show event count on favorite markers
+**Kryteria akceptacji:**
+- [x] Lista ulubionych w panelu użytkownika
+- [x] Nazwa i adres lokalizacji
+- [ ] Notatka użytkownika
+- [ ] Sortowanie/filtrowanie
 
-5. **Notes Enhancement**
-   - Add notes field to favorites screen
-   - Save on change with debounce
-   - Show notes preview in list
+### US-03: Usuwanie z ulubionych
+**Jako** użytkownik
+**Chcę** usunąć lokalizację z ulubionych
+**Aby** posprzątać nieużywane miejsca
 
----
+**Kryteria akceptacji:**
+- [x] Przycisk usuwania
+- [x] Potwierdzenie przed usunięciem
+- [ ] Swipe to delete
 
-## Testing Checklist
+### US-04: Notatki do lokalizacji
+**Jako** użytkownik
+**Chcę** dodać notatkę do ulubionej lokalizacji
+**Aby** zapisać ważne informacje (np. parking, wejście)
 
-- [ ] Heart button shows loading state
-- [ ] Rapid clicks handled gracefully
-- [ ] Error messages display correctly
-- [ ] Favorites screen shows empty state
-- [ ] Pull to refresh works
-- [ ] Swipe to delete works
-- [ ] Search filters favorites
-- [ ] Favorite markers show on map
-- [ ] Toggle favorites filter works
-- [ ] Notes can be edited and saved
-- [ ] Character limit enforced on notes
-
----
-
-## Acceptance Criteria
-
-1. ✅ No console errors or warnings
-2. ✅ Loading states on all async operations
-3. ✅ User-friendly error messages
-4. ✅ Favorites screen fully functional
-5. ✅ Map integration complete
-6. ✅ Notes editable and persistent
-7. ✅ Smooth animations and transitions
-8. ✅ Empty states with helpful messages
-9. ✅ Swipe gestures working
-10. ✅ All edge cases handled
+**Kryteria akceptacji:**
+- [x] Pole notatki przy dodawaniu
+- [ ] Edycja notatki
+- [ ] Wyświetlanie notatki na liście
 
 ---
 
-## Quick Wins
+## Reguły Biznesowe
 
-**Empty State Message:**
-```dart
-Center(
-  child: Column(
-    mainAxisAlignment: MainAxisAlignment.center,
-    children: [
-      Icon(Icons.favorite_border, size: 64, color: Colors.grey),
-      SizedBox(height: 16),
-      Text('No favorite locations yet'),
-      SizedBox(height: 8),
-      Text(
-        'Tap the heart icon on event cards to save locations',
-        textAlign: TextAlign.center,
-        style: TextStyle(color: Colors.grey[600]),
-      ),
-    ],
-  ),
-)
-```
+### Dodawanie do ulubionych
+1. Tylko zalogowani użytkownicy mogą mieć ulubione
+2. Nie można dodać tej samej lokalizacji dwa razy
+3. Notatka jest opcjonalna (max 500 znaków)
 
-**Swipe to Delete:**
-```dart
-Dismissible(
-  key: Key(favorite.id.toString()),
-  direction: DismissDirection.endToStart,
-  background: Container(
-    alignment: Alignment.centerRight,
-    padding: EdgeInsets.only(right: 20),
-    color: Colors.red,
-    child: Icon(Icons.delete, color: Colors.white),
-  ),
-  onDismissed: (_) => _deleteFavorite(favorite),
-  child: FavoriteListItem(favorite: favorite),
-)
-```
+### Usuwanie
+1. Użytkownik może usuwać tylko własne ulubione
+2. Usunięcie nie wpływa na istniejące wydarzenia w tej lokalizacji
 
 ---
 
-## Notes for AI Agent
+## Scope
 
-- Focus on user experience improvements
-- Add smooth animations (fade, slide)
-- Use CustomSnackBar for all user feedback
-- Follow existing patterns for empty states
-- Test on both Android and iOS if possible
-- Ensure offline mode shows cached favorites
+### M1 (MVP) - DONE
+- [x] CRUD ulubionych lokalizacji
+- [x] Przycisk serca na mapie
+- [x] Podstawowa lista ulubionych
+- [x] Notatki przy dodawaniu
+
+### M2 (Post-MVP) - PARTIAL
+- [ ] Edycja notatek
+- [ ] Swipe to delete
+- [ ] Filtr "tylko ulubione" na mapie
+- [ ] Centrowanie mapy na ulubione
+- [ ] Sortowanie po odległości
+- [ ] Empty state z ilustracją
+
+---
+
+## Powiązane Features
+
+- [FEATURE_01](FEATURE_01_Basic_Event_Operations.md) - Tworzenie wydarzeń z wyborem lokalizacji
+
+---
+
+## Dokumentacja Techniczna
+
+Szczegóły implementacji znajdują się w:
+- Backend: [meet-app-be/docs/features/favorites.md](../../meet-app-be/docs/features/favorites.md) (do utworzenia)
+- Frontend: [meet-app-fe/docs/features/favorites.md](../../meet-app-fe/docs/features/favorites.md) (do utworzenia)

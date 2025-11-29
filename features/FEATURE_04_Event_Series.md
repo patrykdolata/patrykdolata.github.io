@@ -1,242 +1,167 @@
-# Feature 4: Event Series Management
+# Feature 04: Event Series Management
 
 ## Standardized Spec
 
-- Milestone: M1 (BASIC), M2 (ADVANCED)
-- Goal: Szablony cyklicznych wydarzeń i generowanie eventów wg częstotliwości.
-- In Scope (M1): WEEKLY/BIWEEKLY; generate z `startDate` + `count` (max 20); link event→series.
-- Out of Scope (M1): MONTHLY, skipHolidays, pause/resume, edycja serii.
-- Prerequisites: Feature 1; DB migracja `event_series` i FK `series_id` w `event`.
-- Security/Permissions: CRUD serii tylko dla organizatora; walidacja limitów generacji.
-- Acceptance Criteria (M1): generowanie poprawnych dat; max 20; powiązania zachowane.
-- Backend API:
-  - POST `/series`, GET `/series?organizerId={id|me}`
-  - POST `/series/{id}/generate`
-- Data Model:
-  - event_series: organizer_id, location_id, frequency, dayOfWeek/time, defaults; event.series_id FK.
-- Frontend UX:
-  - CreateSeriesScreen; dialog Generate (startDate, count); prosta lista serii.
-- Tests:
-  - BE: kalkulacja dat (weekly/biweekly), limity, walidacje; FE: submit flows.
+| Pole | Wartość |
+|------|---------|
+| **Milestone** | M1 (MVP) - basic, M2 - advanced |
+| **Priority** | HIGH |
+| **Status** | ✅ M1 Complete, ⏳ M2 Partial |
+| **Goal** | Szablony cyklicznych wydarzeń i generowanie eventów wg częstotliwości |
+| **Jira** | MA-497, MA-498 |
+
+---
 
 ## Overview
-Create recurring event templates with automatic event generation based on schedules (weekly, biweekly, monthly), holiday skipping, and series management.
 
-**Priority**: CRITICAL PATH
-**Milestone**: M1 (MVP)
-**Implementation Status**: See TODO.md for current progress
+System Event Series umożliwia organizatorom tworzenie szablonów cyklicznych wydarzeń i automatyczne generowanie wydarzeń według harmonogramu (tygodniowo, co dwa tygodnie).
 
----
+**Wizja z goals.md:**
+- Serie Treningowe - szablony cyklicznych wydarzeń
+- Zarządzanie Seriami - generowanie i edycja
 
-## Milestone & Scope
+### Business Value
 
-- Milestone: M1 (MVP)
-- Scope (M1):
-  - WEEKLY/BIWEEKLY
-  - Generate: `startDate` + `count` (max 20)
-  - Link event → series (FK)
-- Out of scope (Post‑MVP):
-  - MONTHLY, `skipHolidays`, pause/resume
-  - Edycja serii (poza usunięciem i stworzeniem nowej)
-
-## Acceptance Criteria (M1)
-
-- Utworzenie serii i wygenerowanie wydarzeń dla weekly/biweekly
-- Limit bezpieczeństwa: max 20 eventów w jednym generowaniu
-- Wydarzenia powiązane z serią
-
-## Test Plan (smoke, M1)
-
-- Generacja weekly/biweekly z poprawnymi datami
-- Powiązania event → series istnieją
-
-
-## Business Value
-- Organizers save time with recurring event templates
-- Automatic event generation reduces manual work
-- Consistent scheduling improves participant planning
-- Holiday awareness prevents scheduling conflicts
+- **Oszczędność czasu**: Jeden szablon zamiast wielokrotnego tworzenia podobnych wydarzeń
+- **Spójność**: Wszystkie wydarzenia w serii mają te same parametry
+- **Planowanie**: Gracze wiedzą, że treningi są cykliczne
 
 ---
 
-## Backend: Database Schema
+## Status Implementacji
 
-```sql
-CREATE TABLE event_series (
-    id BIGSERIAL PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    organizer_id INTEGER NOT NULL REFERENCES _user(id),
-    location_id BIGINT NOT NULL REFERENCES location(id),
-    frequency_type VARCHAR(20) NOT NULL, -- WEEKLY, BIWEEKLY, MONTHLY
-    frequency_interval INTEGER NOT NULL DEFAULT 1,
-    schedule_json TEXT NOT NULL, -- {"days": [1,3,5], "time": "18:00"}
-    slots INTEGER NOT NULL,
-    sport_type VARCHAR(50) NOT NULL,
-    level INTEGER DEFAULT 0,
-    price NUMERIC(19,2),
-    currency VARCHAR(10) DEFAULT 'PLN',
-    message TEXT,
-    status VARCHAR(20) NOT NULL DEFAULT 'ACTIVE', -- ACTIVE, PAUSED
-    skip_holidays BOOLEAN DEFAULT FALSE,
-    auto_promote_from_waitlist BOOLEAN DEFAULT TRUE,
-    send_notifications BOOLEAN DEFAULT TRUE,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP
-);
-
-ALTER TABLE event ADD COLUMN series_id BIGINT REFERENCES event_series(id);
-CREATE INDEX idx_event_series ON event(series_id);
-```
-
-## Backend: Key Components
-
-**Entities:**
-- `EventSeriesEntity` - Series template with all event defaults
-- `FrequencyType` enum - WEEKLY, BIWEEKLY, MONTHLY
-- `SeriesStatus` enum - ACTIVE, PAUSED
-
-**Service Methods:**
-- `createSeries(request, user)` - Create series template
-- `generateEvents(seriesId, startDate, endDate)` - Generate events from template
-- `updateSeries(id, request, user)` - Update series configuration
-- `pauseSeries(id, user)` / `resumeSeries(id, user)` - Control generation
-- `deleteSeries(id, user)` - Delete series and optionally future events
-
-**Schedule JSON Format:**
-```json
-{
-  "days": [1, 3, 5],  // Monday=1, Sunday=7
-  "time": "18:00",
-  "duration": 120
-}
-```
-
-**Holiday Logic:**
-- Hardcoded Polish holidays list
-- Optional: Integration with public holiday API
-- Skip date if `skipHolidays` is true
+| Funkcjonalność | Backend | Frontend | Uwagi |
+|----------------|---------|----------|-------|
+| **M1 - Basic (MVP)** |
+| POST /series (tworzenie) | ✅ | ✅ | EventSeriesController |
+| GET /series (lista) | ✅ | ✅ | Série organizatora |
+| GET /series/{id} | ✅ | ✅ | Szczegóły |
+| PUT /series/{id} | ✅ | ✅ | Aktualizacja szablonu |
+| DELETE /series/{id} | ✅ | ✅ | Usunięcie szablonu |
+| POST /series/{id}/generate | ✅ | ✅ | Generowanie wydarzeń |
+| GET /series/{id}/events | ✅ | ✅ | Lista wydarzeń serii |
+| GET /series/config | ✅ | ✅ | Limit generacji |
+| Frequency: WEEKLY | ✅ | ✅ | Cotygodniowe |
+| Frequency: BIWEEKLY | ✅ | ✅ | Co dwa tygodnie |
+| Link event→series | ✅ | ✅ | FK series_id |
+| **UI** |
+| Lista serii | - | ✅ | series_list_screen.dart |
+| Szczegóły serii | - | ✅ | series_details_screen.dart |
+| Tworzenie serii | - | ✅ | create_series_screen.dart |
+| Dialog generacji | - | ✅ | Wybór daty i liczby |
+| **M2 - Advanced** |
+| Frequency: MONTHLY | ⏳ | ❌ | BE ready, FE brak |
+| skipHolidays | ⏳ | ❌ | BE ready, FE brak |
+| pause/resume | ⏳ | ❌ | BE ready, FE brak |
+| Multi-day per week | ❌ | ❌ | Obecnie 1 dzień |
 
 ---
 
-## Frontend: Key Components
+## User Stories
 
-**Screens:**
-- `SeriesListScreen` - List all user's series
-- `CreateSeriesScreen` - Create series form with frequency picker
-- `SeriesDetailsScreen` - View series details and generated events
-- `GenerateEventsScreen` - Select date range for generation
+### US-01: Tworzenie serii
+**Jako** organizator
+**Chcę** utworzyć szablon cyklicznych wydarzeń
+**Aby** nie tworzyć każdego wydarzenia ręcznie
 
-**Widgets:**
-- `FrequencyPicker` - Dropdown for WEEKLY/BIWEEKLY/MONTHLY
-- `DaysOfWeekSelector` - Multi-select checkboxes (Mon-Sun)
-- `SeriesListItem` - Display series with status badge
+**Kryteria akceptacji:**
+- [x] Formularz tworzenia serii
+- [x] Wybór częstotliwości (WEEKLY/BIWEEKLY)
+- [x] Wybór dnia tygodnia i godziny
+- [x] Wszystkie pola jak przy tworzeniu wydarzenia
+- [x] Walidacja formularza
 
----
+### US-02: Generowanie wydarzeń
+**Jako** organizator
+**Chcę** wygenerować wydarzenia z szablonu
+**Aby** szybko wypełnić kalendarz
 
-## API Endpoints
+**Kryteria akceptacji:**
+- [x] Dialog generacji z wyborem daty startowej
+- [x] Wybór liczby wydarzeń do wygenerowania
+- [x] Limit max 20 wydarzeń na raz
+- [x] Poprawne obliczanie dat wg częstotliwości
+- [x] Wygenerowane wydarzenia widoczne na liście
 
-### POST /api/v1/series
-Create event series
-```json
-{
-  "name": "Weekly Volleyball",
-  "locationId": 1,
-  "frequencyType": "WEEKLY",
-  "frequencyInterval": 1,
-  "schedule": {"days": [1,3,5], "time": "18:00", "duration": 120},
-  "slots": 12,
-  "sportType": "VOLLEYBALL",
-  "level": 3,
-  "skipHolidays": true
-}
-```
+### US-03: Przeglądanie serii
+**Jako** organizator
+**Chcę** zobaczyć listę moich serii
+**Aby** zarządzać szablonami
 
-### POST /api/v1/series/{id}/generate
-Generate events from series
-```json
-{
-  "startDate": "2025-11-05",
-  "endDate": "2025-12-31",
-  "maxEvents": 20
-}
-```
+**Kryteria akceptacji:**
+- [x] Lista serii z podstawowymi informacjami
+- [x] Status serii (ACTIVE/PAUSED)
+- [x] Szczegóły serii z listą wygenerowanych wydarzeń
 
-### GET /api/v1/series
-Get user's series
+### US-04: Edycja serii
+**Jako** organizator
+**Chcę** edytować szablon serii
+**Aby** zmienić parametry przyszłych wydarzeń
 
-### PUT /api/v1/series/{id}
-Update series
+**Kryteria akceptacji:**
+- [x] Edycja wszystkich pól szablonu
+- [x] Zmiany nie wpływają na już wygenerowane wydarzenia
+- [x] Walidacja jak przy tworzeniu
 
-### PUT /api/v1/series/{id}/pause
-Pause series (no new generation)
+### US-05: Usuwanie serii
+**Jako** organizator
+**Chcę** usunąć szablon serii
+**Aby** posprzątać nieużywane szablony
 
-### DELETE /api/v1/series/{id}?deleteFutureEvents=true
-Delete series
-
----
-
-## Implementation Steps
-
-**Backend:**
-1. Create migration V1_6__Add_event_series_table.sql
-2. Create FrequencyType and SeriesStatus enums
-3. Create EventSeriesEntity
-4. Create SeriesRepository with custom queries
-5. Create SeriesService with generation logic
-6. Implement holiday checking logic
-7. Create SeriesController with CRUD endpoints
-8. Add authorization checks (only organizer)
-
-**Frontend:**
-1. Create series entities and enums
-2. Create SeriesHttpClient with API methods
-3. Create SeriesService
-4. Build CreateSeriesScreen with frequency picker
-5. Build SeriesListScreen with series cards
-6. Build GenerateEventsScreen with date pickers
-7. Implement series details with generated events list
-8. Add series management to user profile
+**Kryteria akceptacji:**
+- [x] Usunięcie szablonu serii
+- [x] Wygenerowane wydarzenia pozostają (stają się standalone)
 
 ---
 
-## Testing Checklist
+## Reguły Biznesowe
 
-- [ ] Create series with different frequencies
-- [ ] Generate weekly events (verify dates)
-- [ ] Generate biweekly events
-- [ ] Generate monthly events
-- [ ] Test holiday skipping
-- [ ] Test max events limit
-- [ ] Pause/resume series
-- [ ] Update series configuration
-- [ ] Delete series with/without future events
-- [ ] Verify authorization (only organizer)
-- [ ] Test generated events are editable
-- [ ] Verify series link in event details
+### Tworzenie serii
+1. Tylko zalogowani użytkownicy mogą tworzyć serie
+2. Wymagane pola: tytuł, lokalizacja, częstotliwość, dzień tygodnia, godzina, czas trwania, liczba miejsc, typ sportu
 
----
+### Generowanie wydarzeń
+1. Tylko właściciel serii może generować wydarzenia
+2. Nie można generować z serii PAUSED
+3. Limit: max 20 wydarzeń na jedno generowanie
+4. Data startowa musi być w przyszłości
+5. Wydarzenia dziedziczą wszystkie pola z szablonu
 
-## Acceptance Criteria
-
-1. ✅ Series templates created successfully
-2. ✅ Event generation works for all frequency types
-3. ✅ Holiday skipping functional
-4. ✅ Generated events linked to series
-5. ✅ Pause/resume controls working
-6. ✅ Series CRUD operations complete
-7. ✅ Frontend series management UI functional
-8. ✅ Date picker and frequency selector working
-9. ✅ Generated events appear in calendar/list
-10. ✅ Authorization checks in place
+### Powiązanie z wydarzeniami
+1. Wygenerowane wydarzenia mają FK do serii (series_id)
+2. Usunięcie serii nie usuwa wydarzeń
+3. Edycja serii nie zmienia już wygenerowanych wydarzeń
 
 ---
 
-## Notes for AI Agent
+## Scope
 
-- Validate schedule JSON structure
-- Limit max generated events per request (e.g., 52)
-- Consider timezone handling for event times
-- Generated events should be independently editable
-- Deleting series doesn't delete past events (only future)
-- Holiday list should be maintained in a config file
-- Follow existing patterns for DTOs and services
+### M1 (MVP) - DONE
+- [x] CRUD serii
+- [x] Frequency: WEEKLY, BIWEEKLY
+- [x] Generowanie z wyborem startDate + numberOfEvents
+- [x] Limit 20 wydarzeń
+- [x] Powiązanie event→series
+- [x] UI: lista, szczegóły, tworzenie
+
+### M2 (Post-MVP) - PARTIAL
+- [ ] Frequency: MONTHLY
+- [ ] skipHolidays (pomijanie świąt)
+- [ ] pause/resume serii
+- [ ] Multi-day per week (np. pon+śr+pt)
+- [ ] Edycja wszystkich wydarzeń serii jednocześnie
+
+---
+
+## Powiązane Features
+
+- [FEATURE_01](FEATURE_01_Basic_Event_Operations.md) - CRUD wydarzeń (prerequisite)
+- [FEATURE_08](FEATURE_08_Player_Groups.md) - Serie grupowe
+
+---
+
+## Dokumentacja Techniczna
+
+Szczegóły implementacji znajdują się w:
+- Backend: [meet-app-be/docs/features/series.md](../../meet-app-be/docs/features/series.md)
+- Frontend: [meet-app-fe/docs/features/series.md](../../meet-app-fe/docs/features/series.md)
