@@ -6,7 +6,7 @@
 |------|---------|
 | **Milestone** | M1 (MVP) - basic, M2 - advanced |
 | **Priority** | HIGH |
-| **Status** | ✅ M1 Complete, ❌ M2 Not Started |
+| **Status** | ✅ M1 Complete, ⏳ M2 Partial |
 | **Goal** | Organizator ręcznie zarządza uczestnikami - dodawanie, usuwanie, listy |
 | **Jira** | MA-441 |
 
@@ -38,7 +38,8 @@ Organizator ma pełną kontrolę nad listą uczestników swojego wydarzenia. Mo�
 | Sprawdzanie organizatora | ✅ | ✅ | verifyOrganizer() |
 | **M2 - Advanced** |
 | PUT /{userId}/position | ❌ | ❌ | Zmiana pozycji (reorder) |
-| PUT /{userId}/confirm | ❌ | ❌ | Toggle potwierdzenia |
+| PUT /{userId}/confirm | ✅ | ❌ | Toggle potwierdzenia (organizator) |
+| PUT /confirm | ✅ | ❌ | Self-service potwierdzenie (uczestnik) |
 | PUT /{userId}/payment | ❌ | ❌ | Śledzenie płatności |
 | POST /{userId}/promote | ❌ | ❌ | Promocja do main list |
 | POST /{userId}/demote | ❌ | ❌ | Degradacja do waitlist |
@@ -91,7 +92,20 @@ Organizator ma pełną kontrolę nad listą uczestników swojego wydarzenia. Mo�
 - [ ] Renumeracja pozycji
 - [ ] Endpoint PUT /position
 
-### US-05: Śledzenie płatności (M2)
+### US-05: Potwierdzanie obecności (M2) ✅ BE
+**Jako** organizator
+**Chcę** oznaczyć kto potwierdził obecność
+**Aby** wiedzieć kto na pewno przyjdzie
+
+**Kryteria akceptacji:**
+- [x] Endpoint PUT /{userId}/confirm (toggle)
+- [x] Endpoint PUT /confirm (self-service)
+- [x] Pole isConfirmed w modelu
+- [x] Pole confirmedAt (timestamp)
+- [ ] UI: Toggle w liście uczestników
+- [ ] UI: Przycisk "Potwierdź" dla uczestnika
+
+### US-06: Śledzenie płatności (M2)
 **Jako** organizator
 **Chcę** oznaczyć kto zapłacił
 **Aby** kontrolować finanse
@@ -116,6 +130,12 @@ Organizator ma pełną kontrolę nad listą uczestników swojego wydarzenia. Mo�
 2. Jeśli z main list + autoPromote → promuj pierwszego z waitlist
 3. Renumeracja pozycji po usunięciu
 
+### Potwierdzanie obecności (M2)
+1. Organizator może toggle'ować potwierdzenie dowolnego uczestnika
+2. Uczestnik może potwierdzić własną obecność (self-service)
+3. Brak potwierdzenia = tylko wizualne oznaczenie (organizator decyduje)
+4. confirmedAt ustawiany przy potwierdzeniu, zerowany przy cofnięciu
+
 ### Promocja/Degradacja (M2)
 1. Promocja wymaga wolnego slotu
 2. Degradacja zwalnia slot
@@ -133,13 +153,15 @@ Organizator ma pełną kontrolę nad listą uczestników swojego wydarzenia. Mo�
 - [x] UI: Dialogi add/remove
 - [x] Autoryzacja: tylko organizator
 
-### M2 (Post-MVP) - NOT STARTED
+### M2 (Post-MVP) - PARTIAL
 - [ ] PUT /{userId}/position
-- [ ] PUT /{userId}/confirm
+- [x] PUT /{userId}/confirm (BE done)
+- [x] PUT /confirm - self-service (BE done)
 - [ ] PUT /{userId}/payment
 - [ ] POST /{userId}/promote
 - [ ] POST /{userId}/demote
 - [ ] Drag & drop reordering
+- [ ] Confirmation UI
 - [ ] Payment tracking UI
 
 ---

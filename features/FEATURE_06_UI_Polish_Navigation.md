@@ -6,9 +6,9 @@
 |------|---------|
 | **Milestone** | M1 (MVP) - basic, M2 - polish |
 | **Priority** | MEDIUM |
-| **Status** | ⏳ M1 Partial, ❌ M2 Not Started |
+| **Status** | ⏳ M1 Partial, ⏳ M2 Partial |
 | **Goal** | Spójna nawigacja i podstawowy UI organizatora |
-| **Jira** | MA-407, MA-414 |
+| **Jira** | MA-407, MA-414, MA-499 |
 
 ---
 
@@ -38,7 +38,8 @@ Usprawnienia UI obejmujące nawigację bottom navigation, loading skeletons, err
 | Tab: Profile/Series | - | ⏳ | Podstawowe |
 | MyEvents (organizerId=me) | ✅ | ✅ | Lista organizatora |
 | **M2 - Polish** |
-| Loading skeletons | - | ⏳ | Częściowo |
+| Loading skeletons | - | ✅ | Zaimplementowane (MA-499) |
+| Group filter | - | ✅ | Filtrowanie po grupie (MA-499) |
 | Error states + retry | - | ⏳ | Podstawowe |
 | Empty states | - | ⏳ | Podstawowe |
 | Hero animations | - | ❌ | Nie zaimplementowane |
@@ -79,7 +80,7 @@ Usprawnienia UI obejmujące nawigację bottom navigation, loading skeletons, err
 
 **Kryteria akceptacji:**
 - [x] Loading indicator na listach
-- [ ] Skeleton loading
+- [x] Skeleton loading (MA-499)
 - [ ] Smooth transitions
 
 ### US-04: Error handling
@@ -116,9 +117,11 @@ Usprawnienia UI obejmujące nawigację bottom navigation, loading skeletons, err
 - [x] MyEvents z `organizerId=me`
 - [x] Podstawowe loading states
 - [x] Podstawowe error states
+- [x] Loading skeletons (MA-499)
+- [x] Group filter (MA-499)
 
-### M2 (Post-MVP) - NOT STARTED
-- [ ] Loading skeletons (shimmer)
+### M2 (Post-MVP) - PARTIAL
+- [x] Loading skeletons (shimmer) - ✅ Done (MA-499)
 - [ ] Hero animations
 - [ ] Page transitions
 - [ ] Search functionality

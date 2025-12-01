@@ -55,6 +55,10 @@ Organizator może tworzyć, edytować, usuwać i odwoływać wydarzenia sportowe
 | Zaawansowane filtry | ✅ | ❌ | sportType, level - brak UI |
 | Wyszukiwanie | ❌ | ❌ | Planowane M2 |
 | Pull-to-refresh | - | ✅ | Odświeżanie listy |
+| **Real-time Updates (MA-475)** |
+| WebSocket broadcast EVENT_CREATED | ✅ | ✅ | Nowe markery na mapie |
+| WebSocket EVENT_UPDATE | ✅ | ✅ | Aktualizacja pozycji markera |
+| WebSocket EVENT_CANCELLED | ✅ | ✅ | Powiadomienia dla uczestników |
 
 ---
 
@@ -164,6 +168,7 @@ Organizator może tworzyć, edytować, usuwać i odwoływać wydarzenia sportowe
 - [x] Deep links
 - [x] Formularz tworzenia/edycji
 - [x] Podstawowa walidacja
+- [x] Real-time map updates (MA-475)
 
 ### M2 (Post-MVP)
 - [ ] Status COMPLETED, DRAFT

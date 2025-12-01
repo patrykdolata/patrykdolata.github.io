@@ -60,7 +60,7 @@
 ### Stabilizacja wersji
 - [ ] **Testy end to end**  
 - [ ] **Poprawki** 
-- [ ] **Serwer produkcyjny**
+- [x] **Serwer produkcyjny**
 - [ ] **Release 0.0.1**
 
 ---
@@ -94,7 +94,7 @@
 
 ---
 
-## 🟢 M3 — Skalowanie i Komercjalizacja
+## 🟢 M3 — Skalowanie
 **Termin:** Q2 2026
 **Cel:** Płatności, analityka i pełna zgodność prawna.
 
