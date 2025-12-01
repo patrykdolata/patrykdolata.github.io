@@ -92,6 +92,18 @@
 - [ ] **Zaawansowane Serie** `[MA-445]` – Pomijanie świąt, cykle miesięczne.
 - [ ] **Widok Kalendarza** `[BACKLOG]` – Graficzne przedstawienie nadchodzących gier w miesiącu.
 
+### 🛠️ Stabilność i Jakość
+*Zapewnienie niezawodności aplikacji dla użytkowników.*
+- [ ] **Raportowanie Błędów** `[BACKLOG]` – Automatyczne wykrywanie i powiadomienia o crashach aplikacji.
+- [ ] **Analityka Użytkowników** `[BACKLOG]` – Śledzenie zachowań, konwersji i popularnych funkcji.
+- [ ] **Zdalna Konfiguracja** `[BACKLOG]` – Możliwość zmiany ustawień aplikacji bez aktualizacji w sklepie.
+- [ ] **Panel Logów** `[BACKLOG]` – Przyjazne narzędzie do przeglądania logów produkcyjnych.
+
+### 🔐 Alternatywne Logowanie
+*Ułatwienie rejestracji i logowania dla użytkowników.*
+- [ ] **Social Login** `[BACKLOG]` – Szybkie logowanie przez Google i Apple.
+- [ ] **Magic Link** `[BACKLOG]` – Logowanie bez hasła przez link w emailu.
+
 ---
 
 ## 🟢 M3 — Skalowanie
@@ -107,6 +119,12 @@
 - [ ] **Analityka** `[MA-423]` – Raporty obłożenia, frekwencji i trendów.
 - [ ] **Zgodność RODO** `[BACKLOG]` – Eksport i anonimizacja danych użytkowników.
 - [ ] **Audyt Bezpieczeństwa** `[BACKLOG]` – Testy penetracyjne przed szeroką publikacją.
+
+### 📱 Praca Offline
+*Dostępność aplikacji bez połączenia z internetem.*
+- [ ] **Tryb Offline** `[BACKLOG]` – Przeglądanie zapisanych wydarzeń i danych bez internetu.
+- [ ] **Synchronizacja** `[BACKLOG]` – Automatyczna synchronizacja po przywróceniu połączenia.
+- [ ] **Szybsze Ładowanie** `[BACKLOG]` – Cachowanie danych dla płynniejszego działania.
 
 ---
 
