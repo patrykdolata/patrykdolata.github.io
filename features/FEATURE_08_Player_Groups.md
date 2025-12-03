@@ -211,7 +211,7 @@ System "Player Groups" umożliwia organizatorom tworzenie i zarządzanie grupami
 
 ### Should Have
 - [x] Integracja z Facebook (link do grupy)
-- [x] Maksymalna liczba członków
+- [x] Maksymalna liczba członków (konfigurowalna, domyślnie 1000)
 - [x] Notatki przy zatwierdzaniu/odrzucaniu
 
 ### Could Have
@@ -224,7 +224,7 @@ System "Player Groups" umożliwia organizatorom tworzenie i zarządzanie grupami
 ## Wymagania niefunkcjonalne
 
 - **Wydajność**: Pobieranie listy członków < 500ms
-- **Skalowalność**: Obsługa grup do 1000 członków
+- **Skalowalność**: Obsługa grup do 1000 członków (limit konfigurowalny przez `GROUP_DEFAULT_MAX_MEMBERS`)
 - **Bezpieczeństwo**:
   - Zatwierdzeni członkowie mogą widzieć innych zatwierdzonych członków i core players
   - Tylko organizatorzy widzą pending requests i inne statusy (REJECTED, REMOVED)
@@ -260,10 +260,11 @@ System "Player Groups" umożliwia organizatorom tworzenie i zarządzanie grupami
 
 ## API Endpoints (podsumowanie)
 
-### Zarządzanie grupami (6 endpointów)
+### Zarządzanie grupami (7 endpointów)
 
 | Endpoint | Opis | Dostęp |
 |----------|------|--------|
+| `GET /api/v1/groups/config` | Konfiguracja grup (limity) | Publiczny |
 | `POST /api/v1/groups` | Tworzenie grupy | Zalogowany |
 | `GET /api/v1/groups` | Lista widocznych grup | Zalogowany |
 | `GET /api/v1/groups/organizer` | Grupy organizatora | Organizator |

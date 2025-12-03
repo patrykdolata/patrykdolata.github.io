@@ -184,6 +184,7 @@ Organizator może tworzyć, edytować, usuwać i odwoływać wydarzenia sportowe
 - [FEATURE_02](FEATURE_02_Join_Leave_Events.md) - Dołączanie/opuszczanie wydarzeń
 - [FEATURE_03](FEATURE_03_Participant_Management.md) - Zarządzanie uczestnikami
 - [FEATURE_07](FEATURE_07_Event_Lifecycle.md) - Pełny cykl życia (COMPLETED, auto-completion)
+- [FEATURE_09](FEATURE_09_Deep_Links.md) - Deep Links (udostępnianie wydarzeń)
 
 ---
 

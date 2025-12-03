@@ -26,7 +26,7 @@ This document contains all use cases for the Meet-App sports event management pl
 | **P14** | View My Groups | See all groups you're a member of | Groups Screen |
 | **P15** | Leave Group | Remove yourself from a group | POST /groups/{id}/leave |
 | **P16** | Receive Group Notifications | Real-time updates about group activities (8 types) | WebSocket |
-| **P17** | Open Event via Deep Link | Access event details from shared URL (meetapp.pl/event/xxx) | Deep Link Handler |
+| **P17** | Open Event via Deep Link | Access event details from shared URL (meetapp.pl/event/xxx) | [FEATURE_09](FEATURE_09_Deep_Links.md) |
 | **P18** | View Skill Assessment | Check your volleyball skill ratings (Serve, Receive, etc.) | Skill Level Screen |
 | **P19** | Browse Events List | Alternative list view instead of map with sorting | Events List Screen |
 | **P20** | Check Connection Status | See WebSocket connection indicator (green/red) | Bottom Navigation |
@@ -55,7 +55,7 @@ This document contains all use cases for the Meet-App sports event management pl
 | **O16** | Send Group Notifications | Automatic notifications when creating group events | WebSocket |
 | **O17** | Link Event to Group | Associate events with specific groups for visibility | Event creation |
 | **O18** | View My Events | Filter to see only events you're organizing | GET /events?organizerId=me |
-| **O19** | Share Event Link | Generate shareable deep link (meetapp.pl/event/xxx) | Share button |
+| **O19** | Share Event Link | Generate shareable deep link (meetapp.pl/event/xxx) | [FEATURE_09](FEATURE_09_Deep_Links.md) |
 | **O20** | View Event Analytics | See fill rate percentage, waitlist size, payment stats | Event Details |
 
 ---
@@ -71,7 +71,7 @@ This document contains all use cases for the Meet-App sports event management pl
 | **S05** | Handle JWT Authentication | Secure login with 24h access token, 7d refresh token | Spring Security |
 | **S06** | Persist Notifications | Store all notifications in database with read/unread status | group_notification table |
 | **S07** | Rate Limit API | Prevent abuse with Bucket4j rate limiting | RateLimitingConfig |
-| **S08** | Handle Deep Links | Route meetapp.pl URLs to correct app screens | GoRouter |
+| **S08** | Handle Deep Links | Route meetapp.pl URLs to correct app screens | [FEATURE_09](FEATURE_09_Deep_Links.md) |
 
 ---
 
@@ -190,4 +190,4 @@ O12 → O13 → O14 → O08 → O09 → O05 → O07 → O03
 
 ---
 
-*Last updated: December 2024*
+*Last updated: December 2025*

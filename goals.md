@@ -9,7 +9,7 @@
 
 | Metryka | Status |
 | :--- | :--- |
-| **Postęp M1 (MVP)** | ![Postęp](https://progress-bar.dev/87/?scale=100&title=Zrobione&width=120&color=2ecc71) **87%** |
+| **Postęp M1 (MVP)** | ![Postęp](https://progress-bar.dev/88/?scale=100&title=Zrobione&width=120&color=2ecc71) **88%** |
 | **Aktualna Faza** | **M1: MVP Organizatora + Samoobsługa** |
 | **Najbliższy Termin** | **31.12.2025**  |
 | **Główny Fokus** | Automatyzacja zapisów|
@@ -57,6 +57,12 @@
 - [x] **Stała Lista Graczy** `[MA-502]` – Baza graczy przypisana do grupy dla szybkiego dodawania.
 - [x] **Prywatność** `[MA-421]` – Wydarzenia widoczne tylko dla członków danej grupy.
 
+### ✅ Historia Wydarzeń
+*Dostęp do zakończonych wydarzeń i rozliczenia płatności.*
+- [x] **Przegląd Historii** – Lista zakończonych i anulowanych wydarzeń użytkownika.
+- [x] **Dwie Perspektywy** – Podział na zakładki "Organizowane" i "Uczestnictwo".
+- [x] **Rozliczenia Płatności**  – Organizator widzi status płatności uczestników.
+
 ### Stabilizacja wersji
 - [ ] **Testy end to end**  
 - [ ] **Poprawki** 
@@ -86,7 +92,7 @@
 ### 🔒 Zaawansowane Zarządzanie Listą
 - [ ] **Priorytetyzacja** `[BACKLOG]` – Ręczne przesuwanie graczy (Awans/Degradacja) przez organizatora.
 - [ ] **Drag & Drop** `[BACKLOG]` – Łatwa zmiana kolejności na liście metodą przeciągnij i upuść.
-- [ ] **Historia Gier** `[BACKLOG]` – Wgląd w historię aktywności gracza i organizatora.
+- [ ] **Rozszerzona Historia** `[BACKLOG]` – Statystyki aktywności gracza (% obecności, ulubione sporty, częstotliwość gry).
 
 ### 📅 Inteligentny Kalendarz
 - [ ] **Zaawansowane Serie** `[MA-445]` – Pomijanie świąt, cykle miesięczne.
