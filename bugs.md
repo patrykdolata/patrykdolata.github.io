@@ -1,13 +1,11 @@
-- [x] brak powiadomienia snackbar dla automatycznego dodania gracza 
-- [x] brak powiadomienia na liscie powiadomien (badge pokazuje dobrze) na android jezeli nie kliknie sie snackbar - dodano gracza do wydarzenia
-- [x] mam 2 telefony na jednym jestem zalogowany na test.user na drugim na testuser2
-  - na testuser2 tworze grupe bez graczy, nagle na test.user pojawia mi sie opis i nazwa tej grupy w segmencie u gory listy wydarzen, na liscie do wyboru nie mam tej grupy
-- [x] mimo utworzenia wydarzenia z przypisana grupą, w szczegolach tego wydarzenia mam tag no-group.
-- [x] lepszy komunikat o braku mozliwosci  usuniecia wydarzenia ktore zostalo odwolane
-- [x] brak informacji ze wydarzenie zostalo odwolane na liscie wydarzen
+# features
+- [ ] ustawianie core graczy per seria
 
-- [x] filtrowanie listy wydarzen po grupie
-- ekran dodawania gracza do wydarzenia uspojnic z dodawaniem do grupy
-  - dodac autocomplete z listy graczy w grupie
-- [x] sample seed sql z realnymi danymi (przeźmierowo)
+#bugs
+- [ ] [GRUPA] dluga lista graczy -> oznaczenie jako core -> niepotrzebne przewijanie na gore
+- [ ] [GRUPA] dluga lista graczy -> przycisk dodawania nowego gracza zaslania akcje dla ostatnieg gracza
+- [ ] [GRUPA] mozliwość zaznaczenia wielu graczy i zrobienie operacji bulk (np ustaw jako core gracz) 
+- [ ] nieprawidłowa interpretacja czasu 
+- [ ] utworzenie wydarzenia z serii na ten sam dzien konczy sie bledem
+- [ ] nie można wycofać się z ekranu serii 
 

@@ -71,66 +71,98 @@
 
 ---
 
-## 🟡 M2 — Zaangażowanie, Powiadomienia i Narzędzia Zaawansowane
+## 🟡 M2 — Viralność, Powiadomienia i Feedback
 **Termin:** Q1 2026
-**Cel:** Budowanie zaufania, komunikacja w czasie rzeczywistym i precyzyjna kontrola.
+**Cel:** Maksymalizacja konwersji nowych użytkowników, retencja istniejących, zbieranie feedbacku.
 
-### 🟡 Natywne Powiadomienia 
-*Kluczowe dla utrzymania tempa zapisów i informacji o zmianach.*
-- [x] **Infrastruktura WebSocket** `[MA-534]` `[MA-538]` – Real-time komunikacja między serwerem a aplikacją mobilną.
-- [x] **Powiadomienia o Awansie** `[MA-496]` – "Awansowałeś na listę główną!" po zwolnieniu miejsca.
-- [ ] **Statusy Listy** `[MA-422]` – "Zwolniło się miejsce!" dla osób na liście rezerwowej.
-- [ ] **Przypomnienia** `[MA-422]` – Automatyczny alert 24h przed meczem dla zapisanych graczy.
-- [ ] **Alerty Zmian** `[MA-422]` – Natychmiastowe info o zmianie godziny, lokalizacji lub odwołaniu meczu.
+### 🔴 Onboarding i Konwersja (PRIORYTET)
+*Redukcja friction dla nowych użytkowników z deep links.*
+- [ ] **Web Landing Page** `[BACKLOG]` – Strona meetapp.pl/event/{id} dla userów bez aplikacji (widok wydarzenia + CTA pobierz).
+- [ ] **Social Login** `[BACKLOG]` – Szybkie logowanie przez Google i Apple (1 klik).
+- [ ] **Open Graph Meta** `[BACKLOG]` – Podgląd wydarzenia w Messenger/WhatsApp przed kliknięciem linku.
 
-### ⭐ System Reputacji 
-*Budowanie zaufania i eliminacja "no-show".*
-- [ ] **Śledzenie Obecności (No-Show)** `[BACKLOG]` – Organizator oznacza, czy zapisany gracz faktycznie się pojawił.
-- [ ] **Ocena Wiarygodności** `[BACKLOG]` – Wskaźnik R-Score widoczny przy profilu gracza (np. % obecności).
-- [ ] **Kary za Nieobecność** `[BACKLOG]` – Automatyczna blokada zapisów lub niższy priorytet dla notorycznych "wagarowiczów".
+### 🔴 Push Notifications (PRIORYTET)
+*Kluczowe dla retencji i redukcji no-shows.*
+- [ ] **FCM/APNs Integration** `[BACKLOG]` – Natywne push notifications na iOS i Android.
+- [ ] **Przypomnienia** `[MA-422]` – Automatyczny alert 24h i 2h przed meczem.
+- [ ] **Alerty Zmian** `[MA-422]` – Natychmiastowe info o zmianie godziny, lokalizacji lub odwołaniu.
+- [ ] **Awans z Rezerwy** `[MA-496]` – Push "Awansowałeś na listę główną!"
+- [ ] **Statusy Listy** `[MA-422]` – "Zwolniło się miejsce!" dla osób na rezerwie.
 
-### 🔒 Zaawansowane Zarządzanie Listą
-- [ ] **Priorytetyzacja** `[BACKLOG]` – Ręczne przesuwanie graczy (Awans/Degradacja) przez organizatora.
-- [ ] **Drag & Drop** `[BACKLOG]` – Łatwa zmiana kolejności na liście metodą przeciągnij i upuść.
-- [ ] **Rozszerzona Historia** `[BACKLOG]` – Statystyki aktywności gracza (% obecności, ulubione sporty, częstotliwość gry).
+### 🟡 Real-time (częściowo done)
+*Komunikacja w czasie rzeczywistym w aplikacji.*
+- [x] **Infrastruktura WebSocket** `[MA-534]` `[MA-538]` – Real-time między serwerem a aplikacją.
+- [x] **Powiadomienia o Awansie** `[MA-496]` – In-app notification po awansie z rezerwy.
 
-### 📅 Inteligentny Kalendarz
-- [ ] **Zaawansowane Serie** `[MA-445]` – Pomijanie świąt, cykle miesięczne.
-- [ ] **Widok Kalendarza** `[BACKLOG]` – Graficzne przedstawienie nadchodzących gier w miesiącu.
+### 📣 Feature Requests
+*Zbieranie pomysłów od użytkowników i budowanie społeczności.*
+- [ ] **Zgłaszanie Pomysłów** `[BACKLOG]` – Formularz do zgłaszania feature requestów.
+- [ ] **Głosowanie** `[BACKLOG]` – Użytkownicy mogą lajkować pomysły innych.
+- [ ] **Lista Pomysłów** `[BACKLOG]` – Przeglądanie zgłoszonych requestów z sortowaniem po głosach.
+- [ ] **Status Realizacji** `[BACKLOG]` – Oznaczanie: nowy, w planach, w realizacji, zrobione.
+- [ ] **Publiczny Roadmap** `[BACKLOG]` – Widoczność co jest planowane dla użytkowników.
 
 ### 🛠️ Stabilność i Jakość
-*Zapewnienie niezawodności aplikacji dla użytkowników.*
-- [ ] **Raportowanie Błędów** `[BACKLOG]` – Automatyczne wykrywanie i powiadomienia o crashach aplikacji.
-- [ ] **Analityka Użytkowników** `[BACKLOG]` – Śledzenie zachowań, konwersji i popularnych funkcji.
-- [ ] **Zdalna Konfiguracja** `[BACKLOG]` – Możliwość zmiany ustawień aplikacji bez aktualizacji w sklepie.
-- [ ] **Panel Logów** `[BACKLOG]` – Przyjazne narzędzie do przeglądania logów produkcyjnych.
+*Zapewnienie niezawodności aplikacji.*
+- [ ] **Raportowanie Błędów** `[BACKLOG]` – Crashlytics/Sentry - automatyczne wykrywanie crashów.
+- [ ] **Analityka Konwersji** `[BACKLOG]` – Śledzenie: deep link → instalacja → rejestracja → dołączenie.
 
-### 🔐 Alternatywne Logowanie
-*Ułatwienie rejestracji i logowania dla użytkowników.*
-- [ ] **Social Login** `[BACKLOG]` – Szybkie logowanie przez Google i Apple.
+### ⚪ Nice-to-have
+*Niższy priorytet - jeśli starczy czasu.*
 - [ ] **Magic Link** `[BACKLOG]` – Logowanie bez hasła przez link w emailu.
+- [ ] **Drag & Drop Lista** `[BACKLOG]` – Przeciąganie uczestników na liście.
 
 ---
 
-## 🟢 M3 — Skalowanie
+## 🟢 M3 — Reputacja, Skalowanie i Zaawansowane Narzędzia
 **Termin:** Q2 2026
-**Cel:** Płatności, analityka i pełna zgodność prawna.
+**Cel:** Budowanie zaufania, zaawansowane zarządzanie, płatności.
+
+### ⭐ System Reputacji
+*Budowanie zaufania i eliminacja no-shows.*
+- [ ] **Śledzenie Obecności** `[BACKLOG]` – Organizator oznacza, czy zapisany gracz faktycznie się pojawił.
+- [ ] **R-Score** `[BACKLOG]` – Wskaźnik wiarygodności widoczny przy profilu gracza (% obecności).
+- [ ] **Kary za No-Show** `[BACKLOG]` – Niższy priorytet lub blokada dla notorycznych "wagarowiczów".
+- [ ] **Rozszerzona Historia** `[BACKLOG]` – Statystyki aktywności gracza (ulubione sporty, częstotliwość).
+
+### 🔒 Zaawansowane Zarządzanie Listą
+- [ ] **Priorytetyzacja** `[BACKLOG]` – Ręczne przesuwanie graczy (awans/degradacja).
+- [ ] **Drag & Drop** `[BACKLOG]` – Zmiana kolejności metodą przeciągnij i upuść.
+
+### 📅 Inteligentny Kalendarz
+- [ ] **Zaawansowane Serie** `[MA-445]` – Pomijanie świąt, cykle miesięczne.
+- [ ] **Widok Kalendarza** `[BACKLOG]` – Graficzne przedstawienie nadchodzących gier.
 
 ### 💸 Finanse
-- [ ] **Statusy Płatności** `[MA-197]` – Oznaczanie przez organizatora kto zapłacił (gotówka/przelew).
-- [ ] **Płatności Online** `[BACKLOG]` – Integracja z bramką płatniczą (BLIK/Karta) wewnątrz aplikacji.
-- [ ] **Polityka Zwrotów** `[BACKLOG]` – Automatyzacja zwrotów przy rezygnacji w terminie.
+- [ ] **Statusy Płatności** `[MA-197]` – Oznaczanie kto zapłacił (gotówka/przelew).
+- [ ] **Płatności Online** `[BACKLOG]` – Integracja z BLIK/Kartą wewnątrz aplikacji.
+- [ ] **Polityka Zwrotów** `[BACKLOG]` – Automatyczne zwroty przy rezygnacji w terminie.
 
-### 📈 Dane i Bezpieczeństwo
-- [ ] **Analityka** `[MA-423]` – Raporty obłożenia, frekwencji i trendów.
-- [ ] **Zgodność RODO** `[BACKLOG]` – Eksport i anonimizacja danych użytkowników.
-- [ ] **Audyt Bezpieczeństwa** `[BACKLOG]` – Testy penetracyjne przed szeroką publikacją.
+### 📈 Analityka Organizatora
+- [ ] **Raporty** `[MA-423]` – Obłożenie, frekwencja, trendy.
+- [ ] **Eksport Danych** `[BACKLOG]` – CSV/Excel z listą uczestników.
+
+---
+
+## 🔵 M4 — Optymalizacja, Zgodność i Polish
+**Termin:** Q3 2026
+**Cel:** Offline mode, RODO, optymalizacje wydajności.
 
 ### 📱 Praca Offline
 *Dostępność aplikacji bez połączenia z internetem.*
-- [ ] **Tryb Offline** `[BACKLOG]` – Przeglądanie zapisanych wydarzeń i danych bez internetu.
-- [ ] **Synchronizacja** `[BACKLOG]` – Automatyczna synchronizacja po przywróceniu połączenia.
-- [ ] **Szybsze Ładowanie** `[BACKLOG]` – Cachowanie danych dla płynniejszego działania.
+- [ ] **Tryb Offline** `[BACKLOG]` – Przeglądanie zapisanych wydarzeń bez internetu.
+- [ ] **Synchronizacja** `[BACKLOG]` – Auto-sync po przywróceniu połączenia.
+- [ ] **Cache** `[BACKLOG]` – Cachowanie danych dla płynniejszego działania.
+
+### 🔐 Zgodność i Bezpieczeństwo
+- [ ] **Zgodność RODO** `[BACKLOG]` – Eksport i anonimizacja danych użytkowników.
+- [ ] **Audyt Bezpieczeństwa** `[BACKLOG]` – Testy penetracyjne przed szeroką publikacją.
+- [ ] **Usuwanie Konta** `[BACKLOG]` – Pełne usunięcie danych na żądanie użytkownika.
+
+### 🛠️ Developer Experience
+- [ ] **Zdalna Konfiguracja** `[BACKLOG]` – Feature flags bez aktualizacji w sklepie.
+- [ ] **Panel Logów** `[BACKLOG]` – Narzędzie do przeglądania logów produkcyjnych.
+- [ ] **A/B Testing** `[BACKLOG]` – Testowanie wariantów UI.
 
 ---
 

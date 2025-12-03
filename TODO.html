@@ -856,54 +856,40 @@
         
             <div class="milestone-card">
                 <div class="milestone-header">
-                    <h2 class="milestone-title">M2 Zaangażowanie, Powiadomienia i Narzędzia Zaawansowane</h2>
-                    <div class="milestone-meta"><strong>Termin:</strong> - Q1 2026 &nbsp;•&nbsp; <strong>Cel:</strong> - Budowanie zaufania, komunikacja w czasie rzeczywistym i precyzyjna kontrola.</div>
+                    <h2 class="milestone-title">M2 Viralność, Powiadomienia i Feedback</h2>
+                    <div class="milestone-meta"><strong>Termin:</strong> - Q1 2026 &nbsp;•&nbsp; <strong>Cel:</strong> - Maksymalizacja konwersji nowych użytkowników, retencja istniejących, zbieranie feedbacku.</div>
                 </div>
 
                 <!-- FEATURES -->
                 
                     <details open>
                         <summary>
-                            <span>Natywne Powiadomienia</span>
-                            <span class="status-pill pill-todo">2 / 5</span>
+                            <span>Onboarding i Konwersja (PRIORYTET)</span>
+                            <span class="status-pill pill-todo">0 / 3</span>
                         </summary>
                         <div class="feature-body">
-                            <p class="feature-desc">Kluczowe dla utrzymania tempa zapisów i informacji o zmianach.</p>
+                            <p class="feature-desc">Redukcja friction dla nowych użytkowników z deep links.</p>
                             <ul class="task-list">
                                 
                                     <li class="task-item">
-                                        <div class="checkbox checked">
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                        <div class="checkbox ">
+                                            
                                         </div>
-                                        <div class="task-text dimmed"><strong>Infrastruktura WebSocket</strong> - Real-time komunikacja między serwerem a aplikacją mobilną.</div>
-                                    </li>
-                                
-                                    <li class="task-item">
-                                        <div class="checkbox checked">
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                        </div>
-                                        <div class="task-text dimmed"><strong>Powiadomienia o Awansie</strong> - "Awansowałeś na listę główną!" po zwolnieniu miejsca.</div>
+                                        <div class="task-text "><strong>Web Landing Page</strong> - Strona meetapp.pl/event/{id} dla userów bez aplikacji (widok wydarzenia + CTA pobierz).</div>
                                     </li>
                                 
                                     <li class="task-item">
                                         <div class="checkbox ">
                                             
                                         </div>
-                                        <div class="task-text "><strong>Statusy Listy</strong> - "Zwolniło się miejsce!" dla osób na liście rezerwowej.</div>
+                                        <div class="task-text "><strong>Social Login</strong> - Szybkie logowanie przez Google i Apple (1 klik).</div>
                                     </li>
                                 
                                     <li class="task-item">
                                         <div class="checkbox ">
                                             
                                         </div>
-                                        <div class="task-text "><strong>Przypomnienia</strong> - Automatyczny alert 24h przed meczem dla zapisanych graczy.</div>
-                                    </li>
-                                
-                                    <li class="task-item">
-                                        <div class="checkbox ">
-                                            
-                                        </div>
-                                        <div class="task-text "><strong>Alerty Zmian</strong> - Natychmiastowe info o zmianie godziny, lokalizacji lub odwołaniu meczu.</div>
+                                        <div class="task-text "><strong>Open Graph Meta</strong> - Podgląd wydarzenia w Messenger/WhatsApp przed kliknięciem linku.</div>
                                     </li>
                                 
                             </ul>
@@ -912,32 +898,226 @@
                 
                     <details open>
                         <summary>
-                            <span>⭐ System Reputacji</span>
-                            <span class="status-pill pill-todo">0 / 3</span>
+                            <span>Push Notifications (PRIORYTET)</span>
+                            <span class="status-pill pill-todo">0 / 5</span>
                         </summary>
                         <div class="feature-body">
-                            <p class="feature-desc">Budowanie zaufania i eliminacja "no-show".</p>
+                            <p class="feature-desc">Kluczowe dla retencji i redukcji no-shows.</p>
                             <ul class="task-list">
                                 
                                     <li class="task-item">
                                         <div class="checkbox ">
                                             
                                         </div>
-                                        <div class="task-text "><strong>Śledzenie Obecności (No-Show)</strong> - Organizator oznacza, czy zapisany gracz faktycznie się pojawił.</div>
+                                        <div class="task-text "><strong>FCM/APNs Integration</strong> - Natywne push notifications na iOS i Android.</div>
                                     </li>
                                 
                                     <li class="task-item">
                                         <div class="checkbox ">
                                             
                                         </div>
-                                        <div class="task-text "><strong>Ocena Wiarygodności</strong> - Wskaźnik R-Score widoczny przy profilu gracza (np. % obecności).</div>
+                                        <div class="task-text "><strong>Przypomnienia</strong> - Automatyczny alert 24h i 2h przed meczem.</div>
                                     </li>
                                 
                                     <li class="task-item">
                                         <div class="checkbox ">
                                             
                                         </div>
-                                        <div class="task-text "><strong>Kary za Nieobecność</strong> - Automatyczna blokada zapisów lub niższy priorytet dla notorycznych "wagarowiczów".</div>
+                                        <div class="task-text "><strong>Alerty Zmian</strong> - Natychmiastowe info o zmianie godziny, lokalizacji lub odwołaniu.</div>
+                                    </li>
+                                
+                                    <li class="task-item">
+                                        <div class="checkbox ">
+                                            
+                                        </div>
+                                        <div class="task-text "><strong>Awans z Rezerwy</strong> - Push "Awansowałeś na listę główną!"</div>
+                                    </li>
+                                
+                                    <li class="task-item">
+                                        <div class="checkbox ">
+                                            
+                                        </div>
+                                        <div class="task-text "><strong>Statusy Listy</strong> - "Zwolniło się miejsce!" dla osób na rezerwie.</div>
+                                    </li>
+                                
+                            </ul>
+                        </div>
+                    </details>
+                
+                    <details >
+                        <summary>
+                            <span>Real-time (częściowo done)</span>
+                            <span class="status-pill pill-done">Wykonane</span>
+                        </summary>
+                        <div class="feature-body">
+                            <p class="feature-desc">Komunikacja w czasie rzeczywistym w aplikacji.</p>
+                            <ul class="task-list">
+                                
+                                    <li class="task-item">
+                                        <div class="checkbox checked">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                        </div>
+                                        <div class="task-text dimmed"><strong>Infrastruktura WebSocket</strong> - Real-time między serwerem a aplikacją.</div>
+                                    </li>
+                                
+                                    <li class="task-item">
+                                        <div class="checkbox checked">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                        </div>
+                                        <div class="task-text dimmed"><strong>Powiadomienia o Awansie</strong> - In-app notification po awansie z rezerwy.</div>
+                                    </li>
+                                
+                            </ul>
+                        </div>
+                    </details>
+                
+                    <details open>
+                        <summary>
+                            <span>Feature Requests</span>
+                            <span class="status-pill pill-todo">0 / 5</span>
+                        </summary>
+                        <div class="feature-body">
+                            <p class="feature-desc">Zbieranie pomysłów od użytkowników i budowanie społeczności.</p>
+                            <ul class="task-list">
+                                
+                                    <li class="task-item">
+                                        <div class="checkbox ">
+                                            
+                                        </div>
+                                        <div class="task-text "><strong>Zgłaszanie Pomysłów</strong> - Formularz do zgłaszania feature requestów.</div>
+                                    </li>
+                                
+                                    <li class="task-item">
+                                        <div class="checkbox ">
+                                            
+                                        </div>
+                                        <div class="task-text "><strong>Głosowanie</strong> - Użytkownicy mogą lajkować pomysły innych.</div>
+                                    </li>
+                                
+                                    <li class="task-item">
+                                        <div class="checkbox ">
+                                            
+                                        </div>
+                                        <div class="task-text "><strong>Lista Pomysłów</strong> - Przeglądanie zgłoszonych requestów z sortowaniem po głosach.</div>
+                                    </li>
+                                
+                                    <li class="task-item">
+                                        <div class="checkbox ">
+                                            
+                                        </div>
+                                        <div class="task-text "><strong>Status Realizacji</strong> - Oznaczanie: nowy, w planach, w realizacji, zrobione.</div>
+                                    </li>
+                                
+                                    <li class="task-item">
+                                        <div class="checkbox ">
+                                            
+                                        </div>
+                                        <div class="task-text "><strong>Publiczny Roadmap</strong> - Widoczność co jest planowane dla użytkowników.</div>
+                                    </li>
+                                
+                            </ul>
+                        </div>
+                    </details>
+                
+                    <details open>
+                        <summary>
+                            <span>️ Stabilność i Jakość</span>
+                            <span class="status-pill pill-todo">0 / 2</span>
+                        </summary>
+                        <div class="feature-body">
+                            <p class="feature-desc">Zapewnienie niezawodności aplikacji.</p>
+                            <ul class="task-list">
+                                
+                                    <li class="task-item">
+                                        <div class="checkbox ">
+                                            
+                                        </div>
+                                        <div class="task-text "><strong>Raportowanie Błędów</strong> - Crashlytics/Sentry - automatyczne wykrywanie crashów.</div>
+                                    </li>
+                                
+                                    <li class="task-item">
+                                        <div class="checkbox ">
+                                            
+                                        </div>
+                                        <div class="task-text "><strong>Analityka Konwersji</strong> - Śledzenie: deep link instalacja rejestracja dołączenie.</div>
+                                    </li>
+                                
+                            </ul>
+                        </div>
+                    </details>
+                
+                    <details open>
+                        <summary>
+                            <span>Nice-to-have</span>
+                            <span class="status-pill pill-todo">0 / 2</span>
+                        </summary>
+                        <div class="feature-body">
+                            <p class="feature-desc">Niższy priorytet - jeśli starczy czasu.</p>
+                            <ul class="task-list">
+                                
+                                    <li class="task-item">
+                                        <div class="checkbox ">
+                                            
+                                        </div>
+                                        <div class="task-text "><strong>Magic Link</strong> - Logowanie bez hasła przez link w emailu.</div>
+                                    </li>
+                                
+                                    <li class="task-item">
+                                        <div class="checkbox ">
+                                            
+                                        </div>
+                                        <div class="task-text "><strong>Drag & Drop Lista</strong> - Przeciąganie uczestników na liście.</div>
+                                    </li>
+                                
+                            </ul>
+                        </div>
+                    </details>
+                
+            </div>
+        
+            <div class="milestone-card">
+                <div class="milestone-header">
+                    <h2 class="milestone-title">M3 Reputacja, Skalowanie i Zaawansowane Narzędzia</h2>
+                    <div class="milestone-meta"><strong>Termin:</strong> - Q2 2026 &nbsp;•&nbsp; <strong>Cel:</strong> - Budowanie zaufania, zaawansowane zarządzanie, płatności.</div>
+                </div>
+
+                <!-- FEATURES -->
+                
+                    <details open>
+                        <summary>
+                            <span>⭐ System Reputacji</span>
+                            <span class="status-pill pill-todo">0 / 4</span>
+                        </summary>
+                        <div class="feature-body">
+                            <p class="feature-desc">Budowanie zaufania i eliminacja no-shows.</p>
+                            <ul class="task-list">
+                                
+                                    <li class="task-item">
+                                        <div class="checkbox ">
+                                            
+                                        </div>
+                                        <div class="task-text "><strong>Śledzenie Obecności</strong> - Organizator oznacza, czy zapisany gracz faktycznie się pojawił.</div>
+                                    </li>
+                                
+                                    <li class="task-item">
+                                        <div class="checkbox ">
+                                            
+                                        </div>
+                                        <div class="task-text "><strong>R-Score</strong> - Wskaźnik wiarygodności widoczny przy profilu gracza (% obecności).</div>
+                                    </li>
+                                
+                                    <li class="task-item">
+                                        <div class="checkbox ">
+                                            
+                                        </div>
+                                        <div class="task-text "><strong>Kary za No-Show</strong> - Niższy priorytet lub blokada dla notorycznych "wagarowiczów".</div>
+                                    </li>
+                                
+                                    <li class="task-item">
+                                        <div class="checkbox ">
+                                            
+                                        </div>
+                                        <div class="task-text "><strong>Rozszerzona Historia</strong> - Statystyki aktywności gracza (ulubione sporty, częstotliwość).</div>
                                     </li>
                                 
                             </ul>
@@ -947,7 +1127,7 @@
                     <details open>
                         <summary>
                             <span>Zaawansowane Zarządzanie Listą</span>
-                            <span class="status-pill pill-todo">0 / 3</span>
+                            <span class="status-pill pill-todo">0 / 2</span>
                         </summary>
                         <div class="feature-body">
                             
@@ -957,21 +1137,14 @@
                                         <div class="checkbox ">
                                             
                                         </div>
-                                        <div class="task-text "><strong>Priorytetyzacja</strong> - Ręczne przesuwanie graczy (Awans/Degradacja) przez organizatora.</div>
+                                        <div class="task-text "><strong>Priorytetyzacja</strong> - Ręczne przesuwanie graczy (awans/degradacja).</div>
                                     </li>
                                 
                                     <li class="task-item">
                                         <div class="checkbox ">
                                             
                                         </div>
-                                        <div class="task-text "><strong>Drag & Drop</strong> - Łatwa zmiana kolejności na liście metodą przeciągnij i upuść.</div>
-                                    </li>
-                                
-                                    <li class="task-item">
-                                        <div class="checkbox ">
-                                            
-                                        </div>
-                                        <div class="task-text "><strong>Rozszerzona Historia</strong> - Statystyki aktywności gracza (% obecności, ulubione sporty, częstotliwość gry).</div>
+                                        <div class="task-text "><strong>Drag & Drop</strong> - Zmiana kolejności metodą przeciągnij i upuść.</div>
                                     </li>
                                 
                             </ul>
@@ -998,90 +1171,12 @@
                                         <div class="checkbox ">
                                             
                                         </div>
-                                        <div class="task-text "><strong>Widok Kalendarza</strong> - Graficzne przedstawienie nadchodzących gier w miesiącu.</div>
+                                        <div class="task-text "><strong>Widok Kalendarza</strong> - Graficzne przedstawienie nadchodzących gier.</div>
                                     </li>
                                 
                             </ul>
                         </div>
                     </details>
-                
-                    <details open>
-                        <summary>
-                            <span>️ Stabilność i Jakość</span>
-                            <span class="status-pill pill-todo">0 / 4</span>
-                        </summary>
-                        <div class="feature-body">
-                            <p class="feature-desc">Zapewnienie niezawodności aplikacji dla użytkowników.</p>
-                            <ul class="task-list">
-                                
-                                    <li class="task-item">
-                                        <div class="checkbox ">
-                                            
-                                        </div>
-                                        <div class="task-text "><strong>Raportowanie Błędów</strong> - Automatyczne wykrywanie i powiadomienia o crashach aplikacji.</div>
-                                    </li>
-                                
-                                    <li class="task-item">
-                                        <div class="checkbox ">
-                                            
-                                        </div>
-                                        <div class="task-text "><strong>Analityka Użytkowników</strong> - Śledzenie zachowań, konwersji i popularnych funkcji.</div>
-                                    </li>
-                                
-                                    <li class="task-item">
-                                        <div class="checkbox ">
-                                            
-                                        </div>
-                                        <div class="task-text "><strong>Zdalna Konfiguracja</strong> - Możliwość zmiany ustawień aplikacji bez aktualizacji w sklepie.</div>
-                                    </li>
-                                
-                                    <li class="task-item">
-                                        <div class="checkbox ">
-                                            
-                                        </div>
-                                        <div class="task-text "><strong>Panel Logów</strong> - Przyjazne narzędzie do przeglądania logów produkcyjnych.</div>
-                                    </li>
-                                
-                            </ul>
-                        </div>
-                    </details>
-                
-                    <details open>
-                        <summary>
-                            <span>Alternatywne Logowanie</span>
-                            <span class="status-pill pill-todo">0 / 2</span>
-                        </summary>
-                        <div class="feature-body">
-                            <p class="feature-desc">Ułatwienie rejestracji i logowania dla użytkowników.</p>
-                            <ul class="task-list">
-                                
-                                    <li class="task-item">
-                                        <div class="checkbox ">
-                                            
-                                        </div>
-                                        <div class="task-text "><strong>Social Login</strong> - Szybkie logowanie przez Google i Apple.</div>
-                                    </li>
-                                
-                                    <li class="task-item">
-                                        <div class="checkbox ">
-                                            
-                                        </div>
-                                        <div class="task-text "><strong>Magic Link</strong> - Logowanie bez hasła przez link w emailu.</div>
-                                    </li>
-                                
-                            </ul>
-                        </div>
-                    </details>
-                
-            </div>
-        
-            <div class="milestone-card">
-                <div class="milestone-header">
-                    <h2 class="milestone-title">M3 Skalowanie</h2>
-                    <div class="milestone-meta"><strong>Termin:</strong> - Q2 2026 &nbsp;•&nbsp; <strong>Cel:</strong> - Płatności, analityka i pełna zgodność prawna.</div>
-                </div>
-
-                <!-- FEATURES -->
                 
                     <details open>
                         <summary>
@@ -1096,21 +1191,21 @@
                                         <div class="checkbox ">
                                             
                                         </div>
-                                        <div class="task-text "><strong>Statusy Płatności</strong> - Oznaczanie przez organizatora kto zapłacił (gotówka/przelew).</div>
+                                        <div class="task-text "><strong>Statusy Płatności</strong> - Oznaczanie kto zapłacił (gotówka/przelew).</div>
                                     </li>
                                 
                                     <li class="task-item">
                                         <div class="checkbox ">
                                             
                                         </div>
-                                        <div class="task-text "><strong>Płatności Online</strong> - Integracja z bramką płatniczą (BLIK/Karta) wewnątrz aplikacji.</div>
+                                        <div class="task-text "><strong>Płatności Online</strong> - Integracja z BLIK/Kartą wewnątrz aplikacji.</div>
                                     </li>
                                 
                                     <li class="task-item">
                                         <div class="checkbox ">
                                             
                                         </div>
-                                        <div class="task-text "><strong>Polityka Zwrotów</strong> - Automatyzacja zwrotów przy rezygnacji w terminie.</div>
+                                        <div class="task-text "><strong>Polityka Zwrotów</strong> - Automatyczne zwroty przy rezygnacji w terminie.</div>
                                     </li>
                                 
                             </ul>
@@ -1119,8 +1214,8 @@
                 
                     <details open>
                         <summary>
-                            <span>Dane i Bezpieczeństwo</span>
-                            <span class="status-pill pill-todo">0 / 3</span>
+                            <span>Analityka Organizatora</span>
+                            <span class="status-pill pill-todo">0 / 2</span>
                         </summary>
                         <div class="feature-body">
                             
@@ -1130,8 +1225,72 @@
                                         <div class="checkbox ">
                                             
                                         </div>
-                                        <div class="task-text "><strong>Analityka</strong> - Raporty obłożenia, frekwencji i trendów.</div>
+                                        <div class="task-text "><strong>Raporty</strong> - Obłożenie, frekwencja, trendy.</div>
                                     </li>
+                                
+                                    <li class="task-item">
+                                        <div class="checkbox ">
+                                            
+                                        </div>
+                                        <div class="task-text "><strong>Eksport Danych</strong> - CSV/Excel z listą uczestników.</div>
+                                    </li>
+                                
+                            </ul>
+                        </div>
+                    </details>
+                
+            </div>
+        
+            <div class="milestone-card">
+                <div class="milestone-header">
+                    <h2 class="milestone-title">M4 Optymalizacja, Zgodność i Polish</h2>
+                    <div class="milestone-meta"><strong>Termin:</strong> - Q3 2026 &nbsp;•&nbsp; <strong>Cel:</strong> - Offline mode, RODO, optymalizacje wydajności.</div>
+                </div>
+
+                <!-- FEATURES -->
+                
+                    <details open>
+                        <summary>
+                            <span>Praca Offline</span>
+                            <span class="status-pill pill-todo">0 / 3</span>
+                        </summary>
+                        <div class="feature-body">
+                            <p class="feature-desc">Dostępność aplikacji bez połączenia z internetem.</p>
+                            <ul class="task-list">
+                                
+                                    <li class="task-item">
+                                        <div class="checkbox ">
+                                            
+                                        </div>
+                                        <div class="task-text "><strong>Tryb Offline</strong> - Przeglądanie zapisanych wydarzeń bez internetu.</div>
+                                    </li>
+                                
+                                    <li class="task-item">
+                                        <div class="checkbox ">
+                                            
+                                        </div>
+                                        <div class="task-text "><strong>Synchronizacja</strong> - Auto-sync po przywróceniu połączenia.</div>
+                                    </li>
+                                
+                                    <li class="task-item">
+                                        <div class="checkbox ">
+                                            
+                                        </div>
+                                        <div class="task-text "><strong>Cache</strong> - Cachowanie danych dla płynniejszego działania.</div>
+                                    </li>
+                                
+                            </ul>
+                        </div>
+                    </details>
+                
+                    <details open>
+                        <summary>
+                            <span>Zgodność i Bezpieczeństwo</span>
+                            <span class="status-pill pill-todo">0 / 3</span>
+                        </summary>
+                        <div class="feature-body">
+                            
+                            <ul class="task-list">
                                 
                                     <li class="task-item">
                                         <div class="checkbox ">
@@ -1147,38 +1306,45 @@
                                         <div class="task-text "><strong>Audyt Bezpieczeństwa</strong> - Testy penetracyjne przed szeroką publikacją.</div>
                                     </li>
                                 
+                                    <li class="task-item">
+                                        <div class="checkbox ">
+                                            
+                                        </div>
+                                        <div class="task-text "><strong>Usuwanie Konta</strong> - Pełne usunięcie danych na żądanie użytkownika.</div>
+                                    </li>
+                                
                             </ul>
                         </div>
                     </details>
                 
                     <details open>
                         <summary>
-                            <span>Praca Offline</span>
+                            <span>️ Developer Experience</span>
                             <span class="status-pill pill-todo">0 / 3</span>
                         </summary>
                         <div class="feature-body">
-                            <p class="feature-desc">Dostępność aplikacji bez połączenia z internetem.</p>
+                            
                             <ul class="task-list">
                                 
                                     <li class="task-item">
                                         <div class="checkbox ">
                                             
                                         </div>
-                                        <div class="task-text "><strong>Tryb Offline</strong> - Przeglądanie zapisanych wydarzeń i danych bez internetu.</div>
+                                        <div class="task-text "><strong>Zdalna Konfiguracja</strong> - Feature flags bez aktualizacji w sklepie.</div>
                                     </li>
                                 
                                     <li class="task-item">
                                         <div class="checkbox ">
                                             
                                         </div>
-                                        <div class="task-text "><strong>Synchronizacja</strong> - Automatyczna synchronizacja po przywróceniu połączenia.</div>
+                                        <div class="task-text "><strong>Panel Logów</strong> - Narzędzie do przeglądania logów produkcyjnych.</div>
                                     </li>
                                 
                                     <li class="task-item">
                                         <div class="checkbox ">
                                             
                                         </div>
-                                        <div class="task-text "><strong>Szybsze Ładowanie</strong> - Cachowanie danych dla płynniejszego działania.</div>
+                                        <div class="task-text "><strong>A/B Testing</strong> - Testowanie wariantów UI.</div>
                                     </li>
                                 
                             </ul>
