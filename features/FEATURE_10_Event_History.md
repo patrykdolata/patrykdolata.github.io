@@ -29,25 +29,25 @@ Feature umożliwiający użytkownikom przeglądanie historii swoich wydarzeń - 
 ## Acceptance Criteria
 
 ### AC-10.1: Dostęp do historii
-- [ ] Przycisk "Historia wydarzeń" widoczny w panelu użytkownika
-- [ ] Przycisk przekierowuje do nowego ekranu z historią
-- [ ] Historia dostępna tylko dla zalogowanych użytkowników
+- [x] Przycisk "Historia wydarzeń" widoczny w panelu użytkownika
+- [x] Przycisk przekierowuje do nowego ekranu z historią
+- [x] Historia dostępna tylko dla zalogowanych użytkowników
 
 ### AC-10.2: Wyświetlanie historii
-- [ ] Historia podzielona na dwa taby: "Organizowane" i "Uczestnictwo"
-- [ ] Wydarzenia posortowane od najnowszych
-- [ ] Widoczne: data, godzina, lokalizacja, status (Zakończone/Anulowane)
-- [ ] Paginacja dla dużej liczby wydarzeń
+- [x] Historia podzielona na dwa taby: "Organizowane" i "Uczestnictwo"
+- [x] Wydarzenia posortowane od najnowszych
+- [x] Widoczne: data, godzina, lokalizacja, status (Zakończone/Anulowane)
+- [x] Paginacja dla dużej liczby wydarzeń
 
 ### AC-10.3: Informacje o płatnościach (tylko organizator)
-- [ ] Badge ze statusem płatności (np. "8/10 zapłaciło")
-- [ ] Wyróżnienie wydarzeń z nieopłaconymi uczestnikami
-- [ ] Możliwość przejścia do szczegółów i zarządzania płatnościami
+- [x] Badge ze statusem płatności (np. "8/10 zapłaciło")
+- [x] Wyróżnienie wydarzeń z nieopłaconymi uczestnikami
+- [x] Możliwość przejścia do szczegółów i zarządzania płatnościami
 
 ### AC-10.4: Tab Uczestnictwo
-- [ ] Lista wydarzeń gdzie użytkownik był uczestnikiem (nie organizatorem)
-- [ ] Widoczna informacja o organizatorze
-- [ ] Status wydarzenia (Zakończone/Anulowane)
+- [x] Lista wydarzeń gdzie użytkownik był uczestnikiem (nie organizatorem)
+- [x] Widoczna informacja o organizatorze
+- [x] Status wydarzenia (Zakończone/Anulowane)
 
 ## Technical Implementation
 
@@ -125,5 +125,5 @@ Feature umożliwiający użytkownikom przeglądanie historii swoich wydarzeń - 
 - FEATURE_07: Event Lifecycle (statusy wydarzeń)
 
 ## Version
-- Implemented in: v3.1
-- Migration: V3_1__Add_event_history_indexes.sql
+- Implemented in: v3.2
+- Migration: V3_2__Add_event_history_indexes.sql
