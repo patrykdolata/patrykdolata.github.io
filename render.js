@@ -177,6 +177,10 @@ const STYLES = `
     .metric-card:nth-child(3) { animation-delay: 0.3s; }
     .metric-card:nth-child(4) { animation-delay: 0.4s; }
 
+    .metric-card-full-width {
+        grid-column: 1 / -1;
+    }
+
     .metric-label {
         font-size: 0.75rem;
         text-transform: uppercase;
@@ -563,14 +567,14 @@ function extractProgress(val) {
 
 // --- PARSER ---
 
-function calculateOverallProgress(milestones) {
+function calculateOverallProgress(milestones, milestoneIndex = 1) {
     let totalTasks = 0;
     let completedTasks = 0;
 
-    // Only calculate progress for M1 (first milestone - current phase)
-    if (milestones.length > 0) {
-        const m1 = milestones[0];
-        m1.features.forEach(feature => {
+    // Calculate progress for the specified milestone (default: M2)
+    if (milestones.length > milestoneIndex) {
+        const targetMilestone = milestones[milestoneIndex];
+        targetMilestone.features.forEach(feature => {
             feature.tasks.forEach(task => {
                 totalTasks++;
                 if (task.done) completedTasks++;
@@ -578,7 +582,10 @@ function calculateOverallProgress(milestones) {
         });
     }
 
-    return totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
+    return {
+        percentage: totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0,
+        totalTasks: totalTasks
+    };
 }
 
 function parseMarkdown(content) {
@@ -663,10 +670,10 @@ function parseMarkdown(content) {
     });
 
     // Calculate actual progress and update summary
-    const actualProgress = calculateOverallProgress(data.milestones);
+    const progressData = calculateOverallProgress(data.milestones, 1);
     data.summary.forEach(item => {
         if (item.isProgress) {
-            item.value = actualProgress.toString();
+            item.value = progressData.percentage.toString();
         }
     });
 
@@ -702,8 +709,8 @@ function generateHTML(data) {
         
         <!-- DASHBOARD SUMMARY -->
         <div class="summary-grid">
-            ${data.summary.map(item => `
-                <div class="metric-card">
+            ${data.summary.map((item, index, array) => `
+                <div class="metric-card${index === array.length - 1 ? ' metric-card-full-width' : ''}">
                     <div class="metric-label">${item.label}</div>
                     <div class="metric-value">
                         ${item.isProgress ? item.value + '%' : item.value}
@@ -761,11 +768,11 @@ function generateHTML(data) {
 
 // --- UPDATE GOALS.MD ---
 
-function updateGoalsProgress(content, actualProgress) {
-    // Update the progress bar line
-    const progressRegex = /(\| \*\*Całkowity Postęp\*\* \| !\[Postęp\]\(https:\/\/progress-bar\.dev\/)(\d+)(\/\?scale=100&title=Zrobione&width=120&color=2ecc71\) \*\*)(\d+)(\%\*\* \|)/;
+function updateGoalsProgress(content, actualProgress, totalTasks) {
+    // Update M2 progress bar in summary table
+    const progressRegex = /(\| \*\*Postęp M2\*\* \| !\[Postęp\]\(https:\/\/progress-bar\.dev\/)(\d+)(\/\?scale=)(\d+)(&title=W%20trakcie&width=120&color=3498db\) \*\*)(\d+)(\%\*\* \|)/;
 
-    const updated = content.replace(progressRegex, `$1${actualProgress}$3${actualProgress}$5`);
+    const updated = content.replace(progressRegex, `$1${actualProgress}$3${totalTasks}$5${actualProgress}$7`);
 
     return updated;
 }
@@ -780,11 +787,13 @@ try {
     let raw = fs.readFileSync(INPUT_FILE, 'utf8');
     const data = parseMarkdown(raw);
 
-    // Get the calculated progress
-    const actualProgress = data.summary.find(item => item.isProgress)?.value || '0';
+    // Calculate M2 progress (index 1)
+    const progressData = calculateOverallProgress(data.milestones, 1);
+    const actualProgress = progressData.percentage;
+    const totalTasks = progressData.totalTasks;
 
-    // Update goals.md with actual progress
-    const updatedGoals = updateGoalsProgress(raw, actualProgress);
+    // Update goals.md with actual M2 progress
+    const updatedGoals = updateGoalsProgress(raw, actualProgress, totalTasks);
     if (updatedGoals !== raw) {
         fs.writeFileSync(INPUT_FILE, updatedGoals);
         console.log(`📊 Zaktualizowano postęp w ${INPUT_FILE}: ${actualProgress}%`);

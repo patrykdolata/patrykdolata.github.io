@@ -178,6 +178,10 @@
     .metric-card:nth-child(3) { animation-delay: 0.3s; }
     .metric-card:nth-child(4) { animation-delay: 0.4s; }
 
+    .metric-card-full-width {
+        grid-column: 1 / -1;
+    }
+
     .metric-label {
         font-size: 0.75rem;
         text-transform: uppercase;
@@ -519,13 +523,13 @@
         <div class="summary-grid">
             
                 <div class="metric-card">
-                    <div class="metric-label"><strong>Postęp M1 (MVP)</strong></div>
+                    <div class="metric-label"><strong>Postęp M2</strong></div>
                     <div class="metric-value">
-                        88%
+                        40%
                     </div>
                     
                         <div class="progress-bar">
-                            <div class="progress-fill" style="width: 88%"></div>
+                            <div class="progress-fill" style="width: 40%"></div>
                         </div>
                     
                 </div>
@@ -533,7 +537,15 @@
                 <div class="metric-card">
                     <div class="metric-label"><strong>Aktualna Faza</strong></div>
                     <div class="metric-value">
-                        <strong>M1: MVP Organizatora + Samoobsługa</strong>
+                        <strong>M2: Viralność, Powiadomienia i Feedback</strong>
+                    </div>
+                    
+                </div>
+            
+                <div class="metric-card">
+                    <div class="metric-label"><strong>Ostatni Release</strong></div>
+                    <div class="metric-value">
+                        08.12.2025
                     </div>
                     
                 </div>
@@ -541,15 +553,15 @@
                 <div class="metric-card">
                     <div class="metric-label"><strong>Najbliższy Termin</strong></div>
                     <div class="metric-value">
-                        <strong>31.12.2025</strong>
+                        Q1 2026
                     </div>
                     
                 </div>
             
-                <div class="metric-card">
-                    <div class="metric-label"><strong>Główny Fokus</strong></div>
+                <div class="metric-card metric-card-full-width">
+                    <div class="metric-label"><strong>Cel</strong></div>
                     <div class="metric-value">
-                        Automatyzacja zapisów
+                        Push notifications i onboarding
                     </div>
                     
                 </div>
@@ -560,7 +572,7 @@
         
             <div class="milestone-card">
                 <div class="milestone-header">
-                    <h2 class="milestone-title">M1 MVP Organizatora i Samoobsługa</h2>
+                    <h2 class="milestone-title">M1 MVP Organizatora i Samoobsługa [UKOŃCZONE]</h2>
                     <div class="milestone-meta"><strong>Termin:</strong> - Q4 2025 &nbsp;•&nbsp; <strong>Cel:</strong> - Organizator tworzy wydarzenie, wysyła link na grupę, a lista "robi się sama".</div>
                 </div>
 
@@ -811,41 +823,41 @@
                         </div>
                     </details>
                 
-                    <details open>
+                    <details >
                         <summary>
-                            <span>Stabilizacja wersji</span>
-                            <span class="status-pill pill-todo">1 / 4</span>
+                            <span>Stabilizacja i Release</span>
+                            <span class="status-pill pill-done">Wykonane</span>
                         </summary>
                         <div class="feature-body">
                             
                             <ul class="task-list">
                                 
                                     <li class="task-item">
-                                        <div class="checkbox ">
-                                            
+                                        <div class="checkbox checked">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
                                         </div>
-                                        <div class="task-text "><strong>Testy end to end</strong></div>
-                                    </li>
-                                
-                                    <li class="task-item">
-                                        <div class="checkbox ">
-                                            
-                                        </div>
-                                        <div class="task-text "><strong>Poprawki</strong></div>
+                                        <div class="task-text dimmed"><strong>Testy end-to-end</strong> - Kompleksowa walidacja przed wypuszczeniem.</div>
                                     </li>
                                 
                                     <li class="task-item">
                                         <div class="checkbox checked">
                                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
                                         </div>
-                                        <div class="task-text dimmed"><strong>Serwer produkcyjny</strong></div>
+                                        <div class="task-text dimmed"><strong>Poprawki bugów</strong> - Stabilizacja przed pierwszym releasem.</div>
                                     </li>
                                 
                                     <li class="task-item">
-                                        <div class="checkbox ">
-                                            
+                                        <div class="checkbox checked">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
                                         </div>
-                                        <div class="task-text "><strong>Release 0.0.1</strong></div>
+                                        <div class="task-text dimmed"><strong>Serwer produkcyjny</strong> - Infrastruktura gotowa do testów.</div>
+                                    </li>
+                                
+                                    <li class="task-item">
+                                        <div class="checkbox checked">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                        </div>
+                                        <div class="task-text dimmed"><strong>Release 0.0.1</strong> - Wersja wypuszczona do grona testerskiego (grudzień 2025).</div>
                                     </li>
                                 
                             </ul>
@@ -856,7 +868,7 @@
         
             <div class="milestone-card">
                 <div class="milestone-header">
-                    <h2 class="milestone-title">M2 Viralność, Powiadomienia i Feedback</h2>
+                    <h2 class="milestone-title">M2 Viralność, Powiadomienia i Feedback [W TRAKCIE]</h2>
                     <div class="milestone-meta"><strong>Termin:</strong> - Q1 2026 &nbsp;•&nbsp; <strong>Cel:</strong> - Maksymalizacja konwersji nowych użytkowników, retencja istniejących, zbieranie feedbacku.</div>
                 </div>
 
@@ -899,45 +911,59 @@
                     <details open>
                         <summary>
                             <span>Push Notifications (PRIORYTET)</span>
-                            <span class="status-pill pill-todo">0 / 5</span>
+                            <span class="status-pill pill-todo">6 / 7</span>
                         </summary>
                         <div class="feature-body">
                             <p class="feature-desc">Kluczowe dla retencji i redukcji no-shows.</p>
                             <ul class="task-list">
                                 
                                     <li class="task-item">
-                                        <div class="checkbox ">
-                                            
+                                        <div class="checkbox checked">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
                                         </div>
-                                        <div class="task-text "><strong>FCM/APNs Integration</strong> - Natywne push notifications na iOS i Android.</div>
+                                        <div class="task-text dimmed"><strong>FCM/APNs Integration</strong> - <code style="font-family:monospace; background:var(--border); padding:2px 4px; border-radius:4px; font-size:0.9em;">[ZROBIONE]</code> Device tokens, routing notyfikacji, infrastruktura push na iOS i Android.</div>
+                                    </li>
+                                
+                                    <li class="task-item">
+                                        <div class="checkbox checked">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                        </div>
+                                        <div class="task-text dimmed"><strong>Przypomnienia</strong> - <code style="font-family:monospace; background:var(--border); padding:2px 4px; border-radius:4px; font-size:0.9em;">[ZROBIONE]</code> Automatyczne alerty 24h i 2h przed wydarzeniem (scheduled tasks).</div>
+                                    </li>
+                                
+                                    <li class="task-item">
+                                        <div class="checkbox checked">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                        </div>
+                                        <div class="task-text dimmed"><strong>RSVP Deadline</strong> - <code style="font-family:monospace; background:var(--border); padding:2px 4px; border-radius:4px; font-size:0.9em;">[ZROBIONE]</code> Terminy zapisów na wydarzenia z przypomnieniami.</div>
+                                    </li>
+                                
+                                    <li class="task-item">
+                                        <div class="checkbox checked">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                        </div>
+                                        <div class="task-text dimmed"><strong>Payment Deadline</strong> - <code style="font-family:monospace; background:var(--border); padding:2px 4px; border-radius:4px; font-size:0.9em;">[ZROBIONE]</code> Terminy płatności z notyfikacjami.</div>
                                     </li>
                                 
                                     <li class="task-item">
                                         <div class="checkbox ">
                                             
                                         </div>
-                                        <div class="task-text "><strong>Przypomnienia</strong> - Automatyczny alert 24h i 2h przed meczem.</div>
+                                        <div class="task-text "><strong>Alerty Zmian</strong> - Natychmiastowe info o zmianie godziny, lokalizacji lub odwołaniu (w trakcie).</div>
                                     </li>
                                 
                                     <li class="task-item">
-                                        <div class="checkbox ">
-                                            
+                                        <div class="checkbox checked">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
                                         </div>
-                                        <div class="task-text "><strong>Alerty Zmian</strong> - Natychmiastowe info o zmianie godziny, lokalizacji lub odwołaniu.</div>
+                                        <div class="task-text dimmed"><strong>Awans z Rezerwy</strong> - Push "Awansowałeś na listę główną!" (done w M1).</div>
                                     </li>
                                 
                                     <li class="task-item">
-                                        <div class="checkbox ">
-                                            
+                                        <div class="checkbox checked">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
                                         </div>
-                                        <div class="task-text "><strong>Awans z Rezerwy</strong> - Push "Awansowałeś na listę główną!"</div>
-                                    </li>
-                                
-                                    <li class="task-item">
-                                        <div class="checkbox ">
-                                            
-                                        </div>
-                                        <div class="task-text "><strong>Statusy Listy</strong> - "Zwolniło się miejsce!" dla osób na rezerwie.</div>
+                                        <div class="task-text dimmed"><strong>Statusy Listy</strong> - <code style="font-family:monospace; background:var(--border); padding:2px 4px; border-radius:4px; font-size:0.9em;">[ZROBIONE]</code> Notyfikacje o dodaniu/usunięciu uczestników (PARTICIPANT_ADDED/REMOVED).</div>
                                     </li>
                                 
                             </ul>
@@ -965,6 +991,47 @@
                                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
                                         </div>
                                         <div class="task-text dimmed"><strong>Powiadomienia o Awansie</strong> - In-app notification po awansie z rezerwy.</div>
+                                    </li>
+                                
+                            </ul>
+                        </div>
+                    </details>
+                
+                    <details >
+                        <summary>
+                            <span>Zaawansowane Zarządzanie (częściowo z M3)</span>
+                            <span class="status-pill pill-done">Wykonane</span>
+                        </summary>
+                        <div class="feature-body">
+                            <p class="feature-desc">Funkcje przeniesione z M3 ze względu na priorytet.</p>
+                            <ul class="task-list">
+                                
+                                    <li class="task-item">
+                                        <div class="checkbox checked">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                        </div>
+                                        <div class="task-text dimmed"><strong>Reordering Participants</strong> - <code style="font-family:monospace; background:var(--border); padding:2px 4px; border-radius:4px; font-size:0.9em;">[ZROBIONE]</code> Zmiana kolejności uczestników wydarzenia (backend + frontend).</div>
+                                    </li>
+                                
+                                    <li class="task-item">
+                                        <div class="checkbox checked">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                        </div>
+                                        <div class="task-text dimmed"><strong>Reordering Group Members</strong> - <code style="font-family:monospace; background:var(--border); padding:2px 4px; border-radius:4px; font-size:0.9em;">[ZROBIONE]</code> Zarządzanie kolejnością członków grupy.</div>
+                                    </li>
+                                
+                                    <li class="task-item">
+                                        <div class="checkbox checked">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                        </div>
+                                        <div class="task-text dimmed"><strong>Core Players Statistics</strong> - <code style="font-family:monospace; background:var(--border); padding:2px 4px; border-radius:4px; font-size:0.9em;">[ZROBIONE]</code> Statystyki i analityka głównych graczy.</div>
+                                    </li>
+                                
+                                    <li class="task-item">
+                                        <div class="checkbox checked">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                        </div>
+                                        <div class="task-text dimmed"><strong>Batch Event Series</strong> - <code style="font-family:monospace; background:var(--border); padding:2px 4px; border-radius:4px; font-size:0.9em;">[ZROBIONE]</code> Operacje batch na seriach wydarzeń.</div>
                                     </li>
                                 
                             </ul>
@@ -1073,6 +1140,54 @@
                         </div>
                     </details>
                 
+                    <details open>
+                        <summary>
+                            <span>Stabilizacja i Release</span>
+                            <span class="status-pill pill-todo">0 / 5</span>
+                        </summary>
+                        <div class="feature-body">
+                            
+                            <ul class="task-list">
+                                
+                                    <li class="task-item">
+                                        <div class="checkbox ">
+                                            
+                                        </div>
+                                        <div class="task-text "><strong>Refactor kodu</strong> - Czyszczenie kodu, uzupełnienie testów automatycznych.</div>
+                                    </li>
+                                
+                                    <li class="task-item">
+                                        <div class="checkbox ">
+                                            
+                                        </div>
+                                        <div class="task-text "><strong>Testy end-to-end</strong> - Kompleksowa walidacja przed wypuszczeniem.</div>
+                                    </li>
+                                
+                                    <li class="task-item">
+                                        <div class="checkbox ">
+                                            
+                                        </div>
+                                        <div class="task-text "><strong>Poprawki bugów</strong> - Stabilizacja przed releasem.</div>
+                                    </li>
+                                
+                                    <li class="task-item">
+                                        <div class="checkbox ">
+                                            
+                                        </div>
+                                        <div class="task-text "><strong>Serwer produkcyjny</strong> - Infrastruktura gotowa do testów.</div>
+                                    </li>
+                                
+                                    <li class="task-item">
+                                        <div class="checkbox ">
+                                            
+                                        </div>
+                                        <div class="task-text "><strong>Release 0.0.2</strong> - Wersja wypuszczona do grona testerskiego.</div>
+                                    </li>
+                                
+                            </ul>
+                        </div>
+                    </details>
+                
             </div>
         
             <div class="milestone-card">
@@ -1118,33 +1233,6 @@
                                             
                                         </div>
                                         <div class="task-text "><strong>Rozszerzona Historia</strong> - Statystyki aktywności gracza (ulubione sporty, częstotliwość).</div>
-                                    </li>
-                                
-                            </ul>
-                        </div>
-                    </details>
-                
-                    <details open>
-                        <summary>
-                            <span>Zaawansowane Zarządzanie Listą</span>
-                            <span class="status-pill pill-todo">0 / 2</span>
-                        </summary>
-                        <div class="feature-body">
-                            
-                            <ul class="task-list">
-                                
-                                    <li class="task-item">
-                                        <div class="checkbox ">
-                                            
-                                        </div>
-                                        <div class="task-text "><strong>Priorytetyzacja</strong> - Ręczne przesuwanie graczy (awans/degradacja).</div>
-                                    </li>
-                                
-                                    <li class="task-item">
-                                        <div class="checkbox ">
-                                            
-                                        </div>
-                                        <div class="task-text "><strong>Drag & Drop</strong> - Zmiana kolejności metodą przeciągnij i upuść.</div>
                                     </li>
                                 
                             </ul>

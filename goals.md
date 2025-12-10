@@ -9,14 +9,15 @@
 
 | Metryka | Status |
 | :--- | :--- |
-| **Postęp M1 (MVP)** | ![Postęp](https://progress-bar.dev/88/?scale=100&title=Zrobione&width=120&color=2ecc71) **88%** |
-| **Aktualna Faza** | **M1: MVP Organizatora + Samoobsługa** |
-| **Najbliższy Termin** | **31.12.2025**  |
-| **Główny Fokus** | Automatyzacja zapisów|
+| **Postęp M2** | ![Postęp](https://progress-bar.dev/40/?scale=30&title=W%20trakcie&width=120&color=3498db) **40%** |
+| **Aktualna Faza** | **M2: Viralność, Powiadomienia i Feedback** |
+| **Ostatni Release** |  08.12.2025 |
+| **Najbliższy Termin** | Q1 2026 |
+| **Cel** | Push notifications i onboarding|
 
 ---
 
-## 🚀 M1 — MVP Organizatora i Samoobsługa
+## ✅ M1 — MVP Organizatora i Samoobsługa [UKOŃCZONE]
 **Termin:** Q4 2025
 **Cel:** Organizator tworzy wydarzenie, wysyła link na grupę, a lista "robi się sama".
 
@@ -63,15 +64,17 @@
 - [x] **Dwie Perspektywy** – Podział na zakładki "Organizowane" i "Uczestnictwo".
 - [x] **Rozliczenia Płatności**  – Organizator widzi status płatności uczestników.
 
-### Stabilizacja wersji
-- [ ] **Testy end to end**  
-- [ ] **Poprawki** 
-- [x] **Serwer produkcyjny**
-- [ ] **Release 0.0.1**
+### ✅ Stabilizacja i Release
+- [x] **Testy end-to-end** – Kompleksowa walidacja przed wypuszczeniem.
+- [x] **Poprawki bugów** – Stabilizacja przed pierwszym releasem.
+- [x] **Serwer produkcyjny** – Infrastruktura gotowa do testów.
+- [x] **Release 0.0.1** – Wersja wypuszczona do grona testerskiego (grudzień 2025).
+
+**Status:** M1 ukończone w 100%. Aplikacja działa u testerów, zbierany feedback.
 
 ---
 
-## 🟡 M2 — Viralność, Powiadomienia i Feedback
+## 🟡 M2 — Viralność, Powiadomienia i Feedback [W TRAKCIE]
 **Termin:** Q1 2026
 **Cel:** Maksymalizacja konwersji nowych użytkowników, retencja istniejących, zbieranie feedbacku.
 
@@ -81,18 +84,27 @@
 - [ ] **Social Login** `[BACKLOG]` – Szybkie logowanie przez Google i Apple (1 klik).
 - [ ] **Open Graph Meta** `[BACKLOG]` – Podgląd wydarzenia w Messenger/WhatsApp przed kliknięciem linku.
 
-### 🔴 Push Notifications (PRIORYTET)
+### 🟡 Push Notifications (PRIORYTET)
 *Kluczowe dla retencji i redukcji no-shows.*
-- [ ] **FCM/APNs Integration** `[BACKLOG]` – Natywne push notifications na iOS i Android.
-- [ ] **Przypomnienia** `[MA-422]` – Automatyczny alert 24h i 2h przed meczem.
-- [ ] **Alerty Zmian** `[MA-422]` – Natychmiastowe info o zmianie godziny, lokalizacji lub odwołaniu.
-- [ ] **Awans z Rezerwy** `[MA-496]` – Push "Awansowałeś na listę główną!"
-- [ ] **Statusy Listy** `[MA-422]` – "Zwolniło się miejsce!" dla osób na rezerwie.
+- [x] **FCM/APNs Integration** `[ZROBIONE]` – Device tokens, routing notyfikacji, infrastruktura push na iOS i Android.
+- [x] **Przypomnienia** `[ZROBIONE]` – Automatyczne alerty 24h i 2h przed wydarzeniem (scheduled tasks).
+- [x] **RSVP Deadline** `[ZROBIONE]` – Terminy zapisów na wydarzenia z przypomnieniami.
+- [x] **Payment Deadline** `[ZROBIONE]` – Terminy płatności z notyfikacjami.
+- [ ] **Alerty Zmian** `[MA-422]` – Natychmiastowe info o zmianie godziny, lokalizacji lub odwołaniu (w trakcie).
+- [x] **Awans z Rezerwy** `[MA-496]` – Push "Awansowałeś na listę główną!" (done w M1).
+- [x] **Statusy Listy** `[ZROBIONE]` – Notyfikacje o dodaniu/usunięciu uczestników (PARTICIPANT_ADDED/REMOVED).
 
 ### 🟡 Real-time (częściowo done)
 *Komunikacja w czasie rzeczywistym w aplikacji.*
 - [x] **Infrastruktura WebSocket** `[MA-534]` `[MA-538]` – Real-time między serwerem a aplikacją.
 - [x] **Powiadomienia o Awansie** `[MA-496]` – In-app notification po awansie z rezerwy.
+
+### 🟢 Zaawansowane Zarządzanie (częściowo z M3)
+*Funkcje przeniesione z M3 ze względu na priorytet.*
+- [x] **Reordering Participants** `[ZROBIONE]` – Zmiana kolejności uczestników wydarzenia (backend + frontend).
+- [x] **Reordering Group Members** `[ZROBIONE]` – Zarządzanie kolejnością członków grupy.
+- [x] **Core Players Statistics** `[ZROBIONE]` – Statystyki i analityka głównych graczy.
+- [x] **Batch Event Series** `[ZROBIONE]` – Operacje batch na seriach wydarzeń.
 
 ### 📣 Feature Requests
 *Zbieranie pomysłów od użytkowników i budowanie społeczności.*
@@ -112,6 +124,12 @@
 - [ ] **Magic Link** `[BACKLOG]` – Logowanie bez hasła przez link w emailu.
 - [ ] **Drag & Drop Lista** `[BACKLOG]` – Przeciąganie uczestników na liście.
 
+### ✅ Stabilizacja i Release
+- [ ] **Refactor kodu** - Czyszczenie kodu, uzupełnienie testów automatycznych.
+- [ ] **Testy end-to-end** – Kompleksowa walidacja przed wypuszczeniem.
+- [ ] **Poprawki bugów** – Stabilizacja przed releasem.
+- [ ] **Serwer produkcyjny** – Infrastruktura gotowa do testów.
+- [ ] **Release 0.0.2** – Wersja wypuszczona do grona testerskiego.
 ---
 
 ## 🟢 M3 — Reputacja, Skalowanie i Zaawansowane Narzędzia
@@ -124,10 +142,6 @@
 - [ ] **R-Score** `[BACKLOG]` – Wskaźnik wiarygodności widoczny przy profilu gracza (% obecności).
 - [ ] **Kary za No-Show** `[BACKLOG]` – Niższy priorytet lub blokada dla notorycznych "wagarowiczów".
 - [ ] **Rozszerzona Historia** `[BACKLOG]` – Statystyki aktywności gracza (ulubione sporty, częstotliwość).
-
-### 🔒 Zaawansowane Zarządzanie Listą
-- [ ] **Priorytetyzacja** `[BACKLOG]` – Ręczne przesuwanie graczy (awans/degradacja).
-- [ ] **Drag & Drop** `[BACKLOG]` – Zmiana kolejności metodą przeciągnij i upuść.
 
 ### 📅 Inteligentny Kalendarz
 - [ ] **Zaawansowane Serie** `[MA-445]` – Pomijanie świąt, cykle miesięczne.
