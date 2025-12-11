@@ -78,33 +78,34 @@
 **Termin:** Q1 2026
 **Cel:** Maksymalizacja konwersji nowych użytkowników, retencja istniejących, zbieranie feedbacku.
 
-### 🔴 Onboarding i Konwersja (PRIORYTET)
+### 🔴 Onboarding
 *Redukcja friction dla nowych użytkowników z deep links.*
 - [ ] **Web Landing Page** `[BACKLOG]` – Strona meetapp.pl/event/{id} dla userów bez aplikacji (widok wydarzenia + CTA pobierz).
 - [ ] **Social Login** `[BACKLOG]` – Szybkie logowanie przez Google i Apple (1 klik).
 - [ ] **Open Graph Meta** `[BACKLOG]` – Podgląd wydarzenia w Messenger/WhatsApp przed kliknięciem linku.
 
-### 🟡 Push Notifications (PRIORYTET)
+### 🟡 Push Notifications
 *Kluczowe dla retencji i redukcji no-shows.*
-- [x] **FCM/APNs Integration** `[ZROBIONE]` – Device tokens, routing notyfikacji, infrastruktura push na iOS i Android.
-- [x] **Przypomnienia** `[ZROBIONE]` – Automatyczne alerty 24h i 2h przed wydarzeniem (scheduled tasks).
-- [x] **RSVP Deadline** `[ZROBIONE]` – Terminy zapisów na wydarzenia z przypomnieniami.
-- [x] **Payment Deadline** `[ZROBIONE]` – Terminy płatności z notyfikacjami.
+- [x] **Integracja FCM/APNs**  – Infrastruktura push na iOS i Android.
+- [x] **Przypomnienia** – Automatyczne alerty 24h i 2h przed wydarzeniem.
+- [x] **RSVP Deadline**  – Terminy zapisów na wydarzenia z przypomnieniami.
+- [x] **Deadline Płatności** – Terminy płatności z notyfikacjami.
 - [ ] **Alerty Zmian** `[MA-422]` – Natychmiastowe info o zmianie godziny, lokalizacji lub odwołaniu (w trakcie).
 - [x] **Awans z Rezerwy** `[MA-496]` – Push "Awansowałeś na listę główną!" (done w M1).
-- [x] **Statusy Listy** `[ZROBIONE]` – Notyfikacje o dodaniu/usunięciu uczestników (PARTICIPANT_ADDED/REMOVED).
+- [x] **Statusy Listy** – Notyfikacje o dodaniu/usunięciu uczestników (PARTICIPANT_ADDED/REMOVED).
 
-### 🟡 Real-time (częściowo done)
+### 🟡 Real-time
 *Komunikacja w czasie rzeczywistym w aplikacji.*
 - [x] **Infrastruktura WebSocket** `[MA-534]` `[MA-538]` – Real-time między serwerem a aplikacją.
 - [x] **Powiadomienia o Awansie** `[MA-496]` – In-app notification po awansie z rezerwy.
 
-### 🟢 Zaawansowane Zarządzanie (częściowo z M3)
+### 🟢 Zaawansowane Zarządzanie
 *Funkcje przeniesione z M3 ze względu na priorytet.*
-- [x] **Reordering Participants** `[ZROBIONE]` – Zmiana kolejności uczestników wydarzenia (backend + frontend).
-- [x] **Reordering Group Members** `[ZROBIONE]` – Zarządzanie kolejnością członków grupy.
-- [x] **Core Players Statistics** `[ZROBIONE]` – Statystyki i analityka głównych graczy.
-- [x] **Batch Event Series** `[ZROBIONE]` – Operacje batch na seriach wydarzeń.
+- [x] **Reorganizacja uczestników** – Zmiana kolejności uczestników wydarzenia (backend + frontend).
+- [x] **Reorganizacja członków grupy** – Zarządzanie kolejnością członków grupy.
+- [x] **Ilość członków i stałych graczy** – Statystyki i analityka głównych graczy.
+- [x] **Optymalizacja tworzenia wydarzeń w serii** – Operacje batch na seriach wydarzeń.
+- [ ] **Wiele list głównych graczy** - Przygotowane listy graczy w grupie
 
 ### 📣 Feature Requests
 *Zbieranie pomysłów od użytkowników i budowanie społeczności.*
