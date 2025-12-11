@@ -9,7 +9,7 @@
 
 | Metryka | Status |
 | :--- | :--- |
-| **Postęp M2** | ![Postęp](https://progress-bar.dev/39/?scale=31&title=W%20trakcie&width=120&color=3498db) **39%** |
+| **Postęp M2** | ![Postęp](https://progress-bar.dev/47/?scale=32&title=W%20trakcie&width=120&color=3498db) **47%** |
 | **Aktualna Faza** | **M2: Viralność, Powiadomienia i Feedback** |
 | **Ostatni Release** |  08.12.2025 |
 | **Najbliższy Termin** | Q1 2026 |
