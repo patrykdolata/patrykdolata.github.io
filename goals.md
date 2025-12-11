@@ -80,8 +80,8 @@
 
 ### 🔴 Onboarding
 *Redukcja friction dla nowych użytkowników z deep links.*
-- [ ] **Web Landing Page** `[BACKLOG]` – Strona meetapp.pl/event/{id} dla userów bez aplikacji (widok wydarzenia + CTA pobierz).
-- [ ] **Social Login** `[BACKLOG]` – Szybkie logowanie przez Google i Apple (1 klik).
+- [ ] **Web Landing Page** `[BACKLOG]` – Strona meetapp.pl/event/{id} dla userów bez aplikacji (widok wydarzenia + CTA).
+- [ ] **Social Login** `[BACKLOG]` – Szybkie logowanie przez Google i Apple.
 - [ ] **Open Graph Meta** `[BACKLOG]` – Podgląd wydarzenia w Messenger/WhatsApp przed kliknięciem linku.
 
 ### 🟡 Push Notifications
@@ -113,7 +113,7 @@
 - [ ] **Głosowanie** `[BACKLOG]` – Użytkownicy mogą lajkować pomysły innych.
 - [ ] **Lista Pomysłów** `[BACKLOG]` – Przeglądanie zgłoszonych requestów z sortowaniem po głosach.
 - [ ] **Status Realizacji** `[BACKLOG]` – Oznaczanie: nowy, w planach, w realizacji, zrobione.
-- [ ] **Publiczny Roadmap** `[BACKLOG]` – Widoczność co jest planowane dla użytkowników.
+- [x] **Publiczny Roadmap** `[BACKLOG]` – Widoczność co jest planowane dla użytkowników.
 
 ### 🛠️ Stabilność i Jakość
 *Zapewnienie niezawodności aplikacji.*
@@ -123,7 +123,8 @@
 ### ⚪ Nice-to-have
 *Niższy priorytet - jeśli starczy czasu.*
 - [ ] **Magic Link** `[BACKLOG]` – Logowanie bez hasła przez link w emailu.
-- [ ] **Drag & Drop Lista** `[BACKLOG]` – Przeciąganie uczestników na liście.
+- [x] **Drag & Drop Lista** `[BACKLOG]` – Przeciąganie uczestników na liście.
+- [x] **Statusy Płatności** `[MA-197]` – Oznaczanie kto zapłacił.
 
 ### ✅ Stabilizacja i Release
 - [ ] **Refactor kodu** - Czyszczenie kodu, uzupełnienie testów automatycznych.
@@ -144,18 +145,11 @@
 - [ ] **Kary za No-Show** `[BACKLOG]` – Niższy priorytet lub blokada dla notorycznych "wagarowiczów".
 - [ ] **Rozszerzona Historia** `[BACKLOG]` – Statystyki aktywności gracza (ulubione sporty, częstotliwość).
 
-### 📅 Inteligentny Kalendarz
-- [ ] **Zaawansowane Serie** `[MA-445]` – Pomijanie świąt, cykle miesięczne.
-- [ ] **Widok Kalendarza** `[BACKLOG]` – Graficzne przedstawienie nadchodzących gier.
 
-### 💸 Finanse
-- [ ] **Statusy Płatności** `[MA-197]` – Oznaczanie kto zapłacił (gotówka/przelew).
-- [ ] **Płatności Online** `[BACKLOG]` – Integracja z BLIK/Kartą wewnątrz aplikacji.
-- [ ] **Polityka Zwrotów** `[BACKLOG]` – Automatyczne zwroty przy rezygnacji w terminie.
-
-### 📈 Analityka Organizatora
-- [ ] **Raporty** `[MA-423]` – Obłożenie, frekwencja, trendy.
-- [ ] **Eksport Danych** `[BACKLOG]` – CSV/Excel z listą uczestników.
+### 🔐 Zgodność i Bezpieczeństwo
+- [ ] **Zgodność RODO** `[BACKLOG]` – Eksport i anonimizacja danych użytkowników.
+- [ ] **Audyt Bezpieczeństwa** `[BACKLOG]` – Testy penetracyjne przed szeroką publikacją.
+- [ ] **Usuwanie Konta** `[BACKLOG]` – Pełne usunięcie danych na żądanie użytkownika.
 
 ### ✅ Stabilizacja i Release
 - [ ] **Refactor kodu** - Czyszczenie kodu, uzupełnienie testów automatycznych.
@@ -175,15 +169,23 @@
 - [ ] **Synchronizacja** `[BACKLOG]` – Auto-sync po przywróceniu połączenia.
 - [ ] **Cache** `[BACKLOG]` – Cachowanie danych dla płynniejszego działania.
 
-### 🔐 Zgodność i Bezpieczeństwo
-- [ ] **Zgodność RODO** `[BACKLOG]` – Eksport i anonimizacja danych użytkowników.
-- [ ] **Audyt Bezpieczeństwa** `[BACKLOG]` – Testy penetracyjne przed szeroką publikacją.
-- [ ] **Usuwanie Konta** `[BACKLOG]` – Pełne usunięcie danych na żądanie użytkownika.
+### 📅 Inteligentny Kalendarz
+- [ ] **Zaawansowane Serie** `[MA-445]` – Pomijanie świąt, cykle miesięczne.
+- [ ] **Widok Kalendarza** `[BACKLOG]` – Graficzne przedstawienie nadchodzących gier.
+
+### 💸 Finanse
+- [x] **Statusy Płatności** `[MA-197]` – Oznaczanie kto zapłacił.
+- [ ] **Płatności Online** `[BACKLOG]` – Integracja z BLIK/Kartą wewnątrz aplikacji.
+- [ ] **Polityka Zwrotów** `[BACKLOG]` – Automatyczne zwroty przy rezygnacji w terminie.
 
 ### 🛠️ Developer Experience
 - [ ] **Zdalna Konfiguracja** `[BACKLOG]` – Feature flags bez aktualizacji w sklepie.
 - [ ] **Panel Logów** `[BACKLOG]` – Narzędzie do przeglądania logów produkcyjnych.
 - [ ] **A/B Testing** `[BACKLOG]` – Testowanie wariantów UI.
+
+### 📈 Analityka Organizatora
+- [ ] **Raporty** `[MA-423]` – Obłożenie, frekwencja, trendy.
+- [ ] **Eksport Danych** `[BACKLOG]` – CSV/Excel z listą uczestników.
 
 ### ✅ Stabilizacja i Release
 - [ ] **Refactor kodu** - Czyszczenie kodu, uzupełnienie testów automatycznych.
