@@ -17,7 +17,7 @@
 
 ---
 
-## ✅ M1 — MVP Organizatora i Samoobsługa [UKOŃCZONE]
+## ✅ M1 — MVP Organizatora i Samoobsługa
 **Termin:** Q4 2025
 **Cel:** Organizator tworzy wydarzenie, wysyła link na grupę, a lista "robi się sama".
 
@@ -74,7 +74,7 @@
 
 ---
 
-## 🟡 M2 — Viralność, Powiadomienia i Feedback [W TRAKCIE]
+## 🟡 M2 — Viralność, Powiadomienia i Feedback
 **Termin:** Q1 2026
 **Cel:** Maksymalizacja konwersji nowych użytkowników, retencja istniejących, zbieranie feedbacku.
 
@@ -156,6 +156,12 @@
 - [ ] **Raporty** `[MA-423]` – Obłożenie, frekwencja, trendy.
 - [ ] **Eksport Danych** `[BACKLOG]` – CSV/Excel z listą uczestników.
 
+### ✅ Stabilizacja i Release
+- [ ] **Refactor kodu** - Czyszczenie kodu, uzupełnienie testów automatycznych.
+- [ ] **Testy end-to-end** – Kompleksowa walidacja przed wypuszczeniem.
+- [ ] **Poprawki bugów** – Stabilizacja przed releasem.
+- [ ] **Serwer produkcyjny** – Infrastruktura gotowa do testów.
+- [ ] **Release 0.0.3** – Wersja wypuszczona do grona testerskiego.
 ---
 
 ## 🔵 M4 — Optymalizacja, Zgodność i Polish
@@ -178,6 +184,12 @@
 - [ ] **Panel Logów** `[BACKLOG]` – Narzędzie do przeglądania logów produkcyjnych.
 - [ ] **A/B Testing** `[BACKLOG]` – Testowanie wariantów UI.
 
+### ✅ Stabilizacja i Release
+- [ ] **Refactor kodu** - Czyszczenie kodu, uzupełnienie testów automatycznych.
+- [ ] **Testy end-to-end** – Kompleksowa walidacja przed wypuszczeniem.
+- [ ] **Poprawki bugów** – Stabilizacja przed releasem.
+- [ ] **Serwer produkcyjny** – Infrastruktura gotowa do testów.
+- [ ] **Release 0.0.4** – Wersja wypuszczona do grona testerskiego.
 ---
 
 ## 🏷️ Legenda
