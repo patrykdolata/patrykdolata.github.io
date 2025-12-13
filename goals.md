@@ -80,7 +80,7 @@
 
 ### 🔴 Onboarding
 *Redukcja friction dla nowych użytkowników z deep links.*
-- [ ] **Web Landing Page** `[BACKLOG]` – Strona meetapp.pl/event/{id} dla userów bez aplikacji (widok wydarzenia + CTA).
+- [x] **Web Landing Page** `[BACKLOG]` – Strona meetapp.pl/event/{id} dla userów bez aplikacji (widok wydarzenia + CTA).
 - [ ] **Social Login** `[BACKLOG]` – Szybkie logowanie przez Google i Apple.
 - [ ] **Open Graph Meta** `[BACKLOG]` – Podgląd wydarzenia w Messenger/WhatsApp przed kliknięciem linku.
 
@@ -90,7 +90,7 @@
 - [x] **Przypomnienia** – Automatyczne alerty 24h i 2h przed wydarzeniem.
 - [x] **RSVP Deadline**  – Terminy zapisów na wydarzenia z przypomnieniami.
 - [x] **Deadline Płatności** – Terminy płatności z notyfikacjami.
-- [ ] **Alerty Zmian** `[MA-422]` – Natychmiastowe info o zmianie godziny, lokalizacji lub odwołaniu (w trakcie).
+- [x] **Alerty Zmian** `[MA-422]` – Natychmiastowe info o zmianie godziny, lokalizacji lub odwołaniu (w trakcie).
 - [x] **Awans z Rezerwy** `[MA-496]` – Push "Awansowałeś na listę główną!" (done w M1).
 - [x] **Statusy Listy** – Notyfikacje o dodaniu/usunięciu uczestników (PARTICIPANT_ADDED/REMOVED).
 
@@ -105,7 +105,7 @@
 - [x] **Reorganizacja członków grupy** – Zarządzanie kolejnością członków grupy.
 - [x] **Ilość członków i stałych graczy** – Statystyki i analityka głównych graczy.
 - [x] **Optymalizacja tworzenia wydarzeń w serii** – Operacje batch na seriach wydarzeń.
-- [ ] **Wiele list głównych graczy** - Przygotowane listy graczy w grupie
+- [x] **Wiele list głównych graczy** - Przygotowane listy graczy w grupie
 
 ### 📣 Feature Requests
 *Zbieranie pomysłów od użytkowników i budowanie społeczności.*
@@ -136,7 +136,7 @@
 
 ## 🟢 M3 — Reputacja, Skalowanie i Zaawansowane Narzędzia
 **Termin:** Q2 2026
-**Cel:** Budowanie zaufania, zaawansowane zarządzanie, płatności.
+**Cel:** Budowanie zaufania, zaawansowane zarządzanie, RODO.
 
 ### ⭐ System Reputacji
 *Budowanie zaufania i eliminacja no-shows.*
@@ -144,7 +144,6 @@
 - [ ] **R-Score** `[BACKLOG]` – Wskaźnik wiarygodności widoczny przy profilu gracza (% obecności).
 - [ ] **Kary za No-Show** `[BACKLOG]` – Niższy priorytet lub blokada dla notorycznych "wagarowiczów".
 - [ ] **Rozszerzona Historia** `[BACKLOG]` – Statystyki aktywności gracza (ulubione sporty, częstotliwość).
-
 
 ### 🔐 Zgodność i Bezpieczeństwo
 - [ ] **Zgodność RODO** `[BACKLOG]` – Eksport i anonimizacja danych użytkowników.
@@ -159,9 +158,9 @@
 - [ ] **Release 0.0.3** – Wersja wypuszczona do grona testerskiego.
 ---
 
-## 🔵 M4 — Optymalizacja, Zgodność i Polish
+## 🔵 M4 — Optymalizacja
 **Termin:** Q3 2026
-**Cel:** Offline mode, RODO, optymalizacje wydajności.
+**Cel:** Offline mode, finanse, optymalizacje wydajności.
 
 ### 📱 Praca Offline
 *Dostępność aplikacji bez połączenia z internetem.*
@@ -172,6 +171,14 @@
 ### 📅 Inteligentny Kalendarz
 - [ ] **Zaawansowane Serie** `[MA-445]` – Pomijanie świąt, cykle miesięczne.
 - [ ] **Widok Kalendarza** `[BACKLOG]` – Graficzne przedstawienie nadchodzących gier.
+
+### Kreator składów
+- [ ] **Pozycje** - wybór i przypisanie graczy do pozycji w składzie
+- [ ] **Skład** - możliwość ustawienia składów przed meczem
+
+### Ogłoszenia
+- [ ] **Harmonogram dostępności** - ustawienie w profilu godzin dostępności do gry
+- [ ] **Broadcast** - powiadomienie o wolnych miejscach last-minute
 
 ### 💸 Finanse
 - [x] **Statusy Płatności** `[MA-197]` – Oznaczanie kto zapłacił.
