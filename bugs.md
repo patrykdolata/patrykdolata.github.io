@@ -16,9 +16,12 @@
 - [x] długi freeze przy akceptacji prosby o dołęcznie z web
 
 ## medium
-- [ ] blad przy edycji listy z menu kontekstowego po edycji listy stałych graczy brak zmian listy (stare dane) - nie ma nic w logach rowniez
-- [ ] przy edycji serii wydarzen brak pola o wybranej liscie stalych graczy
+- [ ] wylogowywanie za kazdym ubiciem aplikacji
+- [ ] niepamietanie ostatniego loginu
+- [ ] blad przy edycji listy głównych graczy z menu kontekstowego brak odświeżenia ekranu
+- [x] przy edycji serii wydarzen brak pola o wybranej liscie stalych graczy
 - [ ] potwierdzenie przez uczestnika obecnosci nie utworzylo powiadomienia dla organizatora, nie ma rowniez odswiezania szczegolow wydarzenia po websocket dla tego zdarzenia
+- [ ] problemy z app notification badge oraz indykatorem przy profilu
 
 ## low
 - [ ] utworzenie listy graczy o tej samej nazwie powoduje generyczny blad na UI -> powinien byc konkrety powod bledu
