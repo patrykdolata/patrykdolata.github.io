@@ -5,6 +5,7 @@
 - [ ] select all dla innych list graczy
 - [ ] na ekranie lista graczy powinny byc miniaturki avatarow w jednym wierszu na chodzace na siebie wszystkich czlonkow
 - [ ] możliwość oznaczania w tekstach uzytkowników przez @login
+- [ ] możliwość określania orgaznizatora dodatkowego
 
 # bugs
 ## critical
