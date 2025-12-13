@@ -110,8 +110,8 @@
 - [ ] Sprawdź notifications
   - **Rezultat:** Każdy z 8 członków dostał notification EVENT_CREATED (8 * 10 = 80 notifications)
 
-- [ ] Próba wygenerowania 21 wydarzeń
-  - **Rezultat:** ERROR "Max 20 events per generation"
+- [ ] Próba wygenerowania 11 wydarzeń
+  - **Rezultat:** ERROR "Max 10 events per generation"
 
 - [ ] Edytuj szablon series (zmień godzinę 18:00 → 19:00)
   - **Rezultat:** Szablon zmieniony, istniejące wydarzenia BEZ ZMIAN

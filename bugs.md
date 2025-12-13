@@ -6,20 +6,15 @@
 - [ ] select all dla innych list graczy
 
 # bugs
+## critical
+- [ ] brak wpisu w powiadomieniach o anulowaniu wydarzenia
 - [ ] brak możliwości zmiany kolejnosći na zdefiniowanej liście graczy
-  ```
-  Dec 13 10:20:39 pi meet-app-staging[1924367]: 2025-12-13 10:20:39.045 [http-nio-8081-exec-4] INFO  p.f.m.p.PlayerListManagementService - Reordering members for player list 1 by user 47
-  Dec 13 10:20:39 pi meet-app-staging[1924367]: 2025-12-13 10:20:39.087 [http-nio-8081-exec-4] WARN  p.f.m.p.PlayerListManagementService - Reorder request for list 1 has mismatched member IDs. Expected: [1, 2, 3, 4, 5], Got: [1, 2, 5, 6, 7]
-  Dec 13 10:20:39 pi meet-app-staging[1924367]: 2025-12-13 10:20:39.095 [http-nio-8081-exec-4] WARN  p.f.m.config.GlobalExceptionHandler - Validation error: Member IDs in request don't match current list members
+- [ ] tworzone wydarzenia z serii wydarzen maja godzine przesuniętą względem zaplanowanej
+- [ ] brak powiadomienia o osobie oczekującej na dołączenie do listy
+- [ ] długi freeze przy akceptacji prosby o dołęcznie
 
-  I/flutter ( 5360): 11:22:57.588 [INFO] WebSocket: Reordering 5 members
-  I/flutter ( 5360): 11:22:57.588 [INFO] WebSocket: Reordering 5 members in list: groupId=1, listId=1
-  I/flutter ( 5360): 11:22:57.783 [SEVERE] WebSocket: Error reordering members: Failure.unknown(message: Exception: Invalid input data. Please check the required fields.)
-  I/flutter ( 5360):   Error: Failure.unknown(message: Exception: Invalid input data. Please check the required fields.)
-  I/flutter ( 5360): 11:22:57.783 [SEVERE] WebSocket: Error reordering members: Exception: Failure.unknown(message: Exception: Invalid input data. Please check the required fields.)
-  I/flutter ( 5360):   Error: Exception: Failure.unknown(message: Exception: Invalid input data. Please check the required fields.)
-  I/flutter ( 5360): 11:22:57.783 [SEVERE] WebSocket: Error reordering members: Exception: Failure.unknown(message: Exception: Invalid input data. Please check the required fields.)
-  I/flutter ( 5360):   Error: Exception: Failure.unknown(message: Exception: Invalid input data. Please check the required fields.)
+## medium
+- [ ] blad przy edycji listy z menu kontekstowego po edycji listy stałych graczy brak zmian listy (stare dane)
 - [ ] utworzenie listy graczy o tej samej nazwie nie powoduje bledu na UI -> zero info co się stało
   ```
   I/flutter ( 5360): 11:28:23.287 [INFO] WebSocket: Creating player list: groupId=1, name=środowa ekipa
@@ -49,20 +44,22 @@
   I/flutter ( 5360): <asynchronous suspension>
   I/flutter ( 5360): #4      _GroupDetailsScreenContentState._showCreatePlayerListDialog (package:app/widgets/group/details/group_details_screen.dart:350:23)
   I/flutter ( 5360): <asynchronous suspension>
-  ```
-  ```
-- [ ] brak pull to refresh na liscie stałych graczy
-- [ ] blad przy edycji listy z menu kontekstowego po edycji listy stałych graczy brak zmian listy (stare dane)
-- [ ] usunięcie członka z grupy powinno usuwać go również z przygotowanych list graczy
 - [ ] przy edycji serii wydarzen brak pola o wybranej liscie stalych graczy
-- [ ] przy probie utworzenia szablonu wydarzen przekraczajacego liczbe slots+waitlist komunikat bledu unknown mimo ze pokazuje sie opis pod polem z prawdziwym powodem
-- [ ] na ekranie developera autokorekta username
-- [ ] brak możliwości wycofania żądania o dodanie do grupy
+- [ ] wejscie do aplikacji przez niezalogowanego usera pokazuje czlonkow wydarzenia
+- [ ] potwierdzenie przez uczestnika obecnosci nie utworzylo powiadomienia dla organizatora
+- [ ] brak polskich znakow w list name 
+- [ ] brak pull to refresh na liscie stałych graczy
+- [ ] usunięcie członka z grupy powinno usuwać go również z przygotowanych list graczy
 - [ ] po przelogowaniu na innego usera i wejsciu w zakładkę grupa - biały ekran
+- [ ] snackbary sie stackuja i przy dluzszej niedostepnosci serwera po powrocie polaczenia pokazuja sie bardzo dlugo - powinnien byc reset snackbar przy powrocie polaczenia
 - [ ] brak opisu grupy po przejsciu w szczegoly - być może warto zablokować wejście jeżeli nie jest się członkiem -> tylko join request
+- [ ] deeplink -> aby dolaczyc musisz sie zalogowac -> po zalogowaniu powrot do mapy a nie wydarzenia
 - [ ] komunikat przy probie dodaniu osoby do grupy, ktora juz jest zbyt generyczny
   - backend wysyla: Invalid argument: User is already a member or has pending request
   - frontend: blad failed to add member
-- [ ] brak polskich znakow w list name 
-- [ ] potwierdzenie przez uczestnika obecnosci nie utworzylo powiadomienia dla organizatora
+- [ ] brak możliwości wycofania żądania o dodanie do grupy
+- [ ] przy probie usuniecia wydarzenia z graczami generyczny blad zamiast konkretu:  Invalid state: Cannot delete event with participants. Cancel the event instead.
+- [ ] przy probie utworzenia szablonu wydarzen przekraczajacego liczbe slots+waitlist komunikat bledu unknown mimo ze pokazuje sie opis pod polem z prawdziwym powodem
+- [ ] na ekranie developera autokorekta username
+- [ ] markery na mapie nieprawidłowo się zachowują przy oddalaniu mapy
 
