@@ -1,48 +1,5 @@
 # CHECKLISTA TESTOWANIA MANUALNEGO - MEET APP
 
-**Wersja:** 1.0
-**Data:** 2025-12-13
-**Platforma:** Flutter Mobile App + Spring Boot Backend
-
----
-
-## WYKRYTE NIESPÓJNOŚCI I PROBLEMY
-
-### 🔴 KRYTYCZNE
-1. **Reguła "2h przed wydarzeniem"** - NIE ZAIMPLEMENTOWANA
-   - Brak blokady edycji 2h przed startem
-   - Brak auto-usuwania niepotwierdzonych
-   - Frontend: walidacja tylko sprawdza czy event nie rozpoczęty
-
-2. **Guest Web Registration** - Funkcjonalność istnieje w backendzie, BRAK DOKUMENTACJI
-   - Endpoint: `POST /events/{id}/guest-registration`
-   - Status `PENDING_APPROVAL` dla gości nie jest udokumentowany
-   - Workflow approve/reject guest wymaga weryfikacji
-
-3. **Deep Linking** - Frontend implementuje, backend NIE MA endpointów
-   - Frontend: `meetapp://event/{eventId}` + `https://meetapp.pl/event/{eventId}`
-   - Backend: brak API do walidacji/generowania linków
-   - Może nie działać pełnoprawnie
-
-### 🟠 WAŻNE
-4. **Auto-promote z waitlist** - Częściowo udokumentowana
-   - Kod działa, ale brak szczegółów w docs
-
-5. **Powiadomienia czasowe** - Częściowo zaimplementowane
-   - ✅ EVENT_STARTING_SOON (1h przed)
-   - ✅ RSVP_DEADLINE_APPROACHING (24h przed)
-   - ❌ Frontend nie ma mappingu dla tych typów
-
-6. **Paginacja /groups/my** - Zwraca `List<GroupDTO>` zamiast `PageResponseDto`
-   - Ryzyko: duża liczba grup bez stronicowania
-
-### 🟡 ŚREDNIE
-7. **Player List → Event deletion** - Brak dokumentacji co się dzieje
-8. **Concurrent join na ostatni slot** - Pessimistic locking, ale promotion może mieć race
-9. **Strefy czasowe DST** - UTC w backend, LocalDateTime w frontend - potencjalne przesunięcia ±1h
-
----
-
 ## 🔵 FLOW ZAAWANSOWANE
 
 ### Setup początkowy
@@ -93,13 +50,6 @@
 - [ ] Organizer wyznacza 10 członków jako core players
   - Akcja: PATCH `/groups/{id}/members/{memberId}/core-player`
   - **Rezultat:** Flaga `isCorePlayer=true`, notification wysłane
-
-- [ ] Sprawdź licznik: GET `/groups/{id}/members/core-players/count`
-  - **Rezultat:** corePlayerCount = 10
-
-- [ ] Sprawdź statystyki: GET `/groups/{id}/members/core-players/stats`
-  - **Rezultat:** JSON z breakdown core/regular members
-
 ---
 
 ### 4. Tworzenie player list
@@ -143,9 +93,6 @@
 - [ ] Próba przypisania player list > slots
   - Player list: 15 osób, Slots: 10
   - **Rezultat:** ERROR "Player list exceeds capacity"
-
-- [ ] Sprawdź `/groups/{id}/core-player-capacity`
-  - **Rezultat:** minSeriesCapacity = 12 (z utworzonej serii)
 
 ---
 
@@ -610,50 +557,3 @@
 
 ---
 
-## 📊 PODSUMOWANIE TESTÓW
-
-### Priorytetyzacja
-
-**CRITICAL (muszą działać):**
-- ✅ Tworzenie wydarzeń (FLOW PODSTAWOWE #1)
-- ✅ Join/Leave flow (FLOW PODSTAWOWE #4)
-- ✅ Auto-promote z waitlist (FLOW PODSTAWOWE #4B)
-- ✅ Notifications WebSocket (FLOW PODSTAWOWE #7A)
-
-**HIGH (ważne):**
-- ✅ Series generation (FLOW ZAAWANSOWANE #6)
-- ✅ Player lists (FLOW ZAAWANSOWANE #4)
-- ✅ Deep linking (FLOW PODSTAWOWE #2)
-
-**MEDIUM (weryfikacja niespójności):**
-- ⚠️ Guest web registration
-- ⚠️ Time-based reminders (częściowo zaimplementowane)
-- ⚠️ 2h locking rule (nie zaimplementowana)
-
----
-
-### Znalezione problemy do weryfikacji
-
-1. **2h lock rule** - NIE DZIAŁA (FLOW PODSTAWOWE #9)
-2. **24h auto-remove unconfirmed** - NIE DZIAŁA (FLOW PODSTAWOWE #10)
-3. **Guest registration** - Działa w backendzie, wymaga testu (FLOW PODSTAWOWE #3)
-4. **Deep linking** - Frontend implementuje, backend brak endpointów (FLOW PODSTAWOWE #2)
-5. **Frontend notification mapping** - Brak dla EVENT_STARTING_SOON, RSVP/PAYMENT reminders (FLOW PODSTAWOWE #8)
-6. **Paginacja /groups/my** - Brak stronicowania (EDGE CASES → Paginacja)
-7. **Player list deletion** - Co się dzieje z series? (FLOW ZAAWANSOWANE #4, EDGE CASES → Cleanup)
-8. **Concurrent promotion** - Możliwy race condition (EDGE CASES → Concurrent)
-
----
-
-## 🎯 SCENARIUSZE TESTOWE - STATYSTYKI
-
-- **FLOW ZAAWANSOWANE:** ~45 punktów testowych
-- **FLOW PODSTAWOWE:** ~65 punktów testowych
-- **EDGE CASES:** ~20 punktów testowych
-- **ŁĄCZNIE:** ~130 testów
-
-**Szacowany czas testowania:**
-- CRITICAL flows: 4-5h
-- HIGH flows: 3-4h
-- MEDIUM + Edge cases: 2-3h
-- **TOTAL:** 9-12h pełnego testowania manualnego
