@@ -5,23 +5,14 @@
 - [ ] select all dla innych list graczy
 - [ ] na ekranie lista graczy powinny byc miniaturki avatarow w jednym wierszu na chodzace na siebie wszystkich czlonkow
 - [ ] możliwość oznaczania w tekstach uzytkowników przez @login
-- [ ] możliwość określania orgaznizatora dodatkowego
+- [ ] przerobic mail na resend
 
 # bugs
 ## critical
-- [x] usunięcie z listy uczestnikow wydarzenia nie dziala, sam również nie mogę opusić wydarzenia
-- [x] tworzone wydarzenia z serii wydarzen maja godzine przesuniętą względem zaplanowanej
-- [x] brak wpisu w powiadomieniach o anulowaniu wydarzenia
-- [x] brak powiadomienia o osobie oczekującej na dołączenie do listy
-- [x] długi freeze przy akceptacji prosby o dołęcznie z web
+- [ ] brak nickname przy rejestracji powoduje konta z pustymi danymi
 
 ## medium
-- [ ] wylogowywanie za kazdym ubiciem aplikacji
-- [ ] niepamietanie ostatniego loginu
-- [ ] blad przy edycji listy głównych graczy z menu kontekstowego brak odświeżenia ekranu
-- [x] przy edycji serii wydarzen brak pola o wybranej liscie stalych graczy
 - [ ] potwierdzenie przez uczestnika obecnosci nie utworzylo powiadomienia dla organizatora, nie ma rowniez odswiezania szczegolow wydarzenia po websocket dla tego zdarzenia
-- [ ] problemy z app notification badge oraz indykatorem przy profilu
 
 ## low
 - [ ] utworzenie listy graczy o tej samej nazwie powoduje generyczny blad na UI -> powinien byc konkrety powod bledu
