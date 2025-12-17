@@ -17,7 +17,7 @@
 
 ---
 
-## ✅ M1 — MVP Organizatora i Samoobsługa
+## ✅ M1: MVP Organizatora i Samoobsługa
 **Termin:** Q4 2025
 **Cel:** Organizator tworzy wydarzenie, wysyła link na grupę, a lista "robi się sama".
 
@@ -74,7 +74,7 @@
 
 ---
 
-## 🟡 M2 — Viralność, Powiadomienia i Feedback
+## 🟡 M2: Viralność, Powiadomienia i Feedback
 **Termin:** Q1 2026
 **Cel:** Maksymalizacja konwersji nowych użytkowników, retencja istniejących, zbieranie feedbacku.
 
@@ -130,7 +130,7 @@
 - [ ] **Release 0.0.2** – Wersja wypuszczona do grona testerskiego.
 ---
 
-## 🟢 M3 — Reputacja, Skalowanie i Zaawansowane Narzędzia
+## 🟢 M3: Reputacja, Skalowanie i Zaawansowane Narzędzia
 **Termin:** Q2 2026
 **Cel:** Budowanie zaufania, zaawansowane zarządzanie, RODO.
 
@@ -169,7 +169,7 @@
 - [ ] **Release 0.0.3** – Wersja wypuszczona do grona testerskiego.
 ---
 
-## 🔵 M4 — Optymalizacja
+## 🔵 M4: Optymalizacja
 **Termin:** Q3 2026
 **Cel:** Offline mode, finanse, optymalizacje wydajności.
 
