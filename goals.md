@@ -82,6 +82,7 @@
 *Redukcja friction dla nowych użytkowników z deep links.*
 - [x] **Web Landing Page** `[BACKLOG]` – Strona meetapp.pl/event/{id} dla userów bez aplikacji (widok wydarzenia + CTA).
 - [ ] **Open Graph Meta** `[BACKLOG]` – Podgląd wydarzenia w Messenger/WhatsApp przed kliknięciem linku.
+- [ ] Resend - Przejście na providera do emaili
 
 ### 🟡 Push Notifications
 *Kluczowe dla retencji i redukcji no-shows.*
@@ -118,7 +119,6 @@
 
 ### ⚪ Nice-to-have
 *Niższy priorytet - jeśli starczy czasu.*
-- [ ] **Magic Link** `[BACKLOG]` – Logowanie bez hasła przez link w emailu.
 - [x] **Drag & Drop Lista** `[BACKLOG]` – Przeciąganie uczestników na liście.
 - [x] **Statusy Płatności** `[MA-197]` – Oznaczanie kto zapłacił.
 
@@ -138,6 +138,10 @@
 ### 🔴 Onboarding
 *Redukcja friction dla nowych użytkowników
 - [ ] **Social Login** `[BACKLOG]` – Szybkie logowanie przez Google i Apple.
+
+### ⚪ Nice-to-have
+*Niższy priorytet - jeśli starczy czasu.*
+- [ ] **Magic Link** `[BACKLOG]` – Logowanie bez hasła przez link w emailu.
 
 ### 📣 Feature Requests
 *Zbieranie pomysłów od użytkowników i budowanie społeczności.*
