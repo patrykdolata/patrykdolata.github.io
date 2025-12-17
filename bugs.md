@@ -13,6 +13,7 @@
 ## medium
 
 ## low
+- [ ] po anulowaniu wydarzenia i wejsciu w jego szczegoly przez powiadomienie nadal widnieje przycisk "Anuluj wydarzenie", prawidłowo jest ukrywany wchodząc przez historie - ujednolicić
 - [ ] utworzenie listy graczy o tej samej nazwie powoduje generyczny blad na UI -> powinien byc konkrety powod bledu
 - [ ] komunikat przy probie dodaniu osoby do grupy, ktora juz jest zbyt generyczny
   - backend wysyla: Invalid argument: User is already a member or has pending request

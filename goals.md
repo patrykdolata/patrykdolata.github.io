@@ -9,9 +9,9 @@
 
 | Metryka | Status |
 | :--- | :--- |
-| **Postęp M2** | ![Postęp](https://progress-bar.dev/56/?scale=32&title=W%20trakcie&width=120&color=3498db) **56%** |
+| **Postęp M2** | ![Postęp](https://progress-bar.dev/75/?scale=28&title=W%20trakcie&width=120&color=3498db) **75%** |
 | **Aktualna Faza** | **M2: Viralność, Powiadomienia i Feedback** |
-| **Ostatni Release** |  13.12.2025 |
+| **Ostatni Release** |  14.12.2025 |
 | **Najbliższy Termin** | Q1 2026 |
 | **Cel** | Push notifications i onboarding|
 
@@ -81,7 +81,6 @@
 ### 🔴 Onboarding
 *Redukcja friction dla nowych użytkowników z deep links.*
 - [x] **Web Landing Page** `[BACKLOG]` – Strona meetapp.pl/event/{id} dla userów bez aplikacji (widok wydarzenia + CTA).
-- [ ] **Social Login** `[BACKLOG]` – Szybkie logowanie przez Google i Apple.
 - [ ] **Open Graph Meta** `[BACKLOG]` – Podgląd wydarzenia w Messenger/WhatsApp przed kliknięciem linku.
 
 ### 🟡 Push Notifications
@@ -109,16 +108,13 @@
 
 ### 📣 Feature Requests
 *Zbieranie pomysłów od użytkowników i budowanie społeczności.*
-- [ ] **Zgłaszanie Pomysłów** `[BACKLOG]` – Formularz do zgłaszania feature requestów.
-- [ ] **Głosowanie** `[BACKLOG]` – Użytkownicy mogą lajkować pomysły innych.
-- [ ] **Lista Pomysłów** `[BACKLOG]` – Przeglądanie zgłoszonych requestów z sortowaniem po głosach.
-- [ ] **Status Realizacji** `[BACKLOG]` – Oznaczanie: nowy, w planach, w realizacji, zrobione.
+- [x] **Zgłaszanie Pomysłów** `[BACKLOG]` – Formularz do zgłaszania feature requestów.
 - [x] **Publiczny Roadmap** `[BACKLOG]` – Widoczność co jest planowane dla użytkowników.
 
 ### 🛠️ Stabilność i Jakość
 *Zapewnienie niezawodności aplikacji.*
-- [ ] **Raportowanie Błędów** `[BACKLOG]` – Crashlytics/Sentry - automatyczne wykrywanie crashów.
-- [ ] **Analityka Konwersji** `[BACKLOG]` – Śledzenie: deep link → instalacja → rejestracja → dołączenie.
+- [x] **Raportowanie Błędów** `[BACKLOG]` – Crashlytics/Sentry - automatyczne wykrywanie crashów.
+- [x] **Analityka Konwersji** `[BACKLOG]` – Śledzenie: deep link → instalacja → rejestracja → dołączenie.
 
 ### ⚪ Nice-to-have
 *Niższy priorytet - jeśli starczy czasu.*
@@ -137,6 +133,17 @@
 ## 🟢 M3 — Reputacja, Skalowanie i Zaawansowane Narzędzia
 **Termin:** Q2 2026
 **Cel:** Budowanie zaufania, zaawansowane zarządzanie, RODO.
+
+
+### 🔴 Onboarding
+*Redukcja friction dla nowych użytkowników
+- [ ] **Social Login** `[BACKLOG]` – Szybkie logowanie przez Google i Apple.
+
+### 📣 Feature Requests
+*Zbieranie pomysłów od użytkowników i budowanie społeczności.*
+- [ ] **Głosowanie** `[BACKLOG]` – Użytkownicy mogą lajkować pomysły innych.
+- [ ] **Lista Pomysłów** `[BACKLOG]` – Przeglądanie zgłoszonych requestów z sortowaniem po głosach.
+- [ ] **Status Realizacji** `[BACKLOG]` – Oznaczanie: nowy, w planach, w realizacji, zrobione.
 
 ### ⭐ System Reputacji
 *Budowanie zaufania i eliminacja no-shows.*
