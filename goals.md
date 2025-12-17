@@ -82,7 +82,7 @@
 *Redukcja friction dla nowych użytkowników z deep links.*
 - [x] **Web Landing Page** `[BACKLOG]` – Strona meetapp.pl/event/{id} dla userów bez aplikacji (widok wydarzenia + CTA).
 - [ ] **Open Graph Meta** `[BACKLOG]` – Podgląd wydarzenia w Messenger/WhatsApp przed kliknięciem linku.
-- [ ] Resend - Przejście na providera do emaili
+- [ ] **Resend** - Przejście na providera do emaili
 
 ### 🟡 Push Notifications
 *Kluczowe dla retencji i redukcji no-shows.*

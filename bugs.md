@@ -8,7 +8,6 @@
 
 # bugs
 ## critical
-- [ ] po cancel wydarzenia i zostaniu na ekranie listy wywalilo aplikacje
 
 ## medium
 
