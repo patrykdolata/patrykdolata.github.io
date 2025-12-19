@@ -10,6 +10,9 @@
 ## critical
 
 ## medium
+- [ ] można kliknąć na pending join request i przejść do ekranu szczegółów na którym nic nie widać
+  - przy usuwaniu grupy, pending join tez powinny byc usuniętego
+- [ ] wydaje się, że szczegóły wydarzenia dla organizatora i gościa są inne (wejscie przez joined albo my groups)
 
 ## low
 - [ ] ulepszyc UI dla grup (prośba, o dołączenie, szczegóły wydarzenia)
