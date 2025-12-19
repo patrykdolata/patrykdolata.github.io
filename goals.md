@@ -9,7 +9,7 @@
 
 | Metryka | Status |
 | :--- | :--- |
-| **Postęp M2** | ![Postęp](https://progress-bar.dev/75/?scale=28&title=W%20trakcie&width=120&color=3498db) **75%** |
+| **Postęp M2** | ![Postęp](https://progress-bar.dev/82/?scale=28&title=W%20trakcie&width=120&color=3498db) **82%** |
 | **Aktualna Faza** | **M2: Viralność, Powiadomienia i Feedback** |
 | **Ostatni Release** |  14.12.2025 |
 | **Najbliższy Termin** | Q1 2026 |
@@ -81,8 +81,8 @@
 ### 🔴 Onboarding
 *Redukcja friction dla nowych użytkowników z deep links.*
 - [x] **Web Landing Page** `[BACKLOG]` – Strona meetapp.pl/event/{id} dla userów bez aplikacji (widok wydarzenia + CTA).
-- [ ] **Open Graph Meta** `[BACKLOG]` – Podgląd wydarzenia w Messenger/WhatsApp przed kliknięciem linku.
-- [ ] **Resend** - Przejście na providera do emaili
+- [x] **Open Graph Meta** `[BACKLOG]` – Podgląd wydarzenia w Messenger/WhatsApp przed kliknięciem linku.
+- [x] **Resend** - Przejście na providera do emaili
 
 ### 🟡 Push Notifications
 *Kluczowe dla retencji i redukcji no-shows.*
