@@ -33,6 +33,7 @@
 - gracz nie widzi wydarzenia z serii bez pofiltrowania po grupie
 
 ## low
+- po przelogowaniu się na innego usera, kropka przy profile wskazujaca nieprzeczytane powiadomienia nie aktualizuje sie
 - zakladka joined powinna byc pierwsza na ekranie groups
 - bardzo długie mielenie po kliknieciu na zcentruj mape (problemem jest szukanie GPS)
 - przy probie doddania osoby do grupy, ktora nie istnieje brak tlumaczenia bledu
