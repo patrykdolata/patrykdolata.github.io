@@ -7,7 +7,6 @@
 
 # bugs
 ## critical
-- nadanie roli organizatora dla testuser powoduje red screen
 - zapraszanie gosci na rezerwe, mail z akceptacja nie mowi ze jest na rezerwie
 - powiadomienia dla zmian w utworzonym wydarzeniu nie dzialaja
   - gracz potwierdza obecnosc
@@ -21,6 +20,8 @@
 - mapa nie odswieza sie automatycznie
 
 ## medium
+- powiadomienie mailowe dla gościa, który został przesunięty z rezerwy na liste główną
+- usuniecie gościa z listy wydarzenia powinno wyslac mu email
 - promote to organizer nie dziala prawidlowo, po promocji uzytkownik wciaz nie moze robic wydarzen, ani serii wydarzen
 - nie powinno byc invite links dla publicznej grupy
 - tworzenie konta -> login wielkosc znakow powinna byc toLowerCase
@@ -33,6 +34,8 @@
 - gracz nie widzi wydarzenia z serii bez pofiltrowania po grupie
 
 ## low
+- kod statusu weryfikacji pozycji dla goscia powinien automatycznie byc przekazywany przy kliknieciu na przycisk sprawdz status w email
+- username na formularzu rejestracyjnym to login w bazie danych
 - po przelogowaniu się na innego usera, kropka przy profile wskazujaca nieprzeczytane powiadomienia nie aktualizuje sie
 - zakladka joined powinna byc pierwsza na ekranie groups
 - bardzo długie mielenie po kliknieciu na zcentruj mape (problemem jest szukanie GPS)
