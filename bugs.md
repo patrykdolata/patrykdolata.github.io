@@ -7,13 +7,7 @@
 
 # bugs
 ## critical
-- zapraszanie gosci na rezerwe, mail z akceptacja nie mowi ze jest na rezerwie
-- powiadomienia dla zmian w utworzonym wydarzeniu nie dzialaja
-  - gracz potwierdza obecnosc
-  - gracz opuszcza wydarzenia
-- nie mozna zedytowac juz raz edytowanego wydarzenia
-- zostaja jakies nieprzeczytane powiadomienia
-- blad dolaczania do grupy z ekranu szczegolow wydarzen
+- blad dolaczania do grupy z ekranu szczegolow grupy
 - problemy z invite links
 - brak zabezpieczenia przy tworzeniu grupy dla nie organizatora
 - brak powiadomienia push o dolaczeniu do wydarzenia z serii
@@ -28,7 +22,7 @@
 - w przypadku odwolania wydarzenia goscie powinni dostac email oraz info na status www
 - komunikaty bledow po angielsku na www
 - FAB czasem nie wraca na swoja pozycje
-- na androidzie po dluzszej przerwie i wlaczeniu aplikacji jest duzo komunikatow o braku polaczenia z serwerem
+- na androidzie po dluzszej przerw:ie i wlaczeniu aplikacji jest duzo komunikatow o braku polaczenia z serwerem
 - brak możliwości dołączenia do grupy z ekranu szczegółów grupy
 - brak implementacji linków dla 
 - gracz nie widzi wydarzenia z serii bez pofiltrowania po grupie
