@@ -9,9 +9,9 @@
 
 | Metryka | Status |
 | :--- | :--- |
-| **Postęp M2** | ![Postęp](https://progress-bar.dev/82/?scale=28&title=W%20trakcie&width=120&color=3498db) **82%** |
+| **Postęp M2** | ![Postęp](https://progress-bar.dev/97/?scale=29&title=W%20trakcie&width=120&color=3498db) **97%** |
 | **Aktualna Faza** | **M2: Viralność, Powiadomienia i Feedback** |
-| **Ostatni Release** |  14.12.2025 |
+| **Ostatni Release** |  06.01.2026|
 | **Najbliższy Termin** | Q1 2026 |
 | **Cel** | Push notifications i onboarding|
 
@@ -83,6 +83,7 @@
 - [x] **Web Landing Page** `[BACKLOG]` – Strona meetapp.pl/event/{id} dla userów bez aplikacji (widok wydarzenia + CTA).
 - [x] **Open Graph Meta** `[BACKLOG]` – Podgląd wydarzenia w Messenger/WhatsApp przed kliknięciem linku.
 - [x] **Resend** - Przejście na providera do emaili
+- [x] **Invite links** - linki z zaproszeniami do wydarzeń oraz grupy
 
 ### 🟡 Push Notifications
 *Kluczowe dla retencji i redukcji no-shows.*
@@ -124,10 +125,10 @@
 
 ### ✅ Stabilizacja i Release
 - [ ] **Refactor kodu** - Czyszczenie kodu, uzupełnienie testów automatycznych.
-- [ ] **Testy end-to-end** – Kompleksowa walidacja przed wypuszczeniem.
-- [ ] **Poprawki bugów** – Stabilizacja przed releasem.
-- [ ] **Serwer produkcyjny** – Infrastruktura gotowa do testów.
-- [ ] **Release 0.0.2** – Wersja wypuszczona do grona testerskiego.
+- [x] **Testy end-to-end** – Kompleksowa walidacja przed wypuszczeniem.
+- [x] **Poprawki bugów** – Stabilizacja przed releasem.
+- [x] **Serwer produkcyjny** – Infrastruktura gotowa do testów.
+- [x] **Release 0.0.2** – Wersja wypuszczona do grona testerskiego.
 ---
 
 ## 🟢 M3: Reputacja, Skalowanie i Zaawansowane Narzędzia
