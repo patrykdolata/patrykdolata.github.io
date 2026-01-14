@@ -38,7 +38,7 @@ Kompleksowy audyt bezpieczeństwa i prywatności przed publicznym uruchomieniem.
 | API fuzzing | ❌ | Do wykonania |
 | **Access Control** |
 | IDOR testing | ❌ | Do wykonania |
-| Organizer-only endpoints | ⏳ | Zaimplementowane, do weryfikacji |
+| Organizer-only endpoints | ✅ | PreAuthorize + access validators |
 | **Auth & JWT** |
 | Algorithm enforcement | ⏳ | HS256, do weryfikacji |
 | Token expiration | ✅ | Skonfigurowane |
@@ -49,8 +49,8 @@ Kompleksowy audyt bezpieczeństwa i prywatności przed publicznym uruchomieniem.
 | Security headers | ❌ | Do dodania |
 | HSTS | ❌ | Do dodania |
 | **Rate Limiting** |
-| Login rate limit | ❌ | Do dodania |
-| API rate limit | ❌ | Do dodania |
+| Login rate limit | ✅ | RateLimitInterceptor (/auth) |
+| API rate limit | ⚠️ | Auth endpoints only |
 | **Backup/DR** |
 | Nightly backups | ⏳ | Skrypt gotowy |
 | Restore test | ❌ | Do wykonania |

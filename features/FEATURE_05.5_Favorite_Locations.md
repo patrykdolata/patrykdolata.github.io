@@ -35,7 +35,7 @@ System ulubionych lokalizacji umożliwia użytkownikom zapisywanie często odwie
 | GET /favorites | ✅ | ✅ | Lista ulubionych |
 | GET /favorites/{id} | ✅ | ⏳ | Szczegóły |
 | POST /favorites | ✅ | ✅ | Dodawanie |
-| PUT /favorites/{id} | ✅ | ⏳ | Edycja notatek |
+| PUT /favorites/{id} | ✅ | ❌ | Brak UI edycji notatek |
 | DELETE /favorites/{id} | ✅ | ✅ | Usuwanie po ID |
 | DELETE /location/{id} | ✅ | ✅ | Usuwanie po locationId |
 | GET /location/{id}/status | ✅ | ✅ | Sprawdzenie statusu |

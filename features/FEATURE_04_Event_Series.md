@@ -50,9 +50,9 @@ System Event Series umożliwia organizatorom tworzenie szablonów cyklicznych wy
 | Tworzenie serii | - | ✅ | create_series_screen.dart |
 | Dialog generacji | - | ✅ | Wybór daty i liczby |
 | **M2 - Advanced** |
-| Frequency: MONTHLY | ⏳ | ❌ | BE ready, FE brak |
-| skipHolidays | ⏳ | ❌ | BE ready, FE brak |
-| pause/resume | ⏳ | ❌ | BE ready, FE brak |
+| Frequency: MONTHLY | ❌ | ❌ | Nie zaimplementowane |
+| skipHolidays | ❌ | ❌ | Nie zaimplementowane |
+| pause/resume | ❌ | ❌ | Nie zaimplementowane |
 | Multi-day per week | ❌ | ❌ | Obecnie 1 dzień |
 
 ---

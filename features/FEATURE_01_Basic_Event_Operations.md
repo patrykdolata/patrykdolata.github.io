@@ -32,7 +32,7 @@ Organizator może tworzyć, edytować, usuwać i odwoływać wydarzenia sportowe
 | Tworzenie wydarzenia | ✅ | ✅ | POST /events |
 | Edycja wydarzenia | ✅ | ✅ | PUT /events/{id} |
 | Usuwanie wydarzenia | ✅ | ✅ | DELETE /events/{id} |
-| Odwołanie wydarzenia | ✅ | ❌ | PUT /events/{id}/cancel - brak UI |
+| Odwołanie wydarzenia | ✅ | ✅ | PUT /events/{id}/cancel |
 | Walidacja formularza | ✅ | ✅ | Daty, sloty, cena, wymagane pola |
 | **Interaktywna Mapa** |
 | Wyświetlanie na mapie | ✅ | ✅ | Google Maps z markerami |
@@ -41,7 +41,7 @@ Organizator może tworzyć, edytować, usuwać i odwoływać wydarzenia sportowe
 | Klastrowanie markerów | - | ✅ | MapMarkerManager |
 | **Cykl Życia** |
 | Status ACTIVE | ✅ | ✅ | Domyślny status |
-| Status CANCELLED | ✅ | ⚠️ | Brak badge w liście |
+| Status CANCELLED | ✅ | ✅ | Badge w EventBadgeGroup |
 | Status COMPLETED | ❌ | ❌ | Planowane M2 |
 | Status DRAFT | ❌ | ❌ | Planowane M2 |
 | **Udostępnianie (Deep Links)** |
@@ -104,8 +104,8 @@ Organizator może tworzyć, edytować, usuwać i odwoływać wydarzenia sportowe
 
 **Kryteria akceptacji:**
 - [x] BE: Endpoint PUT /events/{id}/cancel zmienia status na CANCELLED
-- [ ] FE: Przycisk "Odwołaj" w szczegółach wydarzenia
-- [ ] FE: Badge "Odwołane" w liście i szczegółach
+- [x] FE: Przycisk "Odwołaj" w szczegółach wydarzenia
+- [x] FE: Badge "Odwołane" w liście i szczegółach
 - [ ] Odwołane wydarzenie nie przyjmuje nowych zapisów
 
 ### US-05: Przeglądanie wydarzeń na mapie
@@ -174,7 +174,7 @@ Organizator może tworzyć, edytować, usuwać i odwoływać wydarzenia sportowe
 - [ ] Status COMPLETED, DRAFT
 - [ ] Zaawansowane filtry UI (sportType, level, cena)
 - [ ] Wyszukiwanie tekstowe
-- [ ] Badge statusu w liście
+- [x] Badge statusu w liście
 - [ ] Przycisk odwołania z powiadomieniami
 
 ---

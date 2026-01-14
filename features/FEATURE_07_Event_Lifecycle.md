@@ -35,7 +35,7 @@ Zarządzanie statusem wydarzeń: aktywne, odwołane, zakończone. Automatyczne k
 | **M1 - Basic Cancel** |
 | EventStatus enum | ✅ | ✅ | ACTIVE, CANCELLED, COMPLETED |
 | PUT /events/{id}/cancel | ✅ | ✅ | Zaimplementowane |
-| Status badge | - | ⏳ | Częściowe |
+| Status badge | - | ✅ | Cancel badge w EventBadgeGroup |
 | Cancel button | - | ✅ | OrganizerActionsCard |
 | **M2 - Complete Lifecycle** |
 | Status: COMPLETED | ✅ | ⏳ | Enum gotowy |
@@ -56,7 +56,7 @@ Zarządzanie statusem wydarzeń: aktywne, odwołane, zakończone. Automatyczne k
 
 **Kryteria akceptacji:**
 - [x] Endpoint PUT /events/{id}/cancel (BE)
-- [ ] Przycisk "Odwołaj" w UI
+- [x] Przycisk "Odwołaj" w UI
 - [ ] Opcjonalny powód odwołania
 - [x] Tylko organizator może odwołać
 - [ ] Powiadomienie uczestników
@@ -121,7 +121,7 @@ Zarządzanie statusem wydarzeń: aktywne, odwołane, zakończone. Automatyczne k
 - [x] PUT /cancel endpoint (BE)
 - [x] Status w modelu wydarzenia
 - [x] Cancel button w UI (OrganizerActionsCard)
-- [ ] Status badge na kartach
+- [x] Status badge na kartach
 
 ### M2 (Post-MVP) - PARTIAL
 - [x] Status COMPLETED
@@ -145,4 +145,4 @@ Zarządzanie statusem wydarzeń: aktywne, odwołane, zakończone. Automatyczne k
 
 Szczegóły implementacji znajdują się w:
 - Backend: [meet-app-be/docs/features/events.md](../../meet-app-be/docs/features/events.md) (sekcja Cancel)
-- Frontend: [meet-app-fe/docs/features/events.md](../../meet-app-fe/docs/features/events.md) (brak cancelEvent)
+- Frontend: [meet-app-fe/docs/features/events.md](../../meet-app-fe/docs/features/events.md) (cancel w OrganizerActionsCard)

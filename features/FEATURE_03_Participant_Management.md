@@ -37,13 +37,14 @@ Organizator ma pełną kontrolę nad listą uczestników swojego wydarzenia. Mo�
 | Dialog usuwania | - | ✅ | remove_participant_dialog.dart |
 | Sprawdzanie organizatora | ✅ | ✅ | verifyOrganizer() |
 | **M2 - Advanced** |
-| PUT /{userId}/position | ❌ | ❌ | Zmiana pozycji (reorder) |
-| PUT /{userId}/confirm | ✅ | ❌ | Toggle potwierdzenia (organizator) |
-| PUT /confirm | ✅ | ❌ | Self-service potwierdzenie (uczestnik) |
-| PUT /{userId}/payment | ❌ | ❌ | Śledzenie płatności |
+| PUT /reorder | ✅ | ✅ | Zmiana kolejności (main + waitlist) |
+| PUT /{userId}/confirm | ✅ | ✅ | Toggle potwierdzenia (organizator) |
+| PUT /confirm | ✅ | ✅ | Self-service potwierdzenie (uczestnik) |
+| PUT /{userId}/payment | ✅ | ✅ | Toggle płatności |
 | POST /{userId}/promote | ❌ | ❌ | Promocja do main list |
 | POST /{userId}/demote | ❌ | ❌ | Degradacja do waitlist |
-| Drag & drop | ❌ | ❌ | Przeciąganie pozycji |
+| POST /bulk | ✅ | ✅ | Bulk confirm/pay/remove |
+| Drag & drop | - | ✅ | Przeciąganie pozycji |
 
 ---
 
@@ -88,9 +89,9 @@ Organizator ma pełną kontrolę nad listą uczestników swojego wydarzenia. Mo�
 **Aby** zmienić priorytet
 
 **Kryteria akceptacji:**
-- [ ] Drag & drop na liście
-- [ ] Renumeracja pozycji
-- [ ] Endpoint PUT /position
+- [x] Drag & drop na liście
+- [x] Renumeracja pozycji
+- [x] Endpoint PUT /reorder
 
 ### US-05: Potwierdzanie obecności (M2) ✅ BE
 **Jako** organizator
@@ -102,8 +103,8 @@ Organizator ma pełną kontrolę nad listą uczestników swojego wydarzenia. Mo�
 - [x] Endpoint PUT /confirm (self-service)
 - [x] Pole isConfirmed w modelu
 - [x] Pole confirmedAt (timestamp)
-- [ ] UI: Toggle w liście uczestników
-- [ ] UI: Przycisk "Potwierdź" dla uczestnika
+- [x] UI: Toggle w liście uczestników
+- [x] UI: Przycisk "Potwierdź" dla uczestnika
 
 ### US-06: Śledzenie płatności (M2)
 **Jako** organizator
@@ -111,7 +112,7 @@ Organizator ma pełną kontrolę nad listą uczestników swojego wydarzenia. Mo�
 **Aby** kontrolować finanse
 
 **Kryteria akceptacji:**
-- [ ] Toggle "Zapłacono"
+- [x] Toggle "Zapłacono"
 - [ ] Wybór metody płatności
 - [ ] Data płatności
 
@@ -154,15 +155,17 @@ Organizator ma pełną kontrolę nad listą uczestników swojego wydarzenia. Mo�
 - [x] Autoryzacja: tylko organizator
 
 ### M2 (Post-MVP) - PARTIAL
-- [ ] PUT /{userId}/position
-- [x] PUT /{userId}/confirm (BE done)
-- [x] PUT /confirm - self-service (BE done)
-- [ ] PUT /{userId}/payment
+- [x] PUT /reorder
+- [x] PUT /{userId}/confirm (BE + UI)
+- [x] PUT /confirm - self-service (BE + UI)
+- [x] PUT /{userId}/payment
 - [ ] POST /{userId}/promote
 - [ ] POST /{userId}/demote
-- [ ] Drag & drop reordering
-- [ ] Confirmation UI
-- [ ] Payment tracking UI
+- [x] Drag & drop reordering
+- [x] Confirmation UI
+- [x] Payment toggle UI
+- [x] Bulk actions (confirm/pay/remove)
+- [ ] Payment method selection UI
 
 ---
 
