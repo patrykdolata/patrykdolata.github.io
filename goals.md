@@ -11,7 +11,7 @@
 | :--- | :--- |
 | **Postęp M2** | ![Postęp](https://progress-bar.dev/97/?scale=29&title=W%20trakcie&width=120&color=3498db) **97%** |
 | **Aktualna Faza** | **M2: Viralność, Powiadomienia i Feedback** |
-| **Ostatni Release** |  06.01.2026|
+| **Ostatni Release** |  18.01.2026|
 | **Najbliższy Termin** | Q1 2026 |
 | **Cel** | Push notifications i onboarding|
 
