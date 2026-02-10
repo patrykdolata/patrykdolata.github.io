@@ -11,7 +11,7 @@
 | :-------------------- | :------------------------------------------------------------------------------------------------ |
 | **Postęp M2**         | ![Postęp](https://progress-bar.dev/99/?scale=29&title=W%20trakcie&width=120&color=3498db) **99%** |
 | **Aktualna Faza**     | **M2: Viralność, Powiadomienia i Feedback**                                                       |
-| **Ostatni Release**   | 25.01.2026                                                                                        |
+| **Ostatni Release**   | 09.02.2026                                                                                        |
 | **Najbliższy Termin** | Q1 2026                                                                                           |
 | **Cel**               | Push notifications i onboarding                                                                   |
 
@@ -155,11 +155,12 @@ _Niższy priorytet - jeśli starczy czasu._
 
 ### ✅ Stabilizacja i Release
 
-- [ ] **Refactor kodu** - Czyszczenie kodu, uzupełnienie testów automatycznych.
+- [x] **Refactor kodu** - Czyszczenie kodu, uzupełnienie testów automatycznych.
 - [x] **Testy end-to-end** – Kompleksowa walidacja przed wypuszczeniem.
 - [x] **Poprawki bugów** – Stabilizacja przed releasem.
 - [x] **Serwer produkcyjny** – Infrastruktura gotowa do testów.
 - [x] **Release 0.0.2** – Wersja wypuszczona do grona testerskiego.
+- [ ] **Publiczny release 1.0.0** - Wersja upublikowana w sklepach
 
 ---
 
