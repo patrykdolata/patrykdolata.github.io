@@ -11,7 +11,7 @@
 | :-------------------- | :------------------------------------------------------------------------------------------------ |
 | **Postęp M2**         | ![Postęp](https://progress-bar.dev/99/?scale=29&title=W%20trakcie&width=120&color=3498db) **99%** |
 | **Aktualna Faza**     | **M2: Viralność, Powiadomienia i Feedback**                                                       |
-| **Ostatni Release**   | 09.02.2026                                                                                        |
+| **Ostatni Release**   | 14.03.2026                                                                                        |
 | **Najbliższy Termin** | Q1 2026                                                                                           |
 | **Cel**               | Push notifications i onboarding                                                                   |
 
@@ -160,18 +160,18 @@ _Niższy priorytet - jeśli starczy czasu._
 - [x] **Poprawki bugów** – Stabilizacja przed releasem.
 - [x] **Serwer produkcyjny** – Infrastruktura gotowa do testów.
 - [x] **Release 0.0.2** – Wersja wypuszczona do grona testerskiego.
-- [ ] **Publiczny release 1.0.0** - Wersja upublikowana w sklepach
+- [x] **Publiczny release 1.0.0** - Wersja upublikowana w sklepach
 
 ---
 
 ## 🟢 M3: Reputacja, Skalowanie i Zaawansowane Narzędzia
 
 **Termin:** Q2 2026
-**Cel:** Budowanie zaufania, zaawansowane zarządzanie, RODO.
+**Cel:** Budowanie zaufania, zaawansowane zarządzanie.
 
 ### 🔴 Onboarding
 
-\*Redukcja friction dla nowych użytkowników
+_Redukcja friction dla nowych użytkowników_
 
 - [ ] **Social Login** `[BACKLOG]` – Szybkie logowanie przez Google i Apple.
 
@@ -210,7 +210,7 @@ _Budowanie zaufania i eliminacja no-shows._
 - [ ] **Testy end-to-end** – Kompleksowa walidacja przed wypuszczeniem.
 - [ ] **Poprawki bugów** – Stabilizacja przed releasem.
 - [ ] **Serwer produkcyjny** – Infrastruktura gotowa do testów.
-- [ ] **Release 0.0.3** – Wersja wypuszczona do grona testerskiego.
+- [ ] **Release 1.0.3** – Wersja wypuszczona do grona testerskiego.
 
 ---
 
@@ -265,7 +265,7 @@ _Dostępność aplikacji bez połączenia z internetem._
 - [ ] **Testy end-to-end** – Kompleksowa walidacja przed wypuszczeniem.
 - [ ] **Poprawki bugów** – Stabilizacja przed releasem.
 - [ ] **Serwer produkcyjny** – Infrastruktura gotowa do testów.
-- [ ] **Release 0.0.4** – Wersja wypuszczona do grona testerskiego.
+- [ ] **Release 1.0.4** – Wersja wypuszczona do grona testerskiego.
 
 ---
 
