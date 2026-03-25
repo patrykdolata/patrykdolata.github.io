@@ -98,8 +98,8 @@ _Dostęp do zakończonych wydarzeń i rozliczenia płatności._
 
 _Redukcja friction dla nowych użytkowników z deep links._
 
-- [x] **Web Landing Page** `[BACKLOG]` – Strona meetapp.pl/event/{id} dla userów bez aplikacji (widok wydarzenia + CTA).
-- [x] **Open Graph Meta** `[BACKLOG]` – Podgląd wydarzenia w Messenger/WhatsApp przed kliknięciem linku.
+- [x] **Web Landing Page** – Strona meetapp.pl/event/{id} dla userów bez aplikacji (widok wydarzenia + CTA).
+- [x] **Open Graph Meta** – Podgląd wydarzenia w Messenger/WhatsApp przed kliknięciem linku.
 - [x] **Resend** - Przejście na providera do emaili
 - [x] **Invite links** - linki z zaproszeniami do wydarzeń oraz grupy
 
@@ -197,12 +197,6 @@ _Budowanie zaufania i eliminacja no-shows._
 - [ ] **R-Score** `[BACKLOG]` – Wskaźnik wiarygodności widoczny przy profilu gracza (% obecności).
 - [ ] **Kary za No-Show** `[BACKLOG]` – Niższy priorytet lub blokada dla notorycznych "wagarowiczów".
 - [ ] **Rozszerzona Historia** `[BACKLOG]` – Statystyki aktywności gracza (ulubione sporty, częstotliwość).
-
-### 🔐 Zgodność i Bezpieczeństwo
-
-- [ ] **Zgodność RODO** `[BACKLOG]` – Eksport i anonimizacja danych użytkowników.
-- [ ] **Audyt Bezpieczeństwa** `[BACKLOG]` – Testy penetracyjne przed szeroką publikacją.
-- [ ] **Usuwanie Konta** `[BACKLOG]` – Pełne usunięcie danych na żądanie użytkownika.
 
 ### ✅ Stabilizacja i Release
 
