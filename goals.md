@@ -181,6 +181,11 @@ _Niższy priorytet - jeśli starczy czasu._
 
 - [ ] **Magic Link** `[BACKLOG]` – Logowanie bez hasła przez link w emailu.
 
+### Kreator składów
+
+- [ ] **Pozycje** - wybór i przypisanie graczy do pozycji w składzie
+- [ ] **Skład** - możliwość ustawienia składów przed meczem
+
 ### 📣 Feature Requests
 
 _Zbieranie pomysłów od użytkowników i budowanie społeczności._
@@ -194,6 +199,8 @@ _Zbieranie pomysłów od użytkowników i budowanie społeczności._
 _Budowanie zaufania i eliminacja no-shows._
 
 - [ ] **Śledzenie Obecności** `[BACKLOG]` – Organizator oznacza, czy zapisany gracz faktycznie się pojawił.
+- [ ] **Głosowanie MVP** `[BACKLOG]` - Głosowanie po meczu na MVP
+- [ ] **Zapis wyników meczu** `[BACKLOG]` - Możliwość zapisania kto wygrał i jaki był wynik
 - [ ] **R-Score** `[BACKLOG]` – Wskaźnik wiarygodności widoczny przy profilu gracza (% obecności).
 - [ ] **Kary za No-Show** `[BACKLOG]` – Niższy priorytet lub blokada dla notorycznych "wagarowiczów".
 - [ ] **Rozszerzona Historia** `[BACKLOG]` – Statystyki aktywności gracza (ulubione sporty, częstotliwość).
@@ -204,7 +211,7 @@ _Budowanie zaufania i eliminacja no-shows._
 - [ ] **Testy end-to-end** – Kompleksowa walidacja przed wypuszczeniem.
 - [ ] **Poprawki bugów** – Stabilizacja przed releasem.
 - [ ] **Serwer produkcyjny** – Infrastruktura gotowa do testów.
-- [ ] **Release 1.0.3** – Wersja wypuszczona do grona testerskiego.
+- [ ] **Release 1.1.0** – Wersja wypuszczona do grona testerskiego.
 
 ---
 
@@ -225,11 +232,6 @@ _Dostępność aplikacji bez połączenia z internetem._
 
 - [ ] **Zaawansowane Serie** `[MA-445]` – Pomijanie świąt, cykle miesięczne.
 - [ ] **Widok Kalendarza** `[BACKLOG]` – Graficzne przedstawienie nadchodzących gier.
-
-### Kreator składów
-
-- [ ] **Pozycje** - wybór i przypisanie graczy do pozycji w składzie
-- [ ] **Skład** - możliwość ustawienia składów przed meczem
 
 ### Ogłoszenia
 
