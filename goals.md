@@ -199,8 +199,8 @@ _Zbieranie pomysłów od użytkowników i budowanie społeczności._
 _Budowanie zaufania i eliminacja no-shows._
 
 - [ ] **Śledzenie Obecności** `[BACKLOG]` – Organizator oznacza, czy zapisany gracz faktycznie się pojawił.
-- [ ] **Głosowanie MVP** `[BACKLOG]` - Głosowanie po meczu na MVP
-- [ ] **Zapis wyników meczu** `[BACKLOG]` - Możliwość zapisania kto wygrał i jaki był wynik
+- [ ] **Głosowanie MVP** `[BACKLOG]` - Głosowanie po meczu na MVP.
+- [ ] **Zapis wyników meczu** `[BACKLOG]` - Możliwość zapisania kto wygrał i jaki był wynik.
 - [ ] **R-Score** `[BACKLOG]` – Wskaźnik wiarygodności widoczny przy profilu gracza (% obecności).
 - [ ] **Kary za No-Show** `[BACKLOG]` – Niższy priorytet lub blokada dla notorycznych "wagarowiczów".
 - [ ] **Rozszerzona Historia** `[BACKLOG]` – Statystyki aktywności gracza (ulubione sporty, częstotliwość).
@@ -217,7 +217,7 @@ _Budowanie zaufania i eliminacja no-shows._
 
 ## 🔵 M4: Optymalizacja
 
-**Termin:** Q3 2026
+**Termin:** Q4 2026
 **Cel:** Offline mode, finanse, optymalizacje wydajności.
 
 ### 📱 Praca Offline
@@ -246,6 +246,7 @@ _Dostępność aplikacji bez połączenia z internetem._
 
 ### 🛠️ Developer Experience
 
+- [ ] **Nowa architektura** `[BACKLOG]` - Przejście na architekturę zdarzeniową.
 - [ ] **Zdalna Konfiguracja** `[BACKLOG]` – Feature flags bez aktualizacji w sklepie.
 - [ ] **Panel Logów** `[BACKLOG]` – Narzędzie do przeglądania logów produkcyjnych.
 - [ ] **A/B Testing** `[BACKLOG]` – Testowanie wariantów UI.
@@ -260,8 +261,8 @@ _Dostępność aplikacji bez połączenia z internetem._
 - [ ] **Refactor kodu** - Czyszczenie kodu, uzupełnienie testów automatycznych.
 - [ ] **Testy end-to-end** – Kompleksowa walidacja przed wypuszczeniem.
 - [ ] **Poprawki bugów** – Stabilizacja przed releasem.
-- [ ] **Serwer produkcyjny** – Infrastruktura gotowa do testów.
-- [ ] **Release 1.0.4** – Wersja wypuszczona do grona testerskiego.
+- [ ] **Serwer produkcyjny** – Nowa infrastruktura gotowa do testów.
+- [ ] **Release 2.0.0** – Wersja wypuszczona do grona testerskiego.
 
 ---
 
