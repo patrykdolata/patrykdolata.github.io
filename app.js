@@ -105,7 +105,7 @@ async function go(id) {
     saveState();
     
     // Wait a tick for DOM to register the active class, then call onScreen
-    setTimeout(() => onScreen(id), 10);
+    setTimeout(() => onScreen(id), 20);
 }
 
 function switchRole(role) {
@@ -117,16 +117,24 @@ function switchRole(role) {
 
 function onScreen(id) {
     if (id === 'c-qr' && db.currentUser) {
-        document.getElementById('c-disp-name').innerText = `${db.currentUser.name} ${db.currentUser.surname}`;
-        document.getElementById('c-disp-phone').innerText = db.currentUser.phone;
-        document.getElementById('c-disp-units').innerHTML = db.currentUser.units.length 
-            ? db.currentUser.units.map(u => `<span class="tag">#SK-${u}</span>`).join('') 
-            : 'Brak';
+        const nameEl = document.getElementById('c-disp-name');
+        if (nameEl) nameEl.innerText = `${db.currentUser.name} ${db.currentUser.surname}`;
         
-        // Realistic QR Code using API
+        const phoneEl = document.getElementById('c-disp-phone');
+        if (phoneEl) phoneEl.innerText = db.currentUser.phone;
+        
+        const unitsEl = document.getElementById('c-disp-units');
+        if (unitsEl) {
+            unitsEl.innerHTML = db.currentUser.units.length 
+                ? db.currentUser.units.map(u => `<span class="tag">#SK-${u}</span>`).join('') 
+                : 'Brak';
+        }
+        
+        // Realistic QR Code
         const qrImg = document.getElementById('c-qr-img');
         if (qrImg) {
-            qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=USER_${db.currentUser.id}`;
+            qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=USER_${db.currentUser.id}&color=1e3a8a`;
+            qrImg.style.opacity = '1';
         }
     }
     if (id === 's-home') {
@@ -159,22 +167,29 @@ function onScreen(id) {
 // --- CLIENT AUTH ---
 function authProcess(type) {
     if (type === 'reg') {
-        const name = document.getElementById('reg-name').value;
-        const surname = document.getElementById('reg-surname').value;
-        const phone = document.getElementById('reg-phone').value;
+        const name = document.getElementById('reg-name').value.trim();
+        const surname = document.getElementById('reg-surname').value.trim();
+        const phone = document.getElementById('reg-phone').value.trim();
         
+        const nameValid = name.length >= 2;
+        const surnameValid = surname.length >= 2;
         const phoneValid = isValidPhone(phone);
-        setFieldInvalid('reg-name', !name);
-        setFieldInvalid('reg-surname', !surname);
+        
+        setFieldInvalid('reg-name', !nameValid);
+        setFieldInvalid('reg-surname', !surnameValid);
         setFieldInvalid('reg-phone', !phoneValid);
         
-        if (!name || !surname || !phoneValid) {
-            showToast(phoneValid ? 'Proszę uzupełnić wszystkie dane' : 'Błędny format numeru telefonu', 'alert-circle');
+        if (!nameValid || !surnameValid || !phoneValid) {
+            let msg = 'Proszę poprawić błędy w formularzu';
+            if (!nameValid || !surnameValid) msg = 'Imię i nazwisko muszą mieć min. 2 znaki';
+            else if (!phoneValid) msg = 'Błędny format numeru telefonu';
+            
+            showToast(msg, 'alert-circle');
             return;
         }
         db.currentUser = { id: Date.now().toString(), name, surname, phone, units: [] };
     } else {
-        const phone = document.getElementById('login-phone').value;
+        const phone = document.getElementById('login-phone').value.trim();
         if (!phone || !isValidPhone(phone)) {
             setFieldInvalid('login-phone', true);
             showToast('Podaj poprawny numer telefonu', 'alert-circle');
@@ -193,6 +208,17 @@ function authProcess(type) {
 }
 
 function authFinalize() {
+    // Walidacja SMS
+    const inputs = document.querySelectorAll('.sms-input');
+    let code = '';
+    inputs.forEach(i => code += i.value);
+    
+    if (code !== '1234') {
+        showToast('Błędny kod SMS! (użyj 1234)', 'shield-alert');
+        inputs.forEach(i => i.style.borderColor = 'var(--danger)');
+        return;
+    }
+
     if (!db.users.find(u => u.id === db.currentUser.id)) db.users.push(db.currentUser);
     saveState();
     go('c-qr');
@@ -234,17 +260,20 @@ function staffStopEvent() {
 
 // --- STAFF USER MGMT ---
 function staffDoManualReg() {
-    const name = document.getElementById('man-name').value;
-    const surname = document.getElementById('man-surname').value;
-    const phone = document.getElementById('man-phone').value;
+    const name = document.getElementById('man-name').value.trim();
+    const surname = document.getElementById('man-surname').value.trim();
+    const phone = document.getElementById('man-phone').value.trim();
     
+    const nameValid = name.length >= 2;
+    const surnameValid = surname.length >= 2;
     const phoneValid = isValidPhone(phone);
-    setFieldInvalid('man-name', !name);
-    setFieldInvalid('man-surname', !surname);
+    
+    setFieldInvalid('man-name', !nameValid);
+    setFieldInvalid('man-surname', !surnameValid);
     setFieldInvalid('man-phone', !phoneValid);
     
-    if (!name || !surname || !phoneValid) {
-        showToast(phoneValid ? 'Wypełnij wszystkie dane klienta!' : 'Błędny numer telefonu!', 'alert-circle');
+    if (!nameValid || !surnameValid || !phoneValid) {
+        showToast('Błędne dane klienta (min. 2 znaki, poprawny tel)!', 'alert-circle');
         return;
     }
     
