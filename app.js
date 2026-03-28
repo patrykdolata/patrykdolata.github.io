@@ -28,11 +28,12 @@ function loadState() {
 // --- TOASTS & VALIDATION ---
 function showToast(message, icon = 'info') {
     const container = document.getElementById('toast-container');
+    if (!container) return;
     const t = document.createElement('div');
     t.className = 'toast';
     t.innerHTML = `<i data-lucide="${icon}" style="width:18px; height:18px;"></i> <span>${message}</span>`;
     container.appendChild(t);
-    lucide.createIcons();
+    if (window.lucide) lucide.createIcons();
     setTimeout(() => {
         t.style.opacity = '0';
         t.style.transform = 'translateY(-10px)';
@@ -59,9 +60,20 @@ function isValidPhone(phone) {
     return phoneRegex.test(phone.replace(/\s/g, ''));
 }
 
+// Helpery do bezpiecznej manipulacji DOM
+function setVal(id, val) {
+    const el = document.getElementById(id);
+    if (el) el.innerText = val;
+}
+function setHtml(id, html) {
+    const el = document.getElementById(id);
+    if (el) el.innerHTML = html;
+}
+
 // Wykrywanie braku serwera
 if (window.location.protocol === 'file:') {
-    document.getElementById('server-warning').style.display = 'block';
+    const warning = document.getElementById('server-warning');
+    if (warning) warning.style.display = 'block';
 }
 
 // --- INITIALIZATION ---
@@ -69,12 +81,14 @@ window.onload = () => {
     loadState();
     if (db.activeEvent) switchRole('staff');
     else switchRole('client');
-    lucide.createIcons();
+    if (window.lucide) lucide.createIcons();
 };
 
 // --- NAVIGATION ---
 async function go(id) {
     const container = document.getElementById('screen-container');
+    if (!container) return;
+    
     Object.values(loadedScreens).forEach(el => el.classList.remove('active'));
 
     if (!loadedScreens[id]) {
@@ -96,7 +110,7 @@ async function go(id) {
 
     loadedScreens[id].classList.add('active');
     saveState();
-    setTimeout(() => onScreen(id), 50); // Zwiększony timeout dla pewności DOMu
+    setTimeout(() => onScreen(id), 60); // Większy margines czasu na rendering
 }
 
 function switchRole(role) {
@@ -108,17 +122,8 @@ function switchRole(role) {
 }
 
 function onScreen(id) {
-    // Zapewnienie renderowania ikon niezależnie od reszty logiki
-    lucide.createIcons();
-
-    const setVal = (id, val) => {
-        const el = document.getElementById(id);
-        if (el) el.innerText = val;
-    };
-    const setHtml = (id, html) => {
-        const el = document.getElementById(id);
-        if (el) el.innerHTML = html;
-    };
+    // Renderowanie ikon jako pierwszy krok
+    if (window.lucide) lucide.createIcons();
 
     if (id === 'c-qr' && db.currentUser) {
         setVal('c-disp-name', `${db.currentUser.name} ${db.currentUser.surname}`);
@@ -170,7 +175,9 @@ function onScreen(id) {
 
     if (id === 's-user' && staffActiveUser) renderStaffUser();
     if (id === 's-debtors') renderDebtors();
+    
     if (id === 's-summary') {
+        // Wszystkie odwołania w summary muszą być bezpieczne
         setVal('sum-p', db.users.length);
         setVal('sum-h', db.totalOut);
         setVal('sum-d', db.users.filter(u=>u.units.length > 0).length);
@@ -180,9 +187,14 @@ function onScreen(id) {
 // --- CLIENT AUTH ---
 function authProcess(type) {
     if (type === 'reg') {
-        const name = document.getElementById('reg-name').value.trim();
-        const surname = document.getElementById('reg-surname').value.trim();
-        const phone = document.getElementById('reg-phone').value.trim();
+        const nameEl = document.getElementById('reg-name');
+        const surnameEl = document.getElementById('reg-surname');
+        const phoneEl = document.getElementById('reg-phone');
+        if (!nameEl || !surnameEl || !phoneEl) return;
+
+        const name = nameEl.value.trim();
+        const surname = surnameEl.value.trim();
+        const phone = phoneEl.value.trim();
         
         const nameValid = name.length >= 2;
         const surnameValid = surname.length >= 2;
@@ -198,7 +210,9 @@ function authProcess(type) {
         }
         db.currentUser = { id: Date.now().toString(), name, surname, phone, units: [], rentalTime: null };
     } else {
-        const phone = document.getElementById('login-phone').value.trim();
+        const phoneEl = document.getElementById('login-phone');
+        if (!phoneEl) return;
+        const phone = phoneEl.value.trim();
         if (!phone || !isValidPhone(phone)) {
             setFieldInvalid('login-phone', true);
             showToast('Podaj poprawny numer telefonu', 'alert-circle');
@@ -264,15 +278,22 @@ function staffStopEvent() {
 
 // --- STAFF USER MGMT ---
 function staffDoManualReg() {
-    const name = document.getElementById('man-name').value.trim();
-    const surname = document.getElementById('man-surname').value.trim();
-    const phone = document.getElementById('man-phone').value.trim();
+    const nameEl = document.getElementById('man-name');
+    const surnameEl = document.getElementById('man-surname');
+    const phoneEl = document.getElementById('man-phone');
+    if (!nameEl || !surnameEl || !phoneEl) return;
+
+    const name = nameEl.value.trim();
+    const surname = surnameEl.value.trim();
+    const phone = phoneEl.value.trim();
     const nameValid = name.length >= 2;
     const surnameValid = surname.length >= 2;
     const phoneValid = isValidPhone(phone);
+
     setFieldInvalid('man-name', !nameValid);
     setFieldInvalid('man-surname', !surnameValid);
     setFieldInvalid('man-phone', !phoneValid);
+    
     if (!nameValid || !surnameValid || !phoneValid) {
         showToast('Błędne dane klienta!', 'alert-circle');
         return;
@@ -286,12 +307,15 @@ function staffDoManualReg() {
 }
 
 function renderStaffUser() {
+    if (!staffActiveUser) return;
     setVal('s-user-name-title', `${staffActiveUser.name} ${staffActiveUser.surname}`);
     setVal('s-user-phone-title', staffActiveUser.phone);
     setVal('s-user-has-count', staffActiveUser.units.length);
     setHtml('s-user-has-tags', staffActiveUser.units.map(u => `<span class="tag">#SK-${u}</span>`).join('') || 'Brak');
+    
     const retArea = document.getElementById('s-return-area');
     if (retArea) retArea.style.display = staffActiveUser.units.length > 0 ? 'block' : 'none';
+    
     staffQty = 1; staffTempScanned = [];
     setVal('s-qty-val', "1");
     setHtml('s-temp-scanned-tags', "");
@@ -315,6 +339,7 @@ function staffSimHeadphoneScan() {
 }
 
 function staffDoIssue() {
+    if (!staffActiveUser) return;
     staffActiveUser.units.push(...staffTempScanned);
     if (!staffActiveUser.rentalTime) {
         const now = new Date();
@@ -326,7 +351,7 @@ function staffDoIssue() {
 }
 
 function staffSimReturn() {
-    if (!staffActiveUser.units.length) return;
+    if (!staffActiveUser || !staffActiveUser.units.length) return;
     staffActiveUser.units.pop();
     if (staffActiveUser.units.length === 0) staffActiveUser.rentalTime = null;
     db.totalOut--;
@@ -348,14 +373,5 @@ function renderDebtors() {
         c.innerHTML = `<div><b style="display:block;">${u.name} ${u.surname}</b><small>${u.phone}</small><div style="display:flex; gap:4px; margin-top:4px;">${u.units.map(unit => `<span class="tag" style="font-size:9px;">#${unit}</span>`).join('')}</div></div><a href="tel:${u.phone}" class="btn-secondary" style="width:40px; height:40px; border-radius:10px; display:flex; align-items:center; justify-content:center;"><i data-lucide="phone" style="width:16px;"></i></a>`;
         list.appendChild(c);
     });
-    lucide.createIcons();
-}
-
-function setVal(id, val) {
-    const el = document.getElementById(id);
-    if (el) el.innerText = val;
-}
-function setHtml(id, html) {
-    const el = document.getElementById(id);
-    if (el) el.innerHTML = html;
+    if (window.lucide) lucide.createIcons();
 }
