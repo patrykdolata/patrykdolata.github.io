@@ -1,6 +1,6 @@
 // --- DB STATE ---
 let db = { 
-    users: [], // {id, name, surname, phone, units: []}
+    users: [], // {id, name, surname, phone, units: [], rentalTime: null}
     activeEvent: null,
     totalOut: 0,
     currentUser: null 
@@ -129,11 +129,25 @@ function onScreen(id) {
                 ? db.currentUser.units.map(u => `<span class="tag">#SK-${u}</span>`).join('') 
                 : 'Brak';
         }
+
+        const timeEl = document.getElementById('c-disp-time');
+        if (timeEl) {
+            if (db.currentUser.units.length > 0 && db.currentUser.rentalTime) {
+                timeEl.innerText = `Wypożyczono: ${db.currentUser.rentalTime}`;
+                timeEl.style.display = 'block';
+            } else {
+                timeEl.style.display = 'none';
+            }
+        }
         
         // Realistic QR Code
         const qrImg = document.getElementById('c-qr-img');
         if (qrImg) {
-            qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=USER_${db.currentUser.id}&color=1e3a8a`;
+            const qrData = encodeURIComponent(`USER_${db.currentUser.id}`);
+            qrImg.src = `https://quickchart.io/qr?text=${qrData}&size=250&dark=1e3a8a`;
+            qrImg.onerror = () => {
+                qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${qrData}`;
+            };
             qrImg.style.opacity = '1';
         }
     }
@@ -187,7 +201,7 @@ function authProcess(type) {
             showToast(msg, 'alert-circle');
             return;
         }
-        db.currentUser = { id: Date.now().toString(), name, surname, phone, units: [] };
+        db.currentUser = { id: Date.now().toString(), name, surname, phone, units: [], rentalTime: null };
     } else {
         const phone = document.getElementById('login-phone').value.trim();
         if (!phone || !isValidPhone(phone)) {
@@ -277,7 +291,7 @@ function staffDoManualReg() {
         return;
     }
     
-    const user = { id: Date.now().toString(), name, surname, phone, units: [] };
+    const user = { id: Date.now().toString(), name, surname, phone, units: [], rentalTime: null };
     db.users.push(user);
     staffActiveUser = user;
     showToast('Klient zarejestrowany pomyślnie!', 'user-check');
@@ -289,7 +303,7 @@ function renderStaffUser() {
     document.getElementById('s-user-name-title').innerText = `${staffActiveUser.name} ${staffActiveUser.surname}`;
     document.getElementById('s-user-phone-title').innerText = staffActiveUser.phone;
     document.getElementById('s-user-has-count').innerText = staffActiveUser.units.length;
-    document.getElementById('s-user-has-tags').innerHTML = staffActiveUser.units.map(u => `<span class="tag">#SK-${u}</span>`).join('');
+    document.getElementById('s-user-has-tags').innerHTML = staffActiveUser.units.map(u => `<span class="tag">#SK-${u}</span>`).join('') || 'Brak';
     document.getElementById('s-return-area').style.display = staffActiveUser.units.length > 0 ? 'block' : 'none';
     staffQty = 1; staffTempScanned = [];
     document.getElementById('s-qty-val').innerText = "1";
@@ -312,6 +326,11 @@ function staffSimHeadphoneScan() {
 
 function staffDoIssue() {
     staffActiveUser.units.push(...staffTempScanned);
+    // Ustawienie czasu wypożyczenia (tylko jeśli wcześniej go nie było)
+    if (!staffActiveUser.rentalTime) {
+        const now = new Date();
+        staffActiveUser.rentalTime = now.toLocaleDateString('pl-PL') + ' ' + now.toLocaleTimeString('pl-PL', {hour: '2-digit', minute:'2-digit'});
+    }
     db.totalOut += staffTempScanned.length;
     saveState();
     go('s-home');
@@ -319,7 +338,10 @@ function staffDoIssue() {
 
 function staffSimReturn() {
     if (!staffActiveUser.units.length) return;
-    const ret = staffActiveUser.units.pop();
+    staffActiveUser.units.pop();
+    if (staffActiveUser.units.length === 0) {
+        staffActiveUser.rentalTime = null;
+    }
     db.totalOut--;
     saveState();
     renderStaffUser();

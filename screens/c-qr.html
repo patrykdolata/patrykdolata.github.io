@@ -1,19 +1,20 @@
-<div id="c-qr" class="screen">
-    <h2 style="text-align:center;">Twój kod QR</h2>
-    <div class="qr-placeholder" style="padding:16px;">
-        <img id="c-qr-img" src="" style="width:200px; height:200px; display:block;" alt="QR Code">
+<div id="c-qr" class="screen" style="padding: 16px;">
+    <h2 style="text-align:center; margin-bottom: 12px;">Twój kod QR</h2>
+    <div class="qr-placeholder" style="padding:12px; margin-bottom: 12px; border-width: 2px;">
+        <img id="c-qr-img" src="" style="width:200px; height:200px; display:block; background: #eee;" alt="QR Code">
     </div>
     <h3 id="c-disp-name" style="text-align:center; margin:0;">Jan Kowalski</h3>
-    <p id="c-disp-phone" style="text-align:center; font-size:12px; color:var(--text-muted);">+48 000 000 000</p>
+    <p id="c-disp-phone" style="text-align:center; font-size:12px; color:var(--text-muted); margin-bottom: 12px;">+48 000 000 000</p>
     
-    <div class="card" style="margin-top:24px; text-align:center; background:#fffbeb; border-color:#fef3c7;">
-        <strong style="color:var(--warning); font-size:12px; text-transform:uppercase;">Twoje wypożyczenie:</strong>
-        <div id="c-disp-units" style="margin-top:8px;">Brak</div>
+    <div class="card" style="margin-top:0; text-align:center; background:#fffbeb; border-color:#fef3c7; padding: 12px;">
+        <strong style="color:var(--warning); font-size:10px; text-transform:uppercase;">Twoje wypożyczenie:</strong>
+        <div id="c-disp-units" style="margin-top:4px; font-size: 13px;">Brak</div>
+        <div id="c-disp-time" style="margin-top:4px; font-size: 11px; color: var(--text-muted); display: none;"></div>
     </div>
 
-    <button class="btn btn-outline" style="margin-top:24px; font-size:13px; border-style:dashed;" onclick="showToast('Kliknij ikonę udostępniania w przeglądarce i wybierz \'Do ekranu początkowego\'', 'plus-square')">
-        <i data-lucide="plus-square" style="width:18px; height:18px;"></i> Dodaj do ekranu głównego
+    <button class="btn btn-outline" style="margin-top:16px; padding: 12px; font-size:12px; border-style:dashed;" onclick="showToast('Kliknij ikonę udostępniania w przeglądarce i wybierz \'Do ekranu początkowego\'', 'plus-square')">
+        <i data-lucide="plus-square" style="width:16px; height:16px;"></i> Dodaj do ekranu głównego
     </button>
     
-    <button class="btn btn-outline" style="margin-top:auto; color:var(--danger); border-color:transparent;" onclick="authLogout()">Wyloguj</button>
+    <button class="btn btn-outline" style="margin-top:auto; padding: 8px; color:var(--danger); border-color:transparent; font-size: 12px;" onclick="authLogout()">Wyloguj</button>
 </div>
