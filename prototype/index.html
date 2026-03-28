@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Silent King - Prototyp Ultimate v3.0 (Podzielony)</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Informacja dla środowisk bez serwera HTTP -->
+    <div id="server-warning" style="display: none; position: fixed; top: 0; left: 0; right: 0; background: var(--danger); color: white; padding: 10px; text-align: center; z-index: 1000; font-weight: bold;">
+        ⚠️ Uwaga: Aby ekrany działały poprawnie, musisz uruchomić projekt przez lokalny serwer HTTP.
+    </div>
+
+    <div class="role-switcher">
+        <button id="btn-client" class="role-btn active" onclick="switchRole('client')">Klient</button>
+        <button id="btn-staff" class="role-btn" onclick="switchRole('staff')">Obsługa</button>
+    </div>
+
+    <div class="phone-frame">
+        <div class="status-bar">
+            <span>23:05</span>
+            <span>📶 🔋</span>
+        </div>
+        
+        <!-- Główny kontener, do którego JS wstrzykuje ekrany z folderu screens/ -->
+        <div id="screen-container" style="display: flex; flex: 1; flex-direction: column; overflow: hidden;">
+        </div>
+    </div>
+    
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<div id="s-user" class="screen">
+    <div class="nav-back" onclick="go('s-home')">← Zamknij</div>
+    <h2 id="s-user-name-title" style="margin:0;">Użytkownik</h2>
+    <p id="s-user-phone-title" style="color:var(--text-muted); font-size:12px;">+48 000 000 000</p>
+    <div class="card" style="text-align:center;">
+        <small style="text-transform:uppercase; font-weight:700;">Posiada słuchawki:</small>
+        <div style="font-size:32px; font-weight:800; margin:8px 0;" id="s-user-has-count">0</div>
+        <div id="s-user-has-tags"></div>
+    </div>
+    <div id="s-issue-area">
+        <div class="counter">
+            <button class="counter-btn" onclick="staffUpdateQty(-1)">-</button>
+            <span id="s-qty-val" style="font-size:32px; font-weight:800;">1</span>
+            <button class="counter-btn" onclick="staffUpdateQty(1)">+</button>
+        </div>
+        <div class="scan-placeholder" onclick="staffSimHeadphoneScan()">📸 Skanuj QR Słuchawki</div>
+        <div id="s-temp-scanned-tags" style="margin-bottom:16px; text-align:center;"></div>
+        <button class="btn btn-primary" id="s-confirm-btn" disabled onclick="staffDoIssue()">Potwierdź wydanie</button>
+    </div>
+    <div id="s-return-area" style="display:none; border-top:1px solid #eee; padding-top:20px; margin-top:20px;">
+        <div class="scan-placeholder" style="border-color:var(--success); color:var(--success);" onclick="staffSimReturn()">📸 Skanuj Słuchawkę do zwrotu</div>
+    </div>
+</div>

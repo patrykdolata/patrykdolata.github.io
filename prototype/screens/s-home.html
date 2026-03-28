@@ -1,0 +1,22 @@
+<div id="s-home" class="screen">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px;">
+        <div>
+            <h2 id="s-active-event" style="margin:0;">Event</h2>
+            <div style="display:flex; align-items:center; gap:6px; color:var(--danger); font-weight:700; font-size:12px;">● LIVE</div>
+        </div>
+        <button class="btn-secondary" style="width:auto; padding:8px 12px; font-size:11px; border-radius:10px; border:none;" onclick="go('s-event-selector')">Zmień</button>
+    </div>
+    
+    <button class="btn btn-primary" style="height:140px; font-size:20px; flex-direction:column;" onclick="go('s-scan')">
+        <span style="font-size:32px;">📸</span> Skanuj Klienta
+    </button>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px;">
+        <div class="card"><small>WYDANE</small><div style="font-size:24px; font-weight:800;" id="s-stat-out">0</div></div>
+        <div class="card"><small>W BAZIE</small><div style="font-size:24px; font-weight:800;">500</div></div>
+    </div>
+
+    <button class="btn btn-secondary" onclick="go('s-manual-reg')">👤 Rejestracja Ręczna</button>
+    <button class="btn btn-outline" onclick="go('s-debtors')">⚠️ Dłużnicy</button>
+    <button class="btn btn-danger" style="margin-top:auto;" onclick="staffStopEvent()">Zakończ Event</button>
+</div>
