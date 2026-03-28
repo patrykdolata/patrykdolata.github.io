@@ -20,6 +20,7 @@ if (window.location.protocol === 'file:') {
 // --- INITIALIZATION ---
 window.onload = () => {
     switchRole('client');
+    lucide.createIcons();
 };
 
 // --- NAVIGATION ---
@@ -89,6 +90,7 @@ function onScreen(id) {
     }
     if (id === 's-user' && staffActiveUser) renderStaffUser();
     if (id === 's-debtors') renderDebtors();
+    lucide.createIcons();
 }
 
 // --- CLIENT AUTH ---
@@ -182,7 +184,7 @@ function staffSimReturn() {
 function renderDebtors() {
     const list = document.getElementById('s-debtors-list');
     const debtors = db.users.filter(u=>u.units.length > 0);
-    list.innerHTML = debtors.length ? '' : '<p style="text-align:center; opacity:0.5;">Wszyscy oddali sprzęt! 🎉</p>';
+    list.innerHTML = debtors.length ? '' : '<p style="text-align:center; opacity:0.5;">Wszyscy oddali sprzęt! <i data-lucide="party-popper" style="width:16px; height:16px; vertical-align:middle;"></i></p>';
     debtors.forEach(u => {
         const c = document.createElement('div');
         c.className = 'card';

@@ -8,7 +8,7 @@
     </div>
     
     <button class="btn btn-primary" style="height:140px; font-size:20px; flex-direction:column;" onclick="go('s-scan')">
-        <span style="font-size:32px;">📸</span> Skanuj Klienta
+        <i data-lucide="scan-qr-code" style="width:48px; height:48px; margin-bottom:12px;"></i> Skanuj Klienta
     </button>
 
     <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px;">
@@ -16,7 +16,7 @@
         <div class="card"><small>W BAZIE</small><div style="font-size:24px; font-weight:800;">500</div></div>
     </div>
 
-    <button class="btn btn-secondary" onclick="go('s-manual-reg')">👤 Rejestracja Ręczna</button>
-    <button class="btn btn-outline" onclick="go('s-debtors')">⚠️ Dłużnicy</button>
+    <button class="btn btn-secondary" onclick="go('s-manual-reg')"><i data-lucide="user-plus" style="width:20px; height:20px; margin-right:8px; vertical-align:middle;"></i> Rejestracja Ręczna</button>
+    <button class="btn btn-outline" onclick="go('s-debtors')"><i data-lucide="alert-circle" style="width:20px; height:20px; margin-right:8px; vertical-align:middle;"></i> Dłużnicy</button>
     <button class="btn btn-danger" style="margin-top:auto;" onclick="staffStopEvent()">Zakończ Event</button>
 </div>
