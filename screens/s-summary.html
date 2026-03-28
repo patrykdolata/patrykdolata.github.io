@@ -1,10 +1,24 @@
 <div id="s-summary" class="screen">
-    <h1>Koniec Eventu!</h1>
-    <p>Podsumowanie dnia:</p>
-    <div class="card">
-        Obsłużonych osób: <b id="sum-p">0</b><br>
-        Wydanych słuchawek: <b id="sum-h">0</b><br>
-        Pozostałe długi: <b id="sum-d" style="color:var(--danger);">0</b>
+    <div style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
+        <i data-lucide="party-popper" style="width: 80px; height: 80px; color: var(--success); margin-bottom: 24px;"></i>
+        <h1>Koniec Eventu!</h1>
+        <p>Podsumowanie dnia:</p>
+        
+        <div class="card" style="width: 100%; text-align: left;">
+            <div style="margin-bottom: 8px; display: flex; justify-content: space-between;">
+                <span>Obsłużonych osób:</span>
+                <b id="sum-p">0</b>
+            </div>
+            <div style="margin-bottom: 8px; display: flex; justify-content: space-between;">
+                <span>Wydanych słuchawek:</span>
+                <b id="sum-h">0</b>
+            </div>
+            <div style="display: flex; justify-content: space-between; color: var(--danger); font-weight: 700;">
+                <span>Słuchawki do oddania:</span>
+                <b id="sum-d">0</b>
+            </div>
+        </div>
     </div>
+    
     <button class="btn btn-primary" onclick="go('s-event-selector')">Wróć do wyboru</button>
 </div>

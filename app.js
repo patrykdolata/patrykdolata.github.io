@@ -12,6 +12,19 @@ let staffTempScanned = [];
 
 const loadedScreens = {};
 
+// --- STATE PERSISTENCE ---
+function saveState() {
+    localStorage.setItem('silent_king_db', JSON.stringify(db));
+}
+
+function loadState() {
+    const saved = localStorage.getItem('silent_king_db');
+    if (saved) {
+        const parsed = JSON.parse(saved);
+        db = { ...db, ...parsed };
+    }
+}
+
 // --- TOASTS & VALIDATION ---
 function showToast(message, icon = 'info') {
     const container = document.getElementById('toast-container');
@@ -31,6 +44,7 @@ function showToast(message, icon = 'info') {
 function setFieldInvalid(id, isInvalid) {
     const input = document.getElementById(id);
     const err = document.getElementById(`err-${id}`);
+    if (!input) return; // Guard
     if (isInvalid) {
         input.classList.add('invalid');
         if (err) err.style.display = 'block';
@@ -40,6 +54,12 @@ function setFieldInvalid(id, isInvalid) {
     }
 }
 
+function isValidPhone(phone) {
+    // Prosta walidacja: min 9 cyfr, dopuszcza + na początku
+    const phoneRegex = /^\+?[0-9]{9,15}$/;
+    return phoneRegex.test(phone.replace(/\s/g, ''));
+}
+
 // Wykrywanie braku serwera (protokół file://)
 if (window.location.protocol === 'file:') {
     document.getElementById('server-warning').style.display = 'block';
@@ -47,7 +67,10 @@ if (window.location.protocol === 'file:') {
 
 // --- INITIALIZATION ---
 window.onload = () => {
-    switchRole('client');
+    loadState();
+    // Jeśli jest aktywny event, startujemy jako obsługa, jeśli nie - jako klient
+    if (db.activeEvent) switchRole('staff');
+    else switchRole('client');
     lucide.createIcons();
 };
 
@@ -79,6 +102,7 @@ async function go(id) {
     }
 
     loadedScreens[id].classList.add('active');
+    saveState();
     
     // Wait a tick for DOM to register the active class, then call onScreen
     setTimeout(() => onScreen(id), 10);
@@ -98,6 +122,12 @@ function onScreen(id) {
         document.getElementById('c-disp-units').innerHTML = db.currentUser.units.length 
             ? db.currentUser.units.map(u => `<span class="tag">#SK-${u}</span>`).join('') 
             : 'Brak';
+        
+        // Realistic QR Code using API
+        const qrImg = document.getElementById('c-qr-img');
+        if (qrImg) {
+            qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=USER_${db.currentUser.id}`;
+        }
     }
     if (id === 's-home') {
         document.getElementById('s-active-event').innerText = db.activeEvent;
@@ -118,6 +148,11 @@ function onScreen(id) {
     }
     if (id === 's-user' && staffActiveUser) renderStaffUser();
     if (id === 's-debtors') renderDebtors();
+    if (id === 's-summary') {
+        document.getElementById('sum-p').innerText = db.users.length;
+        document.getElementById('sum-h').innerText = db.totalOut;
+        document.getElementById('sum-d').innerText = db.users.filter(u=>u.units.length > 0).length;
+    }
     lucide.createIcons();
 }
 
@@ -128,21 +163,21 @@ function authProcess(type) {
         const surname = document.getElementById('reg-surname').value;
         const phone = document.getElementById('reg-phone').value;
         
-        let valid = true;
+        const phoneValid = isValidPhone(phone);
         setFieldInvalid('reg-name', !name);
         setFieldInvalid('reg-surname', !surname);
-        setFieldInvalid('reg-phone', !phone);
+        setFieldInvalid('reg-phone', !phoneValid);
         
-        if (!name || !surname || !phone) {
-            showToast('Proszę uzupełnić wszystkie dane', 'alert-circle');
+        if (!name || !surname || !phoneValid) {
+            showToast(phoneValid ? 'Proszę uzupełnić wszystkie dane' : 'Błędny format numeru telefonu', 'alert-circle');
             return;
         }
         db.currentUser = { id: Date.now().toString(), name, surname, phone, units: [] };
     } else {
         const phone = document.getElementById('login-phone').value;
-        if (!phone) {
+        if (!phone || !isValidPhone(phone)) {
             setFieldInvalid('login-phone', true);
-            showToast('Podaj numer telefonu', 'alert-circle');
+            showToast('Podaj poprawny numer telefonu', 'alert-circle');
             return;
         }
         const user = db.users.find(u => u.phone === phone);
@@ -159,15 +194,28 @@ function authProcess(type) {
 
 function authFinalize() {
     if (!db.users.find(u => u.id === db.currentUser.id)) db.users.push(db.currentUser);
+    saveState();
     go('c-qr');
 }
 
-function authLogout() { db.currentUser = null; go('c-home'); }
+function authLogout() { 
+    db.currentUser = null; 
+    saveState(); 
+    go('c-home'); 
+}
 
 // --- STAFF EVENT MGMT ---
-function staffStartEvent(name) { db.activeEvent = name; go('s-home'); }
+function staffStartEvent(name) { 
+    db.activeEvent = name; 
+    saveState(); 
+    go('s-home'); 
+}
+
 function staffCreateEvent() {
-    const name = document.getElementById('new-event-name').value;
+    const nameInput = document.getElementById('new-event');
+    if (!nameInput) return;
+    const name = nameInput.value;
+    
     if (!name) {
         setFieldInvalid('new-event', true);
         showToast('Wpisz nazwę eventu!', 'alert-circle');
@@ -177,11 +225,10 @@ function staffCreateEvent() {
     showToast(`Utworzono wydarzenie: ${name}`, 'check-circle');
     staffStartEvent(name);
 }
+
 function staffStopEvent() {
-    document.getElementById('sum-p').innerText = db.users.length;
-    document.getElementById('sum-h').innerText = db.totalOut;
-    document.getElementById('sum-d').innerText = db.users.filter(u=>u.units.length > 0).length;
     db.activeEvent = null;
+    saveState();
     go('s-summary');
 }
 
@@ -191,12 +238,13 @@ function staffDoManualReg() {
     const surname = document.getElementById('man-surname').value;
     const phone = document.getElementById('man-phone').value;
     
+    const phoneValid = isValidPhone(phone);
     setFieldInvalid('man-name', !name);
     setFieldInvalid('man-surname', !surname);
-    setFieldInvalid('man-phone', !phone);
+    setFieldInvalid('man-phone', !phoneValid);
     
-    if (!name || !surname || !phone) {
-        showToast('Wypełnij wszystkie dane klienta!', 'alert-circle');
+    if (!name || !surname || !phoneValid) {
+        showToast(phoneValid ? 'Wypełnij wszystkie dane klienta!' : 'Błędny numer telefonu!', 'alert-circle');
         return;
     }
     
@@ -204,6 +252,7 @@ function staffDoManualReg() {
     db.users.push(user);
     staffActiveUser = user;
     showToast('Klient zarejestrowany pomyślnie!', 'user-check');
+    saveState();
     go('s-user');
 }
 
@@ -235,6 +284,7 @@ function staffSimHeadphoneScan() {
 function staffDoIssue() {
     staffActiveUser.units.push(...staffTempScanned);
     db.totalOut += staffTempScanned.length;
+    saveState();
     go('s-home');
 }
 
@@ -242,6 +292,7 @@ function staffSimReturn() {
     if (!staffActiveUser.units.length) return;
     const ret = staffActiveUser.units.pop();
     db.totalOut--;
+    saveState();
     renderStaffUser();
 }
 
@@ -252,7 +303,21 @@ function renderDebtors() {
     debtors.forEach(u => {
         const c = document.createElement('div');
         c.className = 'card';
-        c.innerHTML = `<b>${u.name} ${u.surname}</b><br><small>${u.units.length} szt. (#${u.units.join(', #')})</small>`;
+        c.style.display = 'flex';
+        c.style.justifyContent = 'space-between';
+        c.style.alignItems = 'center';
+        c.innerHTML = `
+            <div>
+                <b style="display:block; margin-bottom:2px;">${u.name} ${u.surname}</b>
+                <small style="display:block; color:var(--text-muted); margin-bottom:6px;">${u.phone}</small>
+                <div style="display:flex; flex-wrap:wrap; gap:4px;">
+                    ${u.units.map(unit => `<span class="tag" style="margin:0; font-size:10px; padding:2px 6px;">#${unit}</span>`).join('')}
+                </div>
+            </div>
+            <a href="tel:${u.phone}" style="width:44px; height:44px; display:flex; align-items:center; justify-content:center; border-radius:12px; background:var(--bg-page); color:var(--primary); text-decoration:none;">
+                <i data-lucide="phone" style="width:20px; height:20px;"></i>
+            </a>
+        `;
         list.appendChild(c);
     });
 }

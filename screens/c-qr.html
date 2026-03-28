@@ -1,7 +1,7 @@
 <div id="c-qr" class="screen">
     <h2 style="text-align:center;">Twój kod QR</h2>
-    <div class="qr-placeholder">
-        <div style="font-family:monospace; font-size:12px; line-height:1.1; letter-spacing:1px;">█▀▀▀█ █ █▀▀▀█<br>█ ███ █ █ ███ █<br>█ ▀▀▀ █ █ ▀▀▀ █<br>▀▀▀▀▀ ▀ ▀▀▀▀▀</div>
+    <div class="qr-placeholder" style="padding:16px;">
+        <img id="c-qr-img" src="" style="width:200px; height:200px; display:block;" alt="QR Code">
     </div>
     <h3 id="c-disp-name" style="text-align:center; margin:0;">Jan Kowalski</h3>
     <p id="c-disp-phone" style="text-align:center; font-size:12px; color:var(--text-muted);">+48 000 000 000</p>
@@ -10,5 +10,10 @@
         <strong style="color:var(--warning); font-size:12px; text-transform:uppercase;">Twoje wypożyczenie:</strong>
         <div id="c-disp-units" style="margin-top:8px;">Brak</div>
     </div>
-    <button class="btn btn-outline" style="margin-top:auto;" onclick="authLogout()">Wyloguj</button>
+
+    <button class="btn btn-outline" style="margin-top:24px; font-size:13px; border-style:dashed;" onclick="showToast('Kliknij ikonę udostępniania w przeglądarce i wybierz \'Do ekranu początkowego\'', 'plus-square')">
+        <i data-lucide="plus-square" style="width:18px; height:18px;"></i> Dodaj do ekranu głównego
+    </button>
+    
+    <button class="btn btn-outline" style="margin-top:auto; color:var(--danger); border-color:transparent;" onclick="authLogout()">Wyloguj</button>
 </div>
