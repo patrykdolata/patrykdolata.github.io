@@ -12,6 +12,34 @@ let staffTempScanned = [];
 
 const loadedScreens = {};
 
+// --- TOASTS & VALIDATION ---
+function showToast(message, icon = 'info') {
+    const container = document.getElementById('toast-container');
+    const t = document.createElement('div');
+    t.className = 'toast';
+    t.innerHTML = `<i data-lucide="${icon}" style="width:18px; height:18px;"></i> <span>${message}</span>`;
+    container.appendChild(t);
+    lucide.createIcons();
+    setTimeout(() => {
+        t.style.opacity = '0';
+        t.style.transform = 'translateY(-10px)';
+        t.style.transition = 'all 0.3s ease-out';
+        setTimeout(() => t.remove(), 300);
+    }, 3000);
+}
+
+function setFieldInvalid(id, isInvalid) {
+    const input = document.getElementById(id);
+    const err = document.getElementById(`err-${id}`);
+    if (isInvalid) {
+        input.classList.add('invalid');
+        if (err) err.style.display = 'block';
+    } else {
+        input.classList.remove('invalid');
+        if (err) err.style.display = 'none';
+    }
+}
+
 // Wykrywanie braku serwera (protokół file://)
 if (window.location.protocol === 'file:') {
     document.getElementById('server-warning').style.display = 'block';
@@ -45,7 +73,7 @@ async function go(id) {
             loadedScreens[id] = screenEl;
         } catch (e) {
             console.error('Błąd ładowania ekranu:', e);
-            alert(`Nie można załadować ekranu: ${id}. Uruchom lokalny serwer HTTP (np. python3 -m http.server).`);
+            showToast(`Błąd ładowania: ${id}. Uruchom serwer HTTP!`, 'server-off');
             return;
         }
     }
@@ -99,12 +127,31 @@ function authProcess(type) {
         const name = document.getElementById('reg-name').value;
         const surname = document.getElementById('reg-surname').value;
         const phone = document.getElementById('reg-phone').value;
-        if (!name || !surname || !phone) return alert('Wpisz wszystkie dane!');
+        
+        let valid = true;
+        setFieldInvalid('reg-name', !name);
+        setFieldInvalid('reg-surname', !surname);
+        setFieldInvalid('reg-phone', !phone);
+        
+        if (!name || !surname || !phone) {
+            showToast('Proszę uzupełnić wszystkie dane', 'alert-circle');
+            return;
+        }
         db.currentUser = { id: Date.now().toString(), name, surname, phone, units: [] };
     } else {
         const phone = document.getElementById('login-phone').value;
+        if (!phone) {
+            setFieldInvalid('login-phone', true);
+            showToast('Podaj numer telefonu', 'alert-circle');
+            return;
+        }
         const user = db.users.find(u => u.phone === phone);
-        if (!user) return alert('Nie znaleziono konta!');
+        if (!user) {
+            setFieldInvalid('login-phone', true);
+            showToast('Nie znaleziono konta dla tego numeru', 'user-x');
+            return;
+        }
+        setFieldInvalid('login-phone', false);
         db.currentUser = user;
     }
     go('c-sms');
@@ -121,7 +168,13 @@ function authLogout() { db.currentUser = null; go('c-home'); }
 function staffStartEvent(name) { db.activeEvent = name; go('s-home'); }
 function staffCreateEvent() {
     const name = document.getElementById('new-event-name').value;
-    if (!name) return alert('Podaj nazwę eventu!');
+    if (!name) {
+        setFieldInvalid('new-event', true);
+        showToast('Wpisz nazwę eventu!', 'alert-circle');
+        return;
+    }
+    setFieldInvalid('new-event', false);
+    showToast(`Utworzono wydarzenie: ${name}`, 'check-circle');
     staffStartEvent(name);
 }
 function staffStopEvent() {
@@ -134,12 +187,23 @@ function staffStopEvent() {
 
 // --- STAFF USER MGMT ---
 function staffDoManualReg() {
-    const name = document.getElementById('man-name').value || 'Klient';
-    const surname = document.getElementById('man-surname').value || 'Ręczny';
-    const phone = document.getElementById('man-phone').value || '000-000';
+    const name = document.getElementById('man-name').value;
+    const surname = document.getElementById('man-surname').value;
+    const phone = document.getElementById('man-phone').value;
+    
+    setFieldInvalid('man-name', !name);
+    setFieldInvalid('man-surname', !surname);
+    setFieldInvalid('man-phone', !phone);
+    
+    if (!name || !surname || !phone) {
+        showToast('Wypełnij wszystkie dane klienta!', 'alert-circle');
+        return;
+    }
+    
     const user = { id: Date.now().toString(), name, surname, phone, units: [] };
     db.users.push(user);
     staffActiveUser = user;
+    showToast('Klient zarejestrowany pomyślnie!', 'user-check');
     go('s-user');
 }
 

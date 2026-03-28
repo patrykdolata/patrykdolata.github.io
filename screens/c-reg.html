@@ -2,7 +2,13 @@
     <div class="nav-back" onclick="go('c-home')">← Powrót</div>
     <h2>Nowe konto</h2>
     <input type="text" id="reg-name" class="input-field" placeholder="Imię">
+    <div id="err-reg-name" class="error-msg">Proszę podać imię</div>
+
     <input type="text" id="reg-surname" class="input-field" placeholder="Nazwisko">
+    <div id="err-reg-surname" class="error-msg">Proszę podać nazwisko</div>
+
     <input type="tel" id="reg-phone" class="input-field" placeholder="Numer telefonu">
+    <div id="err-reg-phone" class="error-msg">Proszę podać poprawny numer</div>
+
     <button class="btn btn-primary" onclick="authProcess('reg')">Kontynuuj</button>
 </div>
